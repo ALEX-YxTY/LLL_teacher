@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--textSize-->
+    <dimen name="bt_text">15sp</dimen>
+    <dimen name="title_text">20sp</dimen>
+    <dimen name="text13">13sp</dimen>
+
+    <!--view size-->
+    <dimen name="titlebar_height">44dp</dimen>
+
+    <!--margin&padding-->
+    <dimen name="page_margin">40dp</dimen>
+</resources>

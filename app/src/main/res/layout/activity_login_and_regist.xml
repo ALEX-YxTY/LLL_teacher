@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_back_grident">
 
-</LinearLayout>
+    <include layout="@layout/titlebar_transparent" />
+    
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="@dimen/page_margin"
+        android:layout_marginRight="@dimen/page_margin"
+        android:textColor="@color/white"
+        android:textSize="@dimen/bt_text"
+        android:text="@string/tel_login"
+        android:layout_marginTop="315dp"
+        android:background="@drawable/shape_bt_radiu2_orange"/>
+
+    <Button
+        android:id="@+id/bt_register"
+        android:layout_below="@id/bt_login"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:textColor="@color/themeOrange"
+        android:textSize="@dimen/bt_text"
+        android:text="@string/register"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_bt_radiu2_white"/>
+</RelativeLayout>

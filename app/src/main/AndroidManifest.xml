@@ -8,13 +8,39 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.MainActivity">
+
+        <!-- 主页 -->
+        <activity
+            android:name=".views.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <!-- 登录注册选择页 -->
+        <activity
+            android:name=".views.LoginAndRegistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <!-- 登录页 -->
+        <activity
+            android:name=".views.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 注册页 -->
+        <activity
+            android:name=".views.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 忘记密码页 -->
+        <activity
+            android:name=".views.ForgetPswActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".views.ResetPswActivity"></activity>
     </application>
 
 </manifest>

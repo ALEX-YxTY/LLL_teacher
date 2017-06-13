@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="edit_text_border">#E6EDF2</color>
+    <color name="edit_text_color">#D4C0B7</color>
+    <color name="text_black">#21242A</color>
+    <color name="edit_text_hint_color">#EBE7E4</color>
+
+</resources>

@@ -2,14 +2,25 @@ package com.milai.lll_teacher.views
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import butterknife.ButterKnife
+import android.view.View
+import android.widget.ImageView
 import com.milai.lll_teacher.R
 
-class LoginAndRegistActivity : AppCompatActivity() {
+class LoginAndRegistActivity : AppCompatActivity() ,View.OnClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_and_regist)
-        ButterKnife.bind(this)
+        findViewById(R.id.bt_back).setOnClickListener(this)
+        findViewById(R.id.bt_login).setOnClickListener(this)
+        findViewById(R.id.bt_register).setOnClickListener(this)
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.bt_back -> onBackPressed()
+            R.id.bt_login -> return//TODO login
+            R.id.bt_register -> return//TODO register
+        }
     }
 }
