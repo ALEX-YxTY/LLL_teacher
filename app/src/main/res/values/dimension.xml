@@ -10,4 +10,5 @@
 
     <!--margin&padding-->
     <dimen name="page_margin">40dp</dimen>
+    <dimen name="item_margin">13dp</dimen>
 </resources>

@@ -13,6 +13,9 @@
     <color name="text_title">#3C4A55</color>        <!--状态栏文字颜色-->
     <color name="edit_text_color">#D4C0B7</color>
     <color name="edit_text_color_grey">#EBE7E4</color>
+    <color name="text_black1">#4A4A4A</color>
+    <color name="text_grey1">#8A8F97</color>
+    <color name="text_red">#FF6C5D</color>
 
     <!--background-->
     <color name="grey_back1">#F7F9FC</color>         <!--状态栏背景色-->
