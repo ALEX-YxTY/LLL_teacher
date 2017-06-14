@@ -7,4 +7,16 @@
     <string name="forget_psw">忘记密码？</string>
     <string name="next">下一步</string>
     <string name="finish">完成</string>
+    <string name="my_resume">我的简历</string>
+    <string name="my_apply_record">我的投递记录</string>
+    <string name="my_interview">我的面试邀约</string>
+    <string name="my_job_collectin">收藏的职位</string>
+    <string name="my_attention_office">关注的机构</string>
+    <string name="setting">设置</string>
+    <string name="commit">提交</string>
+    <string name="edit_info">资料修改</string>
+    <string name="my_account">我的账号</string>
+    <string name="push">推送消息设置</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="logout">退出登录</string>
 </resources>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_grey1">
+    <include layout="@layout/titlebar_back_white" android:id="@+id/titlebar"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/item_margin12"
+        android:layout_marginLeft="@dimen/item_margin12"
+        android:layout_marginRight="@dimen/item_margin12"
+        android:layout_below="@id/titlebar"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_back_item_border"
+            >
+
+            <ImageView
+                android:id="@id/iv_head"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="14dp"
+                />
+
+            <TextView
+                android:id="@+id/teacher_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/item_margin15"
+                android:textSize="14sp"
+                android:layout_marginTop="11dp"
+                android:layout_toRightOf="@id/iv_head"
+                android:layout_marginLeft="16dp"
+                android:text="王小花"
+                android:textColor="@color/text_black1"/>
+
+            <TextView
+                android:id="@+id/tv_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/teacher_name"
+                android:layout_below="@id/teacher_name"
+                android:layout_marginTop="5dp"
+                android:text="物理"
+                android:textSize="12sp"
+                android:textColor="@color/text_grey1"/>
+
+            <View
+                android:id="@id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/border2"
+                android:layout_marginLeft="@dimen/margin17"
+                android:layout_marginRight="17dp"
+                android:layout_below="@id/iv_head"
+                android:layout_marginTop="@dimen/item_margin15"/>
+            <TextView
+                android:id="@+id/tv_evaluate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/divider"
+                android:textColor="@color/text_black2"
+                android:textSize="14sp"
+                android:text="无可挑剔"
+                android:layout_marginTop="15.5dp"/>
+
+            <RatingBar
+                android:id="@id/star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:layout_below="@id/tv_evaluate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/item_margin15"/>
+
+            <LinearLayout
+                android:layout_below="@id/star"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <include layout="@layout/item_lable"/>
+                    <include layout="@layout/item_lable"/>
+                    <include layout="@layout/item_lable"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp">
+                    <include layout="@layout/item_lable"/>
+                    <include layout="@layout/item_lable"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+        
+        <Button
+            android:id="@+id/bt_commit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:enabled="false"
+            android:background="@drawable/selector_bt_radiu2_orange"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_marginTop="35dp"
+            android:text="@string/commit"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -12,7 +12,9 @@ class RegisterActivity : AppCompatActivity() ,RegisterContract.iView{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+//        setContentView(R.layout.activity_register)
+        setContentView(R.layout.activity_edit_info)
+
     }
 
     override fun showError(err: String) {

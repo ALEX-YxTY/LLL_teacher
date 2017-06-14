@@ -14,6 +14,7 @@
     <color name="edit_text_color">#D4C0B7</color>
     <color name="edit_text_color_grey">#EBE7E4</color>
     <color name="text_black1">#4A4A4A</color>
+    <color name="text_black2">#3C4A55</color>
     <color name="text_grey1">#8A8F97</color>
     <color name="text_red">#FF6C5D</color>
 
@@ -21,8 +22,10 @@
     <color name="grey_back1">#F7F9FC</color>         <!--状态栏背景色-->
     <color name="back_grey_start">#e5f5f7fb</color>         <!--背景起始色-->
     <color name="back_grey_end">#f5f7fb</color>             <!--背景结束色-->
+    <color name="back_grey1">#FCFCFC</color>        <!--背景浅灰-->
 
     <!--boder-->
     <color name="border1">#C6D1E1</color>         <!--状态栏边框-->
-
+    <color name="border2">#E6EAF2</color>
+    <color name="border3">#7FDAD4D1</color>
 </resources>
