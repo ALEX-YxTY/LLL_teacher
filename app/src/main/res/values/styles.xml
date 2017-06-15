@@ -16,4 +16,49 @@
         <item name="android:maxHeight">16dp</item>
     </style>
 
+    <style name="text_14_black">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_black2</item>
+    </style>
+    <style name="text_14_grey">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_grey1</item>
+    </style>
+    <style name="text_14_theme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/themeOrange</item>
+    </style>
+    <style name="text_14_white">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="text_12_black">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_black2</item>
+    </style>
+    <style name="text_10_grey">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/text_grey1</item>
+    </style>
+
+    <style name="text_12_grey">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_grey1</item>
+    </style>
+
+    <style name="text_12_theme">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/themeOrange</item>
+    </style>
+
+    <style name="text_12_grey2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_grey2</item>
+    </style>
+
+    <style name="text_12_black2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_black3</item>
+    </style>
+
 </resources>

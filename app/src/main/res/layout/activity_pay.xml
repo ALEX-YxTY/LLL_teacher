@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_grey1">
+
+    <include layout="@layout/titlebar_back_white" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/component1"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/component1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:text="¥ 49.00"
+            android:textSize="18sp"
+            android:textColor="@color/text_black2"/>
+        <TextView
+            android:id="@+id/tv_pay_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VIP特权缴费"
+            android:layout_alignLeft="@id/tv_money"
+            android:layout_below="@id/tv_money"
+            android:layout_marginTop="10dp"
+            style="@style/text_12_grey"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/component2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="51dp"
+            android:layout_marginTop="12dp"
+            android:text="支付宝支付"
+            style="@style/text_12_black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="推荐有支付宝账户的用户使用"
+            android:layout_alignLeft="@id/component2"
+            android:layout_below="@id/component2"
+            android:layout_marginTop="4dp"
+            style="@style/text_10_grey"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_pay"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_bt_radiu2_orange"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="43dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:text="确认支付  ¥ 49.00"
+        />
+</LinearLayout>

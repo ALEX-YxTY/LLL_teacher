@@ -6,6 +6,7 @@
 
     <color name="themeOrange">#FF763F</color>
     <color name="orange_grey">#F7DCD1</color>
+    <color name="light_pink">#F9F5F0</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00ffffff</color>         <!--透明-->
 
@@ -15,7 +16,9 @@
     <color name="edit_text_color_grey">#EBE7E4</color>
     <color name="text_black1">#4A4A4A</color>
     <color name="text_black2">#3C4A55</color>
+    <color name="text_black3">#505d67</color>
     <color name="text_grey1">#8A8F97</color>
+    <color name="text_grey2">#dddddd</color>
     <color name="text_red">#FF6C5D</color>
 
     <!--background-->
@@ -23,9 +26,14 @@
     <color name="back_grey_start">#e5f5f7fb</color>         <!--背景起始色-->
     <color name="back_grey_end">#f5f7fb</color>             <!--背景结束色-->
     <color name="back_grey1">#FCFCFC</color>        <!--背景浅灰-->
+    <color name="back_light_brown">#EADBC0</color>  <!--浅棕色背景-->
+    <color name="back_dark_brown">#D3A979</color>  <!--浅棕色背景-->
+
 
     <!--boder-->
     <color name="border1">#C6D1E1</color>         <!--状态栏边框-->
     <color name="border2">#E6EAF2</color>
     <color name="border3">#7FDAD4D1</color>
+    <color name="border4">#DaD4D1</color>
+
 </resources>

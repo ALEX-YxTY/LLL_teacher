@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_big"
+        android:layout_width="match_parent"
+        android:layout_height="210dp" />
+
+    <include layout="@layout/titlebar_transparent2" />
+
+    <RelativeLayout
+        android:id="@+id/rl_office"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_below="@id/iv_big"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_marginLeft="@dimen/item_margin13"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/office_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="150dp"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textSize="14sp"
+            android:layout_marginTop="11dp"
+            android:layout_toRightOf="@id/iv_head"
+            android:layout_marginLeft="16dp"
+            android:text="某某教育机构"
+            android:textColor="@color/text_black1"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/office_name"
+            android:layout_below="@id/office_name"
+            android:layout_marginTop="5dp"
+            android:maxWidth="150dp"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="南京市鼓楼区"
+            android:textSize="12sp"
+            android:textColor="@color/text_grey1"/>
+
+        <TextView
+            android:id="@+id/tv_decs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/office_name"
+            android:layout_below="@id/tv_address"
+            android:layout_marginTop="5dp"
+            android:maxWidth="150dp"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="热招：国画老师 等5个职位"
+            android:textSize="12sp"
+            android:textColor="@color/text_grey1" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/border2"
+        android:layout_below="@id/rl_office"/>
+
+    <RelativeLayout
+        android:id="@+id/component1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/divider"
+        android:background="@color/white"
+        >
+        <TextView
+            android:id="@+id/tv_office_tab"
+            android:layout_width="187dp"
+            android:layout_height="match_parent"
+            style="@style/text_12_theme"
+            android:gravity="center"
+            android:text="机构概况"/>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="1.5dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_office_tab"
+            android:background="@color/back_grey1" />
+
+        <TextView
+            android:id="@+id/tv_job_tab"
+            android:layout_toRightOf="@id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/text_12_black2"
+            android:gravity="center"
+            android:text="热招职位(5)"/>
+
+        <View
+            android:id="@+id/indicator_left"
+            android:layout_width="65dp"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="61dp"
+            android:background="@color/themeOrange" />
+
+        <View
+            android:id="@+id/indicator_right"
+            android:layout_width="72dp"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="63dp"
+            android:background="@color/themeOrange"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_below="@id/component1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>
