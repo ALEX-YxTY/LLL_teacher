@@ -1,4 +1,4 @@
-package com.meishipintu.lll_lib.view;
+package com.milai.lll_teacher.custom.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.meishipintu.lll_lib.R;
-import com.meishipintu.lll_lib.utils.DensityUtils;
+
+import com.milai.lll_teacher.R;
+import com.milai.lll_teacher.custom.util.DensityUtils;
 
 import java.util.List;
 
@@ -48,10 +49,10 @@ public class CustomLabelSelectView extends ViewGroup {
         int totalHeight = getPaddingTop() + getPaddingBottom();         //计算的总高度
         int childCount = getChildCount();
         for(int i=0;i<childCount;i++) {
+            //每四个转行
+            View child = getChildAt(i);
+            measureChild(child, widthMeasureSpec, heightMeasureSpec);   //测量子view
             if ( i % 4 == 0) {
-                //每四个转行
-                View child = getChildAt(i);
-                measureChild(child, widthMeasureSpec, heightMeasureSpec);   //测量子view
                 int childHeight = child.getMeasuredHeight();
                 totalHeight += SPACR_VERTICAL + childHeight;
             }
@@ -65,7 +66,6 @@ public class CustomLabelSelectView extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int widthLeft = 0;  //view的左端
         int heightTop = 0;  //view的右端
-        Log.d("test", "childCount:" + getChildCount());
         for(int i = 0; i<getChildCount(); i++) {
             final int item = i;
             View child = getChildAt(i);
@@ -77,7 +77,7 @@ public class CustomLabelSelectView extends ViewGroup {
             int right = widthLeft + child.getMeasuredWidth();
             int bottom = heightTop + child.getMeasuredHeight();
             child.layout(widthLeft, heightTop, right, bottom);
-            widthLeft = right + SPACE_HORIZANTAL;   //修改左端点
+            widthLeft += child.getMeasuredWidth() + SPACE_HORIZANTAL;   //修改左端点
 
             child.setOnClickListener(new OnClickListener() {
                 @Override

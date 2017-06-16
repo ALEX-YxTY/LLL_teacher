@@ -9,16 +9,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--测试页-->
+        <activity android:name=".views.TestActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!-- 主页 -->
         <activity
             android:name=".views.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!-- 登录注册选择页 -->
         <activity
             android:name=".views.LoginAndRegistActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!-- 登录页 -->
         <activity
             android:name=".views.LoginActivity"
@@ -29,18 +39,14 @@
             android:name=".views.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- 忘记密码页 -->
         <activity
             android:name=".views.ForgetPswActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".views.ResetPswActivity"></activity>
+        <activity android:name=".views.ResetPswActivity" />
     </application>
 
 </manifest>

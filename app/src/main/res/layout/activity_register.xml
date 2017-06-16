@@ -46,7 +46,7 @@
                 android:textColor="@drawable/selector_bt_text_color"/>
         </RelativeLayout>
        
-        <com.meishipintu.lll_lib.view.CustomEditText
+        <CustomEditText
             android:id="@+id/et_psw"
             android:layout_below="@id/rl_wrapper"
             android:layout_width="match_parent"

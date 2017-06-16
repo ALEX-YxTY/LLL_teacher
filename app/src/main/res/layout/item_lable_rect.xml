@@ -5,9 +5,9 @@
     android:layout_height="25dp"
     android:gravity="center"
     android:textSize="12sp"
-    android:textColor="@color/edit_text_color"
+    android:textColor="@color/text_grey1"
     android:text="20-35岁"
-    android:background="@drawable/shape_bt_radiu2_orange"
-    style="@style/text_12_white">
+    android:background="@drawable/shape_bt_radiu2_border_grey"
+    >
 
 </TextView>
