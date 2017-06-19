@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -19,8 +20,8 @@ class LoginAndRegistActivity : AppCompatActivity() ,View.OnClickListener{
     override fun onClick(v: View) {
         when (v.id) {
             R.id.bt_back -> onBackPressed()
-            R.id.bt_login -> return//TODO login
-            R.id.bt_register -> return//TODO register
+            R.id.bt_login -> startActivity(Intent(this@LoginAndRegistActivity, LoginActivity::class.java))
+            R.id.bt_register -> startActivity(Intent(this@LoginAndRegistActivity, RegisterActivity::class.java))
         }
     }
 }

@@ -3,6 +3,7 @@ package com.milai.lll_teacher.custom.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,5 +80,9 @@ public class CustomEditText extends LinearLayout{
 
     public void setContent(String string) {
         etInput.setText(string);
+    }
+
+    public void setListener(TextWatcher watcher) {
+        etInput.addTextChangedListener(watcher);
     }
 }

@@ -82,31 +82,16 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/item_margin15"/>
 
-            <LinearLayout
+            <com.milai.lll_teacher.custom.view.CustomLabelMultiSelectCenterView
                 android:layout_below="@id/star"
+                android:id="@+id/multi_select"
                 android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <include layout="@layout/item_lable"/>
-                    <include layout="@layout/item_lable"/>
-                    <include layout="@layout/item_lable"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp">
-                    <include layout="@layout/item_lable"/>
-                    <include layout="@layout/item_lable"/>
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_marginBottom="20dp"/>
 
         </RelativeLayout>
         
@@ -114,11 +99,11 @@
             android:id="@+id/bt_commit"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:enabled="false"
             android:background="@drawable/selector_bt_radiu2_orange"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_marginTop="35dp"
+            android:enabled="false"
             android:text="@string/commit"/>
     </LinearLayout>
 

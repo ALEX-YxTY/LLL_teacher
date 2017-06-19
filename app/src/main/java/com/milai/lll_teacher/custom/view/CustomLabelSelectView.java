@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/6/15.
  * <p>
- * 功能介绍：
+ * 功能介绍：标签选择控件，一行4个，单选，可设置默认值
  */
 
 public class CustomLabelSelectView extends ViewGroup {
@@ -37,7 +37,6 @@ public class CustomLabelSelectView extends ViewGroup {
 
     private void init(Context context) {
         this.context = context;
-        SPACE_HORIZANTAL = DensityUtils.dip2px(context, 10);
         SPACR_VERTICAL = DensityUtils.dip2px(context, 10);
     }
 
@@ -56,9 +55,11 @@ public class CustomLabelSelectView extends ViewGroup {
                 int childHeight = child.getMeasuredHeight();
                 totalHeight += SPACR_VERTICAL + childHeight;
             }
-            //初始化选中项为第一项
-            selectIndex = 0;
+
         }
+        //初始化选中项为第一项
+        selectIndex = 0;
+        SPACE_HORIZANTAL = (widthSize - getChildAt(0).getMeasuredWidth() * 4) / 3;
         setMeasuredDimension(widthSize, heightMode == MeasureSpec.EXACTLY ? heightSize : totalHeight);
     }
 
