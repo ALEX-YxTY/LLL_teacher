@@ -15,14 +15,14 @@
         android:layout_marginLeft="@dimen/page_margin"
         android:layout_marginRight="@dimen/page_margin">
 
-        <com.meishipintu.lll_lib.view.CustomEditText
+        <com.milai.lll_teacher.custom.view.CustomEditText
             android:id="@+id/et_tel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             app:title="手机：+86"
             />
-        <com.meishipintu.lll_lib.view.CustomEditText
+        <com.milai.lll_teacher.custom.view.CustomEditText
             android:id="@+id/et_psw"
             android:layout_below="@id/et_tel"
             android:layout_width="match_parent"

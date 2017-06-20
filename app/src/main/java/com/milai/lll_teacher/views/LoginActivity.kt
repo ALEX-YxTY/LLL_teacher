@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.custom.view.CustomEditText
@@ -21,6 +20,10 @@ class LoginActivity : AppCompatActivity() {
         val etTel = findViewById(R.id.et_tel) as CustomEditText
         val etPsw = findViewById(R.id.et_psw) as CustomEditText
         val btLogin = findViewById(R.id.bt_login) as Button
+        val tvForgetPsw = findViewById(R.id.forget_psw) as TextView
+        findViewById(R.id.bt_back).setOnClickListener({
+            onBackPressed()
+        })
         etTel.setListener(object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 btLogin.isEnabled = (s != null && s.toString().trim().isNotEmpty() && etPsw.text != null
@@ -46,6 +49,10 @@ class LoginActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
 
+        })
+        tvForgetPsw.setOnClickListener({
+            //跳转忘记密码页面
+            startActivity(Intent(this@LoginActivity, ForgetPswActivity::class.java))
         })
         btLogin.setOnClickListener({
             //TODO 登录

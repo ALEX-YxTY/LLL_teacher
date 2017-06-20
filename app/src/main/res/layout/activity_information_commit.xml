@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_grey1">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/titlebar_back_white" />
+
+        <!--姓名-->
+        <RelativeLayout
+            android:id="@+id/rl_edit_info"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/text_black2"
+                android:text="@string/name" />
+
+            <ImageView
+                android:src="@drawable/icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp"
+                android:layout_centerVertical="true"/>
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/themeOrange"
+                android:hint="请填写"
+                android:textColorHint="@color/themeOrange"
+                android:background="@null"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="26dp"
+                android:layout_centerVertical="true"
+                android:gravity="end"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="12dp"
+            android:background="@color/border2" />
+        <!--性别-->
+        <RelativeLayout
+            android:id="@+id/rl_my_account"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/text_black2"
+                android:text="性别" />
+
+            <ImageView
+                android:src="@drawable/icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/text_grey1"
+                android:text="男"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="26dp"
+                android:layout_centerVertical="true"
+                android:gravity="end"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="12dp"
+            android:background="@color/border2" />
+
+        <!-- 出生日期 -->
+        <RelativeLayout
+            android:id="@+id/rl_push"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/text_black2"
+                android:text="出生日期" />
+
+            <ImageView
+                android:src="@drawable/icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp"
+                android:layout_centerVertical="true"/>
+
+            <EditText
+                android:id="@+id/et_birth"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/themeOrange"
+                android:hint="请填写"
+                android:textColorHint="@color/themeOrange"
+                android:background="@null"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="26dp"
+                android:layout_centerVertical="true"
+                android:gravity="end"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="12dp"
+            android:background="@color/border2" />
+
+        <!-- 身份证号码 -->
+        <RelativeLayout
+            android:id="@+id/rl_clear_cache"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/text_black2"
+                android:text="身份证号" />
+
+            <ImageView
+                android:src="@drawable/icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp"
+                android:layout_centerVertical="true"/>
+
+            <EditText
+                android:id="@+id/et_Id"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/themeOrange"
+                android:hint="请填写"
+                android:textColorHint="@color/themeOrange"
+                android:background="@null"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="26dp"
+                android:layout_centerVertical="true"
+                android:gravity="end"/>
+        </RelativeLayout>
+
+
+        <!-- 科目 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:layout_marginTop="9dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/text_black2"
+                android:text="科目" />
+
+            <ImageView
+                android:src="@drawable/icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp"
+                android:layout_centerVertical="true"/>
+
+            <EditText
+                android:id="@+id/et_course"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/themeOrange"
+                android:hint="请填写"
+                android:textColorHint="@color/themeOrange"
+                android:background="@null"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="26dp"
+                android:layout_centerVertical="true"
+                android:gravity="end"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="12dp"
+            android:background="@color/border2" />
+
+        <!-- 授课风格 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/text_black2"
+                android:text="授课风格" />
+
+            <ImageView
+                android:src="@drawable/icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp"
+                android:layout_centerVertical="true"/>
+
+            <EditText
+                android:id="@+id/et_style"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/themeOrange"
+                android:hint="请填写"
+                android:textColorHint="@color/themeOrange"
+                android:background="@null"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="26dp"
+                android:layout_centerVertical="true"
+                android:gravity="end"/>
+        </RelativeLayout>
+
+        <!-- 教师资格证 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:gravity="center"
+            android:layout_marginTop="9dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/text_black2"
+                android:text="教师资格证" />
+
+            <ImageView
+                android:src="@drawable/icon_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="13dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:id="@+id/iv_certificate"
+                android:layout_width="41dp"
+                android:layout_height="41dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="12dp"
+            android:background="@color/border2" />
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_register"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/themeOrange"
+        android:layout_margin="12dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:text="提交申请"/>
+</RelativeLayout>

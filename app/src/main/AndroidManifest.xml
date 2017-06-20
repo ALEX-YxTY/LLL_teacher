@@ -1,57 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.milai.lll_teacher">
+package="com.milai.lll_teacher">
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+<application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme">
 
-        <!-- 测试页 -->
-        <activity
-            android:name=".views.TestActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+    <!-- 测试页 -->
+    <activity
+        android:name=".views.TestActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    <activity android:name=".views.Test2Activity" />
 
-        <!-- 登录注册选择页 -->
-        <activity
-            android:name=".views.LoginAndRegistActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <!-- 登录注册选择页 -->
+    <activity
+        android:name=".views.LoginAndRegistActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+    <!-- 登录页 -->
+    <activity
+        android:name=".views.LoginActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!-- 登录页 -->
-        <activity
-            android:name=".views.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    <!-- 注册页 -->
+    <activity
+        android:name=".views.RegisterActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!-- 注册页 -->
-        <activity
-            android:name=".views.RegisterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+    <!-- 忘记密码页 -->
+    <activity
+        android:name=".views.ForgetPswActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!-- 主页 -->
-        <activity
-            android:name=".views.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    <!-- 重设密码页 -->
+    <activity
+        android:name=".views.ResetPswActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!-- 忘记密码页 -->
-        <activity
-            android:name=".views.ForgetPswActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".views.ResetPswActivity" />
-        <activity android:name=".views.Test2Activity"></activity>
-    </application>
+    <!--信息填写页面-->
+    <activity android:name="com.milai.lll_teacher.views.InformationCommitActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+    <!-- 主页 -->
+    <activity
+        android:name=".views.MainActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+</application>
 
 </manifest>
