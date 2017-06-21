@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,105 +17,10 @@
         android:layout_height="0.5dp"
         android:background="#7fd5c0b7" />
 
-    <LinearLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="49dp">
-        <RelativeLayout
-            android:id="@+id/rl_job"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/iv_1"
-                android:src="@drawable/icon_job_pre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="9dp"/>
-            <TextView
-                android:text="职位"
-                android:textSize="11sp"
-                android:textColor="@color/edit_text_color"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/iv_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"/>
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rl_office"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/iv_2"
-                android:layout_marginTop="9dp"
-                android:src="@drawable/icon_organization"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"/>
-            <TextView
-                android:text="机构"
-                android:textSize="11sp"
-                android:textColor="@color/themeOrange"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/iv_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"/>
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rl_notice"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/iv_3"
-                android:layout_marginTop="9dp"
-                android:src="@drawable/icon_notice_pre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"/>
-            <TextView
-                android:text="消息"
-                android:textSize="11sp"
-                android:textColor="@color/edit_text_color"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/iv_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"/>
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rl_mine"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/iv_4"
-                android:layout_marginTop="9dp"
-                android:src="@drawable/icon_mine_pre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"/>
-            <TextView
-                android:text="我的"
-                android:textSize="11sp"
-                android:textColor="@color/edit_text_color"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/iv_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"/>
-
-        </RelativeLayout>
-    </LinearLayout>
-
+        android:layout_height="49dp"
+        app:tabIndicatorHeight="0dp"
+        />
 </LinearLayout>
