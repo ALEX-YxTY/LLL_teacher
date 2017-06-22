@@ -16,10 +16,10 @@ import android.widget.TextView
  *
  * 主要功能：
  */
-class TjPop(val ctx: Context, val mListener: TjClickListener) : PopupWindow(ctx) {
+class TjPop(val ctx: Context, val mListener: MenuClickListener) : PopupWindow(ctx) {
 
     init {
-        val view = LayoutInflater.from(ctx).inflate(R.layout.item_tj, null)
+        val view = LayoutInflater.from(ctx).inflate(R.layout.pop_tj, null)
         contentView = view
         width = ViewGroup.LayoutParams.MATCH_PARENT
         height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -44,7 +44,7 @@ class TjPop(val ctx: Context, val mListener: TjClickListener) : PopupWindow(ctx)
             ivTj.visibility = View.VISIBLE
             tvAll.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivAll.visibility = View.INVISIBLE
-            mListener.onClick(0,"推荐")
+            mListener.onTjClick(0,"推荐")
             dismiss()
         }
         contentView.findViewById(R.id.ll_all).setOnClickListener{
@@ -52,7 +52,7 @@ class TjPop(val ctx: Context, val mListener: TjClickListener) : PopupWindow(ctx)
             ivAll.visibility = View.VISIBLE
             tvTj.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivTj.visibility = View.INVISIBLE
-            mListener.onClick(1,"全部")
+            mListener.onTjClick(1,"全部")
             dismiss()
         }
     }
@@ -63,6 +63,11 @@ class TjPop(val ctx: Context, val mListener: TjClickListener) : PopupWindow(ctx)
         } else {
             this.dismiss()
         }
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        mListener.onDismiss(1)
     }
 }
 

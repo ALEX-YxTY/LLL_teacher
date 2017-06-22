@@ -25,4 +25,7 @@
     <string name="error_vcode">您输入的验证码不正确</string>
     <string name="name">姓名</string>
     <string name="input_empty">输入项不能为空</string>
+    <string name="empty">暂无数据</string>
+    <string name="bm">投递简历</string>
+    <string name="go_contact">立即沟通</string>
 </resources>

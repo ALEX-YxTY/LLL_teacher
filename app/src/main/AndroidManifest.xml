@@ -62,7 +62,15 @@
             android:name=".views.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".views.SearchActivity"></activity>
+        <!--搜索页面-->
+        <activity android:name=".views.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
+        <!--职位详情页面-->
+        <activity android:name=".custom.view.JobDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

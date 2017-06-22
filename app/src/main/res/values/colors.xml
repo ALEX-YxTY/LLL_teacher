@@ -28,6 +28,7 @@
     <color name="back_grey1">#FCFCFC</color>        <!--背景浅灰-->
     <color name="back_light_brown">#EADBC0</color>  <!--浅棕色背景-->
     <color name="back_dark_brown">#D3A979</color>  <!--浅棕色背景-->
+    <color name="back_city_light">#F8F4F0</color>
 
 
     <!--boder-->

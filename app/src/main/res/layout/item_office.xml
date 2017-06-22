@@ -57,12 +57,12 @@
         android:textSize="12sp"
         android:textColor="@color/text_grey1" />
 
-    <ImageView
-        android:id="@+id/iv_attention"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/item_margin13"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_attention"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="@dimen/item_margin13"/>-->
 
 </RelativeLayout>

@@ -164,14 +164,46 @@
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/bt_invite"
-        android:layout_alignParentBottom="true"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:background="@color/themeOrange"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:text="@string/go_invite"/>
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_height="49dp">
+        <RelativeLayout
+            android:id="@+id/bt_contact"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_back_item_border"
+            >
+            <TextView
+                android:id="@+id/component3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/themeOrange"
+                android:text="@string/go_contact"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_contact"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/component3"
+                android:layout_marginRight="8dp"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/bt_join"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="49dp"
+            android:background="@color/themeOrange"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="@string/bm"/>
+    </LinearLayout>
+
 
 </RelativeLayout>

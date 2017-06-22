@@ -1,45 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp">
 
-    <LinearLayout
-        android:id="@+id/ll_list"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:orientation="horizontal">
-        <ListView
-            android:id="@+id/list_city"
-            android:layout_width="166dp"
-            android:layout_height="match_parent"/>
-        <ListView
-            android:id="@+id/list_area"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/text_12_black2"
+        android:layout_centerInParent="true"
+        />
+    <ImageView
+        android:id="@+id/iv_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_area"
+        android:layout_marginLeft="45dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/icon_selection"/>
 
-    <LinearLayout
-        android:layout_below="@id/ll_list"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/bt_reset"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="重置"
-            android:background="@drawable/shape_back_border2"
-            style="@style/text_12_grey"/>
-        <Button
-            android:id="@+id/bt_filtrate"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="确定"
-            android:background="@color/themeOrange"
-            style="@style/text_12_white"/>
-    </LinearLayout>
 </RelativeLayout>
