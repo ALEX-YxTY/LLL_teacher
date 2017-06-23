@@ -62,15 +62,24 @@
             android:name=".views.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--搜索页面-->
-        <activity android:name=".views.SearchActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            />
-        <!--职位详情页面-->
-        <activity android:name=".custom.view.JobDetailActivity"
+        <!-- 搜索页面 -->
+        <activity
+            android:name=".views.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 职位详情页面 -->
+        <activity
+            android:name=".custom.view.JobDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 机构详情页 -->
+        <activity
+            android:name=".views.OfficeDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".views.ChatDetailActivity" />
+        <activity android:name=".views.CollectionActivity" />
+        <activity android:name=".views.RecordActivity"></activity>
     </application>
 
 </manifest>

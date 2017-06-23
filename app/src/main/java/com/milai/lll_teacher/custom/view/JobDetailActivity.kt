@@ -13,8 +13,8 @@ class JobDetailActivity : AppCompatActivity() ,View.OnClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_job_detail2)
-        job = intent.getSerializableExtra("job") as JobInfo
+        setContentView(R.layout.activity_job_detail_2)
+        job = intent.getSerializableExtra("job") as JobInfo?
         initUI()
     }
 

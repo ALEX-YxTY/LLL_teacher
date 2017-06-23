@@ -9,6 +9,7 @@ import com.milai.lll_teacher.R
 import com.milai.lll_teacher.custom.view.JobDetailActivity
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
+import com.milai.lll_teacher.views.OfficeDetailActivity
 
 /**
  * Created by Administrator on 2017/6/22.
@@ -27,7 +28,7 @@ class OfficeAdapter(ctx: Context, dataList: List<OfficeInfo>)
             val officeInfoViewHolder = holder as OfficeInfoViewHolder
             //TODO bind
             officeInfoViewHolder.itemView.setOnClickListener{
-                val intent = Intent(ctx, JobDetailActivity::class.java)
+                val intent = Intent(ctx, OfficeDetailActivity::class.java)
                 intent.putExtra("office", dataList[position] as OfficeInfo)
                 ctx.startActivity(intent)
             }

@@ -9,7 +9,9 @@
     <!--用户条-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="85dp">
+        android:layout_height="85dp"
+        android:background="@color/white"
+        >
         <ImageView
             android:id="@+id/iv_head"
             android:layout_width="63dp"
@@ -40,12 +42,31 @@
             android:text="普通用户"
         />
 
-        <ImageView
+        <LinearLayout
+            android:orientation="horizontal"
             android:id="@+id/iv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:background="@drawable/shape_half_circle_orange">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/icon_update"
+                android:layout_gravity="center_vertical"
+                android:padding="2dp"
+                android:background="@drawable/shape_circle_white"
+                android:layout_marginLeft="4dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:text="审核中"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
     </RelativeLayout>
 
 
@@ -55,11 +76,14 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
         >
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/item_margin12"/>
+            android:layout_marginLeft="@dimen/item_margin12"
+            android:src="@drawable/icon_resume"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,12 +104,14 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginTop="8dp"
+        android:background="@color/white"
         >
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/item_margin12"/>
+            android:layout_marginLeft="@dimen/item_margin12"
+            android:src="@drawable/icon_record"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,12 +139,14 @@
         android:id="@+id/rl_my_interview"
         android:layout_width="match_parent"
         android:layout_height="44dp"
+        android:background="@color/white"
         >
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/item_margin12"/>
+            android:layout_marginLeft="@dimen/item_margin12"
+            android:src="@drawable/icon_invite"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -141,13 +169,15 @@
         android:id="@+id/rl_my_job_collection"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
         >
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/item_margin12"/>
+            android:layout_marginLeft="@dimen/item_margin12"
+            android:src="@drawable/icon_collect_job"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -175,12 +205,14 @@
         android:id="@+id/rl_my_attention_office"
         android:layout_width="match_parent"
         android:layout_height="44dp"
+        android:background="@color/white"
         >
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/item_margin12"/>
+            android:layout_marginLeft="@dimen/item_margin12"
+            android:src="@drawable/icon_like"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -202,13 +234,15 @@
         android:id="@+id/rl_setting"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
+        android:background="@color/white"
         >
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/item_margin12"/>
+            android:layout_marginLeft="@dimen/item_margin12"
+            android:src="@drawable/icon_setting"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
