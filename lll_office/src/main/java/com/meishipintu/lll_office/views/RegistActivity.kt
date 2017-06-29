@@ -24,7 +24,7 @@ class RegistActivity : AppCompatActivity() {
     val btVcode by lazy { findViewById(R.id.bt_vcode) as Button }
     var timeRemain: Int = 60
     val handler:MyHandler by lazy { MyHandler(this) }
-    val from = intent.getIntExtra("from", 1)
+    val from:Int by lazy { intent.getIntExtra("from", 1) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

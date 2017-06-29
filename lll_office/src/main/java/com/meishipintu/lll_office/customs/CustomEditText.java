@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -41,13 +42,14 @@ public class CustomEditText extends LinearLayout{
             if (title != null) {
                 tvTitle.setText(title);
             }
-            String hint = attributes.getString(R.styleable.CustomEditText_hint);
+            String hint = attributes.getString(R.styleable.CustomEditText_hint1);
             if (hint != null) {
                 etInput.setHint(hint);
             }
             int type = attributes.getInt(R.styleable.CustomEditText_type, 2);
+            Log.d("custom", "type:" + type);
             if (type == 1) {
-                etInput.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                etInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             } else if (type == 3) {
                 etInput.setInputType(InputType.TYPE_CLASS_NUMBER);
             }

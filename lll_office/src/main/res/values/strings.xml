@@ -9,7 +9,7 @@
     <string name="finish">完成</string>
     <string name="my_resume">我的简历</string>
     <string name="my_apply_record">我的投递记录</string>
-    <string name="my_interview">我的面试邀约</string>
+    <string name="my_interview">我的面试</string>
     <string name="my_job_collectin">收藏的职位</string>
     <string name="my_attention_office">关注的机构</string>
     <string name="setting">设置</string>
@@ -29,4 +29,8 @@
     <string name="bm">投递简历</string>
     <string name="go_contact">立即沟通</string>
     <string name="ok">确定</string>
+    <string name="job_manage">职位管理</string>
+    <string name="my_collection">我的收藏</string>
+    <string name="other_office">其他机构</string>
+    <string name="notice_center">消息中心</string>
 </resources>

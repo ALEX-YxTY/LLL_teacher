@@ -28,7 +28,7 @@
             android:id="@+id/et_psw_re"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_below="@id/et_psw"
             app:title="再次确认："
             app:type="password"
             />
@@ -37,7 +37,7 @@
             android:id="@+id/bt_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_psw"
+            android:layout_below="@id/et_psw_re"
             android:layout_marginTop="41dp"
             android:textColor="@color/white"
             android:textSize="@dimen/bt_text"

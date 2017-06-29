@@ -28,7 +28,7 @@ public class CustomLabelSelectView extends ViewGroup {
     private List<String> data;
     private Context context;
 
-    private int selectIndex = -1;        //标识当前选中的index
+    private int selectIndex = 0;        //标识当前选中的index
 
     public CustomLabelSelectView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -57,8 +57,6 @@ public class CustomLabelSelectView extends ViewGroup {
             }
 
         }
-        //初始化选中项为第一项
-        selectIndex = 0;
         SPACE_HORIZANTAL = (widthSize - getChildAt(0).getMeasuredWidth() * 4) / 3;
         setMeasuredDimension(widthSize, heightMode == MeasureSpec.EXACTLY ? heightSize : totalHeight);
     }
@@ -107,6 +105,7 @@ public class CustomLabelSelectView extends ViewGroup {
     //修改当前选择项
     public void setSelect(int index) {
         if (getChildCount() > 0) {
+            Log.d("customview", "selectIndex:" + selectIndex);
             //取出之前选择项
             TextView selectBefore = (TextView) getChildAt(selectIndex);
             selectBefore.setTextColor(0xff8a8f97);
