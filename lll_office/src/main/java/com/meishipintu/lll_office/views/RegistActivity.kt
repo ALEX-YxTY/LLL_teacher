@@ -14,19 +14,24 @@ import com.meishipintu.lll_office.customs.CustomEditText
 import com.meishipintu.lll_office.customs.utils.StringUtils
 import java.lang.ref.WeakReference
 
+/**
+ *  注册页面和找回密码页面。
+ *  from=1 注册  from=2 找回密码
+ */
 class RegistActivity : AppCompatActivity() {
 
     var vcodeGet = ""
     val btVcode by lazy { findViewById(R.id.bt_vcode) as Button }
     var timeRemain: Int = 60
     val handler:MyHandler by lazy { MyHandler(this) }
+    val from = intent.getIntExtra("from", 1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed()}
         val tvTitle = findViewById(R.id.tv_title) as TextView
-        tvTitle.text = "注册"
+        tvTitle.text = if(from==1) "注册" else "找回密码"
         setListener()
     }
 
@@ -34,6 +39,7 @@ class RegistActivity : AppCompatActivity() {
         val etTel = findViewById(R.id.et_tel) as CustomEditText
         val etVcode = findViewById(R.id.et_vcode) as CustomEditText
         val btRegister = findViewById(R.id.bt_login) as Button
+        btRegister.text = if(from==1) "注册" else "下一步"
         val textWatcher: TextWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 btRegister.isEnabled = StringUtils.isTel(etTel.text) && !StringUtils.isNullOrEmpty(etVcode.text)
@@ -59,7 +65,13 @@ class RegistActivity : AppCompatActivity() {
         }
         btRegister.setOnClickListener{
             if (etVcode.text == vcodeGet) {
-                startActivity(Intent(this,SetPsActivity::class.java))
+                var intent:Intent
+                if(from==1) {
+                    intent = Intent(this,SetPsActivity::class.java)
+                } else {
+                    intent = Intent(this, ReSetPswActivity::class.java)
+                }
+                startActivity(intent)
             }
         }
     }

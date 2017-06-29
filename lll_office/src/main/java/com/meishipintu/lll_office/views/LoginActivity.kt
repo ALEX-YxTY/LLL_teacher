@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         tvForgetPsw.setOnClickListener({
             //跳转忘记密码页面
             val intent = Intent(this@LoginActivity, RegistActivity::class.java)
-            intent.putExtra("from", 2)
+            intent.putExtra("from", 2) //from=1 注册  from=2 找回密码
             startActivity(intent)
         })
         btLogin.setOnClickListener({

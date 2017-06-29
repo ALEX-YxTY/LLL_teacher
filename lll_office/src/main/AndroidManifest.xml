@@ -29,7 +29,8 @@
         <activity android:name=".views.LoginActivity" />
         <activity android:name=".views.RegistActivity" />
         <activity android:name=".views.ForgetPswActivity" />
-        <activity android:name=".views.SetPsActivity"></activity>
+        <activity android:name=".views.SetPsActivity" />
+        <activity android:name=".views.ReSetPswActivity"></activity>
     </application>
 
 </manifest>

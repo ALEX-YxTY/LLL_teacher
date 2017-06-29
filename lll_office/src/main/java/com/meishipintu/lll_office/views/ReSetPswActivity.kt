@@ -11,26 +11,25 @@ import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.customs.CustomEditText
 import com.meishipintu.lll_office.customs.utils.StringUtils
 
-class SetPsActivity : AppCompatActivity() {
+class ReSetPswActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_set_ps)
+        setContentView(R.layout.activity_re_set_psw)
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed()}
         val tvTitle = findViewById(R.id.tv_title) as TextView
-        tvTitle.text = "设置密码"
+        tvTitle.text = "设置新密码"
         setListener()
     }
 
     private fun setListener() {
-        val etAccount = findViewById(R.id.et_account) as CustomEditText
         val etPsw = findViewById(R.id.et_psw) as CustomEditText
         val etPswRe = findViewById(R.id.et_psw_re) as CustomEditText
         val btRegister = findViewById(R.id.bt_login) as Button
         val textWatcher: TextWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                btRegister.isEnabled = !StringUtils.isNullOrEmpty(etAccount.text) && !StringUtils.isNullOrEmpty(etPsw.text)
-                        && etPsw.text.length > 5 && (etPsw.text == etPswRe.text)
+                btRegister.isEnabled = !StringUtils.isNullOrEmpty(etPsw.text) && etPsw.text.length > 5
+                        && (etPsw.text == etPswRe.text)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -39,7 +38,6 @@ class SetPsActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         }
-        etAccount.setListener(textWatcher)
         etPsw.setListener(textWatcher)
         etPswRe.setListener(textWatcher)
         btRegister.setOnClickListener{
