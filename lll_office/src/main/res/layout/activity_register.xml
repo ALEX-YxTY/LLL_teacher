@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/titlebar_back"
+        android:id="@+id/title_bar"/>
+
+    <RelativeLayout
+        android:layout_below="@id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/page_margin"
+        android:layout_marginRight="@dimen/page_margin">
+
+        <com.meishipintu.lll_office.customs.CustomEditText
+            android:id="@+id/et_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:title="手机：+86"
+            />
+        <RelativeLayout
+            android:id="@+id/rl_wrapper"
+            android:layout_width="match_parent"
+            android:layout_below="@id/et_tel"
+            android:layout_height="wrap_content">
+            <com.meishipintu.lll_office.customs.CustomEditText
+                android:id="@+id/et_vcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="验证码："
+                />
+            <Button
+                android:id="@+id/bt_vcode"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textSize="13sp"
+                android:text="发送验证码"
+                android:background="@null"
+                android:textColor="@drawable/selector_bt_text_color"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_psw"
+            android:layout_marginTop="41dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/bt_text"
+            android:text="@string/register"
+            android:enabled="false"
+            android:background="@drawable/selector_bt_radiu2_orange"/>
+
+    </RelativeLayout>
+</RelativeLayout>

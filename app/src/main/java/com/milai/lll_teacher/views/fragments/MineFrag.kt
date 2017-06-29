@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.views.CollectionActivity
+import com.milai.lll_teacher.views.InterviewListActivity
+import com.milai.lll_teacher.views.SettingActivity
 
 /**
  * Created by Administrator on 2017/6/21.
@@ -34,6 +37,7 @@ class MineFrag : Fragment(),View.OnClickListener{
         headView.setOnClickListener(this)
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
         val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
+        val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
 
         fragView?.findViewById(R.id.rl_my_resume)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_apply_job)?.setOnClickListener(this)
@@ -48,19 +52,29 @@ class MineFrag : Fragment(),View.OnClickListener{
             R.id.iv_head, R.id.rl_my_resume -> {
                     //TODO 简历页
              }
-            R.id.rl_apply_job -> {}
-            R.id.rl_my_interview -> {}
+            R.id.rl_apply_job -> {
+                val intent = Intent(this.activity, InterviewListActivity::class.java)
+                intent.putExtra("from", 1)      //我的投递记录
+                startActivity(intent)
+            }
+            R.id.rl_my_interview -> {
+                val intent = Intent(this.activity, InterviewListActivity::class.java)
+                intent.putExtra("from", 2)      //我的面试邀约
+                startActivity(intent)
+            }
             R.id.rl_my_job_collection -> {
                 val intent = Intent(this.activity, CollectionActivity::class.java)
-                intent.putExtra("from", 1)
+                intent.putExtra("from", 1)      //收藏的职位
                 startActivity(intent)
             }
             R.id.rl_my_attention_office -> {
                 val intent = Intent(this.activity, CollectionActivity::class.java)
-                intent.putExtra("from", 2)
+                intent.putExtra("from", 2)      //收藏的机构
                 startActivity(intent)
             }
-            R.id.rl_setting -> {}
+            R.id.rl_setting -> {
+                startActivity(Intent(this.activity, SettingActivity::class.java))
+            }
         }
     }
 }

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">拉力郎</string>
+
+    <string name="tel_login">登 录</string>
+    <string name="register">注 册</string>
+    <string name="login">登录</string>
+    <string name="forget_psw">忘记密码？</string>
+    <string name="next">下一步</string>
+    <string name="finish">完成</string>
+    <string name="my_resume">我的简历</string>
+    <string name="my_apply_record">我的投递记录</string>
+    <string name="my_interview">我的面试邀约</string>
+    <string name="my_job_collectin">收藏的职位</string>
+    <string name="my_attention_office">关注的机构</string>
+    <string name="setting">设置</string>
+    <string name="commit">提交</string>
+    <string name="edit_info">资料修改</string>
+    <string name="my_account">我的账号</string>
+    <string name="push">推送消息设置</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="logout">退出登录</string>
+    <string name="go_invite">去邀请</string>
+    <string name="cancel">取消</string>
+    <string name="correct_tel">请输入正确的手机号码</string>
+    <string name="error_vcode">您输入的验证码不正确</string>
+    <string name="name">姓名</string>
+    <string name="input_empty">输入项不能为空</string>
+    <string name="empty">暂无数据</string>
+    <string name="bm">投递简历</string>
+    <string name="go_contact">立即沟通</string>
+    <string name="ok">确定</string>
+</resources>

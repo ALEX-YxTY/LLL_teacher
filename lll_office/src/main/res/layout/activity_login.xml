@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <include layout="@layout/titlebar_back"
+        android:id="@+id/title_bar"/>
+
+    <RelativeLayout
+        android:layout_below="@id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/page_margin"
+        android:layout_marginRight="@dimen/page_margin">
+
+        <com.meishipintu.lll_office.customs.CustomEditText
+            android:id="@+id/et_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:title="手机：+86"
+            app:hint1="请输入账号/手机号码"
+            app:type="string"
+            />
+        <com.meishipintu.lll_office.customs.CustomEditText
+            android:id="@+id/et_psw"
+            android:layout_below="@id/et_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="密码："
+            app:hint1="请输入密码"
+            app:type="password"
+            />
+
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_psw"
+            android:layout_marginTop="41dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/bt_text"
+            android:text="@string/login"
+            android:enabled="false"
+            android:background="@drawable/selector_bt_radiu2_orange"/>
+
+        <TextView
+            android:id="@+id/forget_psw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text13"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/bt_login"
+            android:layout_marginTop="30dp"
+            android:text="@string/forget_psw"
+            android:textColor="@color/edit_text_color"/>
+    </RelativeLayout>
+
+</RelativeLayout>

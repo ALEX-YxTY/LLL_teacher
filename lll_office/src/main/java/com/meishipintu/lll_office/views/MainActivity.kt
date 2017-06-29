@@ -1,13 +1,13 @@
-package com.milai.lll_teacher.views
+package com.meishipintu.lll_office.views
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.milai.lll_teacher.R
+import com.meishipintu.lll_office.R
 
-class RecordActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record)
+        setContentView(R.layout.activity_main)
     }
 }

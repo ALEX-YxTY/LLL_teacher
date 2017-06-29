@@ -10,6 +10,9 @@ import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.views.adapters.JobAdapter
 import com.milai.lll_teacher.views.adapters.OfficeAdapter
 
+/**
+ * 收藏的职位、关注的机构页面
+ */
 class CollectionActivity : AppCompatActivity() {
 
     var from = 1    //1-收藏的职位，2-关注的机构
