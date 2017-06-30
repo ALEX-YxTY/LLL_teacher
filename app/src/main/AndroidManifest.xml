@@ -77,11 +77,22 @@
             android:name=".views.OfficeDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".views.ChatDetailActivity" />
-        <activity android:name=".views.CollectionActivity" />
-        <activity android:name=".views.RecordActivity" />
-        <activity android:name=".views.SettingActivity" />
-        <activity android:name=".views.InterviewListActivity"></activity>
+        <!--聊天界面-->
+        <activity android:name=".views.ChatDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <!--收藏机构和职位-->
+        <activity android:name=".views.CollectionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <!--设置界面-->
+        <activity android:name=".views.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <!--面试邀约和投递记录页面-->
+        <activity android:name=".views.InterviewListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

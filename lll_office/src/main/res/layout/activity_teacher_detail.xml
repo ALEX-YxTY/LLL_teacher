@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.meishipintu.lll_office.views.TeacherDetailActivity">
+
+    <include layout="@layout/titlebar_back_white" 
+        android:id="@+id/titleBar"/>
+    <WebView
+        android:layout_below="@id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+    </WebView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/themeOrange">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:id="@+id/iv_special"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/icon_like_pre"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:id="@+id/tv_action"
+                android:layout_toRightOf="@id/iv_special"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:text="收藏"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

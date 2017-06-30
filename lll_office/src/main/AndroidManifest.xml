@@ -26,20 +26,32 @@
             android:name=".views.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--登录页面-->
-        <activity android:name=".views.LoginActivity"
+        <!-- 登录页面 -->
+        <activity
+            android:name=".views.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 注册和找回密码 -->
+        <activity
+            android:name=".views.RegistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 设置密码 -->
+        <activity
+            android:name=".views.SetPsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 重设密码 -->
+        <activity
+            android:name=".views.ReSetPswActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--教师详情页-->
+        <activity android:name=".views.TeacherDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <!--注册和找回密码-->
-        <activity android:name=".views.RegistActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <!--设置密码-->
-        <activity android:name=".views.SetPsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <!--重设密码-->
-        <activity android:name=".views.ReSetPswActivity"
+        <!--搜索页面-->
+        <activity android:name=".views.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>

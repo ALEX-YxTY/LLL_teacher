@@ -42,7 +42,7 @@ class InterviewListActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.item_tab_2))
         (tabLayout.getTabAt(0)?.customView?.findViewById(R.id.tv_tab)as TextView).text = "全部"
         (tabLayout.getTabAt(1)?.customView?.findViewById(R.id.tv_tab)as TextView).text = if(from==1) "已沟通" else "未面试"
-        (tabLayout.getTabAt(1)?.customView?.findViewById(R.id.tv_tab)as TextView).text = "已面试"
+        (tabLayout.getTabAt(2)?.customView?.findViewById(R.id.tv_tab)as TextView).text = "已面试"
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
