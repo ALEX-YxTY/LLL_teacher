@@ -11,7 +11,7 @@ import com.meishipintu.lll_office.views.fragments.ActivityFrag
 import com.meishipintu.lll_office.views.fragments.MineFrag
 import com.meishipintu.lll_office.views.fragments.NewsFrag
 import com.meishipintu.lll_office.views.fragments.TeacherFrag
-import com.milai.lll_teacher.views.adapters.MyviewPagerAdapter
+import com.meishipintu.lll_office.views.adapters.MyviewPagerAdapter
 
 class MainActivity : AppCompatActivity() {
 

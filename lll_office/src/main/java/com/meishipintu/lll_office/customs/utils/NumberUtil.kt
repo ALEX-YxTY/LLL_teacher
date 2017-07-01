@@ -1,5 +1,8 @@
 package com.meishipintu.lll_office.customs.utils
 
+import java.math.RoundingMode
+import java.text.DecimalFormat
+
 /**
  * Created by Administrator on 2017/7/1.
  *
@@ -7,6 +10,8 @@ package com.meishipintu.lll_office.customs.utils
  */
 object NumberUtil{
     fun formatNumberInTwo(number:Int):String{
-        return String.format("%.2f", number)
+        val df = DecimalFormat("0.00")
+        df.roundingMode = RoundingMode.FLOOR
+        return df.format(number)
     }
 }

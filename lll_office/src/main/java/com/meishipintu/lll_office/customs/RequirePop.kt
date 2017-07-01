@@ -1,4 +1,4 @@
-package com.milai.lll_teacher.custom.view
+package com.meishipintu.lll_office.customs
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import com.meishipintu.lll_office.R
-import com.meishipintu.lll_office.customs.CustomLabelSelectView
 
 /**
  * Created by Administrator on 2017/6/22.

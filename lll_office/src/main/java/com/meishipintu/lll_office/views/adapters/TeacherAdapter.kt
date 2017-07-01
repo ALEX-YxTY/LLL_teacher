@@ -1,4 +1,4 @@
-package com.milai.lll_teacher.views.adapters
+package com.meishipintu.lll_office.views.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -14,7 +14,7 @@ import com.meishipintu.lll_office.views.TeacherDetailActivity
  *
  * 主要功能：
  */
-class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>):BasicAdapter(ctx,dataList) {
+class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>): BasicAdapter(ctx,dataList) {
 
     override fun getSpecialView(container: ViewGroup?): RecyclerView.ViewHolder {
         return TeacherInfoViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_teacher, container, false))

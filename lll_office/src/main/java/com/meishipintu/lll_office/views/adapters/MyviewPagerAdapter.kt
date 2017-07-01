@@ -1,4 +1,4 @@
-package com.milai.lll_teacher.views.adapters
+package com.meishipintu.lll_office.views.adapters
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter
  * 主要功能：
  */
 
-class MyviewPagerAdapter(fm: FragmentManager,val dataList:List<Fragment>) : FragmentPagerAdapter(fm) {
+class MyviewPagerAdapter(fm: FragmentManager, val dataList:List<Fragment>) : FragmentPagerAdapter(fm) {
 
     override fun getItem(i: Int): Fragment? {
         return dataList[i]

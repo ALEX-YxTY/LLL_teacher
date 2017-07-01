@@ -13,20 +13,21 @@ import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.contract.TeacherContract
+import com.meishipintu.lll_office.customs.MenuClickListener
+import com.meishipintu.lll_office.customs.RequirePop
+import com.meishipintu.lll_office.customs.TjPop
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.views.SearchActivity
-import com.milai.lll_teacher.contracts.TeacherContract
-import com.milai.lll_teacher.custom.view.MenuClickListener
-import com.milai.lll_teacher.custom.view.RequirePop
-import com.milai.lll_teacher.custom.view.TjPop
-import com.milai.lll_teacher.views.adapters.TeacherAdapter
+import com.meishipintu.lll_office.views.adapters.TeacherAdapter
+
 
 /**
  * Created by Administrator on 2017/6/29.
  *
  * 主要功能：
  */
-class TeacherFrag:Fragment(),MenuClickListener,TeacherContract.IView{
+class TeacherFrag:Fragment(), MenuClickListener, TeacherContract.IView{
 
 
     var tj = 0 //0-推荐，1-全部
@@ -37,7 +38,7 @@ class TeacherFrag:Fragment(),MenuClickListener,TeacherContract.IView{
 
     var rv: RecyclerView? = null
     var dataList: MutableList<TeacherInfo>? = null
-    val teacherAdapter:TeacherAdapter by lazy { TeacherAdapter(this.activity,dataList!!) }
+    val teacherAdapter: TeacherAdapter by lazy { TeacherAdapter(this.activity,dataList!!) }
 
     var popTj: TjPop? = null
     var popRequire: RequirePop? = null

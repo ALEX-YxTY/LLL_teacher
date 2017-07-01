@@ -10,6 +10,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.views.CollectionActivity
+import com.meishipintu.lll_office.views.NoticeActivity
 import com.meishipintu.lll_office.views.UpdateActivity
 
 /**
@@ -55,9 +57,19 @@ class MineFrag:Fragment(),View.OnClickListener{
             }
             R.id.rl_job_manage ->{}
             R.id.rl_my_interview ->{}
-            R.id.rl_my_collection ->{}
-            R.id.rl_notice_center ->{}
-            R.id.rl_other_office ->{}
+            R.id.rl_my_collection ->{
+                val intent = Intent(this.activity, CollectionActivity::class.java)
+                intent.putExtra("type", 2)
+                startActivity(intent)
+            }
+            R.id.rl_notice_center ->{
+                startActivity(Intent(this.activity, NoticeActivity::class.java))
+            }
+            R.id.rl_other_office ->{
+                val intent = Intent(this.activity, CollectionActivity::class.java)
+                intent.putExtra("type", 1)
+                startActivity(intent)
+            }
             R.id.rl_setting ->{}
         }
     }

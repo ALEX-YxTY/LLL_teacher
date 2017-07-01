@@ -18,7 +18,7 @@
             android:layout_height="53dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            android:src="@drawable/icon_VIP"/>
+            android:src="@drawable/icon_vip"/>
 
         <TextView
             android:id="@+id/tv_money"

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:layout_marginLeft="@dimen/item_margin13"
+    android:layout_marginRight="@dimen/item_margin13"
+    android:layout_marginTop="@dimen/item_margin13"
+    android:background="@drawable/shape_back_item_border">
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_marginLeft="@dimen/item_margin13"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/office_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="150dp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textSize="14sp"
+        android:layout_marginTop="11dp"
+        android:layout_toRightOf="@id/iv_head"
+        android:layout_marginLeft="16dp"
+        android:text="某某教育机构"
+        android:textColor="@color/text_black1"/>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/office_name"
+        android:layout_below="@id/office_name"
+        android:layout_marginTop="5dp"
+        android:maxWidth="150dp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="南京市鼓楼区"
+        android:textSize="12sp"
+        android:textColor="@color/text_grey1"/>
+
+    <TextView
+        android:id="@+id/tv_decs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/office_name"
+        android:layout_below="@id/tv_address"
+        android:layout_marginTop="5dp"
+        android:maxWidth="150dp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="热招：国画老师 等5个职位"
+        android:textSize="12sp"
+        android:textColor="@color/text_grey1" />
+
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_attention"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="@dimen/item_margin13"/>-->
+
+</RelativeLayout>

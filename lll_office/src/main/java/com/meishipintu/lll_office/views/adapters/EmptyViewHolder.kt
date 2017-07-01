@@ -1,4 +1,4 @@
-package com.milai.lll_teacher.views.adapters
+package com.meishipintu.lll_office.views.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -8,4 +8,4 @@ import android.view.View
  *
  * 主要功能：
  */
-class EmptyViewHolder(view:View):RecyclerView.ViewHolder(view)
+class EmptyViewHolder(view: View): RecyclerView.ViewHolder(view)

@@ -66,10 +66,27 @@
             android:name=".views.updateInformationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--付款界面-->
-        <activity android:name=".views.PayActivity"
+        <!-- 付款界面 -->
+        <activity
+            android:name=".views.PayActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 我的消息界面 -->
+        <activity
+            android:name=".views.NoticeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 对话详情界面 -->
+        <activity
+            android:name=".views.ChatDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 机构和教师收藏页 -->
+        <activity
+            android:name=".views.CollectionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".views.OfficeDetailActivity"></activity>
     </application>
 
 </manifest>
