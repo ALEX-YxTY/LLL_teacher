@@ -46,12 +46,28 @@
             android:name=".views.ReSetPswActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--教师详情页-->
-        <activity android:name=".views.TeacherDetailActivity"
+        <!-- 教师详情页 -->
+        <activity
+            android:name=".views.TeacherDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <!--搜索页面-->
-        <activity android:name=".views.SearchActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 搜索页面 -->
+        <activity
+            android:name=".views.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 升级页面 -->
+        <activity
+            android:name=".views.UpdateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 升级补充信息页面 -->
+        <activity
+            android:name=".views.updateInformationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--付款界面-->
+        <activity android:name=".views.PayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
