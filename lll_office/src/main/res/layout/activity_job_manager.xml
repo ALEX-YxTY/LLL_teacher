@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_grey1">
+
+    <include layout="@layout/titlebar_back_white"/>
+
+    <!--筛选条-->
+    <LinearLayout
+        android:id="@+id/ll_tab"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_online"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:textColor="@color/themeOrange"
+            android:text="在线职位"
+            android:gravity="center"
+            android:layout_centerInParent="true"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="20dp"
+            android:background="@color/border2"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_offline"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/text_black3"
+            android:text="已下线"
+            android:layout_centerInParent="true"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/border2"
+        android:layout_gravity="top"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <Button
+        android:id="@+id/bt_new_job"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@color/themeOrange"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="发布新职位"/>
+
+
+</LinearLayout>

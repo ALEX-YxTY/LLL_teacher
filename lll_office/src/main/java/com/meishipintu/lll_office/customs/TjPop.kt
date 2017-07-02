@@ -16,7 +16,7 @@ import com.meishipintu.lll_office.R
  *
  * 主要功能：
  */
-class TjPop(val ctx: Context, val mListener: MenuClickListener) : PopupWindow(ctx) {
+class TjPop(val ctx: Context, val mListener: MenuClickListener,val name1:String,val name2:String) : PopupWindow(ctx) {
 
     init {
         val view = LayoutInflater.from(ctx).inflate(R.layout.pop_tj, null)
@@ -36,15 +36,17 @@ class TjPop(val ctx: Context, val mListener: MenuClickListener) : PopupWindow(ct
 
     private fun initUI() {
         val tvTj = contentView.findViewById(R.id.tv_tj) as TextView
+        tvTj.text = name1
         val ivTj = contentView.findViewById(R.id.iv_tj) as ImageView
         val tvAll = contentView.findViewById(R.id.tv_all) as TextView
+        tvAll.text = name2
         val ivAll = contentView.findViewById(R.id.iv_all) as ImageView
         contentView.findViewById(R.id.ll_tj).setOnClickListener{
             tvTj.setTextColor(ctx.resources.getColor(R.color.themeOrange))
             ivTj.visibility = View.VISIBLE
             tvAll.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivAll.visibility = View.INVISIBLE
-            mListener.onTjClick(0,"推荐")
+            mListener.onTjClick(0,name1)
             dismiss()
         }
         contentView.findViewById(R.id.ll_all).setOnClickListener{
@@ -52,7 +54,7 @@ class TjPop(val ctx: Context, val mListener: MenuClickListener) : PopupWindow(ct
             ivAll.visibility = View.VISIBLE
             tvTj.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivTj.visibility = View.INVISIBLE
-            mListener.onTjClick(1,"全部")
+            mListener.onTjClick(1, name2)
             dismiss()
         }
     }

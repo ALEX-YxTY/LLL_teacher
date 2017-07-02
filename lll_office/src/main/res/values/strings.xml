@@ -37,4 +37,11 @@
     <string name="office_address">机构地址</string>
     <string name="contact_people">联系人</string>
     <string name="contact_way">联系方式</string>
+    <string name="course">职位科目</string>
+    <string name="job_money">职位薪资</string>
+    <string name="job_address">工作地点</string>
+    <string name="sex">性别</string>
+    <string name="year">年龄</string>
+    <string name="work_year">教学要求</string>
+    <string name="teacher_certification">教师资格证</string>
 </resources>

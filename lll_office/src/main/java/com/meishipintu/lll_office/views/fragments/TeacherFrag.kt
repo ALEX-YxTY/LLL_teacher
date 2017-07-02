@@ -79,7 +79,7 @@ class TeacherFrag:Fragment(), MenuClickListener, TeacherContract.IView{
         }
         view.findViewById(R.id.rl_tj)?.setOnClickListener({
             if (popTj == null) {
-                popTj = TjPop(this.activity,this)
+                popTj = TjPop(this.activity,this,"推荐","全部")
             }
             if (popTj?.isShowing as Boolean) {
                 startBackAnimation(2)

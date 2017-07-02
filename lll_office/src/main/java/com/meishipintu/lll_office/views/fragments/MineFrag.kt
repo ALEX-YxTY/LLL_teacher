@@ -10,9 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.meishipintu.lll_office.R
-import com.meishipintu.lll_office.views.CollectionActivity
-import com.meishipintu.lll_office.views.NoticeActivity
-import com.meishipintu.lll_office.views.UpdateActivity
+import com.meishipintu.lll_office.views.*
 
 /**
  * Created by Administrator on 2017/6/29.
@@ -55,8 +53,12 @@ class MineFrag:Fragment(),View.OnClickListener{
                 //TODO
                 startActivity(Intent(this.activity, UpdateActivity::class.java))
             }
-            R.id.rl_job_manage ->{}
-            R.id.rl_my_interview ->{}
+            R.id.rl_job_manage ->{
+                startActivity(Intent(this.activity, JobManagerActivity::class.java))
+            }
+            R.id.rl_my_interview ->{
+                startActivity(Intent(this.activity,MyInterviewActivity::class.java))
+            }
             R.id.rl_my_collection ->{
                 val intent = Intent(this.activity, CollectionActivity::class.java)
                 intent.putExtra("type", 2)
@@ -70,7 +72,9 @@ class MineFrag:Fragment(),View.OnClickListener{
                 intent.putExtra("type", 1)
                 startActivity(intent)
             }
-            R.id.rl_setting ->{}
+            R.id.rl_setting ->{
+                startActivity(Intent(this.activity,SettingActivity::class.java))
+            }
         }
     }
 }

@@ -86,7 +86,35 @@
             android:name=".views.CollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".views.OfficeDetailActivity"></activity>
+        <!-- 机构详情 -->
+        <activity
+            android:name=".views.OfficeDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 职位管理 -->
+        <activity
+            android:name=".views.JobManagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 我的面试 -->
+        <activity
+            android:name=".views.MyInterviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 职位详情页面 -->
+        <activity
+            android:name=".views.JobDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!-- 发布新职位页面 -->
+        <activity
+            android:name=".views.NewJobActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--设置界面-->
+        <activity android:name=".views.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>
