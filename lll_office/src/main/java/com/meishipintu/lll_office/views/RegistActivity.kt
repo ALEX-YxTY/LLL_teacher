@@ -1,17 +1,19 @@
 package com.meishipintu.lll_office.views
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.contract.RegisterContract
 import com.meishipintu.lll_office.customs.CustomEditText
 import com.meishipintu.lll_office.customs.utils.StringUtils
+import com.meishipintu.lll_office.presenters.RegisterPresenter
 import java.lang.ref.WeakReference
 
 /**
@@ -25,6 +27,8 @@ class RegistActivity : AppCompatActivity() {
     var timeRemain: Int = 60
     val handler:MyHandler by lazy { MyHandler(this) }
     val from:Int by lazy { intent.getIntExtra("from", 1) }
+
+    val presenter:RegisterContract.IPresenter by lazy { RegisterPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +69,7 @@ class RegistActivity : AppCompatActivity() {
         }
         btRegister.setOnClickListener{
             if (etVcode.text == vcodeGet) {
-                var intent:Intent
+                val intent:Intent
                 if(from==1) {
                     intent = Intent(this,SetPsActivity::class.java)
                 } else {

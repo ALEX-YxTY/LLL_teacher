@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <uses-permission android:name="android.permission.INTERNET"/>
+
         <!-- 注册登录页 -->
         <activity
             android:name=".views.LoginAndRegisterActivity"
