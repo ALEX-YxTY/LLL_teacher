@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
@@ -20,7 +19,7 @@ import java.lang.ref.WeakReference
  *  注册页面和找回密码页面。
  *  from=1 注册  from=2 找回密码
  */
-class RegistActivity : AppCompatActivity() {
+class RegistActivity : BasicActivity(),RegisterContract.IView {
 
     var vcodeGet = ""
     val btVcode by lazy { findViewById(R.id.bt_vcode) as Button }
@@ -28,7 +27,7 @@ class RegistActivity : AppCompatActivity() {
     val handler:MyHandler by lazy { MyHandler(this) }
     val from:Int by lazy { intent.getIntExtra("from", 1) }
 
-    val presenter:RegisterContract.IPresenter by lazy { RegisterPresenter(this) }
+    val presenter:RegisterPresenter by lazy { RegisterPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,12 +58,14 @@ class RegistActivity : AppCompatActivity() {
         etVcode.setListener(textWatcher)
 
         btVcode.setOnClickListener{
-            if (vcodeGet == etVcode.text) {
-                //TODO 请求验证码
+            if (StringUtils.isTel(etTel.text)) {
+                presenter.getVCode(etTel.text.toString())
                 //启动读秒
                 handler.sendEmptyMessage(1)
                 btVcode.isEnabled = false
                 btVcode.text = "$timeRemain s"
+            } else {
+                toast("请输入正确的手机号码")
             }
         }
         btRegister.setOnClickListener{
@@ -72,6 +73,8 @@ class RegistActivity : AppCompatActivity() {
                 val intent:Intent
                 if(from==1) {
                     intent = Intent(this,SetPsActivity::class.java)
+                    intent.putExtra("mobile",etTel.text.toString())
+                    intent.putExtra("vcode", vcodeGet)
                 } else {
                     intent = Intent(this, ReSetPswActivity::class.java)
                 }
@@ -80,10 +83,21 @@ class RegistActivity : AppCompatActivity() {
         }
     }
 
+    //from RegistContract.IView
+    override fun onVCodeGet(vcode: String) {
+        vcodeGet = vcode
+    }
+
+    //from RegistContract.IView
+    override fun onError(e: String) {
+        toast(e)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         handler.removeMessages(1)
         btVcode.isEnabled = true
+        presenter.unsubscribe()
     }
 
     class MyHandler internal constructor(ctx: RegistActivity): Handler(){

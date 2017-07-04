@@ -142,10 +142,6 @@ class TeacherFrag:Fragment(), MenuClickListener, TeacherContract.IView{
     }
 
     //from JobContract.IView
-    override fun showError(err: String) {
-    }
-
-    //from JobContract.IView
     override fun onDateGet(dataList: List<TeacherInfo>) {
         for (i: Int in 1..10) {
             this.dataList?.add(TeacherInfo())

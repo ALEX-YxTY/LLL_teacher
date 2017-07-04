@@ -1,12 +1,10 @@
-package com.milai.lll_teacher.views
+package com.meishipintu.lll_office.views
 
 /**
- * Created by Administrator on 2017/6/12.
+ * Created by Administrator on 2017/7/4.
  *
- * 功能介绍：
+ * 主要功能：
  */
 interface BasicView {
-
-    fun showError(err: String)
-
+    fun onError(e: String)
 }

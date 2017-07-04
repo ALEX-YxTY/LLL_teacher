@@ -52,12 +52,12 @@ class LoginActivity : AppCompatActivity() {
         })
         tvForgetPsw.setOnClickListener({
             //跳转忘记密码页面
-            startActivity(Intent(this@LoginActivity, ForgetPswActivity::class.java))
+            startActivity(Intent(this, ForgetPswActivity::class.java))
         })
         btLogin.setOnClickListener({
             //TODO 登录
             //成功，跳转主页面
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         })
     }
 }

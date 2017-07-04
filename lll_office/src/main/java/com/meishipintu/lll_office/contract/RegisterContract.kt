@@ -1,7 +1,8 @@
 package com.meishipintu.lll_office.contract
 
-import com.milai.lll_teacher.presenters.BasicPresenter
-import com.milai.lll_teacher.views.BasicView
+import com.meishipintu.lll_office.modles.entities.UserInfo
+import com.meishipintu.lll_office.presenters.BasicPresenterImp
+import com.meishipintu.lll_office.views.BasicView
 
 /**
  * Created by Administrator on 2017/7/3.
@@ -10,14 +11,11 @@ import com.milai.lll_teacher.views.BasicView
  */
 interface RegisterContract {
 
-    interface IView : BasicView {
-
+    interface IView :BasicView{
+        fun onVCodeGet(vcode:String)
     }
 
-    interface IPresenter:BasicPresenter{
-
-        fun getVCode()
-
-        fun register()
+    interface IPresenter {
+        fun getVCode(mobile:String)
     }
 }

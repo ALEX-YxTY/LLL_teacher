@@ -8,10 +8,16 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.contract.SetPswContract
 import com.meishipintu.lll_office.customs.CustomEditText
+import com.meishipintu.lll_office.customs.utils.Encoder
 import com.meishipintu.lll_office.customs.utils.StringUtils
+import com.meishipintu.lll_office.modles.entities.UserInfo
+import com.meishipintu.lll_office.presenters.SetPswPresenter
 
-class SetPsActivity : AppCompatActivity() {
+class SetPsActivity : BasicActivity(),SetPswContract.IView{
+
+    val presenter:SetPswPresenter by lazy { SetPswPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +49,18 @@ class SetPsActivity : AppCompatActivity() {
         etPsw.setListener(textWatcher)
         etPswRe.setListener(textWatcher)
         btRegister.setOnClickListener{
-            //TODO 注册 成功后跳转主页
-            startActivity(Intent(this,MainActivity::class.java))
+            presenter.regist(intent.getStringExtra("mobile"),etAccount.text.toString()
+                    ,Encoder.md5(etPsw.text.toString()),intent.getStringExtra("vcode"))
         }
+    }
+
+    //from SetPswContract.IView
+    override fun onError(e: String) {
+        toast(e)
+    }
+
+    //from SetPswContract.IView
+    override fun onRegisterSuccsee(userInfo: UserInfo) {
+        startActivity(Intent(this,MainActivity::class.java))
     }
 }
