@@ -1,6 +1,5 @@
 package com.meishipintu.lll_office.presenters
 
-import android.util.Log
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.contract.SetPswContract
@@ -8,10 +7,7 @@ import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
 import com.meishipintu.lll_office.modles.entities.UserInfo
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
-import okhttp3.Cookie
-import okhttp3.ResponseBody
+
 
 /**
  * Created by Administrator on 2017/7/4.
