@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.views.*
 
@@ -37,7 +38,11 @@ class MineFrag:Fragment(),View.OnClickListener{
         val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
         val timesRemain = fragView?.findViewById(R.id.tv_times_remain) as TextView
         val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
-        userStates.setOnClickListener(this)
+        if (Cookies.getUserInfo()?.level != 0) {
+            userStates.visibility = View.GONE
+        } else {
+            userStates.setOnClickListener(this)
+        }
 
         fragView?.findViewById(R.id.rl_job_manage)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_my_interview)?.setOnClickListener(this)
@@ -50,7 +55,6 @@ class MineFrag:Fragment(),View.OnClickListener{
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.iv_status ->{
-                //TODO
                 startActivity(Intent(this.activity, UpdateActivity::class.java))
             }
             R.id.rl_job_manage ->{

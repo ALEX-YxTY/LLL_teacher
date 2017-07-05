@@ -116,9 +116,6 @@ class MyInterviewActivity : AppCompatActivity(),View.OnClickListener,MenuClickLi
         tvUnInterView.text = if(index==0) "未面试" else "未面试 邀约"
     }
 
-    override fun onArerSelect(index: Int, name: String) {
-    }
-
     override fun onRequireSelect(indexYear: Int, indexWorkYear: Int, indexEducation: Int) {
     }
 

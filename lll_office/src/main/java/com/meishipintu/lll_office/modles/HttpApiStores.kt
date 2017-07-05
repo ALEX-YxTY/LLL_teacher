@@ -1,6 +1,7 @@
 package com.meishipintu.lll_office.modles
 
 import com.meishipintu.lll_office.modles.entities.HttpResult
+import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.modles.entities.UserInfo
 import io.reactivex.Observable
 import okhttp3.ResponseBody
@@ -25,4 +26,12 @@ interface HttpApiStores {
     @POST("Home/organization/organization_regist")
     fun registerService(@Field("tel") tel:String,@Field("name") name:String,@Field("password") password:String
                         ,@Field("verify") verify:String):Observable<HttpResult<UserInfo>>
+
+    //教师查询及筛选
+    @FormUrlEncoded
+    @POST("Home/Api/getAllTeacher")
+    fun getTeacherService(@Field("year") year: Int, @Field("course") course: Int
+                          , @Field("grade") grade: Int): Observable<HttpResult<List<TeacherInfo>>>
+
+
 }
