@@ -14,4 +14,10 @@ object NumberUtil{
         df.roundingMode = RoundingMode.FLOOR
         return df.format(number)
     }
+
+    fun formatNumberInOne(number:Double):String{
+        val df = DecimalFormat("0.0")
+        df.roundingMode = RoundingMode.FLOOR
+        return df.format(number)
+    }
 }

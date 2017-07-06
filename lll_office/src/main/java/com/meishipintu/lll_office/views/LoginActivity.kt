@@ -1,20 +1,22 @@
 package com.meishipintu.lll_office.views
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.contract.AuthorContract
 import com.meishipintu.lll_office.customs.CustomEditText
+import com.meishipintu.lll_office.presenters.AuthorPresenter
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BasicActivity(),AuthorContract.IView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        presenter = AuthorPresenter(this)
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = "登录"
         val etTel = findViewById(R.id.et_tel) as CustomEditText
@@ -35,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
+
 
         })
         etPsw.setListener(object : TextWatcher {
@@ -57,9 +60,18 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         })
         btLogin.setOnClickListener({
-            //TODO 登录
-            //成功，跳转主页面
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            //登录
+            (presenter as AuthorPresenter).login(etTel.text.toString(), etPsw.text.toString())
         })
+    }
+
+    //from AuthorContract.IView
+    override fun onError(e: String) {
+        toast(e)
+    }
+
+    //from AuthorContract.IView
+    override fun onSuccess() {
+        startActivity(Intent(this,MainActivity::class.java))
     }
 }

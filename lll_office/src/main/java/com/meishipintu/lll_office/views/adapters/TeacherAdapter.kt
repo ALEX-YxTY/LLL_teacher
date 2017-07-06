@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.customs.utils.NumberUtil
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.views.TeacherDetailActivity
 
@@ -23,11 +24,18 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>): BasicAdapter(ctx
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (getItemViewType(position) == TYPE_NORMAL) {
+            val teacher = dataList[position]as TeacherInfo
             val teacherInfoViewHolder = holder as TeacherInfoViewHolder
-            //TODO bind
+            teacherInfoViewHolder.teacherName.text = teacher.name
+            teacherInfoViewHolder.course.text = "${teacher.course} ${teacher.grade}"
+            teacherInfoViewHolder.number.text = "${teacher.total_number} 人评价"
+            teacherInfoViewHolder.socre.text = NumberUtil.formatNumberInOne(teacher.total_score.toDouble()
+                    / teacher.total_number)
+
             teacherInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, TeacherDetailActivity::class.java)
-                intent.putExtra("teacher", dataList[position] as TeacherInfo)
+                intent.putExtra("teacher", teacher )
+                intent.putExtra("type", 1)
                 ctx.startActivity(intent)
             }
         }

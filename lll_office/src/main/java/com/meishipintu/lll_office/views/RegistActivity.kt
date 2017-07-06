@@ -27,12 +27,11 @@ class RegistActivity : BasicActivity(),RegisterContract.IView {
     val handler:MyHandler by lazy { MyHandler(this) }
     val from:Int by lazy { intent.getIntExtra("from", 1) }
 
-    val presenter:RegisterPresenter by lazy { RegisterPresenter(this) }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed()}
+        presenter = RegisterPresenter(this)
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = if(from==1) "注册" else "找回密码"
         setListener()
@@ -59,7 +58,7 @@ class RegistActivity : BasicActivity(),RegisterContract.IView {
 
         btVcode.setOnClickListener{
             if (StringUtils.isTel(etTel.text)) {
-                presenter.getVCode(etTel.text.toString())
+                (presenter as RegisterPresenter).getVCode(etTel.text.toString())
                 //启动读秒
                 handler.sendEmptyMessage(1)
                 btVcode.isEnabled = false
@@ -97,7 +96,6 @@ class RegistActivity : BasicActivity(),RegisterContract.IView {
         super.onDestroy()
         handler.removeMessages(1)
         btVcode.isEnabled = true
-        presenter.unsubscribe()
     }
 
     class MyHandler internal constructor(ctx: RegistActivity): Handler(){

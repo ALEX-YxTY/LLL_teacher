@@ -80,4 +80,10 @@ object Cookies {
         return userInfo
     }
 
+    fun clearUserInfo() {
+        val editor = getPreference()?.edit()
+        editor?.remove("user")
+        editor?.apply()
+    }
+
 }

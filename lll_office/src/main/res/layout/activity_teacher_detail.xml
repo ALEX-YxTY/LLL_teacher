@@ -9,6 +9,7 @@
     <include layout="@layout/titlebar_back_white" 
         android:id="@+id/titleBar"/>
     <WebView
+        android:id="@+id/wv"
         android:layout_below="@id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

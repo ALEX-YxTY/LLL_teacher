@@ -33,5 +33,18 @@ interface HttpApiStores {
     fun getTeacherService(@Field("year") year: Int, @Field("course") course: Int
                           , @Field("grade") grade: Int): Observable<HttpResult<List<TeacherInfo>>>
 
+    //登录接口
+    @FormUrlEncoded
+    @POST("Home/Organization/organization_login")
+    fun loginService(@Field("account") account: String, @Field("password") psw: String):Observable<HttpResult<UserInfo>>
 
+    //获取所有
+    //发布职位接口
+    @FormUrlEncoded
+    @POST("Home/organization/addPosition")
+    fun addPositionService(@Field("job_name") jobName:String,@Field("oid") oid:String,@Field("work_area") area:Int
+                           ,@Field("work_address") address:String,@Field("course") course:Int,@Field("grade") grade:Int
+                           ,@Field("sex") sex:Int,@Field("year") year:Int,@Field("require_year") rYear:Int
+                           ,@Field("money") money:String,@Field("require") require:String,@Field("other_demand") other:String)
+            :Observable<ResponseBody>
 }

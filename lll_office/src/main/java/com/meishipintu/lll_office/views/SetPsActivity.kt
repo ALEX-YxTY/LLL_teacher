@@ -1,28 +1,26 @@
 package com.meishipintu.lll_office.views
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
 import com.meishipintu.lll_office.R
-import com.meishipintu.lll_office.contract.SetPswContract
+import com.meishipintu.lll_office.contract.AuthorContract
 import com.meishipintu.lll_office.customs.CustomEditText
 import com.meishipintu.lll_office.customs.utils.Encoder
 import com.meishipintu.lll_office.customs.utils.StringUtils
-import com.meishipintu.lll_office.modles.entities.UserInfo
-import com.meishipintu.lll_office.presenters.SetPswPresenter
+import com.meishipintu.lll_office.presenters.AuthorPresenter
 
-class SetPsActivity : BasicActivity(),SetPswContract.IView{
+class SetPsActivity : BasicActivity(),AuthorContract.IView{
 
-    val presenter:SetPswPresenter by lazy { SetPswPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_ps)
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed()}
+        presenter = AuthorPresenter(this)
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = "设置密码"
         setListener()
@@ -49,18 +47,19 @@ class SetPsActivity : BasicActivity(),SetPswContract.IView{
         etPsw.setListener(textWatcher)
         etPswRe.setListener(textWatcher)
         btRegister.setOnClickListener{
-            presenter.regist(intent.getStringExtra("mobile"),etAccount.text.toString()
+            (presenter as AuthorPresenter).regist(intent.getStringExtra("mobile"),etAccount.text.toString()
                     ,Encoder.md5(etPsw.text.toString()),intent.getStringExtra("vcode"))
         }
     }
 
-    //from SetPswContract.IView
+    //from AuthorContract.IView
     override fun onError(e: String) {
         toast(e)
     }
 
-    //from SetPswContract.IView
-    override fun onRegisterSuccsee(userInfo: UserInfo) {
+    //from AuthorContract.IView
+    override fun onSuccess() {
         startActivity(Intent(this,MainActivity::class.java))
     }
+
 }
