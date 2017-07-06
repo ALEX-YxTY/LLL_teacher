@@ -1,6 +1,7 @@
 package com.meishipintu.lll_office.modles
 
 import com.meishipintu.lll_office.modles.entities.HttpResult
+import com.meishipintu.lll_office.modles.entities.JobInfo
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.modles.entities.UserInfo
 import io.reactivex.Observable
@@ -38,7 +39,7 @@ interface HttpApiStores {
     @POST("Home/Organization/organization_login")
     fun loginService(@Field("account") account: String, @Field("password") psw: String):Observable<HttpResult<UserInfo>>
 
-    //获取所有
+
     //发布职位接口
     @FormUrlEncoded
     @POST("Home/organization/addPosition")
@@ -47,4 +48,9 @@ interface HttpApiStores {
                            ,@Field("sex") sex:Int,@Field("year") year:Int,@Field("require_year") rYear:Int
                            ,@Field("money") money:String,@Field("require") require:String,@Field("other_demand") other:String)
             :Observable<ResponseBody>
+
+    //获取机构发布的职位
+    @FormUrlEncoded
+    @POST("Home/Organization/getOrganizationPosition")
+    fun getOfficeJobService(@Field("oid") oid:String,@Field("status") status:Int):Observable<HttpResult<List<JobInfo>>>
 }

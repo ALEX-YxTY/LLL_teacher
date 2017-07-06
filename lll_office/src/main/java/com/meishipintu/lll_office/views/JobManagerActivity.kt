@@ -2,16 +2,18 @@ package com.meishipintu.lll_office.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.contract.JobManagerContract
 import com.meishipintu.lll_office.modles.entities.JobInfo
+import com.meishipintu.lll_office.presenters.JobManagerPresenter
 import com.meishipintu.lll_office.views.adapters.JobAdapter
 
-class JobManagerActivity : AppCompatActivity(),View.OnClickListener{
+class JobManagerActivity : BasicActivity(),View.OnClickListener,JobManagerContract.IView{
 
     val dataList: MutableList<JobInfo> = mutableListOf()
     val adapter: JobAdapter by lazy { JobAdapter(this,dataList) }
@@ -24,6 +26,7 @@ class JobManagerActivity : AppCompatActivity(),View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_job_manager)
+        presenter = JobManagerPresenter(this)
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = "职位管理"
         findViewById(R.id.bt_back).setOnClickListener(this)
@@ -34,6 +37,15 @@ class JobManagerActivity : AppCompatActivity(),View.OnClickListener{
         val rv = findViewById(R.id.rv) as RecyclerView
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = this.adapter
+        getData(1)
+    }
+
+    private fun getData(status: Int) {
+        dataList.clear()        //先清空显示
+        adapter.notifyDataSetChanged()
+        if (OfficeApplication.userInfo != null) {
+            (presenter as JobManagerPresenter).getDataList(OfficeApplication.userInfo!!.uid, 1)
+        }
     }
 
     override fun onClick(v: View?) {
@@ -41,7 +53,7 @@ class JobManagerActivity : AppCompatActivity(),View.OnClickListener{
             R.id.bt_back -> onBackPressed()
             R.id.tv_online -> {
                 if (select != 0) {
-                    //TODO 获取在线数据
+                    getData(1)
                     tvOffline.setTextColor(0xff505d67.toInt())
                     tvOnline.setTextColor(0xffFF763F.toInt())
                     select = 0
@@ -49,7 +61,7 @@ class JobManagerActivity : AppCompatActivity(),View.OnClickListener{
             }
             R.id.tv_offline ->{
                 if (select != 1) {
-                    //TODO 获取已下线数据
+                    getData(2)
                     tvOffline.setTextColor(0xffFF763F.toInt())
                     tvOnline.setTextColor(0xff505d67.toInt())
                     select = 1
@@ -59,5 +71,15 @@ class JobManagerActivity : AppCompatActivity(),View.OnClickListener{
                 startActivity(Intent(this,NewJobActivity::class.java))
             }
         }
+    }
+
+    override fun onDateGet(dataList: List<JobInfo>) {
+        this.dataList.clear()
+        this.dataList.addAll(dataList)
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onError(e: String) {
+        toast(e)
     }
 }
