@@ -53,4 +53,9 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Organization/getOrganizationPosition")
     fun getOfficeJobService(@Field("oid") oid:String,@Field("status") status:Int):Observable<HttpResult<List<JobInfo>>>
+
+    //修改职位状态接口
+    @FormUrlEncoded
+    @POST("Home/Organization/updatePostionStatus")
+    fun changeJobStatusService(@Field("id") jid:String,@Field("status") status:Int):Observable<HttpResult<JobInfo>>
 }

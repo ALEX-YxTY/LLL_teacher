@@ -23,8 +23,12 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>): BasicAdapter(ctx,dataLi
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (getItemViewType(position) == TYPE_NORMAL) {
+            val job = dataList[position] as JobInfo
             val jobInfoViewHolder = holder as JobInfoViewHolder
-            //TODO bind
+            jobInfoViewHolder.jobName.text = job.job_name
+            jobInfoViewHolder.address.text = "南京市 ${job.work_area}"
+            jobInfoViewHolder.officeName.text = job.organization.name
+            jobInfoViewHolder.money.text = job.money
             jobInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, JobDetailActivity::class.java)
                 intent.putExtra("job", dataList[position] as JobInfo)
