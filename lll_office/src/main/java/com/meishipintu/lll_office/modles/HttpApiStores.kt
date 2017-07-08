@@ -45,8 +45,9 @@ interface HttpApiStores {
     @POST("Home/organization/addPosition")
     fun addPositionService(@Field("job_name") jobName:String,@Field("oid") oid:String,@Field("work_area") area:Int
                            ,@Field("work_address") address:String,@Field("course") course:Int,@Field("grade") grade:Int
-                           ,@Field("sex") sex:Int,@Field("year") year:Int,@Field("require_year") rYear:Int
-                           ,@Field("money") money:String,@Field("require") require:String,@Field("other_demand") other:String)
+                           ,@Field("sex") sex:Int,@Field("require_year") rYear:Int,@Field("money") money:String
+                           ,@Field("have_certificate") have_certificate:Int
+                           ,@Field("require") require:String,@Field("other_demand") other:String)
             :Observable<ResponseBody>
 
     //获取机构发布的职位
@@ -58,4 +59,9 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Organization/updatePostionStatus")
     fun changeJobStatusService(@Field("id") jid:String,@Field("status") status:Int):Observable<HttpResult<JobInfo>>
+
+    //获取常数接口，type=1~9
+    @FormUrlEncoded
+    @POST("Home/Base/cs")
+    fun getConstantArraysService(@Field("type") type:Int) :Observable<HttpResult<Array<String>>>
 }

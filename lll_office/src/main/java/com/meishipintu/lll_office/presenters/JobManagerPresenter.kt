@@ -19,7 +19,7 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
     val httpApi = HttpApiClinet.retrofit()
 
     override fun getDataList(uid: String, status: Int) {
-        addSubscription(HttpApiClinet.retrofit().getOfficeJobService(uid,status).map(HttpResultFunc<List<JobInfo>>())
+        addSubscription(httpApi.getOfficeJobService(uid,status).map(HttpResultFunc<List<JobInfo>>())
                 ,object :HttpCallback<List<JobInfo>>(){
             override fun onSuccess(model: List<JobInfo>) {
                 (iView as JobManagerContract.IView).onDateGet(model)
@@ -34,6 +34,19 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
     }
 
     override fun changeStatus(jobId: String, type: Int) {
-//        addSubscription()
+        addSubscription(httpApi.changeJobStatusService(jobId,type).map(HttpResultFunc<JobInfo>())
+        ,object :HttpCallback<JobInfo>(){
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    (iView as JobDetailContract.IView).onError(msg)
+                }
+            }
+
+            override fun onSuccess(model: JobInfo) {
+                (iView as JobDetailContract.IView).onStatusChanged(model.status)
+            }
+
+        })
     }
 }

@@ -2,24 +2,24 @@ package com.meishipintu.lll_office.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.text.format.DateUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.contract.JobDetailContract
 import com.meishipintu.lll_office.customs.utils.DateUtil
 import com.meishipintu.lll_office.modles.entities.JobInfo
+import com.meishipintu.lll_office.presenters.JobManagerPresenter
 
-class JobDetailActivity : AppCompatActivity(),View.OnClickListener{
+class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract.IView{
 
     val jobInfo:JobInfo by lazy { intent.getSerializableExtra("job") as JobInfo }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_job_detail)
-
+        presenter = JobManagerPresenter(this)
         initUI()
     }
 
@@ -67,8 +67,18 @@ class JobDetailActivity : AppCompatActivity(),View.OnClickListener{
                 startActivity(intent)
             }
             R.id.tv_offline ->{
-                //TODO 职位下线
+                (presenter as JobManagerPresenter).changeStatus(jobInfo.id.toString(),if(jobInfo.status==1) 2 else 1)
+
             }
         }
+    }
+
+    override fun onError(e: String) {
+        toast(e)
+    }
+
+    override fun onStatusChanged(statusNew: Int) {
+        this.jobInfo.status = statusNew
+        initUI()
     }
 }

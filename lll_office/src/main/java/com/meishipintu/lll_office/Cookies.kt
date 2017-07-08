@@ -2,9 +2,9 @@ package com.meishipintu.lll_office
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.meishipintu.lll_office.modles.entities.UserInfo
-import android.R.id.edit
 import android.util.Base64
+import android.util.Log
+import com.meishipintu.lll_office.modles.entities.UserInfo
 import java.io.*
 
 
@@ -86,4 +86,42 @@ object Cookies {
         editor?.apply()
     }
 
+    fun saveConstant(type:Int,data:Array<String>){
+        val editor = getPreference()?.edit()
+        Log.d("constant", "type=$type and data=${data.toArrayString()}")
+        editor?.putString("constant$type", data.toArrayString())
+        editor?.apply()
+    }
+
+    /**
+     * type取值：
+     * 1 区域
+     * 2 学科
+     * 3年级
+     * 4年龄范围
+     * 5工作年限范围
+     * 6学历
+     * 7套餐
+     * 8评价
+     * 9评语
+     */
+    fun getConstant(type: Int): List<String> {
+        if (getPreference() != null) {
+            return getPreference()!!.getString("constant$type", "lsjdfkljs").split(",")
+        } else {
+            return listOf()
+        }
+
+    }
+
+}
+
+//扩展方法
+private fun <T> Array<T>.toArrayString() :String{
+    var sbf = StringBuilder()
+    for (data: T in this) {
+        sbf.append("${data.toString()},")
+    }
+    sbf.deleteCharAt(sbf.lastIndex)
+    return sbf.toString()
 }

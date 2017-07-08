@@ -33,11 +33,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--职位科目-->
+            <!-- 职位名称 -->
             <RelativeLayout
-                android:id="@+id/rl_course"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
+                android:gravity="center"
                 android:layout_marginTop="8dp"
                 android:background="@color/white">
 
@@ -48,7 +48,89 @@
                     android:layout_centerVertical="true"
                     android:textSize="14sp"
                     android:textColor="@color/text_black2"
+                    android:text="@string/job_name" />
+
+
+                <EditText
+                    android:id="@+id/et_job_name"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/themeOrange"
+                    android:hint="请填写"
+                    android:textColorHint="@color/themeOrange"
+                    android:background="@null"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="13dp"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/border2" />
+
+            <!--职位科目-->
+            <RelativeLayout
+                android:id="@+id/rl_course"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_black2"
                     android:text="@string/course" />
+
+                <ImageView
+                    android:src="@drawable/icon_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="13dp"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/tv_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/themeOrange"
+                    android:hint="请选择"
+                    android:textColorHint="@color/text_grey1"
+                    android:background="@null"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="26dp"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/border2" />
+
+            <!--年级选择-->
+            <RelativeLayout
+                android:id="@+id/rl_grade"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_black2"
+                    android:text="@string/grade" />
 
                 <ImageView
                     android:src="@drawable/icon_next"
@@ -76,6 +158,7 @@
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="12dp"
                 android:background="@color/border2" />
+
 
             <!-- 职位薪资 -->
             <RelativeLayout
@@ -105,6 +188,49 @@
                     android:background="@null"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="13dp"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/border2" />
+
+            <!--工作区域-->
+            <RelativeLayout
+                android:id="@+id/rl_work_area"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_black2"
+                    android:text="@string/work_area" />
+
+                <ImageView
+                    android:src="@drawable/icon_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="13dp"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/themeOrange"
+                    android:hint="请选择"
+                    android:textColorHint="@color/text_grey1"
+                    android:background="@null"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="26dp"
                     android:layout_centerVertical="true"
                     android:gravity="end"/>
             </RelativeLayout>
@@ -188,43 +314,6 @@
                     android:textColorHint="@color/themeOrange"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="26dp"
-                    android:layout_centerVertical="true"
-                    android:gravity="end"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:background="@color/border2" />
-
-            <!-- 年龄 -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:gravity="center"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="19dp"
-                    android:layout_centerVertical="true"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_black2"
-                    android:text="@string/year" />
-
-                <EditText
-                    android:id="@+id/et_year"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@color/themeOrange"
-                    android:hint="请填写"
-                    android:textColorHint="@color/themeOrange"
-                    android:background="@null"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="13dp"
                     android:layout_centerVertical="true"
                     android:gravity="end"/>
             </RelativeLayout>
@@ -329,16 +418,10 @@
 
             <!-- 职位要求 -->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:background="@color/border2" />
 
-            <!-- 其他要求 -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="156dp"
+                android:layout_height="126dp"
                 android:background="@color/white">
 
                 <TextView
@@ -363,7 +446,7 @@
                     android:background="@color/back_grey1"
                     android:gravity="top"
                     android:hint="请描述您的职位要求"
-                    android:maxLength="150"
+                    android:maxLength="800"
                     android:padding="7dp"
                     android:textColor="@color/text_black2"
                     android:textColorHint="@color/edit_text_color_grey"
@@ -371,6 +454,12 @@
 
                     />
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/border2" />
 
             <!--其他要求-->
             <RelativeLayout
@@ -396,7 +485,7 @@
                     android:padding="7dp"
                     android:textSize="11sp"
                     android:gravity="top"
-                    android:maxLength="150"
+                    android:maxLength="300"
                     android:textColor="@color/text_black2"
                     android:hint="请描述您的其他要求"
                     android:textColorHint="@color/edit_text_color_grey"

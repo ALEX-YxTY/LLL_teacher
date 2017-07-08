@@ -44,4 +44,7 @@
     <string name="year">年龄</string>
     <string name="work_year">教学要求</string>
     <string name="teacher_certification">教师资格证</string>
+    <string name="job_name">职位名称</string>
+    <string name="grade">年级</string>
+    <string name="work_area">工作区域</string>
 </resources>

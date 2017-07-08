@@ -44,7 +44,7 @@ class JobManagerActivity : BasicActivity(),View.OnClickListener,JobManagerContra
         dataList.clear()        //先清空显示
         adapter.notifyDataSetChanged()
         if (OfficeApplication.userInfo != null) {
-            (presenter as JobManagerPresenter).getDataList(OfficeApplication.userInfo!!.uid, 1)
+            (presenter as JobManagerPresenter).getDataList(OfficeApplication.userInfo!!.uid, status)
         }
     }
 
@@ -68,6 +68,7 @@ class JobManagerActivity : BasicActivity(),View.OnClickListener,JobManagerContra
                 }
             }
             R.id.bt_new_job ->{
+                //发布新职位
                 startActivity(Intent(this,NewJobActivity::class.java))
             }
         }
