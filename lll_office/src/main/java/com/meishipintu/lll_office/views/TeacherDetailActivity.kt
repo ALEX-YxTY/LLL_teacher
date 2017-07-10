@@ -22,6 +22,7 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener {
         val tvTitle = findViewById(R.id.tv_title)as TextView
         tvTitle.text = "教师详情"
         findViewById(R.id.bt_back).setOnClickListener(this)
+        findViewById(R.id.bt_collect).setOnClickListener(this)
         initWebView()
     }
 
@@ -32,13 +33,15 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener {
         settings.domStorageEnabled = true
         webView.setWebChromeClient(WebChromeClient())
         webView.setWebViewClient(WebViewClient())
-        webView.loadUrl("http://www.baidu.com")
+        webView.loadUrl("http://lll.domobile.net/Home/Index/detail?=${teacher.uid}")
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.bt_back -> onBackPressed()
-
+            R.id.bt_collect -> {
+                //TODO 添加教师收藏
+            }
         }
     }
 }

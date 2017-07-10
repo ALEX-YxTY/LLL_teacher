@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.TeacherContract
 import com.meishipintu.lll_office.customs.MenuClickListener
@@ -30,11 +31,10 @@ import com.meishipintu.lll_office.views.adapters.TeacherAdapter
  */
 class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
 
-    var tj = 0 //0-推荐，1-全部
-    var year = 0    //0-全部，1-25:30 ，2-30:35 , 3-35:40， 4-40:45 ， 5-45:50， 6-50：55 ，7->55
-    var course =0 //0-全部，1-数学 2-语文 3-英语 4-物理 5-化学 6-生物 7-历史 8-政治 9-地理 10-奥数 11-艺体
-    var grade = 0   //0-全部 1-高中 2-大专 3-本科 4-硕士 5-博士
-    var decending = false //true-按评分降序排列 false-默认排列
+    var tj = true //是否推荐
+    var course = 0 //科目
+    var grade = 0   //学科
+    var experience = 0 //经验要求
 
     var rv: RecyclerView? = null
     var dataList = mutableListOf<TeacherInfo>()
@@ -96,11 +96,12 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
         })
 
         view.findViewById((R.id.rl_require)).setOnClickListener{
+
+            val courses = Cookies.getConstant(2)
+            val grades = Cookies.getConstant(3)
+            val experiences = Cookies.getConstant(5)
             if (popRequire == null) {
-                popRequire = RequirePop(this.activity, this, listOf("全部", "25-30岁", "30-35岁", "35-40岁"
-                        , "40-45岁", "45-50岁", "50-55岁", "55岁以上"), listOf("全部","数学","语文"
-                        ,"英语","物理","化学", "生物","历史","政治","地理","奥数","艺体")
-                        , listOf("全部" ,"高中", "大专", "本科", "硕士", "博士"))
+                popRequire = RequirePop(this.activity, this, courses, grades, experiences)
             }
             if (popRequire?.isShowing as Boolean) {
                 startBackAnimation(2)
@@ -110,6 +111,9 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
                 startBackAnimation(1)
             }
             popRequire?.showPopDropDown(tab)
+        }
+        view.findViewById(R.id.rl_most).setOnClickListener{
+            presenter.doSearch(decending = true) //所有教师根据降序排列
         }
     }
 
@@ -122,18 +126,19 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
     }
 
     //from MenuClickListener
-    override fun onTjClick(index: Int, name: String) {
+    override fun onTjClick(index: Boolean, name: String) {
         tj = index
         tvTj?.text = name
-        //TODO 调查询接口 推荐查询模式未定
+        presenter.doSearch(tj = tj) //根据是否筛选推荐
     }
 
+
     //from MenuClickListener
-    override fun onRequireSelect(indexYear: Int, indexCourse: Int, indexGrade: Int) {
-        year = indexYear
+    override fun onRequireSelect(indexCourse: Int, indexGrade: Int, indexExperience: Int) {
         course = indexCourse
         grade = indexGrade
-        presenter.doSearch(year = year, course = course, grade = grade) //根据年龄，科目，年级筛选
+        experience = indexExperience
+        presenter.doSearch(experience = experience, course = course, grade = grade) //根据年龄，科目，年级筛选
     }
 
     //from MenuClickListener

@@ -12,14 +12,27 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp">
         <TextView
-            android:text="年龄"
+            android:text="学科"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/text_12_grey"
             android:layout_marginTop="20dp"/>
 
         <com.milai.lll_teacher.custom.view.CustomLabelSelectView
-            android:id="@+id/selectview_year"
+            android:id="@+id/selectview_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:text="年级"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_12_grey"
+            android:layout_marginTop="20dp"/>
+
+        <com.milai.lll_teacher.custom.view.CustomLabelSelectView
+            android:id="@+id/selectview_grade"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>
@@ -32,20 +45,7 @@
             android:layout_marginTop="20dp"/>
 
         <com.milai.lll_teacher.custom.view.CustomLabelSelectView
-            android:id="@+id/selectview_workyear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:text="学历"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/text_12_grey"
-            android:layout_marginTop="20dp"/>
-
-        <com.milai.lll_teacher.custom.view.CustomLabelSelectView
-            android:id="@+id/selectview_education"
+            android:id="@+id/selectview_experience"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>

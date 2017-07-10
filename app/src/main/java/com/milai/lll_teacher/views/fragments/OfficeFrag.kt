@@ -26,7 +26,7 @@ import com.milai.lll_teacher.views.adapters.OfficeAdapter
 
 class OfficeFrag : Fragment(),View.OnClickListener,OfficeContract.IView{
 
-    var dataList: MutableList<OfficeInfo>? = null
+    var dataList = ArrayList<OfficeInfo>()
     var adapter: OfficeAdapter? = null
 
 
@@ -42,7 +42,6 @@ class OfficeFrag : Fragment(),View.OnClickListener,OfficeContract.IView{
         view.findViewById(R.id.bt_back).visibility = GONE
         view.findViewById(R.id.bt_search).setOnClickListener(this)
         val rv = view.findViewById(R.id.rv) as RecyclerView
-        dataList = mutableListOf()
         adapter = OfficeAdapter(this.activity, dataList!!)
         rv.layoutManager = LinearLayoutManager(this.activity)
         rv.adapter = adapter
@@ -60,9 +59,8 @@ class OfficeFrag : Fragment(),View.OnClickListener,OfficeContract.IView{
     }
 
     override fun onDataGet(dataList: List<OfficeInfo>) {
-        for (i: Int in 1..10) {
-            this.dataList?.add(OfficeInfo())
-        }
+        this.dataList.clear()
+        this.dataList.addAll(dataList)
         adapter?.notifyDataSetChanged()
     }
 

@@ -8,14 +8,8 @@
 
     <include layout="@layout/titlebar_back_white" 
         android:id="@+id/titleBar"/>
-    <WebView
-        android:id="@+id/wv"
-        android:layout_below="@id/titleBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        
-    </WebView>
     <RelativeLayout
+        android:id="@+id/bt_collect"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_alignParentBottom="true"
@@ -42,4 +36,12 @@
                 android:text="收藏"/>
         </RelativeLayout>
     </RelativeLayout>
+
+    <WebView
+        android:id="@+id/wv"
+        android:layout_below="@id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bt_collect"/>
+
 </RelativeLayout>

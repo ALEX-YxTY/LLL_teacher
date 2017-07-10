@@ -31,8 +31,8 @@ interface HttpApiStores {
     //教师查询及筛选
     @FormUrlEncoded
     @POST("Home/Api/getAllTeacher")
-    fun getTeacherService(@Field("year") year: Int, @Field("course") course: Int
-                          , @Field("grade") grade: Int): Observable<HttpResult<List<TeacherInfo>>>
+    fun getTeacherService(@Field("isTj") tj: Boolean, @Field("year") year: Int, @Field("course") course: Int
+                          , @Field("grade") grade: Int, @Field("decending") isDecending: Boolean): Observable<HttpResult<List<TeacherInfo>>>
 
     //登录接口
     @FormUrlEncoded
@@ -43,12 +43,12 @@ interface HttpApiStores {
     //发布职位接口
     @FormUrlEncoded
     @POST("Home/organization/addPosition")
-    fun addPositionService(@Field("job_name") jobName:String,@Field("oid") oid:String,@Field("work_area") area:Int
+    fun addJobService(@Field("job_name") jobName:String,@Field("oid") oid:String,@Field("work_area") area:Int
                            ,@Field("work_address") address:String,@Field("course") course:Int,@Field("grade") grade:Int
                            ,@Field("sex") sex:Int,@Field("require_year") rYear:Int,@Field("money") money:String
                            ,@Field("have_certificate") have_certificate:Int
                            ,@Field("require") require:String,@Field("other_demand") other:String)
-            :Observable<ResponseBody>
+            :Observable<HttpResult<Any>>
 
     //获取机构发布的职位
     @FormUrlEncoded
@@ -64,4 +64,5 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Base/cs")
     fun getConstantArraysService(@Field("type") type:Int) :Observable<HttpResult<Array<String>>>
+
 }

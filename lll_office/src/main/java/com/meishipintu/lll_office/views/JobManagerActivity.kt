@@ -1,11 +1,13 @@
 package com.meishipintu.lll_office.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import com.meishipintu.lll_office.Constant
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.JobManagerContract
@@ -69,18 +71,37 @@ class JobManagerActivity : BasicActivity(),View.OnClickListener,JobManagerContra
             }
             R.id.bt_new_job ->{
                 //发布新职位
-                startActivity(Intent(this,NewJobActivity::class.java))
+                startActivityForResult(Intent(this,NewJobActivity::class.java), Constant.START_NEW_JOB)
             }
         }
     }
 
+    //from JobManagerContract.IView
     override fun onDateGet(dataList: List<JobInfo>) {
         this.dataList.clear()
         this.dataList.addAll(dataList)
         adapter.notifyDataSetChanged()
     }
 
+    //from JobManagerContract.IView
     override fun onError(e: String) {
         toast(e)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constant.START_NEW_JOB && resultCode == Activity.RESULT_OK) {
+            //刷新左边页并显示
+            getData(1)
+            tvOffline.setTextColor(0xff505d67.toInt())
+            tvOnline.setTextColor(0xffFF763F.toInt())
+            select = 0
+        }else if (requestCode == Constant.CHANGE_JOB_STATE && resultCode == Activity.RESULT_OK) {
+            //刷新左边页并显示
+            getData(1)
+            tvOffline.setTextColor(0xff505d67.toInt())
+            tvOnline.setTextColor(0xffFF763F.toInt())
+            select = 0
+        }
     }
 }

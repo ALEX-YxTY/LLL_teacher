@@ -44,7 +44,7 @@ class TjPop(val ctx: Context, val mListener: MenuClickListener) : PopupWindow(ct
             ivTj.visibility = View.VISIBLE
             tvAll.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivAll.visibility = View.INVISIBLE
-            mListener.onTjClick(0,"推荐")
+            mListener.onTjClick(true,"推荐")
             dismiss()
         }
         contentView.findViewById(R.id.ll_all).setOnClickListener{
@@ -52,7 +52,7 @@ class TjPop(val ctx: Context, val mListener: MenuClickListener) : PopupWindow(ct
             ivAll.visibility = View.VISIBLE
             tvTj.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivTj.visibility = View.INVISIBLE
-            mListener.onTjClick(1,"全部")
+            mListener.onTjClick(false,"全部")
             dismiss()
         }
     }

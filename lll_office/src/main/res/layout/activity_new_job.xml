@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="@color/themeOrange"
+                    android:textColor="@color/text_grey1"
                     android:hint="请选择"
                     android:textColorHint="@color/text_grey1"
                     android:background="@null"
@@ -139,11 +139,13 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="13dp"
                     android:layout_centerVertical="true"/>
+
                 <TextView
+                    android:id="@+id/tv_grade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="@color/themeOrange"
+                    android:textColor="@color/text_grey1"
                     android:hint="请选择"
                     android:textColorHint="@color/text_grey1"
                     android:background="@null"
@@ -151,6 +153,7 @@
                     android:layout_marginRight="26dp"
                     android:layout_centerVertical="true"
                     android:gravity="end"/>
+
             </RelativeLayout>
 
             <View
@@ -222,10 +225,11 @@
                     android:layout_marginRight="13dp"
                     android:layout_centerVertical="true"/>
                 <TextView
+                    android:id="@+id/tv_work_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="@color/themeOrange"
+                    android:textColor="@color/text_grey1"
                     android:hint="请选择"
                     android:textColorHint="@color/text_grey1"
                     android:background="@null"
@@ -269,6 +273,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="13dp"
                     android:layout_centerVertical="true"
+                    android:maxLines="2"
                     android:gravity="end"/>
             </RelativeLayout>
 
@@ -305,13 +310,12 @@
                     android:layout_centerVertical="true"/>
 
                 <TextView
-                    android:id="@+id/et_contact"
+                    android:id="@+id/tv_sex"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textColor="@color/text_grey1"
-                    android:text="男"
-                    android:textColorHint="@color/themeOrange"
+                    android:text="不限"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="26dp"
                     android:layout_centerVertical="true"
@@ -325,7 +329,7 @@
                 android:background="@color/border2" />
 
 
-            <!-- 教学要求 -->
+            <!-- 经验要求 -->
             <RelativeLayout
                 android:id="@+id/rl_work_year"
                 android:layout_width="match_parent"
@@ -357,8 +361,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textColor="@color/text_grey1"
-                    android:text="1-3年"
-                    android:textColorHint="@color/themeOrange"
+                    android:text="不限"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="26dp"
                     android:layout_centerVertical="true"
@@ -402,7 +405,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textColor="@color/text_grey1"
-                    android:text="有"
+                    android:text="无要求"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="26dp"
                     android:layout_centerVertical="true"
@@ -417,8 +420,6 @@
 
 
             <!-- 职位要求 -->
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="126dp"
@@ -445,12 +446,12 @@
                     android:layout_marginTop="12dp"
                     android:background="@color/back_grey1"
                     android:gravity="top"
+                    android:maxLines="30"
                     android:hint="请描述您的职位要求"
-                    android:maxLength="800"
                     android:padding="7dp"
                     android:textColor="@color/text_black2"
                     android:textColorHint="@color/edit_text_color_grey"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
 
                     />
             </RelativeLayout>
@@ -483,11 +484,11 @@
                     android:layout_height="70dp"
                     android:layout_below="@id/component4"
                     android:padding="7dp"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:gravity="top"
-                    android:maxLength="300"
+                    android:maxLines="20"
                     android:textColor="@color/text_black2"
-                    android:hint="请描述您的其他要求"
+                    android:hint="请描述您的其他要求（可以为空）"
                     android:textColorHint="@color/edit_text_color_grey"
                     android:background="@color/back_grey1"
                     android:layout_marginLeft="19dp"

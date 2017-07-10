@@ -15,5 +15,7 @@ interface JobDetailContract {
 
     interface IPresenter:BasicPresenterImp{
         fun changeStatus(jobId: String, type: Int)
+
+        fun getOrganizationDetail(uid:String)
     }
 }

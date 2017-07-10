@@ -46,7 +46,7 @@ class TjPop(val ctx: Context, val mListener: MenuClickListener,val name1:String,
             ivTj.visibility = View.VISIBLE
             tvAll.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivAll.visibility = View.INVISIBLE
-            mListener.onTjClick(0,name1)
+            mListener.onTjClick(true,name1)
             dismiss()
         }
         contentView.findViewById(R.id.ll_all).setOnClickListener{
@@ -54,7 +54,7 @@ class TjPop(val ctx: Context, val mListener: MenuClickListener,val name1:String,
             ivAll.visibility = View.VISIBLE
             tvTj.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivTj.visibility = View.INVISIBLE
-            mListener.onTjClick(1, name2)
+            mListener.onTjClick(false, name2)
             dismiss()
         }
     }

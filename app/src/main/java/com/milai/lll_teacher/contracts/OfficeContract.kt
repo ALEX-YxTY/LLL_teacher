@@ -1,7 +1,6 @@
 package com.milai.lll_teacher.contracts
 
 import com.milai.lll_teacher.models.entities.OfficeInfo
-import com.milai.lll_teacher.presenters.BasicPresenter
 import com.milai.lll_teacher.views.BasicView
 
 /**
@@ -15,7 +14,7 @@ interface OfficeContract {
         fun onDataGet(dataList: List<OfficeInfo>)
     }
 
-    interface IPresenter:BasicPresenter{
+    interface IPresenter {
         fun getOffice()
     }
 }

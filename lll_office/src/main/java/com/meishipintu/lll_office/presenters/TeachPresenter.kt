@@ -14,8 +14,8 @@ import com.meishipintu.lll_office.views.BasicView
  */
 class TeachPresenter(val iView:TeacherContract.IView):BasicPresenter(),TeacherContract.IPresenter {
 
-    override fun doSearch(tj: Int, year: Int, course: Int, grade: Int, decending: Boolean) {
-        addSubscription(HttpApiClinet.retrofit().getTeacherService(year,course,grade)
+    override fun doSearch(tj: Boolean, year: Int, course: Int, grade: Int, decending: Boolean) {
+        addSubscription(HttpApiClinet.retrofit().getTeacherService(tj,year,course,grade,decending)
                 .map(HttpResultFunc<List<TeacherInfo>>()), object : HttpCallback<List<TeacherInfo>>(){
             override fun onSuccess(model: List<TeacherInfo>) {
                 iView.onDateGet(model)

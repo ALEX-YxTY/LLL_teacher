@@ -13,8 +13,8 @@ import com.meishipintu.lll_office.R
  *
  * 主要功能：
  */
-class RequirePop(ctx: Context, val mListener: MenuClickListener, val years: List<String>
-                 , val workYears: List<String>, val educations: List<String>) : PopupWindow(ctx) {
+class RequirePop(val ctx: Context, val mListener: MenuClickListener, val courses: List<String>
+                 , val grades: List<String>, val experiences: List<String>) : PopupWindow(ctx) {
     init {
         val view = LayoutInflater.from(ctx).inflate(R.layout.pop_require, null)
         contentView = view
@@ -32,19 +32,19 @@ class RequirePop(ctx: Context, val mListener: MenuClickListener, val years: List
     }
 
     private fun initUI() {
-        val yearSelect = contentView.findViewById(R.id.selectview_year) as CustomLabelSelectView
-        yearSelect.setData(years)
-        val workYearSelect = contentView.findViewById(R.id.selectview_workyear) as CustomLabelSelectView
-        workYearSelect.setData(workYears)
-        val educationSelect = contentView.findViewById(R.id.selectview_education) as CustomLabelSelectView
-        educationSelect.setData(educations)
+        val courseSelect = contentView.findViewById(R.id.selectview_course) as CustomLabelSelectView
+        courseSelect.setData(courses)
+        val gradeSelect = contentView.findViewById(R.id.selectview_grade) as CustomLabelSelectView
+        gradeSelect.setData(grades)
+        val experienceSelect = contentView.findViewById(R.id.selectview_experience) as CustomLabelSelectView
+        experienceSelect.setData(experiences)
         contentView.findViewById(R.id.bt_reset).setOnClickListener{
-            yearSelect.setSelect(0)
-            workYearSelect.setSelect(0)
-            educationSelect.setSelect(0)
+            courseSelect.setSelect(0)
+            gradeSelect.setSelect(0)
+            experienceSelect.setSelect(0)
         }
         contentView.findViewById(R.id.bt_filtrate).setOnClickListener{
-            mListener.onRequireSelect(yearSelect.selectIndex, workYearSelect.selectIndex, educationSelect.selectIndex)
+            mListener.onRequireSelect(courseSelect.selectIndex, gradeSelect.selectIndex, experienceSelect.selectIndex)
             dismiss()
         }
     }

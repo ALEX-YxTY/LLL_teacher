@@ -21,7 +21,11 @@ class LoginAndRegistActivity : AppCompatActivity() ,View.OnClickListener{
         when (v.id) {
             R.id.bt_back -> onBackPressed()
             R.id.bt_login -> startActivity(Intent(this@LoginAndRegistActivity, LoginActivity::class.java))
-            R.id.bt_register -> startActivity(Intent(this@LoginAndRegistActivity, RegisterActivity::class.java))
+            R.id.bt_register -> {
+                val intent = Intent(this, RegisterActivity::class.java)
+                intent.putExtra("from", 1)  //from=1 注册  from=2 找回密码
+                startActivity(intent)
+            }
         }
     }
 }

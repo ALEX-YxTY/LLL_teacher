@@ -1,7 +1,7 @@
 package com.milai.lll_teacher.contracts
 
 import com.milai.lll_teacher.models.entities.JobInfo
-import com.milai.lll_teacher.presenters.BasicPresenter
+import com.milai.lll_teacher.presenters.BasicPresenterImp
 import com.milai.lll_teacher.views.BasicView
 
 /**
@@ -16,8 +16,9 @@ interface JobContract {
         fun onDateGet(dataList:List<JobInfo>)
     }
 
-    interface IPresenter:BasicPresenter{
+    interface IPresenter:BasicPresenterImp {
 
-        fun doSearch(tj: Int = 0, area: Int = 0, year: Int = 0, workYear: Int = 0, education: Int = 0)
+        //查询和筛选职位方法
+        fun doSearch(tj: Boolean = true, area: Int = 0, course: Int = 0, grade: Int = 0, experience: Int = 0)
     }
 }

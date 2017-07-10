@@ -15,6 +15,8 @@ interface NewJobContract {
     }
 
     interface IPresenter:BasicPresenterImp{
-        fun addJob(name:String)
+        fun addJob(name: String, oid: String, workArea: Int, wordAddress: String, course: Int, grade: Int
+                   , sex: Int, requireYear: Int, money: String, certificate: Int, require: String, other: String)
+
     }
 }
