@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.milai.lll_teacher.R
-import com.milai.lll_teacher.custom.view.JobDetailActivity
-import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.views.OfficeDetailActivity
 
@@ -26,7 +24,11 @@ class OfficeAdapter(ctx: Context, dataList: List<OfficeInfo>)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (getItemViewType(position) == TYPE_NORMAL) {
             val officeInfoViewHolder = holder as OfficeInfoViewHolder
-            //TODO bind
+            val office = dataList[position] as OfficeInfo
+            officeInfoViewHolder.officeName.text = office.name
+            officeInfoViewHolder.address.text = office.address
+            officeInfoViewHolder.desc.text = "热招   职位"
+
             officeInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, OfficeDetailActivity::class.java)
                 intent.putExtra("office", dataList[position] as OfficeInfo)

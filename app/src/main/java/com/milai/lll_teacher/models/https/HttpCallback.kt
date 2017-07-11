@@ -26,6 +26,7 @@ abstract class HttpCallback<T>:Observer<T> {
     }
 
     override fun onError(e: Throwable) {
+        e.printStackTrace()
         //这块应该可以优化
         if (e is HttpException) {
             val httpException = e

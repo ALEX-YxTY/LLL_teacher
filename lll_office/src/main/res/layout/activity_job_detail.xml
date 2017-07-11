@@ -213,7 +213,8 @@
                     android:layout_marginTop="5dp" />
             </RelativeLayout>
 
-            <include layout="@layout/item_office" />
+            <include layout="@layout/item_office"
+                android:id="@+id/include_office"/>
 
         </LinearLayout>
 

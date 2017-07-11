@@ -21,7 +21,7 @@ class CollectionActivity : AppCompatActivity() {
 
     val jobList:List<JobInfo> = mutableListOf()
     val officeList:List<OfficeInfo> = mutableListOf()
-    val jobAdapter:JobAdapter by lazy { JobAdapter(this,jobList) }
+    val jobAdapter:JobAdapter by lazy { JobAdapter(this,jobList,1) }
     val officeAdapter:OfficeAdapter by lazy { OfficeAdapter(this,officeList) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

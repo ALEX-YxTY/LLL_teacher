@@ -14,6 +14,7 @@ import android.widget.TextView
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.OfficeContract
 import com.milai.lll_teacher.models.entities.OfficeInfo
+import com.milai.lll_teacher.presenters.OfficePresenter
 import com.milai.lll_teacher.views.SearchActivity
 import com.milai.lll_teacher.views.adapters.OfficeAdapter
 
@@ -24,11 +25,12 @@ import com.milai.lll_teacher.views.adapters.OfficeAdapter
  * 主要功能：
  */
 
-class OfficeFrag : Fragment(),View.OnClickListener,OfficeContract.IView{
+class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView{
 
     var dataList = ArrayList<OfficeInfo>()
     var adapter: OfficeAdapter? = null
 
+    val presenter:OfficePresenter by lazy { OfficePresenter(this) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.frag_office,container,false)
@@ -45,7 +47,7 @@ class OfficeFrag : Fragment(),View.OnClickListener,OfficeContract.IView{
         adapter = OfficeAdapter(this.activity, dataList!!)
         rv.layoutManager = LinearLayoutManager(this.activity)
         rv.adapter = adapter
-        onDataGet(mutableListOf())
+        presenter.getOffice()
     }
 
     override fun onClick(v: View?) {
@@ -65,5 +67,6 @@ class OfficeFrag : Fragment(),View.OnClickListener,OfficeContract.IView{
     }
 
     override fun showError(err: String) {
+        toast(err)
     }
 }

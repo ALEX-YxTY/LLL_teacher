@@ -69,7 +69,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!-- 职位详情页面 -->
         <activity
-            android:name=".custom.view.JobDetailActivity"
+            android:name=".views.JobDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!-- 机构详情页 -->

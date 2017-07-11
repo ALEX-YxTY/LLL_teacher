@@ -18,7 +18,7 @@ class InterviewListActivity : AppCompatActivity() {
 
     var from = 1    //1-我的投递记录，2-我的面试邀约
     val dataList = mutableListOf<com.milai.lll_teacher.models.entities.JobInfo>()
-    val adapter:JobAdapter by lazy{ JobAdapter(this, dataList)}
+    val adapter:JobAdapter by lazy{ JobAdapter(this, dataList,1)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -2,6 +2,7 @@ package com.milai.lll_teacher.models.https
 
 import com.milai.lll_teacher.models.entities.HttpResult
 import com.milai.lll_teacher.models.entities.JobInfo
+import com.milai.lll_teacher.models.entities.OfficeInfo
 import io.reactivex.Observable
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -31,6 +32,13 @@ interface HttpApiStores {
                       , @Field("grade") grade: Int, @Field("experience") experience: Int)
             : Observable<HttpResult<List<JobInfo>>>
 
+    //查询所有机构
+    @POST("Home/organization/getAllOrganization")
+    fun getOrganizationgService():Observable<HttpResult<List<OfficeInfo>>>
 
+    //查询机构发布的职位
+    @FormUrlEncoded
+    @POST("Home/Organization/getOrganizationPosition")
+    fun getOfficeJobService(@Field("oid") oid:String,@Field("status") status:Int):Observable<HttpResult<List<JobInfo>>>
 
 }

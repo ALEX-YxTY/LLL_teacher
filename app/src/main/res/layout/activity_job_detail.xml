@@ -5,7 +5,7 @@
     android:background="@color/back_grey1">
 
     <include
-        layout="@layout/titlebar_back_white"
+        layout="@layout/titlebar_back_white_with_star"
         android:id="@id/titlebar" />
 
     <ScrollView
@@ -43,7 +43,7 @@
                     android:textColor="@color/text_black1"/>
 
                 <TextView
-                    android:id="@+id/tv_office"
+                    android:id="@+id/tv_course_grade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/job_name"
@@ -56,19 +56,45 @@
                     android:textSize="12sp"
                     android:textColor="@color/text_grey1"/>
 
-                <TextView
-                    android:id="@+id/tv_address"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/job_name"
-                    android:layout_below="@id/tv_office"
+                    android:layout_below="@id/tv_course_grade"
                     android:layout_marginTop="5dp"
-                    android:maxWidth="150dp"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:text="南京市鼓楼区"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_grey1" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="100dp"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_grey1" />
+                    <TextView
+                        android:id="@+id/tv_experience"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="100dp"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_grey1"
+                        android:layout_marginLeft="4dp"/>
+                    <TextView
+                        android:id="@+id/tv_certificate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="100dp"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textSize="12sp"
+                        android:text="有教师资格证"
+                        android:textColor="@color/text_grey1" />
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/tv_money"
@@ -123,8 +149,7 @@
                     android:textSize="12sp"
                     android:textColor="@color/text_grey1"
                     android:layout_below="@id/component1"
-                    android:layout_marginTop="5dp"
-                    android:text="南京市鼓楼区古平岗4号紫金智梦园"/>
+                    android:layout_marginTop="5dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -144,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="职位详情"
+                    android:text="职位要求"
                     android:textColor="@color/text_black1"/>
 
                 <TextView
@@ -154,24 +179,92 @@
                     android:textSize="12sp"
                     android:textColor="@color/text_grey1"
                     android:layout_below="@id/component2"
-                    android:layout_marginTop="5dp"
-                    android:text="sdjflkjslkdfjlkjslkdjflkjsdklfjlkjsdklfjklsjdflkjlskjdfllkdsjflkjsdklfjklsjdkfljlksjdfkljlksdjfkljsdkljfkljsdkljfkljdsklfjklsdjflkjsdlkjflksjdlkfjlksdjfkljdksljfkljsdkljfklsjdklfjklsdjfkljdlskjfkljsdklfjlkjklsdjfklsdfkljsdfkljsdklfjsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssflkjslkdjflkjskldfjklsjdfkljslkdjflkjsdlfjsdjfkllsdkjflkjsdklfjkljsdkfjlksdjflkjsdklfjlksdjflkjslkdflksjdflkjslkdjflkjsdlkfjlksdflksjdlfkjklsdjflksjdlkfjlksdjflkjsdlkflksdlkfklsdjflkjsdlkjfkljsdklfjklsdjkfljklsdjfkldslkfjklsdjklfjklsdjfklsdlkjfkljsdlkfjlksdjflkjsdlkfjlkdsjflkjdskljfkljdsfjlksdjflkdslkflksdflkjsdklfjlksdjfkljdsklfjlkdskl"/>
+                    android:layout_marginTop="5dp" />
             </RelativeLayout>
 
-            <include layout="@layout/item_office" />
+            <RelativeLayout
+                android:id="@+id/rl_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="10dp"
+                android:layout_marginLeft="@dimen/item_margin13"
+                android:layout_marginRight="@dimen/item_margin13"
+                android:layout_marginTop="@dimen/item_margin13"
+                android:background="@drawable/shape_back_item_border">
+
+                <TextView
+                    android:id="@+id/component3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="其他要求"
+                    android:textColor="@color/text_black1"/>
+
+                <TextView
+                    android:id="@+id/tv_other_demand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_grey1"
+                    android:layout_below="@id/component3"
+                    android:layout_marginTop="5dp" />
+            </RelativeLayout>
+
+            <include layout="@layout/item_office"
+                android:id="@+id/include_office"/>
 
         </LinearLayout>
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/bt_invite"
-        android:layout_alignParentBottom="true"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:background="@color/themeOrange"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:text="@string/go_invite"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <RelativeLayout
+            android:id="@+id/bt_contact"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="49dp"
+            android:background="@color/white">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                >
+                <ImageView
+                    android:id="@+id/iv_component1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_contact"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="立即沟通"
+                    android:textSize="14sp"
+                    android:textColor="@color/themeOrange"
+                    android:layout_toRightOf="@id/iv_component1"
+                    android:layout_marginLeft="5dp"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+        <Button
+            android:id="@+id/bt_append"
+            android:layout_alignParentBottom="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="49dp"
+            android:background="@color/themeOrange"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="@string/go_invite"/>
+    </LinearLayout>
 
 </RelativeLayout>

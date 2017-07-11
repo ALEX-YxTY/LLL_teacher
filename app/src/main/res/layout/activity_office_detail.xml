@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -77,61 +78,73 @@
         android:background="@color/border2"
         android:layout_below="@id/rl_office"/>
 
-    <RelativeLayout
-        android:id="@+id/component1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_below="@id/divider"
         android:background="@color/white"
-        >
-        <TextView
-            android:id="@+id/tv_office_tab"
-            android:layout_width="187dp"
-            android:layout_height="match_parent"
-            style="@style/text_12_theme"
-            android:gravity="center"
-            android:text="机构概况"/>
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:tabIndicatorHeight="0dp"/>
 
+    <RelativeLayout
+        android:layout_below="@id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
         <View
-            android:id="@+id/divider2"
-            android:layout_width="1.5dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tv_office_tab"
-            android:background="@color/back_grey1" />
-
-        <TextView
-            android:id="@+id/tv_job_tab"
-            android:layout_toRightOf="@id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/text_12_black2"
-            android:gravity="center"
-            android:text="热招职位(5)"/>
-
-        <View
-            android:id="@+id/indicator_left"
-            android:layout_width="65dp"
-            android:layout_height="2dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="61dp"
-            android:background="@color/themeOrange" />
-
-        <View
-            android:id="@+id/indicator_right"
-            android:layout_width="72dp"
-            android:layout_height="2dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="63dp"
-            android:background="@color/themeOrange"
-            android:visibility="gone"/>
-
+            android:layout_width="0dp"
+            android:layout_height="22dp"
+            android:background="@color/border2"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp"
-        android:layout_below="@id/component1"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabLayout"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_job"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:visibility="gone"
+            android:background="@color/back_grey1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="11dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_black3"
+                    android:text="机构介绍"
+                    />
+                <TextView
+                    android:id="@+id/tv_introduce"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_grey1"
+                    android:layout_marginTop="5dp"
+                    />
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+
+
 </RelativeLayout>

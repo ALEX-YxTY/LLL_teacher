@@ -42,7 +42,7 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
 
     var rv: RecyclerView? = null
     var dataList = ArrayList<JobInfo>()
-    val jobAdapter:JobAdapter by lazy { JobAdapter(this.activity,dataList) }
+    val jobAdapter:JobAdapter by lazy { JobAdapter(this.activity,dataList,1) }  //type=1 job包含机构信息
 
     var popTj: TjPop? = null
     var popArea: AreaPop? = null
