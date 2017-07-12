@@ -224,7 +224,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_bt_transparent_black">
         <RelativeLayout
             android:id="@+id/bt_contact"
             android:layout_width="0dp"
@@ -260,7 +261,7 @@
             android:layout_alignParentBottom="true"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="49dp"
+            android:layout_height="match_parent"
             android:background="@color/themeOrange"
             android:textSize="16sp"
             android:textColor="@color/white"

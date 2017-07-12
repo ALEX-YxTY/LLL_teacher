@@ -24,7 +24,9 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        userInfo = Cookies.getUserInfo()
+//        userInfo = Cookies.getUserInfo()
+        userInfo = UserInfo()
+        userInfo?.uid = "c81e728d9d4c2f636f067f89cc14862c"
         downloadResource()
     }
 

@@ -41,4 +41,30 @@ interface HttpApiStores {
     @POST("Home/Organization/getOrganizationPosition")
     fun getOfficeJobService(@Field("oid") oid:String,@Field("status") status:Int):Observable<HttpResult<List<JobInfo>>>
 
+    //查询教师是否已收藏某职位
+    @FormUrlEncoded
+    @POST("Home/Api/getTeacherIsLikedPosition")
+    fun isCollectedService(@Field("pid") pid:Int,@Field("tid") uid:String):Observable<HttpResult<List<Any>>>
+
+    //添加收藏职位
+    @FormUrlEncoded
+    @POST("Home/Api/addTeacherLikedPosition")
+    fun addJobCollectionService(@Field("pid") jobId:Int,@Field("tid") uid:String):Observable<HttpResult<Any>>
+
+    //删除收藏职位
+    @FormUrlEncoded
+    @POST("Home/Api/deleteTeacherLikedPosition")
+    fun delectJobCollectionService(@Field("pid") jobId:Int, @Field("tid") uid:String):Observable<HttpResult<Any>>
+
+
+    //查询收藏职位列表
+    @FormUrlEncoded
+    @POST("Home/Api/getTeacherLikedPosition")
+    fun getJobCollectService(@Field("tid") tid:String):Observable<HttpResult<List<JobInfo>>>
+
+    //教师主动投递简历
+    @FormUrlEncoded
+    @POST("Home/Api/sendResume")
+    fun sendResumeService(@Field("pid") jobId: Int, @Field("tid") teacherId: String, @Field("oid") oid: String
+                          , @Field("type") type: Int):Observable<HttpResult<Any>>
 }

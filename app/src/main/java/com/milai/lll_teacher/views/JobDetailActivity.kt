@@ -1,16 +1,22 @@
 package com.milai.lll_teacher.views
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.meishipintu.lll_office.customs.utils.DateUtil
 import com.milai.lll_teacher.Cookies
+import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
+import com.milai.lll_teacher.contracts.JobDetailContact
 import com.milai.lll_teacher.models.entities.JobInfo
+import com.milai.lll_teacher.presenters.JobPresenter
 
-class JobDetailActivity : BasicActivity() ,View.OnClickListener{
+class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact.IView{
 
     val jobInfo: JobInfo by lazy { intent.getSerializableExtra("job") as JobInfo }
     /**
@@ -18,10 +24,16 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener{
      *          从机构发布的职位进入，不再带机构信息，避免陷入循环，type=2
      */
     val type:Int by lazy { intent.getIntExtra("type", 2) }
+    val star:ImageView by lazy { findViewById(R.id.bt_collect) as ImageView }
+
+    val glide:RequestManager by lazy{ Glide.with(this) }
+    var isCollect = false       //标记是否已收藏
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_job_detail)
+        presenter = JobPresenter(this)
+        (presenter as JobDetailContact.IPresenter).isJobCollect(jobInfo.id, MyApplication.userInfo?.uid!!)
         initUI()
     }
 
@@ -29,9 +41,9 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener{
         val title = findViewById(R.id.tv_title) as TextView
         title.text = "职位详情"
         findViewById(R.id.bt_back).setOnClickListener(this)
-        findViewById(R.id.bt_collect).setOnClickListener(this)
         findViewById(R.id.bt_contact).setOnClickListener(this)
         findViewById(R.id.bt_append).setOnClickListener(this)
+        star.setOnClickListener(this)
 
         val grades = Cookies.getConstant(3)
         val courses = Cookies.getConstant(2)
@@ -75,10 +87,55 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener{
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.bt_back -> onBackPressed()
-            R.id.bt_collect ->{}
-            R.id.bt_contact ->{}
-            R.id.bt_append ->{}
+            R.id.bt_collect ->{
+                //添加删除收藏
+                (presenter as JobDetailContact.IPresenter).addJobCollect(jobInfo.id, isCollect, MyApplication.userInfo?.uid!!)
+            }
+            R.id.bt_contact ->{
+                //进入沟通页
+                val intent = Intent(this, MessageDetailActivity::class.java)
+                intent.putExtra("job", jobInfo)
+                intent.putExtra("teacher", MyApplication.userInfo?.uid)
+                startActivity(intent)
+            }
+            R.id.bt_append ->{
+                //投递简历
+                (presenter as JobDetailContact.IPresenter).sendResume(jobInfo.id, MyApplication.userInfo?.uid!!, jobInfo.oid)
+            }
         }
     }
 
+    //from JobDetailContract.IView
+    override fun showError(err: String) {
+        toast(err)
+    }
+
+    //from JobDetailContract.IView
+    override fun isJobCollected(isCollected: Boolean) {
+        Log.d("test", "is the job collected $isCollected")
+        this.isCollect = isCollected
+        if (isCollected) {
+            glide.load(R.drawable.icon_star_fill).into(star)
+        } else {
+            glide.load(R.drawable.icon_star_unfill).into(star)
+        }
+    }
+
+    //from JobDetailContract.IView
+    override fun onJobCollected(isCollected: Boolean) {
+        if (isCollected) {
+            isCollect = true
+            toast("添加收藏成功")
+            glide.load(R.drawable.icon_star_fill).into(star)
+        } else {
+            isCollect = false
+            toast("取消收藏成功")
+            glide.load(R.drawable.icon_star_unfill).into(star)
+        }
+    }
+
+    //from JobDetailContract.IView
+    override fun onResumeSendSuccess() {
+        toast("")
+    }
 }
