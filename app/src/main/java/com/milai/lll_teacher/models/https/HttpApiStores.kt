@@ -44,7 +44,7 @@ interface HttpApiStores {
     //查询教师是否已收藏某职位
     @FormUrlEncoded
     @POST("Home/Api/getTeacherIsLikedPosition")
-    fun isCollectedService(@Field("pid") pid:Int,@Field("tid") uid:String):Observable<HttpResult<List<Any>>>
+    fun isJobCollectedService(@Field("pid") pid:Int, @Field("tid") uid:String):Observable<HttpResult<List<Any>>>
 
     //添加收藏职位
     @FormUrlEncoded
@@ -67,4 +67,24 @@ interface HttpApiStores {
     @POST("Home/Api/sendResume")
     fun sendResumeService(@Field("pid") jobId: Int, @Field("tid") teacherId: String, @Field("oid") oid: String
                           , @Field("type") type: Int):Observable<HttpResult<Any>>
+
+    //教师添加收藏机构
+    @FormUrlEncoded
+    @POST("Home/Api/addTeacherLikedOrganization")
+    fun addOfficeCollectionService(@Field("oid") officeId: String, @Field("tid") teacherId: String): Observable<HttpResult<Any>>
+
+    //教师删除收藏机构
+    @FormUrlEncoded
+    @POST("Home/Api/addTeacherLikedOrganization")
+    fun deletOfficeCollectionService(@Field("oid") officeId: String, @Field("tid") teacherId: String): Observable<HttpResult<Any>>
+
+    //教师查询收藏的机构
+    @FormUrlEncoded
+    @POST("Home/Api/getTeacherLikedOrganization")
+    fun getOfficeCollectionService( @Field("tid") teacherId: String): Observable<HttpResult<List<OfficeInfo>>>
+
+    //教师是否收藏了机构
+    @FormUrlEncoded
+    @POST("Home/Api/getTeacherIsLikedOrganization")
+    fun isOfficeCollectedService(@Field("oid") officeId: String,  @Field("tid") teacherId: String): Observable<HttpResult<List<Any>>>
 }

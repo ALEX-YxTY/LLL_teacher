@@ -225,13 +225,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/shape_bt_transparent_black">
+        >
         <RelativeLayout
             android:id="@+id/bt_contact"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="49dp"
-            android:background="@color/white">
+            android:background="@drawable/shape_bt_transparent_black">
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

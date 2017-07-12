@@ -42,7 +42,7 @@ abstract class HttpCallback<T>:Observer<T> {
             }
             onFailure(msg)
         } else {
-            onFailure(e.toString())
+            onFailure((e as Exception).message)
         }
         onFinish()
     }

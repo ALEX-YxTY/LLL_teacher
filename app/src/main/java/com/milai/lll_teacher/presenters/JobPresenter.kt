@@ -2,7 +2,6 @@ package com.milai.lll_teacher.presenters
 
 import com.milai.lll_teacher.contracts.JobContract
 import com.milai.lll_teacher.contracts.JobDetailContact
-import com.milai.lll_teacher.models.entities.HttpResult
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpCallback
@@ -37,7 +36,7 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
 
     //判断职位是否已收藏
     override fun isJobCollect(id: Int, uid: String) {
-        addSubscription(httpApi.isCollectedService(id,uid).map(HttpResultFunc<List<Any>>())
+        addSubscription(httpApi.isJobCollectedService(id,uid).map(HttpResultFunc<List<Any>>())
                 ,object:HttpCallback<List<Any>>(){
             override fun onSuccess(model: List<Any>) {
                 if (model.isNotEmpty()) {

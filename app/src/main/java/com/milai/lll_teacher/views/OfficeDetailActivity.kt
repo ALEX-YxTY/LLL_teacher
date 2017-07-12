@@ -17,6 +17,7 @@ import com.milai.lll_teacher.views.adapters.JobAdapter
 
 class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
 
+
     val office:OfficeInfo by lazy { intent.getSerializableExtra("office") as OfficeInfo }
     val scrollView: ScrollView by lazy { findViewById(R.id.scroll) as ScrollView}
 
@@ -76,13 +77,27 @@ class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
         scrollView.visibility = View.VISIBLE
     }
 
+    //from OfficeDetailContract.IView
     override fun onPositionGet(data: List<JobInfo>) {
         dataList.clear()
         dataList.addAll(data)
         adapter.notifyDataSetChanged()
     }
 
+    //from OfficeDetailContract.IView
     override fun showError(err: String) {
         toast(err)
+    }
+
+    //from OfficeDetailContract.IView
+    override fun isOfficeCollected(isCollect: Boolean) {
+    }
+
+    //from OfficeDetailContract.IView
+    override fun onOfficeCollectResult(isAdd: Boolean) {
+    }
+
+    //from OfficeDetailContract.IView
+    override fun onOfficeCollectionGet(data: List<OfficeInfo>) {
     }
 }
