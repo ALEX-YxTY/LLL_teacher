@@ -57,9 +57,9 @@ class OfficePresenter(val iView:BasicView) : BasicPresenter(), OfficeContract.IP
                 ,object :HttpCallback<List<Any>>(){
             override fun onSuccess(model: List<Any>) {
                 if (model.isNotEmpty()) {
-                    (iView as OfficeDetailContract.IView).isOfficeCollected(false)
-                } else {
                     (iView as OfficeDetailContract.IView).isOfficeCollected(true)
+                } else {
+                    (iView as OfficeDetailContract.IView).isOfficeCollected(false)
                 }
             }
 
@@ -107,21 +107,21 @@ class OfficePresenter(val iView:BasicView) : BasicPresenter(), OfficeContract.IP
         }
     }
 
-    //查询教师收藏的机构
-    override fun getOrganizationCollection(teacherId: String) {
-        addSubscription(httpApi.getOfficeCollectionService(teacherId).map(HttpResultFunc<List<OfficeInfo>>())
-                ,object :HttpCallback<List<OfficeInfo>>(){
-            override fun onSuccess(model: List<OfficeInfo>) {
-                (iView as OfficeDetailContract.IView).onOfficeCollectionGet(model)
-            }
-
-            override fun onFailure(msg: String?) {
-                if (msg != null) {
-                    iView.showError(msg)
-                }
-            }
-
-        })
-    }
+//    //查询教师收藏的机构
+//    override fun getOrganizationCollection(teacherId: String) {
+//        addSubscription(httpApi.getOfficeCollectionService(teacherId).map(HttpResultFunc<List<OfficeInfo>>())
+//                ,object :HttpCallback<List<OfficeInfo>>(){
+//            override fun onSuccess(model: List<OfficeInfo>) {
+//                (iView as OfficeDetailContract.IView).onOfficeCollectionGet(model)
+//            }
+//
+//            override fun onFailure(msg: String?) {
+//                if (msg != null) {
+//                    iView.showError(msg)
+//                }
+//            }
+//
+//        })
+//    }
 
 }

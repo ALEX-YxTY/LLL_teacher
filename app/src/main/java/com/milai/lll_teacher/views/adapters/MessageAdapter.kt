@@ -5,6 +5,7 @@ import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.models.entities.Message
 import com.milai.lll_teacher.views.ChatDetailActivity
@@ -26,7 +27,8 @@ class MessageAdapter(ctx:Context,dataList:MutableList<Message>):BasicAdapter(ctx
             //TODO bindview
             messageViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, ChatDetailActivity::class.java)
-                intent.putExtra("message", dataList[position] as Message)
+//                intent.putExtra("job", jobInfo)
+                intent.putExtra("teacher", MyApplication.userInfo?.uid)
                 ctx.startActivity(intent)
             }
         }

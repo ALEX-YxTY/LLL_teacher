@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.models.https
 
+import com.milai.lll_teacher.models.entities.ChatDetail
 import com.milai.lll_teacher.models.entities.HttpResult
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
@@ -35,6 +36,11 @@ interface HttpApiStores {
     //查询所有机构
     @POST("Home/organization/getAllOrganization")
     fun getOrganizationgService():Observable<HttpResult<List<OfficeInfo>>>
+
+    //查询机构详情
+    @FormUrlEncoded
+    @POST("Home/Organization/getOrganizationDetail ")
+    fun getOrganizationDetaioService(@Field("uid") uid:String):Observable<HttpResult<OfficeInfo>>
 
     //查询机构发布的职位
     @FormUrlEncoded
@@ -75,7 +81,7 @@ interface HttpApiStores {
 
     //教师删除收藏机构
     @FormUrlEncoded
-    @POST("Home/Api/addTeacherLikedOrganization")
+    @POST("Home/Api/deleteTeacherLikedOrganization")
     fun deletOfficeCollectionService(@Field("oid") officeId: String, @Field("tid") teacherId: String): Observable<HttpResult<Any>>
 
     //教师查询收藏的机构
@@ -87,4 +93,16 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Api/getTeacherIsLikedOrganization")
     fun isOfficeCollectedService(@Field("oid") officeId: String,  @Field("tid") teacherId: String): Observable<HttpResult<List<Any>>>
+
+    //获取聊天详情
+    @FormUrlEncoded
+    @POST("Home/Api/getChatDetail")
+    fun getChatDetailService(@Field("tid") teacherId:String,@Field("pid") jobId:Int):Observable<HttpResult<List<ChatDetail>>>
+
+    //发送新的聊天
+    @FormUrlEncoded
+    @POST("Home/Api/chat")
+    fun sendChatService(@Field("pid") jobId:Int,@Field("tid") teacherId:String, @Field("oid") officeId:String
+                        ,@Field("content") content:String,@Field("type") type:Int):Observable<HttpResult<Any>>
+
 }

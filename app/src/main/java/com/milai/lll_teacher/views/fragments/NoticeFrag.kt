@@ -80,7 +80,7 @@ class NoticeFrag :Fragment(),NoticeContract.IView{
 
     override fun onMessageGet(messages: List<Message>) {
         for (i: Int in 1..10) {
-            messageList.add(Message())
+//            messageList.add(Message())
         }
         messageAdaper.notifyDataSetChanged()
     }

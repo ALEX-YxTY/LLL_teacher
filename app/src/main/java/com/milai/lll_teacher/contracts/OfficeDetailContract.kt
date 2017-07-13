@@ -18,7 +18,6 @@ interface OfficeDetailContract{
 
         fun onOfficeCollectResult(isAdd: Boolean)
 
-        fun onOfficeCollectionGet(data:List<OfficeInfo>)
     }
 
     interface IPresenter:BasicPresenterImp{
@@ -28,7 +27,5 @@ interface OfficeDetailContract{
         fun isOfficeCollect(officeId: String, teacherId: String)
 
         fun addOrganizationCollection(officeId: String, teacherId: String, isAddded: Boolean)
-
-        fun getOrganizationCollection(teacherId:String)
     }
 }

@@ -8,6 +8,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.OfficeDetailContract
 import com.milai.lll_teacher.models.entities.JobInfo
@@ -20,7 +23,10 @@ class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
 
     val office:OfficeInfo by lazy { intent.getSerializableExtra("office") as OfficeInfo }
     val scrollView: ScrollView by lazy { findViewById(R.id.scroll) as ScrollView}
+    val star:ImageView by lazy { findViewById(R.id.bt_collect) as ImageView }
 
+    val glide: RequestManager by lazy{ Glide.with(this)}
+    var isCollected = false   //标记是否已经收藏0
     val dataList = mutableListOf<JobInfo>()
     val adapter:JobAdapter by lazy{ JobAdapter(this, dataList,2)}   //type=2 job不包含机构信息
 
@@ -28,6 +34,7 @@ class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_office_detail)
         presenter = OfficePresenter(this)
+        (presenter as OfficeDetailContract.IPresenter).isOfficeCollect(office.uid, MyApplication.userInfo?.uid!!)
         initTab()
         initUI()
         initList()
@@ -74,6 +81,11 @@ class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
         tvDesc.text = "热招  职位"
         val tvIntroduce = findViewById(R.id.tv_introduce) as TextView
         tvIntroduce.text = office.introduce_detail
+        star.setOnClickListener{
+            (presenter as OfficeDetailContract.IPresenter).addOrganizationCollection(office.uid
+                    , MyApplication.userInfo?.uid!!, isCollected)
+        }
+        findViewById(R.id.bt_back).setOnClickListener{ onBackPressed()}
         scrollView.visibility = View.VISIBLE
     }
 
@@ -91,13 +103,23 @@ class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
 
     //from OfficeDetailContract.IView
     override fun isOfficeCollected(isCollect: Boolean) {
+        this.isCollected = isCollect
+        if (isCollect) {
+            glide.load(R.drawable.icon_star_fill).into(star)
+        }
     }
 
     //from OfficeDetailContract.IView
     override fun onOfficeCollectResult(isAdd: Boolean) {
+        if (isAdd) {
+            toast("添加收藏成功")
+            isCollected = true
+            glide.load(R.drawable.icon_star_fill).into(star)
+        } else {
+            toast("取消收藏成功")
+            isCollected = false
+            glide.load(R.drawable.icon_star_unfill).into(star)
+        }
     }
 
-    //from OfficeDetailContract.IView
-    override fun onOfficeCollectionGet(data: List<OfficeInfo>) {
-    }
 }

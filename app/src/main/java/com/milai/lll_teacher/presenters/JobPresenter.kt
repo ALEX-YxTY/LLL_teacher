@@ -69,7 +69,6 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
                         iView.showError(msg)
                     }
                 }
-
             })
         } else {
             addSubscription(httpApi.delectJobCollectionService(id,teacherId).map(HttpResultFunc<Any>())
