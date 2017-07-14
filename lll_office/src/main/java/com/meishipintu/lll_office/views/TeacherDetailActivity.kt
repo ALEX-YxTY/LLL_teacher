@@ -33,7 +33,7 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener {
         settings.domStorageEnabled = true
         webView.setWebChromeClient(WebChromeClient())
         webView.setWebViewClient(WebViewClient())
-        webView.loadUrl("http://lll.domobile.net/Home/Index/detail?=${teacher.uid}")
+        webView.loadUrl("http://lll.domobile.net/Home/Index/detail?uid=${teacher.uid}")
     }
 
     override fun onClick(v: View?) {

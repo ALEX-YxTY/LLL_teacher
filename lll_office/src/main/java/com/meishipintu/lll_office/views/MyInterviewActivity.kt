@@ -11,13 +11,14 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.contract.MyInterviewContract
 import com.meishipintu.lll_office.customs.MenuClickListener
 import com.meishipintu.lll_office.customs.TjPop
+import com.meishipintu.lll_office.modles.entities.DeliverInfo
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.views.adapters.TeacherAdapter
 
-class MyInterviewActivity : AppCompatActivity(),View.OnClickListener,MenuClickListener {
-
+class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListener,MyInterviewContract.IView {
 
     val rv:RecyclerView by lazy { findViewById(R.id.rv)as RecyclerView }
     val tvAll:TextView by lazy { findViewById(R.id.tv_all)as TextView }
@@ -110,17 +111,24 @@ class MyInterviewActivity : AppCompatActivity(),View.OnClickListener,MenuClickLi
         else R.anim.popout_anim))
     }
 
-    override fun onTjClick(index: Int, name: String) {
+    override fun onTjClick(index: Boolean, name: String) {
         //0-未面试  1-未面试邀约
         changeSelect(1)
-        tvUnInterView.text = if(index==0) "未面试" else "未面试 邀约"
+        tvUnInterView.text = if(index) "未面试" else "未面试 邀约"
     }
+
 
     override fun onRequireSelect(indexYear: Int, indexWorkYear: Int, indexEducation: Int) {
     }
 
     override fun onDismiss(type: Int) {
         back.visibility= View.GONE
+    }
+
+    override fun onError(e: String) {
+    }
+
+    override fun onDeleverDataGet(dataList: List<DeliverInfo>) {
     }
 
 }

@@ -93,7 +93,7 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
             }
             R.id.bt_contact ->{
                 //进入沟通页
-                val intent = Intent(this, MessageDetailActivity::class.java)
+                val intent = Intent(this, ChatDetailActivity::class.java)
                 intent.putExtra("job", jobInfo)
                 intent.putExtra("teacher", MyApplication.userInfo?.uid)
                 startActivity(intent)

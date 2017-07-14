@@ -10,7 +10,7 @@
 
     <include layout="@layout/titlebar_back_white"/>
 
-    <include layout="@layout/item_job"/>
+    <include layout="@layout/item_job" android:id="@+id/item_job"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"

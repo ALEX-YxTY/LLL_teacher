@@ -96,10 +96,6 @@
             android:name=".views.InterviewListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--沟通详情页面-->
-        <activity android:name=".views.MessageDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             />
     </application>
 
