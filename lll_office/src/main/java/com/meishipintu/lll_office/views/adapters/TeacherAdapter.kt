@@ -35,7 +35,6 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>): BasicAdapter(ctx
             teacherInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, TeacherDetailActivity::class.java)
                 intent.putExtra("teacher", teacher )
-                intent.putExtra("type", 1)
                 ctx.startActivity(intent)
             }
         }

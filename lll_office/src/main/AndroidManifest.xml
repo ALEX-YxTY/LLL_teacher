@@ -120,10 +120,15 @@
             android:name=".views.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--邀请面试页面-->
-        <activity android:name=".views.InviteInterviewActivity"
+        <!-- 邀请面试页面 -->
+        <activity
+            android:name=".views.InviteInterviewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--教师详情-未面试/已面试-->
+        <activity android:name=".views.TeacherInterviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

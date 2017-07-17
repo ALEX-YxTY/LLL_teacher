@@ -1,9 +1,6 @@
 package com.meishipintu.lll_office.modles
 
-import com.meishipintu.lll_office.modles.entities.HttpResult
-import com.meishipintu.lll_office.modles.entities.JobInfo
-import com.meishipintu.lll_office.modles.entities.TeacherInfo
-import com.meishipintu.lll_office.modles.entities.UserInfo
+import com.meishipintu.lll_office.modles.entities.*
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.Field
@@ -65,4 +62,25 @@ interface HttpApiStores {
     @POST("Home/Base/cs")
     fun getConstantArraysService(@Field("type") type:Int) :Observable<HttpResult<Array<String>>>
 
+    //获取机构被投递记录
+    @FormUrlEncoded
+    @POST("Home/Organization/getOrganizationDeliver")
+    fun getDeliverHistoryService(@Field("oid") oid: String, @Field("status") status: Int, @Field("type") type: Int)
+            : Observable<HttpResult<List<DeliverInfo>>>
+
+    //查询机构详情
+    @FormUrlEncoded
+    @POST("Home/Organization/getOrganizationDetail ")
+    fun getOrganizationDetaioService(@Field("uid") uid:String):Observable<HttpResult<OfficeInfo>>
+
+    //获取聊天详情
+    @FormUrlEncoded
+    @POST("Home/Api/getChatDetail")
+    fun getChatDetailService(@Field("tid") teacherId:String,@Field("pid") jobId:Int):Observable<HttpResult<List<ChatDetail>>>
+
+    //发送新的聊天
+    @FormUrlEncoded
+    @POST("Home/Api/chat")
+    fun sendChatService(@Field("pid") jobId:Int,@Field("tid") teacherId:String, @Field("oid") officeId:String
+                        ,@Field("content") content:String,@Field("type") type:Int):Observable<HttpResult<Any>>
 }

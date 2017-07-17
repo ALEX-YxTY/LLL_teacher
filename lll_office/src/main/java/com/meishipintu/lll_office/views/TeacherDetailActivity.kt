@@ -13,8 +13,6 @@ import com.meishipintu.lll_office.modles.entities.TeacherInfo
 class TeacherDetailActivity : BasicActivity(),View.OnClickListener {
 
     val teacher:TeacherInfo by lazy { intent.getSerializableExtra("teacher") as TeacherInfo }
-    //1-教师详情（收藏） 2-教师详情（邀约） 3-教师详情（未面试） 4-教师详情（已面试）
-    val type:Int by lazy { intent.getIntExtra("type",1) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

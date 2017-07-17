@@ -10,12 +10,15 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.MyInterviewContract
 import com.meishipintu.lll_office.customs.MenuClickListener
 import com.meishipintu.lll_office.customs.TjPop
 import com.meishipintu.lll_office.modles.entities.DeliverInfo
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
+import com.meishipintu.lll_office.presenters.DeliverPresenter
+import com.meishipintu.lll_office.views.adapters.DeliverAdapter
 import com.meishipintu.lll_office.views.adapters.TeacherAdapter
 
 class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListener,MyInterviewContract.IView {
@@ -31,14 +34,15 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
     val back:View by lazy { findViewById(R.id.back)}
     val tab :View by lazy { findViewById(R.id.ll_tab) }
 
-    val dataList:MutableList<TeacherInfo> = mutableListOf()
-    val adapter:TeacherAdapter by lazy { TeacherAdapter(this,dataList) }
+    val dataList:MutableList<DeliverInfo> = mutableListOf()
+    val adapter:DeliverAdapter by lazy { DeliverAdapter(this,dataList) }
 
     var select = 0  //标注当前选择栏
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_interview)
+        presenter = DeliverPresenter(this)
         findViewById(R.id.bt_back).setOnClickListener(this)
         val tvTitle = findViewById(R.id.tv_title)as TextView
         tvTitle.text = "我的面试"
@@ -52,6 +56,8 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
     private fun initRv() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = this.adapter
+        (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication.userInfo?.uid!!)
+        changeSelect(0)
     }
 
     override fun onClick(v: View?) {
@@ -61,10 +67,12 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
             }
             R.id.tv_all ->{
                 //全部数据
+                (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication.userInfo?.uid!!)
                 changeSelect(0)
             }
             R.id.tv_already ->{
                 //已面试数据
+                (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication.userInfo?.uid!!,status = 2)
                 changeSelect(2)
             }
             R.id.rl_not_interview ->{
@@ -113,6 +121,13 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
 
     override fun onTjClick(index: Boolean, name: String) {
         //0-未面试  1-未面试邀约
+        if (index) {
+            (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication
+                    .userInfo?.uid!!, status = 1)
+        } else {
+            (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication
+                    .userInfo?.uid!!, status = 1, type = 2)
+        }
         changeSelect(1)
         tvUnInterView.text = if(index) "未面试" else "未面试 邀约"
     }
@@ -125,9 +140,12 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
         back.visibility= View.GONE
     }
 
+    //from MyInterviewContract.IView
     override fun onError(e: String) {
+        toast(e)
     }
 
+    //from MyInterviewContract.IView
     override fun onDeleverDataGet(dataList: List<DeliverInfo>) {
     }
 

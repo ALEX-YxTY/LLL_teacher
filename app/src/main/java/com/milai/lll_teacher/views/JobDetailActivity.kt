@@ -136,6 +136,6 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
 
     //from JobDetailContract.IView
     override fun onResumeSendSuccess() {
-        toast("")
+        toast("简历投递成功！")
     }
 }

@@ -16,6 +16,6 @@ interface MyInterviewContract {
     }
 
     interface IPresenter:BasicPresenterImp{
-        fun getDeliverHistory(uid:String,status:Int,type:Int)
+        fun getDeliverHistory(uid: String, status: Int = 0, type: Int = 0)
     }
 }

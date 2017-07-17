@@ -47,4 +47,5 @@
     <string name="job_name">职位名称</string>
     <string name="grade">年级</string>
     <string name="work_area">工作区域</string>
+    <string name="go_interview">去面试</string>
 </resources>
