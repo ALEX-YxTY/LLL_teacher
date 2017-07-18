@@ -35,20 +35,18 @@ class DeliverAdapter(ctx: Context, dataList:List<DeliverInfo>): BasicAdapter(ctx
             deliverInfoViewHolder.number.text = "${teacher.total_number} 人评价"
             deliverInfoViewHolder.socre.text = NumberUtil.formatNumberInOne(teacher.total_score.toDouble()
                     / teacher.total_number)
-            deliverInfoViewHolder.jobName.text = (dataList[position] as DeliverInfo).position.job_name
-            deliverInfoViewHolder.chat.setOnClickListener{
-                //进入沟通页
-                val intent = Intent(ctx, ChatDetailActivity::class.java)
-                intent.putExtra("job", (dataList[position] as DeliverInfo).position)
-                intent.putExtra("teacher", teacher.uid)
-                ctx.startActivity(intent)
-            }
+            deliverInfoViewHolder.jobName.text = (dataList[position] as DeliverInfo).postion.job_name
+//            deliverInfoViewHolder.chat.setOnClickListener{
+//                //进入沟通页
+//                val intent = Intent(ctx, ChatDetailActivity::class.java)
+//                intent.putExtra("job", (dataList[position] as DeliverInfo).position)
+//                intent.putExtra("teacher", teacher.uid)
+//                ctx.startActivity(intent)
+//            }
             deliverInfoViewHolder.itemView.setOnClickListener{
                 //进入教师详情页面
                 val intent = Intent(ctx, TeacherInterviewActivity::class.java)
-                intent.putExtra("teacher", teacher )
-                intent.putExtra("job", (dataList[position] as DeliverInfo).position)
-                intent.putExtra("status",(dataList[position] as DeliverInfo).status)
+                intent.putExtra("deliver", dataList[position] as DeliverInfo )
                 ctx.startActivity(intent)
             }
         }

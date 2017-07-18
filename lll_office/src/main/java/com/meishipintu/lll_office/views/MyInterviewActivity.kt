@@ -56,6 +56,10 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
     private fun initRv() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = this.adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
         (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication.userInfo?.uid!!)
         changeSelect(0)
     }
@@ -147,6 +151,9 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
 
     //from MyInterviewContract.IView
     override fun onDeleverDataGet(dataList: List<DeliverInfo>) {
+        this.dataList.clear()
+        this.dataList.addAll(dataList)
+        adapter.notifyDataSetChanged()
     }
 
 }

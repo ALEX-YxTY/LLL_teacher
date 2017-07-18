@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.presenters
 
+import com.meishipintu.lll_office.contract.InterviewContract
 import com.meishipintu.lll_office.contract.MyInterviewContract
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
@@ -12,10 +13,14 @@ import com.meishipintu.lll_office.views.BasicView
  *
  * 主要功能：
  */
-class DeliverPresenter(val iView:BasicView):BasicPresenter(), MyInterviewContract.IPresenter {
+class DeliverPresenter(val iView:BasicView):BasicPresenter(), MyInterviewContract.IPresenter
+        ,InterviewContract.IPresenter{
 
+    val httpApi = HttpApiClinet.retrofit()
+
+    //获取机构被投递记录
     override fun getDeliverHistory(uid: String, status: Int, type: Int) {
-        addSubscription(HttpApiClinet.retrofit().getDeliverHistoryService(uid,status,type)
+        addSubscription(httpApi.getDeliverHistoryService(uid,status,type)
                 .map(HttpResultFunc<List<DeliverInfo>>()),object :HttpCallback<List<DeliverInfo>>(){
             override fun onSuccess(model: List<DeliverInfo>) {
                 (iView as MyInterviewContract.IView).onDeleverDataGet(model)
@@ -28,5 +33,23 @@ class DeliverPresenter(val iView:BasicView):BasicPresenter(), MyInterviewContrac
             }
 
         })
+    }
+
+    override fun updateDeliverStatus(deliverId: Int, status: Int, score: Int, evaluate: String) {
+        addSubscription(httpApi.updateDeliverStatusService(deliverId,status,score,evaluate).map(HttpResultFunc<DeliverInfo>())
+                ,object :HttpCallback<DeliverInfo>(){
+
+            override fun onSuccess(model: DeliverInfo) {
+                (iView as InterviewContract.IView).onStatusUpdateSuccess(model.status)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
+
+        })
+
     }
 }

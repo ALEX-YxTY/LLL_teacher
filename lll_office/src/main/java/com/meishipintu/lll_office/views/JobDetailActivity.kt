@@ -78,9 +78,7 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         when(v?.id){
             R.id.bt_back -> onBackPressed()
             R.id.bt_invite ->{
-                val intent = Intent(this, InviteInterviewActivity::class.java)
-                intent.putExtra("jobId", jobInfo.id)
-                startActivity(intent)
+                //TODO 去邀请
             }
             R.id.tv_offline ->{
                 (presenter as JobManagerPresenter).changeStatus(jobInfo.id.toString(),if(jobInfo.status==1) 2 else 1)

@@ -125,8 +125,13 @@
             android:name=".views.InviteInterviewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--教师详情-未面试/已面试-->
-        <activity android:name=".views.TeacherInterviewActivity"
+        <!-- 教师详情-未面试/已面试 -->
+        <activity
+            android:name=".views.TeacherInterviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--评价页面-->
+        <activity android:name=".views.EvaluateActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>

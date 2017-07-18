@@ -41,7 +41,7 @@
     <RatingBar
         android:id="@+id/star"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="14dp"
         android:layout_below="@id/tv_course"
         android:layout_marginTop="6dp"
         android:layout_alignLeft="@id/tv_course"

@@ -33,7 +33,7 @@
                 android:id="@+id/teacher_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/item_margin15"
+                android:layout_marginRight="15dp"
                 android:textSize="14sp"
                 android:layout_marginTop="11dp"
                 android:layout_toRightOf="@id/iv_head"
@@ -57,10 +57,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/border2"
-                android:layout_marginLeft="@dimen/margin17"
+                android:layout_marginLeft="17dp"
                 android:layout_marginRight="17dp"
                 android:layout_below="@id/iv_head"
-                android:layout_marginTop="@dimen/item_margin15"/>
+                android:layout_marginTop="15dp"/>
             <TextView
                 android:id="@+id/tv_evaluate"
                 android:layout_width="wrap_content"
@@ -69,20 +69,23 @@
                 android:layout_below="@id/divider"
                 android:textColor="@color/text_black2"
                 android:textSize="14sp"
-                android:text="无可挑剔"
                 android:layout_marginTop="15.5dp"/>
 
             <RatingBar
                 android:id="@id/star"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:numStars="5"
                 android:stepSize="1.0"
                 android:layout_below="@id/tv_evaluate"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/item_margin15"/>
+                android:layout_marginTop="15dp"
+                style="@style/CustomRatingBar2"
+                android:layout_marginBottom="20dp"
+                android:isIndicator="false"
+                />
 
-            <com.milai.lll_teacher.custom.view.CustomLabelMultiSelectCenterView
+            <com.meishipintu.lll_office.customs.CustomLabelMultiSelectCenterView
                 android:layout_below="@id/star"
                 android:id="@+id/multi_select"
                 android:layout_centerHorizontal="true"
@@ -90,8 +93,9 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
+                />
 
         </RelativeLayout>
         

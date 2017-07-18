@@ -83,4 +83,10 @@ interface HttpApiStores {
     @POST("Home/Api/chat")
     fun sendChatService(@Field("pid") jobId:Int,@Field("tid") teacherId:String, @Field("oid") officeId:String
                         ,@Field("content") content:String,@Field("type") type:Int):Observable<HttpResult<Any>>
+
+    //变更投递记录的状态（已面试，已评价等）
+    @FormUrlEncoded
+    @POST("Home/Api/updateInterviewStatus")
+    fun updateDeliverStatusService(@Field("id") deliverId: Int, @Field("status") status: Int, @Field("score") score: Int
+                                   , @Field("evaluate") evaluat:String):Observable<HttpResult<DeliverInfo>>
 }
