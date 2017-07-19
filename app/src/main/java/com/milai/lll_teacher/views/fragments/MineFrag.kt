@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.views.CollectionActivity
 import com.milai.lll_teacher.views.InterviewListActivity
+import com.milai.lll_teacher.views.OrganizationCollectionActivity
 import com.milai.lll_teacher.views.SettingActivity
 
 /**
@@ -63,13 +64,13 @@ class MineFrag : Fragment(),View.OnClickListener{
                 startActivity(intent)
             }
             R.id.rl_my_job_collection -> {
+                //收藏的职位
                 val intent = Intent(this.activity, CollectionActivity::class.java)
-                intent.putExtra("from", 1)      //收藏的职位
                 startActivity(intent)
             }
             R.id.rl_my_attention_office -> {
-                val intent = Intent(this.activity, CollectionActivity::class.java)
-                intent.putExtra("from", 2)      //收藏的机构
+                //收藏的机构
+                val intent = Intent(this.activity, OrganizationCollectionActivity::class.java)
                 startActivity(intent)
             }
             R.id.rl_setting -> {

@@ -36,10 +36,10 @@ dependencies {
     implementation 'com.android.support:design:25.4.0'
     implementation 'com.android.support:recyclerview-v7:25.4.0'
     //Retrofit2
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //链接rxjava2 要是用adapter-rxjava2
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     //okHttp3-interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     //rxKotlin&rxAndroid

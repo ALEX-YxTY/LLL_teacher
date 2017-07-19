@@ -1,8 +1,8 @@
 package com.milai.lll_teacher.presenters
 
-import com.milai.lll_teacher.contracts.JobContract
 import com.milai.lll_teacher.contracts.OfficeContract
 import com.milai.lll_teacher.contracts.OfficeDetailContract
+import com.milai.lll_teacher.contracts.OrganizationCollectionContract
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
@@ -16,7 +16,7 @@ import com.milai.lll_teacher.views.BasicView
  * 主要功能：
  */
 class OfficePresenter(val iView:BasicView) : BasicPresenter(), OfficeContract.IPresenter
-        ,OfficeDetailContract.IPresenter {
+        ,OfficeDetailContract.IPresenter,OrganizationCollectionContract.IPresenter {
 
     val httpApi = HttpApiClinet.retrofit()
 
@@ -107,21 +107,21 @@ class OfficePresenter(val iView:BasicView) : BasicPresenter(), OfficeContract.IP
         }
     }
 
-//    //查询教师收藏的机构
-//    override fun getOrganizationCollection(teacherId: String) {
-//        addSubscription(httpApi.getOfficeCollectionService(teacherId).map(HttpResultFunc<List<OfficeInfo>>())
-//                ,object :HttpCallback<List<OfficeInfo>>(){
-//            override fun onSuccess(model: List<OfficeInfo>) {
-//                (iView as OfficeDetailContract.IView).onOfficeCollectionGet(model)
-//            }
-//
-//            override fun onFailure(msg: String?) {
-//                if (msg != null) {
-//                    iView.showError(msg)
-//                }
-//            }
-//
-//        })
-//    }
+    //查询教师收藏的机构
+    override fun getOrganizationCollection(teacherId: String) {
+        addSubscription(httpApi.getOfficeCollectionService(teacherId).map(HttpResultFunc<List<OfficeInfo>>())
+                ,object :HttpCallback<List<OfficeInfo>>(){
+            override fun onSuccess(model: List<OfficeInfo>) {
+                (iView as OrganizationCollectionContract.IView).onOrganizationCollectionGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+
+        })
+    }
 
 }

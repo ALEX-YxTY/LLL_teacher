@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.presenters
 
+import com.milai.lll_teacher.contracts.CollectionContract
 import com.milai.lll_teacher.contracts.JobContract
 import com.milai.lll_teacher.contracts.JobDetailContact
 import com.milai.lll_teacher.models.entities.JobInfo
@@ -13,7 +14,7 @@ import com.milai.lll_teacher.views.BasicView
  *
  * 主要功能：
  */
-class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresenter,JobDetailContact.IPresenter {
+class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresenter,JobDetailContact.IPresenter,CollectionContract.IPresenter {
 
     val httpApi = HttpApiClinet.retrofit()
 
@@ -100,6 +101,23 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
                     iView.showError(msg)
                 }
             }
+        })
+    }
+
+    //获取收藏的职位
+    override fun getJobCollection(tid: String) {
+        addSubscription(httpApi.getJobCollectService(tid).map(HttpResultFunc<List<JobInfo>>())
+                ,object :HttpCallback<List<JobInfo>>(){
+            override fun onSuccess(model: List<JobInfo>) {
+                (iView as CollectionContract.IView).onJobCollectionGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+
         })
     }
 }
