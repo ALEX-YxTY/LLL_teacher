@@ -80,6 +80,9 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="38dp"
         android:layout_marginRight="13dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:src="@drawable/icon_chat"
         />
 

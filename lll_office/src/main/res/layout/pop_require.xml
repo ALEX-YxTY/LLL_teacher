@@ -18,7 +18,7 @@
             style="@style/text_12_grey"
             android:layout_marginTop="20dp"/>
 
-        <com.milai.lll_teacher.custom.view.CustomLabelSelectView
+        <com.meishipintu.lll_office.customs.CustomLabelSelectView
             android:id="@+id/selectview_course"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             style="@style/text_12_grey"
             android:layout_marginTop="20dp"/>
 
-        <com.milai.lll_teacher.custom.view.CustomLabelSelectView
+        <com.meishipintu.lll_office.customs.CustomLabelSelectView
             android:id="@+id/selectview_grade"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             style="@style/text_12_grey"
             android:layout_marginTop="20dp"/>
 
-        <com.milai.lll_teacher.custom.view.CustomLabelSelectView
+        <com.meishipintu.lll_office.customs.CustomLabelSelectView
             android:id="@+id/selectview_experience"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

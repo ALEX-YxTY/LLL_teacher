@@ -1,11 +1,9 @@
 package com.meishipintu.lll_office.views
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -52,6 +50,7 @@ class ChatDetailActivity : BasicActivity(), ChatDetailContract.IView  {
             //跳转职位详情，不带机构信息
             val intent = Intent(this, JobDetailActivity::class.java)
             intent.putExtra("job", job)
+            intent.putExtra("type",2)
             if (job.organization != null) {
                 intent.putExtra("type", 1)   //通知职位详情页是否要显示机构信息
             } else {
@@ -90,18 +89,17 @@ class ChatDetailActivity : BasicActivity(), ChatDetailContract.IView  {
     override fun onSendChatSuccess() {
         et.setText("")
         et.clearFocus()
-        changSoftInputWindow(true)
         (presenter as ChatDetailContract.IPresenter).getChatList(teacherId, job.id)
     }
 
-    fun changSoftInputWindow(close: Boolean) {
-        val inputService = getSystemService (Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        //如果软键盘在显示，则强制隐藏
-        if (close && inputService.isActive()) {
-            inputService.hideSoftInputFromWindow(et.getWindowToken(), 0)
-        }
-        if (!close) {
-            inputService.showSoftInput(et, InputMethodManager.SHOW_FORCED)
-        }
-    }
+//    fun changSoftInputWindow(close: Boolean) {
+//        val inputService = getSystemService (Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        //如果软键盘在显示，则强制隐藏
+//        if (close && inputService.isActive()) {
+//            inputService.hideSoftInputFromWindow(et.getWindowToken(), 0)
+//        }
+//        if (!close) {
+//            inputService.showSoftInput(et, InputMethodManager.SHOW_FORCED)
+//        }
+//    }
 }

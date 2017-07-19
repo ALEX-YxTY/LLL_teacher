@@ -18,10 +18,9 @@ import com.meishipintu.lll_office.views.JobDetailActivity
  *
  * 主要功能：
  */
-class JobAdapter(ctx: Context, dataList: List<JobInfo>): BasicAdapter(ctx,dataList) {
+class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int): BasicAdapter(ctx,dataList) {
 
     val area = Cookies.getConstant(1)
-    val name = OfficeApplication.userInfo?.name
 
     override fun getSpecialView(container: ViewGroup?): RecyclerView.ViewHolder {
         return JobInfoViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_job, container, false))
@@ -30,16 +29,18 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>): BasicAdapter(ctx,dataLi
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (getItemViewType(position) == TYPE_NORMAL) {
+            val jobInfoViewHolder = (holder as JobInfoViewHolder)
             val job = dataList[position] as JobInfo
-            val jobInfoViewHolder = holder as JobInfoViewHolder
+
             jobInfoViewHolder.jobName.text = job.job_name
             jobInfoViewHolder.address.text = if (job.work_area == 0) "全南京" else "南京市 ${area[job.work_area]}"
-            jobInfoViewHolder.officeName.text = name
             jobInfoViewHolder.money.text = job.money
+
             jobInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, JobDetailActivity::class.java)
                 intent.putExtra("job", dataList[position] as JobInfo)
-                (ctx as AppCompatActivity).startActivityForResult(intent, Constant.CHANGE_JOB_STATE)
+                intent.putExtra("type", type)   //通知职位详情页是否要显示上下线及邀请功能
+                ctx.startActivity(intent)
             }
         }
     }

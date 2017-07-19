@@ -10,5 +10,5 @@ import java.io.Serializable
 data class TeacherInfo(val id: Int, val uid: String, val tel: String, val password: String, val name: String
                        , val sex: Int, val birthday: String, val identityid: String, val course: Int
                        , val style: String, val avatar: String, val certification: String, val create_time: String
-                       , val grade: String, val total_score: Int, val total_number: Int):Serializable
+                       , val grade: Int, val total_score: Int, val total_number: Int):Serializable
 

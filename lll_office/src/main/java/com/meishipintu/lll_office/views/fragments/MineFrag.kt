@@ -65,15 +65,13 @@ class MineFrag:Fragment(),View.OnClickListener{
             }
             R.id.rl_my_collection ->{
                 val intent = Intent(this.activity, CollectionActivity::class.java)
-                intent.putExtra("type", 2)
                 startActivity(intent)
             }
             R.id.rl_notice_center ->{
                 startActivity(Intent(this.activity, NoticeActivity::class.java))
             }
             R.id.rl_other_office ->{
-                val intent = Intent(this.activity, CollectionActivity::class.java)
-                intent.putExtra("type", 1)
+                val intent = Intent(this.activity, OtherOrganizationActivity::class.java)
                 startActivity(intent)
             }
             R.id.rl_setting ->{

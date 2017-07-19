@@ -4,6 +4,7 @@ import android.util.Log
 import com.meishipintu.lll_office.contract.JobDetailContract
 import com.meishipintu.lll_office.contract.JobManagerContract
 import com.meishipintu.lll_office.contract.NewJobContract
+import com.meishipintu.lll_office.contract.TeacherDetailContract
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
@@ -82,4 +83,5 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
 
         })
     }
+
 }

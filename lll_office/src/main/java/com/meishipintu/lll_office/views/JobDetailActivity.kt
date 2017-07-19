@@ -19,7 +19,10 @@ import com.meishipintu.lll_office.presenters.JobManagerPresenter
 class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract.IView{
 
     val jobInfo:JobInfo by lazy { intent.getSerializableExtra("job") as JobInfo }
-    val officeInfo: UserInfo? = OfficeApplication.userInfo
+    /**
+     * type =1 不显示上下线功能，type=2 显示上下线功能
+     */
+    val type: Int by lazy { intent.getIntExtra("type", 1) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,16 +38,21 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         val experiences = Cookies.getConstant(5)
         val areas = Cookies.getConstant(1)
 
-
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = "职位详情"
         val tvStatusChange = findViewById(R.id.tv_offline) as TextView
-        tvStatusChange.text=if(jobInfo.status==1) "下线" else "上线"
-        tvStatusChange.setOnClickListener(this)
-        findViewById(R.id.bt_back).setOnClickListener(this)
         val btInvite = findViewById(R.id.bt_invite)
-        btInvite.setOnClickListener(this)
-        btInvite.visibility = if (jobInfo.status > 1) View.GONE else View.VISIBLE
+        if (type == 1) {
+            tvStatusChange.visibility = View.GONE
+            btInvite.visibility = View.GONE
+        } else {
+            tvStatusChange.text=if(jobInfo.status==1) "下线" else "上线"
+            tvStatusChange.setOnClickListener(this)
+            btInvite.setOnClickListener(this)
+            btInvite.visibility = if (jobInfo.status > 1) View.GONE else View.VISIBLE
+        }
+
+        findViewById(R.id.bt_back).setOnClickListener(this)
 
         (findViewById(R.id.job_name) as TextView).text = jobInfo.job_name
         (findViewById(R.id.tv_course_grade) as TextView).text = "${grades[jobInfo.grade]} ${courses[jobInfo.course]}"
@@ -67,11 +75,7 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
             (findViewById(R.id.tv_other_demand)as TextView).text = jobInfo.other_demand
         }
 
-        (findViewById(R.id.office_name) as TextView).text = officeInfo?.name
-        (findViewById(R.id.tv_address) as TextView).text = officeInfo?.address
-        (findViewById(R.id.tv_decs) as TextView).text = "热招 "
-        val officeHead = findViewById(R.id.iv_head) as ImageView
-        Glide.with(this).load(officeInfo?.avatar).into(officeHead)
+        findViewById(R.id.include_office).visibility=View.GONE
     }
 
     override fun onClick(v: View?) {
@@ -79,6 +83,7 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
             R.id.bt_back -> onBackPressed()
             R.id.bt_invite ->{
                 //TODO 去邀请
+                //进入邀请界面
             }
             R.id.tv_offline ->{
                 (presenter as JobManagerPresenter).changeStatus(jobInfo.id.toString(),if(jobInfo.status==1) 2 else 1)
@@ -98,6 +103,5 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         }
         setResult(Activity.RESULT_OK)
         this.finish()
-
     }
 }

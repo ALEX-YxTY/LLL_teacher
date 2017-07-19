@@ -18,7 +18,7 @@ import com.meishipintu.lll_office.views.adapters.JobAdapter
 class JobManagerActivity : BasicActivity(),View.OnClickListener,JobManagerContract.IView{
 
     val dataList: MutableList<JobInfo> = mutableListOf()
-    val adapter: JobAdapter by lazy { JobAdapter(this,dataList) }
+    val adapter: JobAdapter by lazy { JobAdapter(this,dataList,2) } //type=2 显示上下线功能
 
     val tvOnline:TextView by lazy { findViewById(R.id.tv_online) as TextView }
     val tvOffline:TextView by lazy { findViewById(R.id.tv_offline) as TextView }

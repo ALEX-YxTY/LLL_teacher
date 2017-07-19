@@ -36,7 +36,7 @@
         android:layout_alignLeft="@id/office_name"
         android:layout_below="@id/office_name"
         android:layout_marginTop="5dp"
-        android:maxWidth="150dp"
+        android:maxWidth="250dp"
         android:lines="1"
         android:ellipsize="end"
         android:text="南京市鼓楼区"

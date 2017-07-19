@@ -6,7 +6,7 @@
 
     <include
         layout="@layout/titlebar_back_white_with_star"
-        android:id="@id/titlebar" />
+        android:id="@+id/titlebar" />
 
     <ScrollView
         android:layout_width="match_parent"

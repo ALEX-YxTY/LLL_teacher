@@ -38,7 +38,7 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
 
     var rv: RecyclerView? = null
     var dataList = mutableListOf<TeacherInfo>()
-    val teacherAdapter: TeacherAdapter by lazy { TeacherAdapter(this.activity,dataList) }
+    val teacherAdapter: TeacherAdapter by lazy { TeacherAdapter(this.activity, dataList, 1) }
 
     var popTj: TjPop? = null
     var popRequire: RequirePop? = null
