@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.presenters
 
+import android.util.Log
 import com.milai.lll_teacher.contracts.CollectionContract
 import com.milai.lll_teacher.contracts.JobContract
 import com.milai.lll_teacher.contracts.JobDetailContact
@@ -109,6 +110,7 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
         addSubscription(httpApi.getJobCollectService(tid).map(HttpResultFunc<List<JobInfo>>())
                 ,object :HttpCallback<List<JobInfo>>(){
             override fun onSuccess(model: List<JobInfo>) {
+                Log.d("test","the dataList size is ${model.size}")
                 (iView as CollectionContract.IView).onJobCollectionGet(model)
             }
 

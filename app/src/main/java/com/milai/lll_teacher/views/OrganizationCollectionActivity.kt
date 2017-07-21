@@ -25,11 +25,15 @@ class OrganizationCollectionActivity : BasicActivity(), OrganizationCollectionCo
         setContentView(R.layout.activity_collection)
         presenter = OfficePresenter(this)
         val title = findViewById(R.id.tv_title) as TextView
-        title.text = "收藏的职位"
+        title.text = "收藏的机构"
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed() }
         val rv = findViewById(R.id.rv) as RecyclerView
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = officeAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
         (presenter as OrganizationCollectionContract.IPresenter).getOrganizationCollection(MyApplication.userInfo?.uid!!)
     }
 

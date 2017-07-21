@@ -10,11 +10,14 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
 import com.milai.lll_teacher.R
+import com.milai.lll_teacher.contracts.ForgetPswContract
+import com.milai.lll_teacher.custom.util.Encoder
 import com.milai.lll_teacher.custom.util.StringUtils
 import com.milai.lll_teacher.custom.view.CustomEditText
+import com.milai.lll_teacher.presenters.AuthorPresenter
 import java.lang.ref.WeakReference
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BasicActivity(),ForgetPswContract.IView {
 
     var vcodeGet = ""
     val btVcode by lazy { findViewById(R.id.bt_vcode) as Button }
@@ -24,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        presenter = AuthorPresenter(this)
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed()}
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = "注册"
@@ -37,8 +41,8 @@ class RegisterActivity : AppCompatActivity() {
         val btRegister = findViewById(R.id.bt_login) as Button
         val textWatcher:TextWatcher= object :TextWatcher{
             override fun afterTextChanged(s: Editable) {
-                btRegister.isEnabled = StringUtils.isTel(etTel.text) && !StringUtils.isNullOrEmpty(etVcode.text)
-                        && !StringUtils.isNullOrEmpty(etPsw.text)
+                btRegister.isEnabled = StringUtils.isTel(etTel.text) && !etVcode.text.isNullOrEmpty()
+                        && !etPsw.text.isNullOrEmpty()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -53,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
 
         btVcode.setOnClickListener{
             if (vcodeGet == etVcode.text) {
-                //TODO 请求验证码
+                (presenter as ForgetPswContract.IPresenter).getVCode(etTel.text)
                 //启动读秒
                 handler.sendEmptyMessage(1)
                 btVcode.isEnabled = false
@@ -62,7 +66,11 @@ class RegisterActivity : AppCompatActivity() {
         }
         btRegister.setOnClickListener{
             if (etVcode.text == vcodeGet) {
-                startActivity(Intent(this@RegisterActivity,InformationCommitActivity::class.java))
+                val intent = Intent(this@RegisterActivity, InformationCommitActivity::class.java)
+                intent.putExtra("tel", etTel.text)
+                intent.putExtra("verify", etVcode.text)
+                intent.putExtra("psw",Encoder.md5(etPsw.text))
+                startActivity(intent)
             }
         }
     }
@@ -72,6 +80,17 @@ class RegisterActivity : AppCompatActivity() {
         handler.removeMessages(1)
         btVcode.isEnabled = true
     }
+
+    //from ForgetPswContract.IView
+    override fun showError(err: String) {
+        toast(err)
+    }
+
+    //from ForgetPswContract.IView
+    override fun onVCodeGet(vcode: String) {
+        vcodeGet = vcode
+    }
+
 
     class MyHandler internal constructor(ctx: RegisterActivity): Handler(){
 

@@ -10,11 +10,12 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.milai.lll_teacher.R
+import com.milai.lll_teacher.contracts.ForgetPswContract
 import com.milai.lll_teacher.custom.util.StringUtils
 import com.milai.lll_teacher.custom.view.CustomEditText
 import java.lang.ref.WeakReference
 
-class ForgetPswActivity : AppCompatActivity() {
+class ForgetPswActivity : BasicActivity(),ForgetPswContract.IView {
 
     var vcodeGet:String = ""
     var timeRemain: Int = 60
@@ -39,14 +40,20 @@ class ForgetPswActivity : AppCompatActivity() {
                 handler.sendEmptyMessage(1)
                 btVcode.text = "60s"
                 btVcode.isEnabled= false
+                //获取验证码
+                (presenter as ForgetPswContract.IPresenter).getVCode(etTel.text)
             } else {
                 Toast.makeText(this@ForgetPswActivity, R.string.correct_tel, Toast.LENGTH_SHORT)
             }
         })
         btNext.setOnClickListener{
             if (etTel.text != "" && etVcode.text == vcodeGet) {
-                //TODO 跳转重设密码
-                startActivity(Intent(this@ForgetPswActivity, ResetPswActivity::class.java))
+                //跳转设置密码页
+                val intent = Intent(this@ForgetPswActivity, ResetPswActivity::class.java)
+                intent.putExtra("tel", etTel.text)
+                intent.putExtra("verify", etVcode.text)
+                startActivity(intent)
+                this.finish()
             } else {
                 Toast.makeText(this@ForgetPswActivity, R.string.error_vcode, Toast.LENGTH_SHORT)
             }
@@ -58,6 +65,17 @@ class ForgetPswActivity : AppCompatActivity() {
         handler.removeMessages(1)
         btVcode.isEnabled = true
     }
+
+    //from ForgetPswContract.IView
+    override fun showError(err: String) {
+        toast(err)
+    }
+
+    //from ForgetPswContract.IView
+    override fun onVCodeGet(vcode: String) {
+        this.vcodeGet = vcode
+    }
+
 
     class MyHandler internal constructor(ctx: ForgetPswActivity):Handler(){
         private val reference: WeakReference<ForgetPswActivity> = WeakReference(ctx)

@@ -39,6 +39,7 @@
             android:layout_below="@id/et_psw"
             android:layout_marginTop="41dp"
             android:textColor="@color/white"
+            android:enabled="false"
             android:textSize="@dimen/bt_text"
             android:text="@string/finish"
             android:background="@drawable/selector_bt_radiu2_orange"/>

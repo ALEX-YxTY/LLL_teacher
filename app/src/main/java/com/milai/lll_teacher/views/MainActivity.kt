@@ -30,7 +30,6 @@ class MainActivity : android.support.v7.app.AppCompatActivity() {
 
     var clickTime: Long = 0
 
-
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.milai.lll_teacher.R.layout.activity_main)
@@ -46,11 +45,11 @@ class MainActivity : android.support.v7.app.AppCompatActivity() {
                 },{},{},{
                     t: Disposable -> disposables.add(t)
                 })
-//        if (Cookies.getUserInfo() != null) {
+        if (Cookies.getUserInfo() != null) {
             initViewPager()
-//        } else {
-//            startActivity(Intent(this,LoginAndRegistActivity::class.java))
-//        }
+        } else {
+            startActivity(Intent(this,LoginAndRegistActivity::class.java))
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {

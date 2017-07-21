@@ -3,6 +3,7 @@ package com.milai.lll_teacher.views
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.TextView
 import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
@@ -31,6 +32,10 @@ class CollectionActivity : BasicActivity(), CollectionContract.IView {
         val rv = findViewById(R.id.rv) as RecyclerView
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = jobAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
         (presenter as JobPresenter).getJobCollection(MyApplication.userInfo?.uid!!)
     }
 
@@ -41,6 +46,7 @@ class CollectionActivity : BasicActivity(), CollectionContract.IView {
 
     //from CollectionContract.IView
     override fun onJobCollectionGet(dataList: List<JobInfo>) {
+        Log.d("test","the dataList size is ${dataList.size}")
         this.jobList.clear()
         this.jobList.addAll(dataList)
         jobAdapter.notifyDataSetChanged()

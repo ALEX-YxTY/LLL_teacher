@@ -14,6 +14,7 @@ import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.JobDetailContact
 import com.milai.lll_teacher.models.entities.JobInfo
+import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.presenters.JobPresenter
 
 class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact.IView{
@@ -79,6 +80,7 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
             (findViewById(R.id.tv_decs) as TextView).text = "热招 职位"
             val officeHead = findViewById(R.id.iv_head) as ImageView
             Glide.with(this).load(jobInfo.organization.avatar).into(officeHead)
+            findViewById(R.id.include_office).setOnClickListener(this)
         } else {
             findViewById(R.id.include_office).visibility=View.GONE
         }
@@ -101,6 +103,14 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
             R.id.bt_append ->{
                 //投递简历
                 (presenter as JobDetailContact.IPresenter).sendResume(jobInfo.id, MyApplication.userInfo?.uid!!, jobInfo.oid)
+            }
+            R.id.include_office ->{
+                //进入机构详情页面
+                if (jobInfo.organization != null) {
+                    val intent = Intent(this, OfficeDetailActivity::class.java)
+                    intent.putExtra("office", jobInfo.organization)
+                    startActivity(intent)
+                }
             }
         }
     }

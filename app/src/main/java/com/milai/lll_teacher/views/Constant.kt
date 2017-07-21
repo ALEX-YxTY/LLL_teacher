@@ -8,5 +8,7 @@ package com.milai.lll_teacher.views
 object Constant {
     const val EXIT:Int = 1
     const val LOGOUT: Int = 2
+    const val CHANGE_PSW: Int=3    //修改密码 requestCode
+    const val REQUEST_STORAGE_PERMISSION: Int = 100 //请求存储权限
 
 }

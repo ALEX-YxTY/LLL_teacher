@@ -1,9 +1,6 @@
 package com.milai.lll_teacher.models.https
 
-import com.milai.lll_teacher.models.entities.ChatDetail
-import com.milai.lll_teacher.models.entities.HttpResult
-import com.milai.lll_teacher.models.entities.JobInfo
-import com.milai.lll_teacher.models.entities.OfficeInfo
+import com.milai.lll_teacher.models.entities.*
 import io.reactivex.Observable
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -20,6 +17,16 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Base/getVerifyCodeByMobile")
     fun getVCodeService(@Field("mobile")mobile:String):Observable<HttpResult<String>>
+
+    //重设密码
+    @FormUrlEncoded
+    @POST("Home/Api/forgetTeacherPassword")
+    fun resetPswService(@Field("tel")tel:String,@Field("verify")vcode:String,@Field("password")psw:String):Observable<HttpResult<Any>>
+
+    //教师登录
+    @FormUrlEncoded
+    @POST("Home/Api/teacher_login")
+    fun loginService(@Field("tel") tel:String,@Field("password") psw:String):Observable<HttpResult<UserInfo>>
 
     //获取常数接口，type=1~9
     @FormUrlEncoded
