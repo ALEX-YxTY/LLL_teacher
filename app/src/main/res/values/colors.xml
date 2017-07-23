@@ -29,6 +29,7 @@
     <color name="back_light_brown">#EADBC0</color>  <!--浅棕色背景-->
     <color name="back_dark_brown">#D3A979</color>  <!--浅棕色背景-->
     <color name="back_city_light">#F8F4F0</color>
+    <color name="untransparent_gray">#e4e4e4</color>
 
 
     <!--boder-->
