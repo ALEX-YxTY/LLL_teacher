@@ -85,4 +85,8 @@
         <item name="colorPrimaryDark">#CCa500</item>
     </style>
 
+    <!--custom dialog-->
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+    </style>
 </resources>

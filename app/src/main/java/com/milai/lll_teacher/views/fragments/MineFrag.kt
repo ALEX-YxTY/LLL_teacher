@@ -9,11 +9,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
-import com.milai.lll_teacher.views.CollectionActivity
-import com.milai.lll_teacher.views.InterviewListActivity
-import com.milai.lll_teacher.views.OrganizationCollectionActivity
-import com.milai.lll_teacher.views.SettingActivity
+import com.milai.lll_teacher.views.*
 
 /**
  * Created by Administrator on 2017/6/21.
@@ -35,8 +34,10 @@ class MineFrag : Fragment(),View.OnClickListener{
         val title = fragView?.findViewById(R.id.tv_title) as TextView
         title.text = "我的"
         val headView = fragView?.findViewById(R.id.iv_head) as ImageView
+        Glide.with(this).load(MyApplication.userInfo?.avatar).error(R.drawable.teacher_default).into(headView)
         headView.setOnClickListener(this)
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
+        userName.text = MyApplication.userInfo?.name
         val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
         val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
 
@@ -51,7 +52,7 @@ class MineFrag : Fragment(),View.OnClickListener{
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.iv_head, R.id.rl_my_resume -> {
-                    //TODO 简历页
+                startActivity(Intent(this.activity,ResumeEditActivity::class.java))
              }
             R.id.rl_apply_job -> {
                 val intent = Intent(this.activity, InterviewListActivity::class.java)
