@@ -1,9 +1,11 @@
 package com.meishipintu.lll_office.views
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -17,7 +19,8 @@ import com.meishipintu.lll_office.views.adapters.ChatAdapter
 
 class ChatDetailActivity : BasicActivity(), ChatDetailContract.IView  {
 
-    val job: JobInfo by lazy{ intent.getSerializableExtra("job") as JobInfo}
+    val oid:String by lazy{ intent.getStringExtra("oid")}
+    val jobId: Int by lazy{ intent.getIntExtra("jobId", 0)}
     val teacherId:String by lazy{ intent.getStringExtra("teacher")}
 
     val data = mutableListOf<ChatDetail>()
@@ -30,7 +33,7 @@ class ChatDetailActivity : BasicActivity(), ChatDetailContract.IView  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_detail)
         presenter = MessagePresenter(this)
-        (presenter as ChatDetailContract.IPresenter).getOfficeInfo(job.oid)
+        (presenter as ChatDetailContract.IPresenter).getOfficeInfo(oid)
         initList()
         initUI()
     }
@@ -43,25 +46,20 @@ class ChatDetailActivity : BasicActivity(), ChatDetailContract.IView  {
             if (et.text.toString().isNullOrEmpty()) {
                 toast("输入内容不能为空")
             } else {
-                (presenter as ChatDetailContract.IPresenter).sendChat(job.id, teacherId, job.oid, et.text.toString())
+                (presenter as ChatDetailContract.IPresenter).sendChat(jobId, teacherId, oid, et.text.toString())
             }
         }
         rlJob.setOnClickListener{
             //跳转职位详情，不带机构信息
             val intent = Intent(this, JobDetailActivity::class.java)
-            intent.putExtra("job", job)
-            intent.putExtra("type",2)
-            if (job.organization != null) {
-                intent.putExtra("type", 1)   //通知职位详情页是否要显示机构信息
-            } else {
-                intent.putExtra("type", 2)
-            }
+            intent.putExtra("jobId", jobId)
+            intent.putExtra("type",2)   //不显示机构信息
             startActivity(intent)
         }
     }
 
     private fun initList() {
-        (presenter as ChatDetailContract.IPresenter).getChatList(teacherId, job.id)
+        (presenter as ChatDetailContract.IPresenter).getChatList(teacherId, jobId)
         val rv = findViewById(R.id.rv) as RecyclerView
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
@@ -89,17 +87,18 @@ class ChatDetailActivity : BasicActivity(), ChatDetailContract.IView  {
     override fun onSendChatSuccess() {
         et.setText("")
         et.clearFocus()
-        (presenter as ChatDetailContract.IPresenter).getChatList(teacherId, job.id)
+        changSoftInputWindow(true)
+        (presenter as ChatDetailContract.IPresenter).getChatList(teacherId, jobId)
     }
 
-//    fun changSoftInputWindow(close: Boolean) {
-//        val inputService = getSystemService (Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        //如果软键盘在显示，则强制隐藏
-//        if (close && inputService.isActive()) {
-//            inputService.hideSoftInputFromWindow(et.getWindowToken(), 0)
-//        }
-//        if (!close) {
-//            inputService.showSoftInput(et, InputMethodManager.SHOW_FORCED)
-//        }
-//    }
+    fun changSoftInputWindow(close: Boolean) {
+        val inputService = getSystemService (Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        //如果软键盘在显示，则强制隐藏
+        if (close && inputService.isActive()) {
+            inputService.hideSoftInputFromWindow(et.getWindowToken(), 0)
+        }
+        if (!close) {
+            inputService.showSoftInput(et, InputMethodManager.SHOW_FORCED)
+        }
+    }
 }

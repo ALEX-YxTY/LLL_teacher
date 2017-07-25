@@ -15,6 +15,8 @@ interface JobDetailContact {
 
         fun onJobCollected(isCollected: Boolean)
 
+        fun onJobDetailGet(jobInf:com.milai.lll_teacher.models.entities.JobInfo)
+
         fun onResumeSendSuccess()
     }
 
@@ -25,5 +27,7 @@ interface JobDetailContact {
         fun addJobCollect(id: Int, add: Boolean,uid:String)
 
         fun sendResume(jobId:Int,uid:String,oid:String)
+
+        fun getJobDetail(pid:Int)
     }
 }

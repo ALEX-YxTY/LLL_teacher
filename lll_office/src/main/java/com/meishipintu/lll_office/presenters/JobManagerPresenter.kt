@@ -84,4 +84,21 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
         })
     }
 
+    //获取职位详情
+    override fun getJobDetail(pid: Int) {
+        addSubscription(httpApi.getPositionDetailServie(pid).map(HttpResultFunc<JobInfo>())
+                ,object :HttpCallback<JobInfo>(){
+            override fun onSuccess(model: JobInfo) {
+                (iView as JobDetailContract.IView).onJobDetailGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
+
+        })
+    }
+
 }

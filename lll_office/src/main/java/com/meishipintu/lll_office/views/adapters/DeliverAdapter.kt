@@ -43,7 +43,8 @@ class DeliverAdapter(ctx: Context, dataList:List<DeliverInfo>): BasicAdapter(ctx
             deliverInfoViewHolder.chat.setOnClickListener{
                 //进入沟通页
                 val intent = Intent(ctx, ChatDetailActivity::class.java)
-                intent.putExtra("job", (dataList[position] as DeliverInfo).postion)
+                intent.putExtra("jobId", (dataList[position] as DeliverInfo).postion.id)
+                intent.putExtra("oid", (dataList[position] as DeliverInfo).postion.oid)
                 intent.putExtra("teacher", teacher.uid)
                 ctx.startActivity(intent)
             }

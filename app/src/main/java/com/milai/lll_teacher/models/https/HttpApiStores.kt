@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.models.https
 
+import com.milai.lll_teacher.models.entities.SysNoticeInfo
 import com.milai.lll_teacher.models.entities.*
 import io.reactivex.Observable
 import retrofit2.http.Field
@@ -112,4 +113,19 @@ interface HttpApiStores {
     fun sendChatService(@Field("pid") jobId:Int,@Field("tid") teacherId:String, @Field("oid") officeId:String
                         ,@Field("content") content:String,@Field("type") type:Int):Observable<HttpResult<Any>>
 
+    //获取系统通知
+    @FormUrlEncoded
+    @POST("Home/Api/getSystemNotice")
+    fun getSysNoticeService(@Field("uid")oid:String,@Field("type")type:Int):Observable<HttpResult<List<SysNoticeInfo>>>
+
+    //获取私信通知
+    @FormUrlEncoded
+    @POST("Home/Api/getChatList")
+    fun getChatListService(@Field("tid")tid:String,@Field("type")type:Int,@Field("oid") oid:String)
+            :Observable<HttpResult<List<MessageNoticeInfo>>>
+
+    //通过职位id获取职位详情
+    @FormUrlEncoded
+    @POST("Home/Organization/getPostionDetail")
+    fun getPositionDetailServie(@Field("id")pid:Int):Observable<HttpResult<JobInfo>>
 }

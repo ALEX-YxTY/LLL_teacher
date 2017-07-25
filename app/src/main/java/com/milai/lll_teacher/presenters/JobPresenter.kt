@@ -15,7 +15,8 @@ import com.milai.lll_teacher.views.BasicView
  *
  * 主要功能：
  */
-class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresenter,JobDetailContact.IPresenter,CollectionContract.IPresenter {
+class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresenter
+        ,JobDetailContact.IPresenter,CollectionContract.IPresenter {
 
     val httpApi = HttpApiClinet.retrofit()
 
@@ -112,6 +113,23 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
             override fun onSuccess(model: List<JobInfo>) {
                 Log.d("test","the dataList size is ${model.size}")
                 (iView as CollectionContract.IView).onJobCollectionGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+
+        })
+    }
+
+    //获取职位详情
+    override fun getJobDetail(pid: Int) {
+        addSubscription(httpApi.getPositionDetailServie(pid).map(HttpResultFunc<JobInfo>())
+                ,object :HttpCallback<JobInfo>(){
+            override fun onSuccess(model: JobInfo) {
+                (iView as JobDetailContact.IView).onJobDetailGet(model)
             }
 
             override fun onFailure(msg: String?) {

@@ -48,4 +48,7 @@
     <string name="grade">年级</string>
     <string name="work_area">工作区域</string>
     <string name="go_interview">去面试</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

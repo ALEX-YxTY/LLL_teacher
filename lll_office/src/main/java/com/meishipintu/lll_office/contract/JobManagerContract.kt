@@ -17,5 +17,6 @@ interface JobManagerContract {
 
     interface IPresenter:BasicPresenterImp{
         fun getDataList(uid: String, status: Int)
+
     }
 }

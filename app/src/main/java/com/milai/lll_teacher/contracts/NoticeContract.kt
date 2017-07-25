@@ -1,25 +1,27 @@
 package com.milai.lll_teacher.contracts
 
-import com.milai.lll_teacher.models.entities.Message
-import com.milai.lll_teacher.models.entities.SysNotice
+import com.milai.lll_teacher.models.entities.MessageNoticeInfo
+import com.milai.lll_teacher.models.entities.SysNoticeInfo
+import com.milai.lll_teacher.presenters.BasicPresenterImp
 import com.milai.lll_teacher.views.BasicView
 
 /**
- * Created by Administrator on 2017/6/23.
+ * Created by Administrator on 2017/7/25.
  *
  * 主要功能：
  */
 interface NoticeContract {
 
-    interface IView :BasicView{
-        fun onMessageGet(messages: List<Message>)
+    interface IView: BasicView {
 
-        fun onNoticeGet(notices:List<SysNotice>)
+        fun onSysNoticeGet(dataList:List<SysNoticeInfo>)
+
+        fun onMessageNoticeGet(dataList:List<MessageNoticeInfo>)
     }
 
-    interface IPresenter {
-        fun getMessage()
+    interface IPresenter: BasicPresenterImp {
+        fun getSysNotice(tid:String)
 
-        fun getNotice()
+        fun getMessageNotice(tid:String)
     }
 }

@@ -38,7 +38,7 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int): BasicAda
 
             jobInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, JobDetailActivity::class.java)
-                intent.putExtra("job", dataList[position] as JobInfo)
+                intent.putExtra("jobId", (dataList[position] as JobInfo).id)
                 intent.putExtra("type", type)   //通知职位详情页是否要显示上下线及邀请功能
                 ctx.startActivity(intent)
             }

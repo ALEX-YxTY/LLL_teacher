@@ -18,11 +18,12 @@ import com.meishipintu.lll_office.presenters.JobManagerPresenter
 
 class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract.IView{
 
-    val jobInfo:JobInfo by lazy { intent.getSerializableExtra("job") as JobInfo }
+    val jobId:Int by lazy { intent.getIntExtra("jobId", 0)}
     /**
      * type =1 不显示上下线功能，type=2 显示上下线功能
      */
     val type: Int by lazy { intent.getIntExtra("type", 1) }
+    var status =1 //1-在线 2-下线
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +33,25 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
     }
 
     private fun initUI() {
+        val tvTitle = findViewById(R.id.tv_title) as TextView
+        tvTitle.text = "职位详情"
+
+        findViewById(R.id.bt_back).setOnClickListener(this)
+        findViewById(R.id.include_office).visibility=View.GONE
+
+        (presenter as JobDetailContract.IPresenter).getJobDetail(jobId)
+    }
+
+    //from JobDetailContract.IView
+    override fun onJobDetailGet(jobInfo: JobInfo) {
+        this.status = jobInfo.status
+
         val grades = Cookies.getConstant(3)
         val courses = Cookies.getConstant(2)
         val sexs = arrayOf("性别无要求", "男", "女")
         val experiences = Cookies.getConstant(5)
         val areas = Cookies.getConstant(1)
 
-        val tvTitle = findViewById(R.id.tv_title) as TextView
-        tvTitle.text = "职位详情"
         val tvStatusChange = findViewById(R.id.tv_offline) as TextView
         val btInvite = findViewById(R.id.bt_invite)
         if (type == 1) {
@@ -51,11 +63,9 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
             btInvite.setOnClickListener(this)
             btInvite.visibility = if (jobInfo.status > 1) View.GONE else View.VISIBLE
         }
-
-        findViewById(R.id.bt_back).setOnClickListener(this)
-
-        (findViewById(R.id.job_name) as TextView).text = jobInfo.job_name
-        (findViewById(R.id.tv_course_grade) as TextView).text = "${grades[jobInfo.grade]} ${courses[jobInfo.course]}"
+        (findViewById(R.id.job_name) as TextView).text = jobInfo?.job_name
+        (findViewById(R.id.tv_course_grade) as TextView).text = "${grades[jobInfo.grade]} " +
+                "${courses[jobInfo.course]}"
         (findViewById(R.id.tv_sex) as TextView).text = "${sexs[jobInfo.sex]}"
         (findViewById(R.id.tv_experience) as TextView).text = "${experiences[jobInfo.require_year]}"
         val tvCertificate = findViewById(R.id.tv_certificate) as TextView
@@ -74,8 +84,6 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         } else {
             (findViewById(R.id.tv_other_demand)as TextView).text = jobInfo.other_demand
         }
-
-        findViewById(R.id.include_office).visibility=View.GONE
     }
 
     override fun onClick(v: View?) {
@@ -86,7 +94,7 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
                 //进入邀请界面
             }
             R.id.tv_offline ->{
-                (presenter as JobManagerPresenter).changeStatus(jobInfo.id.toString(),if(jobInfo.status==1) 2 else 1)
+                (presenter as JobManagerPresenter).changeStatus(jobId.toString(),if(status==1) 2 else 1)
             }
         }
     }
