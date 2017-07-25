@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.meishipintu.lll_office.customs.utils.DateUtil
+import com.milai.lll_teacher.custom.util.DateUtil
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.models.entities.ChatDetail
 

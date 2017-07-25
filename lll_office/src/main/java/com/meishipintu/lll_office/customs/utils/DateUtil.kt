@@ -10,7 +10,7 @@ import java.util.*
  */
 object DateUtil{
 
-    //timestamp -> mm-dd
+    //timestamp -> MM-dd
     fun stampToDate(timeStamp: String): String {
         val simpleDateFormat = SimpleDateFormat("MM-dd")
         return simpleDateFormat.format(Date(timeStamp.toLong() * 1000))
@@ -31,5 +31,11 @@ object DateUtil{
     fun  stampToDate3(timeStamp: Long): String {
         val simpleDateFormat = SimpleDateFormat("HH:mm")
         return "今天 ${simpleDateFormat.format(Date(timeStamp * 1000))}"
+    }
+
+    //timestamp -> MM-dd hh:mm:ss
+    fun  stampToDate4(timeStamp: Long): String {
+        val simpleDateFormat = SimpleDateFormat("MM-dd  HH:mm:ss")
+        return simpleDateFormat.format(Date(timeStamp * 1000))
     }
 }

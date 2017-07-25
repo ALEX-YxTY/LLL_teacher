@@ -30,8 +30,10 @@ class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView{
     var dataList = ArrayList<OfficeInfo>()
     var adapter: OfficeAdapter? = null
 
-    val presenter:OfficePresenter by lazy { OfficePresenter(this) }
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = OfficePresenter(this)
+    }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.frag_office,container,false)
         initUI(view)
@@ -47,7 +49,7 @@ class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView{
         adapter = OfficeAdapter(this.activity, dataList!!)
         rv.layoutManager = LinearLayoutManager(this.activity)
         rv.adapter = adapter
-        presenter.getOffice()
+        (presenter as OfficeContract.IPresenter).getOffice()
     }
 
     override fun onClick(v: View?) {

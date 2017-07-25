@@ -89,5 +89,4 @@
     <style name="CustomDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item><!--无标题-->
     </style>
-
 </resources>

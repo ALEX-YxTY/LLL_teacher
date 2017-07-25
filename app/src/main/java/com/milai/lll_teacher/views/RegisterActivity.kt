@@ -56,13 +56,9 @@ class RegisterActivity : BasicActivity(),ForgetPswContract.IView {
         etVcode.setListener(textWatcher)
 
         btVcode.setOnClickListener{
-            if (vcodeGet == etVcode.text) {
-                (presenter as ForgetPswContract.IPresenter).getVCode(etTel.text)
-                //启动读秒
-                handler.sendEmptyMessage(1)
-                btVcode.isEnabled = false
-                btVcode.text = "$timeRemain s"
-            }
+            (presenter as ForgetPswContract.IPresenter).getVCode(etTel.text)
+            //启动读秒
+            handler.sendEmptyMessage(1)
         }
         btRegister.setOnClickListener{
             if (etVcode.text == vcodeGet) {
@@ -89,6 +85,8 @@ class RegisterActivity : BasicActivity(),ForgetPswContract.IView {
     //from ForgetPswContract.IView
     override fun onVCodeGet(vcode: String) {
         vcodeGet = vcode
+        btVcode.isEnabled = false
+        btVcode.text = "$timeRemain s"
     }
 
 

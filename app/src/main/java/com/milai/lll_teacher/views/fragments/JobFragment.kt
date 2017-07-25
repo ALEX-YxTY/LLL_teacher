@@ -53,8 +53,10 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     var tvRequire:TextView?=null
     var back: View? = null
 
-    val presenter:JobContract.IPresenter by lazy { JobPresenter(this) }
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = JobPresenter(this)
+    }
     override fun onCreateView(inflater: LayoutInflater?, @Nullable container: ViewGroup?, @Nullable savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.frag_job, container, false)
         tvTj = view.findViewById(R.id.tv_1) as TextView
@@ -69,7 +71,7 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     private fun initList() {
         rv?.layoutManager = LinearLayoutManager(this.activity)
         rv?.adapter = jobAdapter
-        presenter.doSearch()
+        (presenter as JobContract.IPresenter).doSearch()
     }
 
     //筛选菜单的监听
@@ -139,14 +141,14 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     override fun onTjClick(index: Boolean, name: String) {
         tj = index
         tvTj?.text = name
-        presenter.doSearch(tj = index)
+        (presenter as JobContract.IPresenter).doSearch(tj = index)
     }
 
     //from MenuClickListener
     override fun onArerSelect(index: Int, name: String) {
         area = index
         tvArea?.text = name
-        presenter.doSearch(area = index)
+        (presenter as JobContract.IPresenter).doSearch(area = index)
     }
 
     //from MenuClickListener
@@ -154,7 +156,7 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
         course = indexCourse
         grade = indexGrade
         experience = indexExperience
-        presenter.doSearch(course = course, grade = grade, experience = experience)
+        (presenter as JobContract.IPresenter).doSearch(course = course, grade = grade, experience = experience)
     }
 
     //from MenuClickListener

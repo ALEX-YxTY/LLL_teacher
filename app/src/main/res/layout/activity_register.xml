@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             app:title="手机：+86"
+            app:type="number"
             />
         <RelativeLayout
             android:id="@+id/rl_wrapper"
@@ -33,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="验证码："
+                app:type="number"
                 />
             <Button
                 android:id="@+id/bt_vcode"

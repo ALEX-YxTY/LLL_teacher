@@ -50,7 +50,10 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
 
     var rootView: View? = null
 
-    val presenter:TeacherContract.IPresenter by lazy { TeachPresenter(this) }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = TeachPresenter(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, @Nullable container: ViewGroup?, @Nullable savedInstanceState: Bundle?): View? {
         if (rootView == null) {
@@ -68,7 +71,7 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
     private fun initList() {
         rv?.layoutManager = LinearLayoutManager(this.activity)
         rv?.adapter = teacherAdapter
-        presenter.doSearch()    //默认全部查询
+        (presenter as TeacherContract.IPresenter).doSearch()    //默认全部查询
     }
 
     //筛选菜单的监听
@@ -113,7 +116,7 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
             popRequire?.showPopDropDown(tab)
         }
         view.findViewById(R.id.rl_most).setOnClickListener{
-            presenter.doSearch(decending = true) //所有教师根据降序排列
+            (presenter as TeacherContract.IPresenter).doSearch(decending = true) //所有教师根据降序排列
         }
     }
 
@@ -129,7 +132,7 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
     override fun onTjClick(index: Boolean, name: String) {
         tj = index
         tvTj?.text = name
-        presenter.doSearch(tj = tj) //根据是否筛选推荐
+        (presenter as TeacherContract.IPresenter).doSearch(tj = tj) //根据是否筛选推荐
     }
 
 
@@ -138,7 +141,7 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
         course = indexCourse
         grade = indexGrade
         experience = indexExperience
-        presenter.doSearch(experience = experience, course = course, grade = grade) //根据年龄，科目，年级筛选
+        (presenter as TeacherContract.IPresenter).doSearch(experience = experience, course = course, grade = grade) //根据年龄，科目，年级筛选
     }
 
     //from MenuClickListener
@@ -155,11 +158,6 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
 
     override fun onError(e: String) {
         toast(e)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.unsubscribe()
     }
 
 }

@@ -54,7 +54,8 @@ class TeacherInterviewActivity : BasicActivity(),View.OnClickListener,InterviewC
             R.id.bt_contact -> {
                 //进入沟通页
                 val intent = Intent(this, ChatDetailActivity::class.java)
-                intent.putExtra("job", deliverInfo.postion)
+                intent.putExtra("oid", deliverInfo.postion.oid)
+                intent.putExtra("jobId", deliverInfo.postion.id)
                 intent.putExtra("teacher", deliverInfo.teacher.uid)
                 startActivity(intent)
             }

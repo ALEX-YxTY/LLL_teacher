@@ -8,7 +8,7 @@
     android:layout_marginTop="@dimen/item_margin13"
     >
 
-    <ImageView
+    <com.meishipintu.lll_office.customs.CircleImageView
         android:id="@+id/iv_head"
         android:layout_width="55dp"
         android:layout_height="55dp"

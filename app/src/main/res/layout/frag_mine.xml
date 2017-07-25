@@ -12,7 +12,7 @@
         android:layout_height="85dp"
         android:background="@color/white"
         >
-        <ImageView
+        <com.milai.lll_teacher.custom.view.CircleImageView
             android:id="@+id/iv_head"
             android:layout_width="63dp"
             android:layout_height="63dp"

@@ -2,20 +2,19 @@ package com.milai.lll_teacher.views.fragments
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TabHost
 import android.widget.TextView
+import com.milai.lll_teacher.MyApplication
+import com.milai.lll_teacher.models.entities.MessageNoticeInfo
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.NoticeContract
 import com.milai.lll_teacher.models.entities.Message
-import com.milai.lll_teacher.models.entities.SysNotice
+import com.milai.lll_teacher.models.entities.SysNoticeInfo
+import com.milai.lll_teacher.presenters.NoticePresenter
 import com.milai.lll_teacher.views.adapters.MessageAdapter
 import com.milai.lll_teacher.views.adapters.SysNoticAdapter
 
@@ -24,14 +23,20 @@ import com.milai.lll_teacher.views.adapters.SysNoticAdapter
  *
  * 主要功能：
  */
-class NoticeFrag :Fragment(),NoticeContract.IView{
+class NoticeFrag :BasicFragment(),NoticeContract.IView{
 
     var fragview: View? = null
-    var messageList= mutableListOf<Message>()
-    var noticeList = mutableListOf<SysNotice>()
-    val messageAdaper: MessageAdapter by lazy { MessageAdapter(this@NoticeFrag.activity,this.messageList) }
+    var messageList= mutableListOf<MessageNoticeInfo>()
+    var noticeList = mutableListOf<SysNoticeInfo>()
+    val messageAdaper: MessageAdapter by lazy { MessageAdapter(this.activity,this.messageList) }
     val noticeAdapter: SysNoticAdapter by lazy{ SysNoticAdapter(this.activity, noticeList)}
 
+    val recyclerView:RecyclerView by lazy{ fragview?.findViewById(R.id.rv) as RecyclerView}
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = NoticePresenter(this)
+    }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragview == null) {
             fragview = inflater?.inflate(R.layout.frag_notice, container, false)
@@ -44,11 +49,10 @@ class NoticeFrag :Fragment(),NoticeContract.IView{
         val tvTitle = fragview?.findViewById(R.id.tv_title) as TextView
         tvTitle.text = "我的消息"
         //初始化recyclerview
-        val recyclerView = fragview?.findViewById(R.id.rv) as RecyclerView
+
         recyclerView.layoutManager = LinearLayoutManager(this.activity)
         recyclerView.adapter = messageAdaper
-        onMessageGet(mutableListOf())
-        onNoticeGet(mutableListOf())
+        (presenter as NoticeContract.IPresenter).getMessageNotice(MyApplication.userInfo?.uid!!)
 
         //初始化tablayout
         val tabLayout = fragview?.findViewById(R.id.tabLayout) as TabLayout
@@ -66,9 +70,9 @@ class NoticeFrag :Fragment(),NoticeContract.IView{
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab?.position == 0) {
-                    recyclerView.adapter = messageAdaper
+                    (presenter as NoticeContract.IPresenter).getMessageNotice(MyApplication.userInfo?.uid!!)
                 } else {
-                    recyclerView.adapter = noticeAdapter
+                    (presenter as NoticeContract.IPresenter).getSysNotice(MyApplication.userInfo?.uid!!)
                 }
             }
         })
@@ -76,20 +80,22 @@ class NoticeFrag :Fragment(),NoticeContract.IView{
     }
 
     override fun showError(err: String) {
+        toast(err)
     }
 
-    override fun onMessageGet(messages: List<Message>) {
-        for (i: Int in 1..10) {
-//            messageList.add(Message())
-        }
+    override fun onSysNoticeGet(dataList: List<SysNoticeInfo>) {
+        recyclerView.adapter = noticeAdapter
+        noticeList.clear()
+        noticeList.addAll(dataList)
+        noticeAdapter.notifyDataSetChanged()
+    }
+
+    override fun onMessageNoticeGet(dataList: List<MessageNoticeInfo>) {
+        recyclerView.adapter = messageAdaper
+        messageList.clear()
+        messageList.addAll(dataList)
         messageAdaper.notifyDataSetChanged()
     }
 
-    override fun onNoticeGet(notices: List<SysNotice>) {
-        for (i: Int in 1..10) {
-            noticeList.add(SysNotice())
-        }
-        noticeAdapter.notifyDataSetChanged()
-    }
 
 }

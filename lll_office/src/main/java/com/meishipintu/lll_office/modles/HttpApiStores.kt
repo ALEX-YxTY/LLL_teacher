@@ -98,23 +98,23 @@ interface HttpApiStores {
     //机构收藏教师
     @FormUrlEncoded
     @POST("Home/Api/addTeacherLike")
-    fun addTeacherCollectionService(@Field("tid") teacherId: String, @Field("oid") uid: String):Observable<HttpResult<Any>>
+    fun addTeacherCollectionService(@Field("tid") teacherId: String, @Field("oid") uid: String): Observable<HttpResult<Any>>
 
     //取消机构收藏教师
     @FormUrlEncoded
     @POST("Home/Api/deleteTeacherLike")
-    fun deleteTeacherCollectionService(@Field("tid") teacherId: String, @Field("oid") uid: String):Observable<HttpResult<Any>>
+    fun deleteTeacherCollectionService(@Field("tid") teacherId: String, @Field("oid") uid: String): Observable<HttpResult<Any>>
 
     //获取机构收藏教师列表
     @FormUrlEncoded
     @POST("Home/Api/getTeacherLike")
-    fun getTeacherCollectService(@Field("oid") uid:String) :Observable<HttpResult<List<TeacherInfo>>>
+    fun getTeacherCollectService(@Field("oid") uid: String): Observable<HttpResult<List<TeacherInfo>>>
 
     //机构邀请教师面试
     @FormUrlEncoded
     @POST("Home/Api/sendResume")
     fun sendResumeService(@Field("pid") jobId: Int, @Field("tid") teacherId: String, @Field("oid") oid: String
-                          , @Field("type") type: Int):Observable<HttpResult<Any>>
+                          , @Field("type") type: Int): Observable<HttpResult<Any>>
 
     //获取其他机构
     @FormUrlEncoded
@@ -134,6 +134,21 @@ interface HttpApiStores {
     //教师是否收藏了机构
     @FormUrlEncoded
     @POST("Home/Api/getTeacherIsLikedOrganization")
-    fun isOfficeCollectedService(@Field("oid") officeId: String,  @Field("tid") teacherId: String): Observable<HttpResult<List<Any>>>
+    fun isOfficeCollectedService(@Field("oid") officeId: String, @Field("tid") teacherId: String): Observable<HttpResult<List<Any>>>
 
+    //获取系统通知
+    @FormUrlEncoded
+    @POST("Home/Api/getSystemNotice")
+    fun getSysNoticeService(@Field("uid")oid:String,@Field("type")type:Int):Observable<HttpResult<List<SysNoticeInfo>>>
+
+    //获取私信通知
+    @FormUrlEncoded
+    @POST("Home/Api/getChatList")
+    fun getChatListService(@Field("tid")tid:String,@Field("type")type:Int,@Field("oid") oid:String)
+            :Observable<HttpResult<List<MessageNoticeInfo>>>
+
+    //通过职位id获取职位详情
+    @FormUrlEncoded
+    @POST("Home/Organization/getPostionDetail")
+    fun getPositionDetailServie(@Field("id")pid:Int):Observable<HttpResult<JobInfo>>
 }

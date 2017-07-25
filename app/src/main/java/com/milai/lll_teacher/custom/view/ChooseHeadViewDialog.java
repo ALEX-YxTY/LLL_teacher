@@ -7,12 +7,11 @@ import android.view.View;
 
 import com.milai.lll_teacher.R;
 
-
 /**
  * Created by Administrator on 2016/9/28.
  */
 
-public class ChooseHeadViewDialog extends Dialog implements View.OnClickListener {
+public class ChooseHeadViewDialog extends Dialog implements View.OnClickListener{
 
     OnItemClickListener listener;
 
