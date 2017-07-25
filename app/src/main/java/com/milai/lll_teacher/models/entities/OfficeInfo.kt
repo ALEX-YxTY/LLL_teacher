@@ -29,4 +29,5 @@ import java.io.Serializable
 data class OfficeInfo(val id: Int, val uid: String, val tel: String, val name: String, val address: String
                       , val contact: String, val contact_tel: String, val introduce_detail: String
                       , val avatar: String, val level: Int, val certification: String, val limit_time: String
-                      , val job_time_remain: Int, val interview_time_remain: Int): Serializable
+                      , val job_time_remain: Int, val interview_time_remain: Int,val count:Int
+                      , val postion:JobInfo): Serializable

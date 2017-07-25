@@ -2,6 +2,7 @@ package com.milai.lll_teacher.presenters
 
 import com.milai.lll_teacher.contracts.ChatDetailContract
 import com.milai.lll_teacher.models.entities.ChatDetail
+import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpCallback
@@ -30,6 +31,23 @@ class MessagePresenter(val iView:BasicView) : BasicPresenter(),ChatDetailContrac
                     iView.showError(msg)
                 }
             }
+        })
+    }
+
+    //获取职位详情
+    override fun getJobDetailInfo(pid: Int) {
+        addSubscription(httpApi.getPositionDetailServie(pid).map(HttpResultFunc<JobInfo>())
+                ,object :HttpCallback<JobInfo>(){
+            override fun onSuccess(model: JobInfo) {
+                (iView as ChatDetailContract.IView).onJobInfoGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+
         })
     }
 

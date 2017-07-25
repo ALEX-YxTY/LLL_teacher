@@ -26,7 +26,6 @@
         android:layout_marginTop="11dp"
         android:layout_toRightOf="@id/iv_head"
         android:layout_marginLeft="16dp"
-        android:text="某某教育机构"
         android:textColor="@color/text_black1"/>
 
     <TextView
@@ -39,7 +38,6 @@
         android:maxWidth="250dp"
         android:lines="1"
         android:ellipsize="end"
-        android:text="南京市鼓楼区"
         android:textSize="12sp"
         android:textColor="@color/text_grey1"/>
 
@@ -53,7 +51,6 @@
         android:maxWidth="150dp"
         android:lines="1"
         android:ellipsize="end"
-        android:text="热招：国画老师 等5个职位"
         android:textSize="12sp"
         android:textColor="@color/text_grey1" />
 

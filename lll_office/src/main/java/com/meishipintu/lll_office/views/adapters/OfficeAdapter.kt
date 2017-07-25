@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.modles.entities.OfficeInfo
 import com.meishipintu.lll_office.views.OfficeDetailActivity
@@ -33,7 +32,11 @@ class OfficeAdapter(ctx: Context, dataList: List<OfficeInfo>)
             val officeInfo = dataList[position] as OfficeInfo
             officeInfoViewHolder.officeName.text = officeInfo.name
             officeInfoViewHolder.address.text = officeInfo.address
-            officeInfoViewHolder.desc.text = "热招：  ${officeInfo.postion.job_name}  等${officeInfo.count}个职位"
+            if (officeInfo.postion != null) {
+                officeInfoViewHolder.desc.text = "热招：  ${officeInfo.postion.job_name}  等${officeInfo.count}个职位"
+            } else {
+                officeInfoViewHolder.desc.text = "暂无职位招聘"
+            }
             glide.load(officeInfo.avatar).error(R.drawable.organization_default).into(officeInfoViewHolder.ivHead)
             officeInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, OfficeDetailActivity::class.java)

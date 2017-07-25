@@ -2,16 +2,19 @@ package com.milai.lll_teacher.views
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.milai.lll_teacher.Cookies
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.ChatDetailContract
+import com.milai.lll_teacher.custom.util.DateUtil
 import com.milai.lll_teacher.models.entities.ChatDetail
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
@@ -35,6 +38,7 @@ class ChatDetailActivity : BasicActivity(),ChatDetailContract.IView {
         setContentView(R.layout.activity_chat_detail)
         presenter = MessagePresenter(this)
         (presenter as ChatDetailContract.IPresenter).getOfficeInfo(oid)
+        (presenter as ChatDetailContract.IPresenter).getJobDetailInfo(jobId)
         initList()
         initUI()
     }
@@ -75,6 +79,24 @@ class ChatDetailActivity : BasicActivity(),ChatDetailContract.IView {
     override fun onOfficeInfoGet(officeInfo: OfficeInfo) {
         val title = findViewById(R.id.tv_title) as TextView
         title.text = officeInfo.name
+        val tvOffice = findViewById(R.id.tv_office) as TextView
+        tvOffice.text = officeInfo.name
+        val ivHead = findViewById(R.id.iv_head) as ImageView
+        Glide.with(this).load(officeInfo.avatar).error(R.drawable.organization_default).into(ivHead)
+    }
+
+    //from ChatDetailContract.IView
+    override fun onJobInfoGet(jobInfo: JobInfo) {
+        val area = Cookies.getConstant(1)
+
+        val jobName = findViewById(R.id.job_name) as TextView
+        jobName.text = jobInfo.job_name
+        val tvAddress = findViewById(R.id.tv_address) as TextView
+        tvAddress.text = if (jobInfo.work_area == 0) "全南京" else "南京市 ${area[jobInfo.work_area]}"
+        val tvMoney = findViewById(R.id.tv_money) as TextView
+        tvMoney.text = jobInfo.money
+        val tvTime = findViewById(R.id.tv_time) as TextView
+        tvTime.text = DateUtil.stampToDate(jobInfo.create_time)
     }
 
     //from ChatDetailContract.IView

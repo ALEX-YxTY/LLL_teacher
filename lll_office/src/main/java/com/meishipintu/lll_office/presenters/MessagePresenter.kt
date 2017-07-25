@@ -5,7 +5,8 @@ import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
 import com.meishipintu.lll_office.modles.entities.ChatDetail
-import com.meishipintu.lll_office.modles.entities.OfficeInfo
+import com.meishipintu.lll_office.modles.entities.JobInfo
+import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.views.BasicView
 
 
@@ -16,14 +17,15 @@ import com.meishipintu.lll_office.views.BasicView
  */
 class MessagePresenter(val iView: BasicView) : BasicPresenter(), ChatDetailContract.IPresenter {
 
+
     val httpApi = HttpApiClinet.retrofit()
 
     //获取机构详情
-    override fun getOfficeInfo(oid: String) {
-        addSubscription(httpApi.getOrganizationDetaioService(oid).map(HttpResultFunc<OfficeInfo>())
-                ,object: HttpCallback<OfficeInfo>(){
-            override fun onSuccess(model: OfficeInfo) {
-                (iView as ChatDetailContract.IView).onOfficeInfoGet(model)
+    override fun getTeacherInfo(tid: String) {
+        addSubscription(httpApi.getTeacherDetailServie(tid).map(HttpResultFunc<TeacherInfo>())
+                ,object: HttpCallback<TeacherInfo>(){
+            override fun onSuccess(model: TeacherInfo) {
+                (iView as ChatDetailContract.IView).onTeacherInfoGet(model)
             }
 
             override fun onFailure(msg: String?) {
@@ -31,6 +33,23 @@ class MessagePresenter(val iView: BasicView) : BasicPresenter(), ChatDetailContr
                     iView.onError(msg)
                 }
             }
+        })
+    }
+
+    //获取职位详情
+    override fun getJobInfo(pid: Int) {
+        addSubscription(httpApi.getPositionDetailServie(pid).map(HttpResultFunc<JobInfo>())
+                ,object :HttpCallback<JobInfo>(){
+            override fun onSuccess(model: JobInfo) {
+                (iView as ChatDetailContract.IView).onJobInfoGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
+
         })
     }
 

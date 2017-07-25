@@ -71,8 +71,10 @@ class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
     }
 
     private fun initUI() {
+        val ivBig = findViewById(R.id.iv_big) as ImageView
+        glide.load(office.avatar).error(R.drawable.organization_default).into(ivBig)
         val ivHead = findViewById(R.id.iv_head) as ImageView
-        Glide.with(this).load(office.avatar).error(R.drawable.organization_default).into(ivHead)
+        glide.load(office.avatar).error(R.drawable.organization_default).into(ivHead)
         val tvName = findViewById(R.id.office_name) as TextView
         tvName.text = office.name
         val tvAddress = findViewById(R.id.tv_address) as TextView

@@ -1,7 +1,8 @@
 package com.meishipintu.lll_office.contract
 
 import com.meishipintu.lll_office.modles.entities.ChatDetail
-import com.meishipintu.lll_office.modles.entities.OfficeInfo
+import com.meishipintu.lll_office.modles.entities.JobInfo
+import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.presenters.BasicPresenterImp
 import com.meishipintu.lll_office.views.BasicView
 
@@ -12,7 +13,9 @@ import com.meishipintu.lll_office.views.BasicView
  */
 interface ChatDetailContract {
     interface IView: BasicView {
-        fun onOfficeInfoGet(officeInfo: OfficeInfo)
+        fun onTeacherInfoGet(teacherInfo: TeacherInfo)
+
+        fun onJobInfoGet(jobInfo:JobInfo)
 
         fun onChaListGet(dataList: List<ChatDetail>)
 
@@ -20,7 +23,9 @@ interface ChatDetailContract {
     }
 
     interface IPresenter: BasicPresenterImp {
-        fun getOfficeInfo(oid: String)
+        fun getTeacherInfo(tid: String)
+
+        fun getJobInfo(pid:Int)
 
         fun getChatList(tid: String, pid: Int)
 

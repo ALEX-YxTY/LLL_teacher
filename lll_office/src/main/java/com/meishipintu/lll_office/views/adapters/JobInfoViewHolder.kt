@@ -12,7 +12,7 @@ import com.meishipintu.lll_office.R
  * 主要功能：
  */
 class JobInfoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val hear = view.findViewById(R.id.iv_head) as ImageView
+        val head = view.findViewById(R.id.iv_head) as ImageView
         val jobName = view.findViewById(R.id.job_name) as TextView
         val officeName = view.findViewById(R.id.tv_office) as TextView
         val address = view.findViewById(R.id.tv_address) as TextView

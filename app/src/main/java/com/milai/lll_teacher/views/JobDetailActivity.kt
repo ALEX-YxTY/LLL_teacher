@@ -8,12 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.milai.lll_teacher.custom.util.DateUtil
 import com.milai.lll_teacher.Cookies
 import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.JobDetailContact
+import com.milai.lll_teacher.custom.util.DateUtil
 import com.milai.lll_teacher.models.entities.JobInfo
+import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.presenters.JobPresenter
 
 class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact.IView{
@@ -144,16 +145,21 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         } else {
             (findViewById(R.id.tv_other_demand)as TextView).text = jobInfo!!.other_demand
         }
+        (presenter as JobDetailContact.IPresenter).getOfficeDetail(jobInf.oid)
 
-        if (type == 1) {
-            (findViewById(R.id.office_name) as TextView).text = jobInfo!!.organization.name
-            (findViewById(R.id.tv_address) as TextView).text = jobInfo!!.organization.address
-            (findViewById(R.id.tv_decs) as TextView).text = "热招 职位"
-            val officeHead = findViewById(R.id.iv_head) as ImageView
-            Glide.with(this).load(jobInfo!!.organization.avatar).into(officeHead)
-            findViewById(R.id.include_office).setOnClickListener(this)
+    }
+
+    //from JobContract.IView
+    override fun onOfficeInfoGet(officeInfo: OfficeInfo) {
+        (findViewById(R.id.office_name) as TextView).text = officeInfo.name
+        (findViewById(R.id.tv_address) as TextView).text = officeInfo.address
+        if (officeInfo.postion != null) {
+            (findViewById(R.id.tv_decs) as TextView).text = "热招：  ${officeInfo.postion.job_name}  等${officeInfo.count}个职位"
         } else {
-            findViewById(R.id.include_office).visibility=View.GONE
+            (findViewById(R.id.tv_decs) as TextView).text = "暂无职位招聘"
         }
+        val officeHead = findViewById(R.id.iv_head) as ImageView
+        Glide.with(this).load(jobInfo!!.organization.avatar).into(officeHead)
+        findViewById(R.id.include_office).setOnClickListener(this)
     }
 }

@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.contracts
 
+import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.presenters.BasicPresenterImp
 import com.milai.lll_teacher.views.BasicView
 
@@ -17,6 +18,8 @@ interface JobDetailContact {
 
         fun onJobDetailGet(jobInf:com.milai.lll_teacher.models.entities.JobInfo)
 
+        fun onOfficeInfoGet(officeInfo:OfficeInfo)
+
         fun onResumeSendSuccess()
     }
 
@@ -29,5 +32,7 @@ interface JobDetailContact {
         fun sendResume(jobId:Int,uid:String,oid:String)
 
         fun getJobDetail(pid:Int)
+
+        fun getOfficeDetail(oid:String)
     }
 }

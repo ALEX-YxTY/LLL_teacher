@@ -2,7 +2,6 @@ package com.meishipintu.lll_office.modles
 
 import com.meishipintu.lll_office.modles.entities.*
 import io.reactivex.Observable
-import okhttp3.ResponseBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -151,4 +150,9 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Organization/getPostionDetail")
     fun getPositionDetailServie(@Field("id")pid:Int):Observable<HttpResult<JobInfo>>
+
+    //获取教师详情
+    @FormUrlEncoded
+    @POST("Home/Api/getTeacherDetail")
+    fun getTeacherDetailServie(@Field("uid")tid:String):Observable<HttpResult<TeacherInfo>>
 }

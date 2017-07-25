@@ -5,6 +5,7 @@ import com.milai.lll_teacher.contracts.CollectionContract
 import com.milai.lll_teacher.contracts.JobContract
 import com.milai.lll_teacher.contracts.JobDetailContact
 import com.milai.lll_teacher.models.entities.JobInfo
+import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpCallback
 import com.milai.lll_teacher.models.https.HttpResultFunc
@@ -130,6 +131,23 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
                 ,object :HttpCallback<JobInfo>(){
             override fun onSuccess(model: JobInfo) {
                 (iView as JobDetailContact.IView).onJobDetailGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+
+        })
+    }
+
+    //获取机构详情
+    override fun getOfficeDetail(oid: String) {
+        addSubscription(httpApi.getOrganizationDetaioService(oid).map(HttpResultFunc<OfficeInfo>())
+                ,object :HttpCallback<OfficeInfo>(){
+            override fun onSuccess(model: OfficeInfo) {
+                (iView as JobDetailContact.IView).onOfficeInfoGet(model)
             }
 
             override fun onFailure(msg: String?) {
