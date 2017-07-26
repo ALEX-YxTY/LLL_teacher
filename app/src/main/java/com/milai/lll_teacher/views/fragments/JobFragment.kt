@@ -34,11 +34,8 @@ import com.milai.lll_teacher.views.adapters.JobAdapter
 
 class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
 
-    var tj = true //是否推荐
+    var tj = 1 //是否推荐
     var area = 0 //0-全部，index-区序号
-    var course =0 //学科
-    var grade = 0   //年级
-    var experience =0 //经验要求
 
     var rv: RecyclerView? = null
     var dataList = ArrayList<JobInfo>()
@@ -138,25 +135,34 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     }
 
     //from MenuClickListener
-    override fun onTjClick(index: Boolean, name: String) {
+    override fun onTjClick(index: Int, name: String) {
         tj = index
         tvTj?.text = name
+        //还原其他标签
+        popArea?.clearSelect()
+        popRequire?.clearSelect()
+
         (presenter as JobContract.IPresenter).doSearch(tj = index)
     }
 
     //from MenuClickListener
     override fun onArerSelect(index: Int, name: String) {
         area = index
-        tvArea?.text = name
-        (presenter as JobContract.IPresenter).doSearch(area = index)
+        //还原其他标签
+        tvTj?.text = "全部"
+        popTj?.setIndexNow(1)
+        popRequire?.clearSelect()
+        (presenter as JobContract.IPresenter).doSearch(tj = 0, area = index)
     }
 
     //from MenuClickListener
     override fun onRequireSelect(indexCourse: Int, indexGrade: Int, indexExperience: Int) {
-        course = indexCourse
-        grade = indexGrade
-        experience = indexExperience
-        (presenter as JobContract.IPresenter).doSearch(course = course, grade = grade, experience = experience)
+        //还原其他标签
+        tvTj?.text = "全部"
+        popTj?.setIndexNow(1)
+        popArea?.clearSelect()
+        (presenter as JobContract.IPresenter).doSearch(tj = 0, course = indexCourse, grade = indexGrade
+                , experience = indexExperience)
     }
 
     //from MenuClickListener

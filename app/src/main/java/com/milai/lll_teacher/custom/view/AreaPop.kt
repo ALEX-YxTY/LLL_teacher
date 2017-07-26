@@ -19,7 +19,7 @@ import com.milai.lll_teacher.R
  */
 class AreaPop(val ctx: Context, val mListenr: MenuClickListener, val areas: Array<String>) : PopupWindow(ctx) {
 
-
+    val myAreaAdapter :MyAreaAdapter by lazy {MyAreaAdapter(areas, ctx) }
     init {
         val view = LayoutInflater.from(ctx).inflate(R.layout.pop_area, null)
         contentView = view
@@ -44,7 +44,6 @@ class AreaPop(val ctx: Context, val mListenr: MenuClickListener, val areas: Arra
                 , intArrayOf(R.id.tv_city))
 
         val llArea = contentView.findViewById(R.id.list_area) as RecyclerView
-        val myAreaAdapter = MyAreaAdapter(areas, ctx)
         llArea.layoutManager = LinearLayoutManager(ctx)
         llArea.adapter = myAreaAdapter
 
@@ -55,6 +54,10 @@ class AreaPop(val ctx: Context, val mListenr: MenuClickListener, val areas: Arra
             mListenr.onArerSelect(myAreaAdapter.select,areas[myAreaAdapter.select])
             this.dismiss()
         }
+    }
+
+    fun clearSelect() {
+        myAreaAdapter.resetSelect()
     }
 
     fun showPopDropDown(view: View) {

@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.meishipintu.lll_office.Cookies
+import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.customs.CircleImageView
 import com.meishipintu.lll_office.views.*
 
 /**
@@ -33,10 +36,13 @@ class MineFrag:Fragment(),View.OnClickListener{
     private fun initUI() {
         val title = fragView?.findViewById(R.id.tv_title) as TextView
         title.text = "我的"
-        val headView = fragView?.findViewById(R.id.iv_head) as ImageView
+        val headView = fragView?.findViewById(R.id.iv_head) as CircleImageView
+        Glide.with(this).load(OfficeApplication.userInfo?.avatar).error(R.drawable.organization_default).into(headView)
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
+        userName.text = OfficeApplication.userInfo?.name
         val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
         val timesRemain = fragView?.findViewById(R.id.tv_times_remain) as TextView
+//        timesRemain.text =
         val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
         if (Cookies.getUserInfo()?.level != 0) {
             userStates.visibility = View.GONE

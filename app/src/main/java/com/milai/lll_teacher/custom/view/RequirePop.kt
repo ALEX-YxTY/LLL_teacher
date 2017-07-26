@@ -15,6 +15,12 @@ import com.milai.lll_teacher.R
  */
 class RequirePop(val ctx: Context, val mListener: MenuClickListener, val courses: List<String>
                  , val grades: List<String>, val experiences: List<String>) : PopupWindow(ctx) {
+    val courseSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_course)
+            as CustomLabelSelectView}
+    val gradeSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_grade)
+            as CustomLabelSelectView}
+    val experienceSelect :CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_experience)
+            as CustomLabelSelectView}
     init {
         val view = LayoutInflater.from(ctx).inflate(R.layout.pop_require, null)
         contentView = view
@@ -32,11 +38,9 @@ class RequirePop(val ctx: Context, val mListener: MenuClickListener, val courses
     }
 
     private fun initUI() {
-        val courseSelect = contentView.findViewById(R.id.selectview_course) as CustomLabelSelectView
+
         courseSelect.setData(courses)
-        val gradeSelect = contentView.findViewById(R.id.selectview_grade) as CustomLabelSelectView
         gradeSelect.setData(grades)
-        val experienceSelect = contentView.findViewById(R.id.selectview_experience) as CustomLabelSelectView
         experienceSelect.setData(experiences)
         contentView.findViewById(R.id.bt_reset).setOnClickListener{
             courseSelect.setSelect(0)
@@ -55,6 +59,12 @@ class RequirePop(val ctx: Context, val mListener: MenuClickListener, val courses
         } else {
             this.dismiss()
         }
+    }
+
+    fun clearSelect() {
+        courseSelect.setSelect(0)
+        gradeSelect.setSelect(0)
+        experienceSelect.setSelect(0)
     }
 
     override fun dismiss() {

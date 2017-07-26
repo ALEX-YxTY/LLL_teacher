@@ -7,7 +7,7 @@ package com.milai.lll_teacher.custom.view
  */
 interface MenuClickListener {
 
-    fun onTjClick(index: Boolean, name: String)
+    fun onTjClick(index: Int, name: String)
 
     fun onArerSelect(index: Int, name: String)
 

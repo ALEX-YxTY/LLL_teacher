@@ -18,6 +18,11 @@ import android.widget.TextView
  */
 class TjPop(val ctx: Context, val mListener: MenuClickListener) : PopupWindow(ctx) {
 
+    val tvTj :TextView by lazy{ contentView.findViewById(R.id.tv_tj) as TextView}
+    val ivTj :ImageView by lazy{ contentView.findViewById(R.id.iv_tj) as ImageView}
+    val tvAll :TextView by lazy{ contentView.findViewById(R.id.tv_all) as TextView}
+    val ivAll :ImageView by lazy{ contentView.findViewById(R.id.iv_all) as ImageView}
+
     init {
         val view = LayoutInflater.from(ctx).inflate(R.layout.pop_tj, null)
         contentView = view
@@ -35,26 +40,34 @@ class TjPop(val ctx: Context, val mListener: MenuClickListener) : PopupWindow(ct
     }
 
     private fun initUI() {
-        val tvTj = contentView.findViewById(R.id.tv_tj) as TextView
-        val ivTj = contentView.findViewById(R.id.iv_tj) as ImageView
-        val tvAll = contentView.findViewById(R.id.tv_all) as TextView
-        val ivAll = contentView.findViewById(R.id.iv_all) as ImageView
+
         contentView.findViewById(R.id.ll_tj).setOnClickListener{
+            click(0)
+        }
+        contentView.findViewById(R.id.ll_all).setOnClickListener{
+            click(1)
+        }
+    }
+
+    fun setIndexNow(index: Int) {
+        click(index)
+    }
+
+    private fun click(index: Int) {
+        if (index == 0) {
             tvTj.setTextColor(ctx.resources.getColor(R.color.themeOrange))
             ivTj.visibility = View.VISIBLE
             tvAll.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivAll.visibility = View.INVISIBLE
-            mListener.onTjClick(true,"推荐")
-            dismiss()
-        }
-        contentView.findViewById(R.id.ll_all).setOnClickListener{
+            mListener.onTjClick(1, "推荐")
+        } else {
             tvAll.setTextColor(ctx.resources.getColor(R.color.themeOrange))
             ivAll.visibility = View.VISIBLE
             tvTj.setTextColor(ctx.resources.getColor(R.color.text_black3))
             ivTj.visibility = View.INVISIBLE
-            mListener.onTjClick(false,"全部")
-            dismiss()
+            mListener.onTjClick(0,"全部")
         }
+        dismiss()
     }
 
     fun showPopDropDown(parent: View) {

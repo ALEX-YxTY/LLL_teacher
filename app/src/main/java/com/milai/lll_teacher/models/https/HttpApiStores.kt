@@ -37,8 +37,8 @@ interface HttpApiStores {
     //职位查询和筛选接口
     @FormUrlEncoded
     @POST("Home/organization/getAllPosition")
-    fun getJobService(@Field("isTj") isTj: Boolean, @Field("area") area: Int, @Field("course") course: Int
-                      , @Field("grade") grade: Int, @Field("experience") experience: Int)
+    fun getJobService(@Field("is_tj") isTj: Int, @Field("work_area") area: Int, @Field("course") course: Int
+                      , @Field("grade") grade: Int, @Field("require_year") experience: Int)
             : Observable<HttpResult<List<JobInfo>>>
 
     //查询所有机构

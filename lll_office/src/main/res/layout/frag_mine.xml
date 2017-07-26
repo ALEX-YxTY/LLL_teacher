@@ -12,7 +12,7 @@
         android:layout_height="85dp"
         android:background="@color/white"
         >
-        <ImageView
+        <com.meishipintu.lll_office.customs.CircleImageView
             android:id="@+id/iv_head"
             android:layout_width="63dp"
             android:layout_height="63dp"

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.customs.utils.NumberUtil
@@ -20,7 +21,7 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
 
     val courses = Cookies.getConstant(2)    //获取学科数据
     val grades = Cookies.getConstant(3)     //获取年级数据
-
+    val glide = Glide.with(ctx)
     override fun getSpecialView(container: ViewGroup?): RecyclerView.ViewHolder {
         return TeacherInfoViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_teacher, container, false))
     }
@@ -35,7 +36,13 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
             teacherInfoViewHolder.number.text = "${teacher.total_number} 人评价"
             teacherInfoViewHolder.socre.text = NumberUtil.formatNumberInOne(teacher.total_score.toDouble()
                     / teacher.total_number)
-
+            glide.load(teacher.avatar).error(R.drawable.teacher_default).into(teacherInfoViewHolder.head)
+            if (teacher.total_number > 0) {
+                //评价大于1人
+                teacherInfoViewHolder.star.rating = (teacher.total_score.toFloat() / teacher.total_number)
+            } else {
+                teacherInfoViewHolder.star.rating = 0f
+            }
             teacherInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, TeacherDetailActivity::class.java)
                 intent.putExtra("teacher", teacher )
