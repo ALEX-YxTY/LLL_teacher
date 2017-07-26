@@ -31,7 +31,7 @@ class MessageAdapter(ctx: Context, dataList:MutableList<MessageNoticeInfo>): Bas
             val messageViewHolder = holder as MessageViewHolder
             val messageInfo = dataList[position] as MessageNoticeInfo
 
-            glide.load(messageInfo.organization_avatar).error(R.drawable.teacher_default).into(messageViewHolder.ivHead)
+            glide.load(messageInfo.organization_avatar).error(R.drawable.organization_default).into(messageViewHolder.ivHead)
             messageViewHolder.officeName.text = messageInfo.organization_name
             messageViewHolder.address.text = messageInfo.job_name
             messageViewHolder.recently.text = messageInfo.content

@@ -47,7 +47,7 @@ interface HttpApiStores {
 
     //查询机构详情
     @FormUrlEncoded
-    @POST("Home/Organization/getOrganizationDetail ")
+    @POST("Home/Organization/getOrganizationDetail")
     fun getOrganizationDetaioService(@Field("uid") uid:String):Observable<HttpResult<OfficeInfo>>
 
     //查询机构发布的职位

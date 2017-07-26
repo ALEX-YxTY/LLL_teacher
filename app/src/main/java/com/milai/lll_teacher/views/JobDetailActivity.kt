@@ -20,6 +20,7 @@ import com.milai.lll_teacher.presenters.JobPresenter
 class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact.IView{
 
     val jobId:Int by lazy { intent.getIntExtra("jobId", 0)}
+    val oid:String by lazy { intent.getStringExtra("oid")}
     /**
      * type：定义职位详情页面从哪里进入，从总职位列表进入，会自带机构信息，type=1
      *          从机构发布的职位进入，不再带机构信息，避免陷入循环，type=2
@@ -27,6 +28,7 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
     val type:Int by lazy { intent.getIntExtra("type", 2) }
     val star:ImageView by lazy { findViewById(R.id.bt_collect) as ImageView }
     var jobInfo: JobInfo? = null
+    var officeInfo: OfficeInfo? = null
 
     val glide:RequestManager by lazy{ Glide.with(this) }
     var isCollect = false       //标记是否已收藏
@@ -37,6 +39,11 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         presenter = JobPresenter(this)
         (presenter as JobDetailContact.IPresenter).isJobCollect(jobId, MyApplication.userInfo?.uid!!)
         (presenter as JobDetailContact.IPresenter).getJobDetail(jobId)
+        if (type != 2) {
+            (presenter as JobDetailContact.IPresenter).getOfficeDetail(oid)
+        } else {
+            findViewById(R.id.include_office).visibility = View.GONE
+        }
         initUI()
     }
 
@@ -46,6 +53,7 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.bt_contact).setOnClickListener(this)
         findViewById(R.id.bt_append).setOnClickListener(this)
+        findViewById(R.id.include_office).setOnClickListener(this)
         star.setOnClickListener(this)
 
     }
@@ -71,9 +79,9 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
             }
             R.id.include_office ->{
                 //进入机构详情页面
-                if (jobInfo?.organization != null) {
+                if (this.officeInfo != null) {
                     val intent = Intent(this, OfficeDetailActivity::class.java)
-                    intent.putExtra("office", jobInfo?.organization)
+                    intent.putExtra("office", this.officeInfo)
                     startActivity(intent)
                 }
             }
@@ -151,15 +159,16 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
 
     //from JobContract.IView
     override fun onOfficeInfoGet(officeInfo: OfficeInfo) {
-        (findViewById(R.id.office_name) as TextView).text = officeInfo.name
-        (findViewById(R.id.tv_address) as TextView).text = officeInfo.address
-        if (officeInfo.postion != null) {
-            (findViewById(R.id.tv_decs) as TextView).text = "热招：  ${officeInfo.postion.job_name}  等${officeInfo.count}个职位"
+        this.officeInfo = officeInfo
+        (findViewById(R.id.office_name) as TextView).text = this.officeInfo?.name
+        (findViewById(R.id.tv_address) as TextView).text = this.officeInfo?.address
+        if (this.officeInfo?.postion != null) {
+            (findViewById(R.id.tv_decs) as TextView).text = "热招：  ${this.officeInfo?.postion?.job_name}" +
+                    "  等${this.officeInfo?.count}个职位"
         } else {
             (findViewById(R.id.tv_decs) as TextView).text = "暂无职位招聘"
         }
         val officeHead = findViewById(R.id.iv_head) as ImageView
-        Glide.with(this).load(jobInfo!!.organization.avatar).into(officeHead)
-        findViewById(R.id.include_office).setOnClickListener(this)
+        Glide.with(this).load(this.officeInfo?.avatar).error(R.drawable.organization_default).into(officeHead)
     }
 }

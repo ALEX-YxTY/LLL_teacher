@@ -28,7 +28,7 @@ class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
     val glide: RequestManager by lazy{ Glide.with(this)}
     var isCollected = false   //标记是否已经收藏0
     val dataList = mutableListOf<JobInfo>()
-    val adapter:JobAdapter by lazy{ JobAdapter(this, dataList,2)}   //type=2 job不包含机构信息
+    val adapter:JobAdapter by lazy{ JobAdapter(this, dataList,2,avatar = office.avatar)}   //type=2 job不包含机构信息
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +72,11 @@ class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
     }
 
     private fun initUI() {
+        val glide = Glide.with(this)
         val ivHead = findViewById(R.id.iv_head) as ImageView
+        val ivBig = findViewById(R.id.iv_big) as ImageView
+        glide.load(office.avatar).error(R.drawable.organization_default).into(ivHead)
+        glide.load(office.avatar).error(R.drawable.organization_default).into(ivBig)
         val tvName = findViewById(R.id.office_name) as TextView
         tvName.text = office.name
         val tvAddress = findViewById(R.id.tv_address) as TextView

@@ -17,7 +17,7 @@ import com.milai.lll_teacher.views.JobDetailActivity
  *
  *  type=1 job包含organization信息，type=2 job不包含organization信息
  */
-class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int):BasicAdapter(ctx,dataList) {
+class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int, val avatar: String? = null):BasicAdapter(ctx,dataList) {
 
     val area = Cookies.getConstant(1)
     val glide = Glide.with(ctx)
@@ -36,16 +36,20 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int):BasicAdap
             if (type == 1) {
                 jobInfoViewHolder.officeName.text = job.organization.name
                 glide.load(job.organization.avatar).error(R.drawable.organization_default).into(jobInfoViewHolder.hear)
+            } else {
+                glide.load(avatar).error(R.drawable.organization_default).into(jobInfoViewHolder.hear)
             }
             jobInfoViewHolder.money.text = job.money
             jobInfoViewHolder.time.text = DateUtil.stampToDate(job.create_time)
 
             jobInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, JobDetailActivity::class.java)
+                intent.putExtra("oid",job.oid)
                 intent.putExtra("jobId", job.id)
                 intent.putExtra("type", type)   //通知职位详情页是否要显示机构信息
                 ctx.startActivity(intent)
             }
         }
     }
+
 }
