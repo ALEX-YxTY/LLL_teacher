@@ -265,7 +265,8 @@
             android:background="@color/themeOrange"
             android:textSize="16sp"
             android:textColor="@color/white"
-            android:text="@string/go_invite"/>
+            android:text="@string/go_invite"
+            />
     </LinearLayout>
 
 </RelativeLayout>

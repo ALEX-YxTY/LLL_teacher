@@ -54,13 +54,12 @@ class ChatAdapter(val ctx:Context,val dataList:List<ChatDetail>):RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        Log.d("chat","now bind view position: $position")
-        Log.d("chat","getItemCount: $itemCount")
         if (getItemViewType(position) != TYPE_EMPTY) {
             val chatViewHolder = holder as ChatViewHolder
             val chatDetail = dataList[position]
             chatViewHolder.content.text = chatDetail.content
             if (position == 0) {
+                //第一条必显示时间
                 chatViewHolder.date.visibility = View.VISIBLE
                 chatViewHolder.date.text = DateUtil.stampToDate2(chatDetail.create_time)
             }else if (chatDetail.create_time - timeLast > 30 * 60) {
@@ -80,7 +79,6 @@ class ChatAdapter(val ctx:Context,val dataList:List<ChatDetail>):RecyclerView.Ad
             }
             //渲染完毕后，将本条消息时间最为最后时间保存
             this.timeLast = chatDetail.create_time
-            Log.d("test","time last is $timeLast")
         }
     }
 }

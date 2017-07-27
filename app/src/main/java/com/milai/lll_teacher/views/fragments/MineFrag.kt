@@ -20,6 +20,7 @@ import com.milai.lll_teacher.views.*
  * 主要功能：
  */
 class MineFrag : Fragment(),View.OnClickListener{
+
     var fragView: View? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

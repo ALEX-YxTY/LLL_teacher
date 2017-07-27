@@ -38,26 +38,26 @@ class MainActivity : android.support.v7.app.AppCompatActivity() {
                 .subscribe({
                     (type) -> run{
                     when (type) {
-                        Constant.EXIT -> this@MainActivity.finish()
-                        Constant.LOGOUT -> startActivity(Intent(this,LoginAndRegistActivity::class.java))
+//                        Constant.EXIT -> this@MainActivity.finish()
+                        Constant.LOGOUT -> {
+                            //退出登录后启动注册登录页面，并退出主页
+                            startActivity(Intent(this,LoginAndRegistActivity::class.java))
+                            this.finish()
+                        }
                     }
                 }
                 },{},{},{
                     t: Disposable -> disposables.add(t)
                 })
-        if (Cookies.getUserInfo() != null) {
-            initViewPager()
-        } else {
-            startActivity(Intent(this,LoginAndRegistActivity::class.java))
-        }
+        initViewPager()
     }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        if (Cookies.getUserInfo() != null) {
-            initViewPager()
-        }
-    }
+//
+//    override fun onNewIntent(intent: Intent?) {
+//        super.onNewIntent(intent)
+//        if (Cookies.getUserInfo() != null) {
+//            initViewPager()
+//        }
+//    }
 
     private fun initViewPager() {
         val iconList = listOf(R.drawable.selector_icon_job, R.drawable.selector_icon_office

@@ -29,9 +29,7 @@ class AuthorPresenter(val iView:BasicView) :BasicPresenter(),LoginContract.IPres
             }
 
             override fun onFailure(msg: String?) {
-                if (msg != null) {
-                    iView.showError(msg)
-                }
+                iView.showError("手机号或密码错误")
             }
         })
     }

@@ -21,6 +21,8 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
 
     val jobId:Int by lazy { intent.getIntExtra("jobId", 0)}
     val oid:String by lazy { intent.getStringExtra("oid")}
+    //from 1:默认情况，2：隐藏投递简历
+    val from:Int by lazy{ intent.getIntExtra("from", 1)}
     /**
      * type：定义职位详情页面从哪里进入，从总职位列表进入，会自带机构信息，type=1
      *          从机构发布的职位进入，不再带机构信息，避免陷入循环，type=2
@@ -55,7 +57,9 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         findViewById(R.id.bt_append).setOnClickListener(this)
         findViewById(R.id.include_office).setOnClickListener(this)
         star.setOnClickListener(this)
-
+        if (from == 2) {
+            findViewById(R.id.bt_append).visibility = View.GONE
+        }
     }
 
     override fun onClick(v: View?) {

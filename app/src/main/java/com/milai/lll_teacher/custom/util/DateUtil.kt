@@ -18,7 +18,12 @@ object DateUtil{
 
     //如果是今天之前的时间，返回timestamp -> MM-dd hh:mm，今天返回timeStamp -> 今天 hh:mm
     fun  stampToDate2(timeStamp: Long): String {
-        if ((System.currentTimeMillis() / (1000 * 60 * 60 * 24) - (timeStamp / (60 * 60 * 24)) > 1)) {
+        val calanderTime = Calendar.getInstance()
+        calanderTime.timeInMillis = timeStamp * 1000
+        val calanderNow = Calendar.getInstance()
+        if (calanderNow.get(Calendar.YEAR)<calanderNow.get(Calendar.YEAR)
+                ||calanderNow.get(Calendar.MONTH)<calanderNow.get(Calendar.MONTH)
+                ||calanderTime.get(Calendar.DAY_OF_MONTH)<calanderNow.get(Calendar.DAY_OF_MONTH)) {
             val simpleDateFormat = SimpleDateFormat("MM-dd HH:mm")
             return simpleDateFormat.format(Date(timeStamp * 1000))
         } else {

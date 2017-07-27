@@ -128,4 +128,9 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Organization/getPostionDetail")
     fun getPositionDetailServie(@Field("id")pid:Int):Observable<HttpResult<JobInfo>>
+
+    //查询教师投递记录
+    @FormUrlEncoded
+    @POST("Home/Api/getTeacherDeliver")
+    fun getTeacherDetailServie(@Field("tid")tid:String,@Field("type") type:Int,@Field("status") status:Int):Observable<HttpResult<List<DeliverInfo>>>
 }

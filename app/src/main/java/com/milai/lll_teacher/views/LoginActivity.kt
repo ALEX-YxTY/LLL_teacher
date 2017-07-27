@@ -9,10 +9,12 @@ import android.widget.TextView
 import com.milai.lll_teacher.Cookies
 import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
+import com.milai.lll_teacher.RxBus
 import com.milai.lll_teacher.contracts.LoginContract
 import com.milai.lll_teacher.custom.util.Encoder
 import com.milai.lll_teacher.custom.util.StringUtils
 import com.milai.lll_teacher.custom.view.CustomEditText
+import com.milai.lll_teacher.models.entities.BusMessage
 import com.milai.lll_teacher.models.entities.UserInfo
 import com.milai.lll_teacher.presenters.AuthorPresenter
 
@@ -80,6 +82,9 @@ class LoginActivity : BasicActivity(),LoginContract.IView {
         MyApplication.userInfo = user
         //重新进入首页
         startActivity(Intent(this, MainActivity::class.java))
+        //退出登录页和登录注册页
+        this.finish()
+        RxBus.send(BusMessage(Constant.LOGIN_SUCCESS))
     }
 
 }

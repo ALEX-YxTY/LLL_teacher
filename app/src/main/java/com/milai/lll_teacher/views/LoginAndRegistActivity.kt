@@ -9,14 +9,34 @@ import android.widget.Toast
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.RxBus
 import com.milai.lll_teacher.models.entities.BusMessage
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class LoginAndRegistActivity : AppCompatActivity() ,View.OnClickListener{
+
+    val disposables: CompositeDisposable by lazy{ CompositeDisposable() }
 
     var clickTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_and_regist)
+        RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    (type) -> run{
+                    when (type) {
+                        Constant.LOGIN_SUCCESS -> {
+                            //登陆成功后退出此页面
+                            this.finish()
+                        }
+                    }
+                }
+                },{},{},{
+                    t: Disposable -> disposables.add(t)
+                })
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.bt_login).setOnClickListener(this)
         findViewById(R.id.bt_register).setOnClickListener(this)
@@ -40,7 +60,11 @@ class LoginAndRegistActivity : AppCompatActivity() ,View.OnClickListener{
             clickTime = System.currentTimeMillis()
         } else {
             this.finish()
-            RxBus.send(BusMessage(Constant.EXIT))
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 }
