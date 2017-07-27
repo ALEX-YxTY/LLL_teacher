@@ -12,6 +12,16 @@
         android:roundIcon="@mipmap/launcher_office"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--启动页-->
+        <activity android:name=".views.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!-- 注册登录页 -->
         <activity
@@ -24,11 +34,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- 登录页面 -->
         <activity
@@ -130,8 +136,9 @@
             android:name=".views.EvaluateActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--其他机构页面-->
-        <activity android:name=".views.OtherOrganizationActivity"
+        <!-- 其他机构页面 -->
+        <activity
+            android:name=".views.OtherOrganizationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>

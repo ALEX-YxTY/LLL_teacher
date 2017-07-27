@@ -1,12 +1,12 @@
-package com.milai.lll_teacher.views
+package com.meishipintu.lll_office.views
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import com.milai.lll_teacher.Cookies
-import com.milai.lll_teacher.R
+import com.meishipintu.lll_office.Cookies
+import com.meishipintu.lll_office.R
 import java.lang.ref.WeakReference
 
 class SplashActivity : AppCompatActivity() {
@@ -18,11 +18,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         handler.sendEmptyMessage(1)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeMessages(1)
     }
 
     class MyHandler internal constructor(ctx: SplashActivity): Handler(){
@@ -40,11 +35,16 @@ class SplashActivity : AppCompatActivity() {
                     if (Cookies.getUserInfo() != null) {
                         activity.startActivity(Intent(activity, MainActivity::class.java))
                     } else {
-                        activity.startActivity(Intent(activity,LoginAndRegistActivity::class.java))
+                        activity.startActivity(Intent(activity,LoginAndRegisterActivity::class.java))
                     }
                     activity.finish()
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeMessages(1)
     }
 }

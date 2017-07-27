@@ -51,13 +51,7 @@ class MainActivity : android.support.v7.app.AppCompatActivity() {
                 })
         initViewPager()
     }
-//
-//    override fun onNewIntent(intent: Intent?) {
-//        super.onNewIntent(intent)
-//        if (Cookies.getUserInfo() != null) {
-//            initViewPager()
-//        }
-//    }
+
 
     private fun initViewPager() {
         val iconList = listOf(R.drawable.selector_icon_job, R.drawable.selector_icon_office

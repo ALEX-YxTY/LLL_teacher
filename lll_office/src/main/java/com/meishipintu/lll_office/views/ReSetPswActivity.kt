@@ -7,9 +7,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
+import com.meishipintu.lll_office.Constant
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.RxBus
 import com.meishipintu.lll_office.customs.CustomEditText
 import com.meishipintu.lll_office.customs.utils.StringUtils
+import com.meishipintu.lll_office.modles.entities.BusMessage
 
 class ReSetPswActivity : AppCompatActivity() {
 
@@ -42,7 +45,11 @@ class ReSetPswActivity : AppCompatActivity() {
         etPswRe.setListener(textWatcher)
         btRegister.setOnClickListener{
             //TODO 注册 成功后跳转主页
-            startActivity(Intent(this,MainActivity::class.java))
+            //重新进入首页
+            startActivity(Intent(this, MainActivity::class.java))
+            //退出登录页和登录注册页
+            RxBus.send(BusMessage(Constant.LOGIN_SUCCESS))
+            this.finish()
         }
     }
 }

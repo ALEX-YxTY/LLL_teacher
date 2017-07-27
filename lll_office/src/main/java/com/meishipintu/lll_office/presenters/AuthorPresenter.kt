@@ -18,7 +18,9 @@ import com.meishipintu.lll_office.modles.entities.UserInfo
 class AuthorPresenter(val iView:AuthorContract.IView):BasicPresenter(),AuthorContract.IPresenter {
 
     val callBack:HttpCallback<UserInfo> by lazy { object :HttpCallback<UserInfo>(){
+
         override fun onSuccess(userInfo: UserInfo) {
+            //保存登录
             Cookies.saveUserInfo(userInfo)
             OfficeApplication.userInfo = userInfo
             iView.onSuccess()
@@ -30,6 +32,7 @@ class AuthorPresenter(val iView:AuthorContract.IView):BasicPresenter(),AuthorCon
             }
         }
     } }
+
     //注册
     override fun regist(tel: String, name: String, password: String, vcode: String) {
         addSubscription(HttpApiClinet.retrofit().registerService(tel,name,password,vcode).map(HttpResultFunc<UserInfo>())

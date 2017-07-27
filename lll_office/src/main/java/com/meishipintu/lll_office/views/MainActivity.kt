@@ -40,26 +40,18 @@ class MainActivity : AppCompatActivity() {
                 .subscribe({
                     (type) -> run{
                     when (type) {
-                        Constant.EXIT -> this@MainActivity.finish()
-                        Constant.LOGOUT -> startActivity(Intent(this,LoginAndRegisterActivity::class.java))
+                        Constant.LOGOUT -> {
+                            startActivity(Intent(this,LoginAndRegisterActivity::class.java))
+                            this.finish()
+                        }
                     }
                 }
                 },{},{},{
                     t: Disposable -> disposables.add(t)
                 })
-        if (Cookies.getUserInfo() != null) {
-            initViewPager()
-        } else {
-            startActivity(Intent(this,LoginAndRegisterActivity::class.java))
-        }
+        initViewPager()
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        if (Cookies.getUserInfo() != null) {
-            initViewPager()
-        }
-    }
 
     private fun initViewPager() {
         val iconList = listOf(R.drawable.selector_icon_news, R.drawable.selector_icon_teacher
