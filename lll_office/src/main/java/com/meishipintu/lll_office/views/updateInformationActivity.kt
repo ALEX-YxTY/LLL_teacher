@@ -1,31 +1,34 @@
 package com.meishipintu.lll_office.views
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.view.View
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import com.meishipintu.lll_office.Constant
-import com.meishipintu.lll_office.R
-import com.meishipintu.lll_office.customs.ChooseHeadViewDialog
 import android.support.v4.content.FileProvider
 import android.util.Log
+import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.meishipintu.lll_office.Constant
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
+import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.UpdateInfoContract
-import com.meishipintu.lll_office.customs.utils.*
+import com.meishipintu.lll_office.customs.ChooseHeadViewDialog
+import com.meishipintu.lll_office.customs.utils.DialogUtils
+import com.meishipintu.lll_office.customs.utils.NumberUtil
+import com.meishipintu.lll_office.customs.utils.StringUtils
+import com.meishipintu.lll_office.customs.utils.UriUtils
 import com.meishipintu.lll_office.modles.entities.UserInfo
 import com.meishipintu.lll_office.presenters.UpdateInfoPresenter
 import java.io.File
@@ -44,6 +47,8 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     val etContactor:EditText by lazy { findViewById(R.id.et_contactor)as EditText }
     val etContact:EditText by lazy { findViewById(R.id.et_contact)as EditText }
     val etIntro:EditText by lazy { findViewById(R.id.et_intro)as EditText }
+    val ivAdd:ImageView by lazy{ findViewById(R.id.iv_add) as ImageView}
+
     lateinit var photoURI: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +63,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
         title.text = "信息填写"
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.bt_pay).setOnClickListener(this)
-        findViewById(R.id.iv_add).setOnClickListener(this)
+        ivAdd.setOnClickListener(this)
         val tvMoney = findViewById(R.id.tv_money) as TextView
         tvMoney.text = "¥ ${NumberUtil.formatNumberInTwo(money)}"
     }
@@ -199,16 +204,53 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == Constant.CHOOSE_PICTURE_FROM_ALBUN) {
-                //相册返回
-                photoURI = data?.data!!
-                photoURI = UriUtils.convertUri(photoURI, this)      //content：//  Uri转换为file://  Uri
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                Constant.CHOOSE_PICTURE_FROM_ALBUN ->{
+                    //相册选择图片返回
+                    val contentUri = data?.data
+                    startPhotoCrop(contentUri) // 开始对图片进行裁剪处理
+                }
+                Constant.TAKE_PHOTO ->{
+                    //拍照返回
+                    if (Build.VERSION.SDK_INT < 24) {
+                        startPhotoCrop(Uri.fromFile(tempFile)) // 开始对图片进行裁剪处理
+                    } else {
+                        startPhotoCrop(photoURI)
+                    }
+                }
+                Constant.CROP_SMALL_PICTURE ->{
+                    if (data != null) {
+                        val extras = data.extras
+                        if (extras != null) {
+                            val photo = extras.getParcelable<Bitmap>("data")
+                            Glide.with(this).load(photo).into(ivAdd)
+                            //将剪切后图片保存在缓存文件中
+                            UriUtils.saveBitmap(photo, tempFile)
+                        }
+                    }
+                }
             }
-            val iv = findViewById(R.id.iv_add) as ImageView
-            Glide.with(this).load(photoURI).into(iv)
-            upload = true  //标记已上传图片
         }
 
+    }
+
+    //启动裁剪图片
+    private fun startPhotoCrop(contentUri: Uri?) {
+        if (contentUri != null) {
+            val intent = Intent("com.android.camera.action.CROP")
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            intent.setDataAndType(contentUri, "image/*")
+            // 设置裁剪
+            intent.putExtra("crop", "true")
+            // aspectX aspectY 是宽高的比例
+//            intent.putExtra("aspectX", 1)
+//            intent.putExtra("aspectY", 1)
+            // outputX outputY 是裁剪图片宽高
+            intent.putExtra("outputX", 500)
+//            intent.putExtra("outputY", 120)
+            intent.putExtra("return-data", true)
+            startActivityForResult(intent, Constant.CROP_SMALL_PICTURE)
+        }
     }
 }
