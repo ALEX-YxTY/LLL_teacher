@@ -61,26 +61,33 @@ class MineFrag:Fragment(),View.OnClickListener{
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.iv_status ->{
+                //升级账号
                 startActivity(Intent(this.activity, UpdateActivity::class.java))
             }
             R.id.rl_job_manage ->{
+                //职位管理
                 startActivity(Intent(this.activity, JobManagerActivity::class.java))
             }
             R.id.rl_my_interview ->{
+                //我的面试
                 startActivity(Intent(this.activity,MyInterviewActivity::class.java))
             }
             R.id.rl_my_collection ->{
+                //我的收藏
                 val intent = Intent(this.activity, CollectionActivity::class.java)
                 startActivity(intent)
             }
             R.id.rl_notice_center ->{
+                //消息中心
                 startActivity(Intent(this.activity, NoticeActivity::class.java))
             }
             R.id.rl_other_office ->{
+                //其他机构
                 val intent = Intent(this.activity, OtherOrganizationActivity::class.java)
                 startActivity(intent)
             }
             R.id.rl_setting ->{
+                //设置
                 startActivity(Intent(this.activity,SettingActivity::class.java))
             }
         }

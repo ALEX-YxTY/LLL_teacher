@@ -138,21 +138,33 @@ interface HttpApiStores {
     //获取系统通知
     @FormUrlEncoded
     @POST("Home/Api/getSystemNotice")
-    fun getSysNoticeService(@Field("uid")oid:String,@Field("type")type:Int):Observable<HttpResult<List<SysNoticeInfo>>>
+    fun getSysNoticeService(@Field("uid") oid: String, @Field("type") type: Int): Observable<HttpResult<List<SysNoticeInfo>>>
 
     //获取私信通知
     @FormUrlEncoded
     @POST("Home/Api/getChatList")
-    fun getChatListService(@Field("tid")tid:String,@Field("type")type:Int,@Field("oid") oid:String)
-            :Observable<HttpResult<List<MessageNoticeInfo>>>
+    fun getChatListService(@Field("tid") tid: String, @Field("type") type: Int, @Field("oid") oid: String)
+            : Observable<HttpResult<List<MessageNoticeInfo>>>
 
     //通过职位id获取职位详情
     @FormUrlEncoded
     @POST("Home/Organization/getPostionDetail")
-    fun getPositionDetailServie(@Field("id")pid:Int):Observable<HttpResult<JobInfo>>
+    fun getPositionDetailServie(@Field("id") pid: Int): Observable<HttpResult<JobInfo>>
 
     //获取教师详情
     @FormUrlEncoded
     @POST("Home/Api/getTeacherDetail")
-    fun getTeacherDetailServie(@Field("uid")tid:String):Observable<HttpResult<TeacherInfo>>
+    fun getTeacherDetailServie(@Field("uid") tid: String): Observable<HttpResult<TeacherInfo>>
+
+    //获取订单orderStr
+    @FormUrlEncoded
+    @POST("Home/Payment/pay")
+    fun getOrderStr(@Field("subject") subject: String, @Field("type") type: String, @Field("aid") aid:Int
+                    ,@Field("body") name: String, @Field("money") money: Float,@Field("level") level:Int
+                    , @Field("oid") uid: String):Observable<HttpResult<OrderInfo>>
+
+    //订单取消接口
+    @FormUrlEncoded
+    @POST("Home/Payment/cancelOrder")
+    fun cancelOrderService(@Field("order_id") order_id: String):Observable<HttpResult<Any>>
 }

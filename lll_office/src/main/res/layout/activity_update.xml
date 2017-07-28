@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back_grey1">
@@ -19,12 +20,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
                 android:background="@drawable/shape_back_grident2">
-                <ImageView
+                <com.meishipintu.lll_office.customs.CircleImageView
                     android:id="@id/iv_head"
                     android:layout_width="63dp"
                     android:layout_height="63dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="12dp"/>
+                    android:layout_marginLeft="12dp"
+                    app:border_width="2dp"
+                    app:border_color="@color/white"
+                    />
                 <TextView
                     android:id="@+id/office_name"
                     android:layout_width="wrap_content"
