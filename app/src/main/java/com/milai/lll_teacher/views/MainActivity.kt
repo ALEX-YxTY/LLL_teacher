@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.milai.lll_teacher.Cookies
+import com.milai.lll_teacher.Constant
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.RxBus
 import com.milai.lll_teacher.models.entities.BusMessage

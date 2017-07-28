@@ -6,10 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
-import com.milai.lll_teacher.Cookies
-import com.milai.lll_teacher.MyApplication
-import com.milai.lll_teacher.R
-import com.milai.lll_teacher.RxBus
+import com.milai.lll_teacher.*
 import com.milai.lll_teacher.contracts.LoginContract
 import com.milai.lll_teacher.custom.util.Encoder
 import com.milai.lll_teacher.custom.util.StringUtils
@@ -62,7 +59,7 @@ class LoginActivity : BasicActivity(),LoginContract.IView {
         })
         tvForgetPsw.setOnClickListener({
             //跳转忘记密码页面
-            startActivityForResult(Intent(this, ForgetPswActivity::class.java),Constant.CHANGE_PSW)
+            startActivityForResult(Intent(this, ForgetPswActivity::class.java), Constant.CHANGE_PSW)
         })
         btLogin.setOnClickListener({
             //登录

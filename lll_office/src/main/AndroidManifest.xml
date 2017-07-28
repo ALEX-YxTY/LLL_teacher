@@ -3,6 +3,7 @@
     package="com.meishipintu.lll_office">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -161,6 +162,17 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
+
+        <!-- FileProvider 供跨程序使用Uri文件 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.meishipintu.lll_office"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepath" />
+        </provider>
     </application>
 
 </manifest>

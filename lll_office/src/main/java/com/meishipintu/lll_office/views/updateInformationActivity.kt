@@ -1,30 +1,55 @@
 package com.meishipintu.lll_office.views
 
+import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import com.meishipintu.lll_office.Constant
 import com.meishipintu.lll_office.R
-import com.meishipintu.lll_office.customs.utils.NumberUtil
-import com.meishipintu.lll_office.customs.utils.StringUtils
-import com.meishipintu.lll_office.customs.utils.ToastUtil
+import com.meishipintu.lll_office.customs.ChooseHeadViewDialog
+import android.support.v4.content.FileProvider
+import android.util.Log
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.meishipintu.lll_office.Cookies
+import com.meishipintu.lll_office.OfficeApplication
+import com.meishipintu.lll_office.contract.UpdateInfoContract
+import com.meishipintu.lll_office.customs.utils.*
+import com.meishipintu.lll_office.modles.entities.UserInfo
+import com.meishipintu.lll_office.presenters.UpdateInfoPresenter
+import java.io.File
 
-class updateInformationActivity : AppCompatActivity(),View.OnClickListener {
 
-    val money:Int by lazy { this.intent.getIntExtra("money", 49) }
+class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateInfoContract.IView {
+
+
+    //调起相机的回复
+    lateinit var tempFile:File
+    var upload = false  //标记是否上传图片成功
+
+    val money:Float by lazy { this.intent.getStringExtra("level").split("&")[1].toFloat() }
     val etName:EditText by lazy { findViewById(R.id.et_name)as EditText }
     val etAddress:EditText by lazy { findViewById(R.id.et_address)as EditText }
     val etContactor:EditText by lazy { findViewById(R.id.et_contactor)as EditText }
     val etContact:EditText by lazy { findViewById(R.id.et_contact)as EditText }
     val etIntro:EditText by lazy { findViewById(R.id.et_intro)as EditText }
-    var isPicUpload = false     //表示图片是否上传成功
-
+    lateinit var photoURI: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_information)
+        presenter = UpdateInfoPresenter(this)
         initUI()
     }
 
@@ -36,26 +61,154 @@ class updateInformationActivity : AppCompatActivity(),View.OnClickListener {
         findViewById(R.id.iv_add).setOnClickListener(this)
         val tvMoney = findViewById(R.id.tv_money) as TextView
         tvMoney.text = "¥ ${NumberUtil.formatNumberInTwo(money)}"
-
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.bt_back -> onBackPressed()
             R.id.bt_pay -> {
-                //TODO 输入检查
                 if (StringUtils.isNullOrEmpty(arrayOf(etName.text.toString(), etAddress.text.toString()
-                        , etContactor.text.toString(), etContact.text.toString()))) {
-                    ToastUtil.show(this,"内容不能为空",true)
+                        , etContactor.text.toString(), etContact.text.toString(), etIntro.text.toString()))) {
+                    toast("内容不能为空")
+                    return
                 }
-                val intent = Intent(this, PayActivity::class.java)
-                intent.putExtra("money", money)
-                startActivity(intent)
+                if (!upload) {
+                    toast("请上传营业执照")
+                    return
+                }
+                val certificateFile: File
+                if ("file".equals(photoURI?.scheme)) {
+                    certificateFile = File(photoURI.path)
+                    Log.d("test", "name: ${certificateFile.absolutePath}")
+                } else {
+                    Log.d("test", "name: ${tempFile.absolutePath}")
+                    certificateFile = tempFile
+                }
+                (presenter as UpdateInfoPresenter).updateOfficeInfo(OfficeApplication.userInfo?.uid!!
+                        ,etName.text.toString(),etAddress.text.toString(),etContactor.text.toString()
+                        ,etContact.text.toString(),etIntro.text.toString(),certificateFile)
+
             }
             R.id.iv_add -> {
-                //TODO 弹窗上传pic
+                choosePicture()
             }
         }
     }
 
+    //选择图片 调用PhotoPicker
+    private fun choosePicture() {
+        tempFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "certificate.jpg")
+        ChooseHeadViewDialog(this, R.style.CustomDialog, object : ChooseHeadViewDialog.OnItemClickListener {
+            override fun onClickCamera(view: View, dialog: Dialog) {
+                dialog.dismiss()
+                startCameraWapper()
+            }
+
+            override fun onClickAlbum(view: View, dialog: Dialog) {
+                dialog.dismiss()
+                //调用相册
+                val intent = Intent.createChooser(Intent()
+                        .setAction(Intent.ACTION_GET_CONTENT).setType("image/*"), "选择相册")
+                startActivityForResult(intent, Constant.CHOOSE_PICTURE_FROM_ALBUN)
+            }
+        }).show()
+    }
+
+    //相机权限申请包装方法
+    fun startCameraWapper() {
+        val hasStoragePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+        Log.d("test","permission has: $hasStoragePermission")
+
+        if (hasStoragePermission != PackageManager.PERMISSION_GRANTED) {        //未授权
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)) {                    //系统申请权限框不再弹出
+                DialogUtils.showCustomDialog(this, "本应用需要获取使用相机权限", { dialog, _ ->
+                    ActivityCompat.requestPermissions(this@updateInformationActivity, arrayOf(android.Manifest.permission.CAMERA)
+                            , Constant.REQUEST_CAMERA_PERMISSION)
+                    dialog.dismiss()
+                }) { dialog, _ -> dialog.dismiss() }
+                return
+            }
+            //系统框弹出时直接申请
+            ActivityCompat.requestPermissions(this@updateInformationActivity, arrayOf(android
+                    .Manifest.permission.CAMERA), Constant.REQUEST_CAMERA_PERMISSION)
+            return
+        }
+
+        startCamera()
+    }
+
+    //启动相机
+    private fun startCamera() {
+        /* getUriForFile(Context context, String authority, File file):此处的authority需要和manifest里面保持一致。
+                photoURI打印结果：content://cn.lovexiaoai.myapp.fileprovider/camera_photos/Pictures/Screenshots/testImg.png 。
+                这里的camera_photos:对应filepaths.xml中的name
+            */
+        photoURI = FileProvider.getUriForFile(this, "com.meishipintu.lll_office", tempFile)
+        /**
+         *  调用相机，获取压缩后的图片
+         *  如需获取不压缩图片，需要intent.intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+         *  此时还分当前SDK是否>7.0，如果小于7.0可以file//类型Uri存储照片，如果>=7.0，则只接受content://类型Uri
+         *  还需要配置FileProvider来提供更存储Uri
+         */
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val currentapiVersion = android.os.Build.VERSION.SDK_INT
+        if (currentapiVersion < 24) {
+            //7.0以前版本
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile))
+        } else {
+            /* 这句要记得写：这是申请权限，之前因为没有添加这个，打开裁剪页面时，一直提示“无法修改低于50*50像素的图片”，
+                开始还以为是图片的问题呢，结果发现是因为没有添加FLAG_GRANT_READ_URI_PERMISSION。
+                如果关联了源码，点开FileProvider的getUriForFile()看看（下面有），注释就写着需要添加权限。
+            */
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            //获取相机元图片，不经过压缩，并保存在uir位置
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            //调用系统相机
+        }
+        startActivityForResult(intent, Constant.TAKE_PHOTO)
+    }
+
+    override fun onError(e: String) {
+        toast(e)
+    }
+
+    override fun onUploadSuccess(userInfo: UserInfo) {
+        Cookies.saveUserInfo(userInfo)
+        OfficeApplication.userInfo = userInfo
+        val intent = Intent(this, PayActivity::class.java)
+        intent.putExtra("money", money)
+        startActivity(intent)
+        this.finish()
+    }
+
+    //权限申请回调
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        Log.d("test","permission Granted: ${grantResults[0]}")
+        when (requestCode) {
+            Constant.REQUEST_CAMERA_PERMISSION ->{
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    //拒绝授权
+                    Toast.makeText(this, "没有相机权限，将有部分功能无法使用，请在系统设置中增加应用的相应授权", Toast.LENGTH_SHORT)
+                            .show()
+                } else {
+                    startCamera()
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constant.CHOOSE_PICTURE_FROM_ALBUN) {
+                //相册返回
+                photoURI = data?.data!!
+                photoURI = UriUtils.convertUri(photoURI, this)      //content：//  Uri转换为file://  Uri
+            }
+            val iv = findViewById(R.id.iv_add) as ImageView
+            Glide.with(this).load(photoURI).into(iv)
+            upload = true  //标记已上传图片
+        }
+
+    }
 }

@@ -23,10 +23,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import com.alipay.sdk.app.PayTask
 import java.lang.ref.WeakReference
 import android.widget.Toast
-import com.meishipintu.lll_office.modles.entities.OrderInfo
 import com.meishipintu.lll_office.modles.entities.PayResult
 
 
@@ -37,7 +35,6 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
         listOf(findViewById(R.id.rl_1), findViewById(R.id.rl_2), findViewById(R.id.rl_3), findViewById(R.id.rl_4))
     }
     val levels = Cookies.getConstant(7)
-    val moneys = listOf(49.0f, 149.0f, 249.0f, 349.0f)
     val tvMoney:TextView by lazy { findViewById(R.id.tv_money) as TextView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -136,42 +133,42 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
             R.id.rl_4 -> {if(select!=3) changeTo(3)}
             R.id.bt_pay -> {
                 //先去完善信息
-//                val intent = Intent(this, updateInformationActivity::class.java)
-//                intent.putExtra("money", moneys[select])
-//                intent.putExtra("name",levels[select])
-//                startActivity(intent)
-                if (handler == null) {
-                    handler = MyHandler(this)
-                }
-                //直接支付
-                addSubscription(HttpApiClinet.retrofit().getOrderStr("会员升级","01"
-                        ,0,levels[select].split("&")[0],levels[select].split("&")[1].toFloat()
-                        ,select+1,OfficeApplication.userInfo?.uid!!).map(HttpResultFunc<OrderInfo>())
-                        ,object :HttpCallback<OrderInfo>(){
-                    override fun onSuccess(orderInfo: OrderInfo) {
-                        Log.d("test","resutl: ${orderInfo.url}")
-                        val payRunnable = Runnable {
-                            val alipay = PayTask(this@UpdateActivity)
-                            val result = alipay.payV2(orderInfo.url, true)
-                            orderID = orderInfo.order_id
-                            Log.d("test", result.toString())
+                val intent = Intent(this, updateInformationActivity::class.java)
+                intent.putExtra("level",levels[select])
+                startActivity(intent)
 
-                            val msg = handler?.obtainMessage()
-                            msg?.what = SDK_PAY_FLAG
-                            msg?.obj = result
-                            handler?.sendMessage(msg)
-                        }
-
-                        val payThread = Thread(payRunnable)
-                        payThread.start()
-                    }
-
-                    override fun onFailure(msg: String?) {
-                        if (msg != null) {
-                            toast("获取支付信息失败，请稍后重试")
-                        }
-                    }
-                })
+//                if (handler == null) {
+//                    handler = MyHandler(this)
+//                }
+//                //直接支付
+//                addSubscription(HttpApiClinet.retrofit().getOrderStr("会员升级","01"
+//                        ,0,levels[select].split("&")[0],levels[select].split("&")[1].toFloat()
+//                        ,select+1,OfficeApplication.userInfo?.uid!!).map(HttpResultFunc<OrderInfo>())
+//                        ,object :HttpCallback<OrderInfo>(){
+//                    override fun onSuccess(orderInfo: OrderInfo) {
+//                        Log.d("test","resutl: ${orderInfo.url}")
+//                        val payRunnable = Runnable {
+//                            val alipay = PayTask(this@UpdateActivity)
+//                            val result = alipay.payV2(orderInfo.url, true)
+//                            orderID = orderInfo.order_id
+//                            Log.d("test", result.toString())
+//
+//                            val msg = handler?.obtainMessage()
+//                            msg?.what = SDK_PAY_FLAG
+//                            msg?.obj = result
+//                            handler?.sendMessage(msg)
+//                        }
+//
+//                        val payThread = Thread(payRunnable)
+//                        payThread.start()
+//                    }
+//
+//                    override fun onFailure(msg: String?) {
+//                        if (msg != null) {
+//                            toast("获取支付信息失败，请稍后重试")
+//                        }
+//                    }
+//                })
 
             }
         }
@@ -188,6 +185,6 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
         idList[select].setBackgroundResource(R.drawable.shape_tv_lable_unselect_raidus8)
         select = index
         idList[select].setBackgroundResource(R.drawable.shape_tv_lable_radiu8)
-        tvMoney.text = "¥ ${moneys[select]}"
+        tvMoney.text = "¥ ${levels[select].split("&")[1]}"
     }
 }

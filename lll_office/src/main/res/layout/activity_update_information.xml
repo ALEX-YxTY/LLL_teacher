@@ -290,30 +290,25 @@
 
                 <ImageView
                     android:id="@+id/iv_add"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/icon_add"
+                    android:layout_width="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_add"
+                    android:scaleType="centerInside"
                     android:layout_below="@id/component4"
                     android:layout_marginTop="14dp"
-                    android:layout_marginLeft="27dp"/>
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/iv_add"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="7dp"
                     android:layout_marginLeft="22dp"
                     android:textSize="10sp"
                     android:textColor="@color/themeOrange"
                     android:text="上传证件"/>
-
-                <ImageView
-                    android:id="@+id/iv_certificate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="40dp"
-                    android:visibility="gone"/>
 
 
             </RelativeLayout>

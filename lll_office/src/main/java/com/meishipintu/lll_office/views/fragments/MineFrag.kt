@@ -44,7 +44,7 @@ class MineFrag:Fragment(),View.OnClickListener{
         val timesRemain = fragView?.findViewById(R.id.tv_times_remain) as TextView
 //        timesRemain.text =
         val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
-        if (Cookies.getUserInfo()?.level != 0) {
+        if (Cookies.getUserInfo()?.level == 4) {
             userStates.visibility = View.GONE
         } else {
             userStates.setOnClickListener(this)

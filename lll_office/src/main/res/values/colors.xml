@@ -20,6 +20,7 @@
     <color name="text_grey1">#8A8F97</color>
     <color name="text_grey2">#dddddd</color>
     <color name="text_red">#FF6C5D</color>
+    <color name="untransparent_gray">#e4e4e4</color>
 
     <!--background-->
     <color name="grey_back1">#F7F9FC</color>         <!--状态栏背景色-->

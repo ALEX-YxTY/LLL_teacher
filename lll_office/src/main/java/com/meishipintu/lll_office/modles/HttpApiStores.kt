@@ -2,9 +2,9 @@ package com.meishipintu.lll_office.modles
 
 import com.meishipintu.lll_office.modles.entities.*
 import io.reactivex.Observable
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 /**
  * Created by Administrator on 2017/7/4.
@@ -167,4 +167,12 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Payment/cancelOrder")
     fun cancelOrderService(@Field("order_id") order_id: String):Observable<HttpResult<Any>>
+
+    //修改机构信息接口
+    @Multipart
+    @POST("Home/organization/organization_update")
+    fun updateOfficeInfoService(@Part("uid") uid: RequestBody, @Part("address") address: RequestBody
+                                , @Part("name") name: RequestBody, @Part("contact") contact: RequestBody
+                                , @Part("contact_tel") contactTel: RequestBody, @Part("introduce_detail") introduce: RequestBody
+                                , @Part file1: MultipartBody.Part ):Observable<HttpResult<Any>>
 }

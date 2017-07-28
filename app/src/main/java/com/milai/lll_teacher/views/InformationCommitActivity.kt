@@ -21,6 +21,8 @@ import android.widget.Toast
 import com.milai.lll_teacher.custom.util.DialogUtils
 import com.milai.lll_teacher.custom.view.ChooseHeadViewDialog
 import android.provider.MediaStore
+import com.milai.lll_teacher.Constant
+import java.io.File
 
 
 class InformationCommitActivity : AppCompatActivity() {

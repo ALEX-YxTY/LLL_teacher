@@ -4,10 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.milai.lll_teacher.Cookies
-import com.milai.lll_teacher.MyApplication
-import com.milai.lll_teacher.R
-import com.milai.lll_teacher.RxBus
+import com.milai.lll_teacher.*
 import com.milai.lll_teacher.models.entities.BusMessage
 
 class SettingActivity : AppCompatActivity(), View.OnClickListener {

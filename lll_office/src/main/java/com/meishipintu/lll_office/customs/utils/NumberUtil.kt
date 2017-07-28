@@ -15,6 +15,12 @@ object NumberUtil{
         return df.format(number)
     }
 
+    fun formatNumberInTwo(number:Float):String{
+        val df = DecimalFormat("0.00")
+        df.roundingMode = RoundingMode.FLOOR
+        return df.format(number)
+    }
+
     fun formatNumberInOne(number:Double):String{
         val df = DecimalFormat("0.0")
         df.roundingMode = RoundingMode.FLOOR
