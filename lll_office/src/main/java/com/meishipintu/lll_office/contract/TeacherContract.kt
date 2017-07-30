@@ -18,7 +18,7 @@ interface TeacherContract {
 
     interface IPresenter : BasicPresenterImp {
 
-        fun doSearch(tj: Boolean = true, course: Int = 0, grade: Int = 0, experience: Int = 0, decending: Boolean = false)
+        fun doSearch(tj: Int = 0, course: Int = 0, grade: Int = 0, experience: Int = 0, decending: Boolean = false)
 
     }
 }

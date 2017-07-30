@@ -26,7 +26,7 @@ class LoginAndRegisterActivity : BasicActivity(),View.OnClickListener{
                 .subscribe({
                     (type) -> run{
                     when (type) {
-                        Constant.LOGIN_SUCCESS -> {
+                        Constant.LOGIN_SUCCESS,Constant.REGIST_SUCCESS -> {
                             //登陆成功后退出此页面
                             this.finish()
                         }

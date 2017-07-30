@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
@@ -67,6 +66,7 @@ class RegisterActivity : BasicActivity(),ForgetPswContract.IView {
                 intent.putExtra("verify", etVcode.text)
                 intent.putExtra("psw",Encoder.md5(etPsw.text))
                 startActivity(intent)
+                this.finish()
             }
         }
     }

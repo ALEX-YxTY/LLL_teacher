@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -8,10 +9,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
+import com.meishipintu.lll_office.Constant
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.RxBus
 import com.meishipintu.lll_office.contract.RegisterContract
 import com.meishipintu.lll_office.customs.CustomEditText
 import com.meishipintu.lll_office.customs.utils.StringUtils
+import com.meishipintu.lll_office.modles.entities.BusMessage
 import com.meishipintu.lll_office.presenters.RegisterPresenter
 import java.lang.ref.WeakReference
 
@@ -20,6 +24,8 @@ import java.lang.ref.WeakReference
  *  from=1 注册  from=2 找回密码
  */
 class RegistActivity : BasicActivity(),RegisterContract.IView {
+
+    val REGISTER = 10 //注册requestCode
 
     var vcodeGet = ""
     val btVcode by lazy { findViewById(R.id.bt_vcode) as Button }
@@ -77,7 +83,7 @@ class RegistActivity : BasicActivity(),RegisterContract.IView {
                 } else {
                     intent = Intent(this, ReSetPswActivity::class.java)
                 }
-                startActivity(intent)
+                startActivityForResult(intent,REGISTER)
             }
         }
     }
@@ -96,6 +102,16 @@ class RegistActivity : BasicActivity(),RegisterContract.IView {
         super.onDestroy()
         handler.removeMessages(1)
         btVcode.isEnabled = true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REGISTER && resultCode == Activity.RESULT_OK) {
+            //重新进入首页
+            startActivity(Intent(this, MainActivity::class.java))
+            //退出注册页和登录注册页
+            RxBus.send(BusMessage(Constant.REGIST_SUCCESS))
+            this.finish()
+        }
     }
 
     class MyHandler internal constructor(ctx: RegistActivity): Handler(){

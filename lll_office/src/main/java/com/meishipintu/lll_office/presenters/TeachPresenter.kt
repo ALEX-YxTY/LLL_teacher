@@ -21,7 +21,7 @@ class TeachPresenter(val iView:BasicView):BasicPresenter(),TeacherContract.IPres
     val httpApi = HttpApiClinet.retrofit()
 
     //筛选查找教师
-    override fun doSearch(tj: Boolean, year: Int, course: Int, grade: Int, decending: Boolean) {
+    override fun doSearch(tj: Int, year: Int, course: Int, grade: Int, decending: Boolean) {
         addSubscription(httpApi.getTeacherService(tj,year,course,grade,decending)
                 .map(HttpResultFunc<List<TeacherInfo>>()), object : HttpCallback<List<TeacherInfo>>(){
             override fun onSuccess(model: List<TeacherInfo>) {

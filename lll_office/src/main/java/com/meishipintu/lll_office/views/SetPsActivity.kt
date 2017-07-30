@@ -1,6 +1,6 @@
 package com.meishipintu.lll_office.views
 
-import android.content.Intent
+import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -59,7 +59,8 @@ class SetPsActivity : BasicActivity(),AuthorContract.IView{
 
     //from AuthorContract.IView
     override fun onSuccess() {
-        startActivity(Intent(this,MainActivity::class.java))
+        setResult(Activity.RESULT_OK)
+        this.finish()
     }
 
 }

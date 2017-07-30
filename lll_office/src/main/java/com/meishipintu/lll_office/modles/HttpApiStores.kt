@@ -27,7 +27,7 @@ interface HttpApiStores {
     //教师查询及筛选
     @FormUrlEncoded
     @POST("Home/Api/getAllTeacher")
-    fun getTeacherService(@Field("isTj") tj: Boolean, @Field("year") year: Int, @Field("course") course: Int
+    fun getTeacherService(@Field("is_tj") tj: Int, @Field("require_year") year: Int, @Field("course") course: Int
                           , @Field("grade") grade: Int, @Field("decending") isDecending: Boolean): Observable<HttpResult<List<TeacherInfo>>>
 
     //登录接口

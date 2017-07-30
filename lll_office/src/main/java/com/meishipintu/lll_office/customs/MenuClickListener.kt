@@ -7,7 +7,7 @@ package com.meishipintu.lll_office.customs
  */
 interface MenuClickListener {
 
-    fun onTjClick(index: Boolean, name: String)
+    fun onTjClick(index: Int, name: String)
 
     fun onRequireSelect(indexCourse: Int, indexGrade: Int, indexExperience: Int)
 

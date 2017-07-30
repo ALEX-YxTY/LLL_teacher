@@ -3,7 +3,6 @@ package com.meishipintu.lll_office.views.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.Nullable
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -30,11 +29,6 @@ import com.meishipintu.lll_office.views.adapters.TeacherAdapter
  * 主要功能：
  */
 class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
-
-    var tj = true //是否推荐
-    var course = 0 //科目
-    var grade = 0   //学科
-    var experience = 0 //经验要求
 
     var rv: RecyclerView? = null
     var dataList = mutableListOf<TeacherInfo>()
@@ -71,7 +65,7 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
     private fun initList() {
         rv?.layoutManager = LinearLayoutManager(this.activity)
         rv?.adapter = teacherAdapter
-        (presenter as TeacherContract.IPresenter).doSearch()    //默认全部查询
+        (presenter as TeacherContract.IPresenter).doSearch(tj = 1)    //默认查询推荐
     }
 
     //筛选菜单的监听
@@ -129,19 +123,20 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
     }
 
     //from MenuClickListener
-    override fun onTjClick(index: Boolean, name: String) {
-        tj = index
+    override fun onTjClick(index: Int, name: String) {
         tvTj?.text = name
-        (presenter as TeacherContract.IPresenter).doSearch(tj = tj) //根据是否筛选推荐
+        // 还原其他设置
+        popRequire?.clearSelect()
+        (presenter as TeacherContract.IPresenter).doSearch(tj = index) //根据是否筛选推荐
     }
 
 
     //from MenuClickListener
     override fun onRequireSelect(indexCourse: Int, indexGrade: Int, indexExperience: Int) {
-        course = indexCourse
-        grade = indexGrade
-        experience = indexExperience
-        (presenter as TeacherContract.IPresenter).doSearch(experience = experience, course = course, grade = grade) //根据年龄，科目，年级筛选
+        //还原其他
+        tvTj?.text = "全部"
+        popTj?.setIndexNow(1)
+        (presenter as TeacherContract.IPresenter).doSearch(experience = indexExperience, course = indexCourse, grade = indexGrade) //根据年龄，科目，年级筛选
     }
 
     //from MenuClickListener

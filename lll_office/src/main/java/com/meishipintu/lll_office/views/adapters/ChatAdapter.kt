@@ -60,7 +60,11 @@ class ChatAdapter(val ctx:Context,val dataList:List<ChatDetail>):RecyclerView.Ad
             val chatViewHolder = holder as ChatViewHolder
             val chatDetail = dataList[position]
             chatViewHolder.content.text = chatDetail.content
-            if (chatDetail.create_time - timeLast > 30 * 60) {
+            if (position == 0) {
+                //第一条必显示时间
+                chatViewHolder.date.visibility = View.VISIBLE
+                chatViewHolder.date.text = DateUtil.stampToDate2(chatDetail.create_time)
+            }else if (chatDetail.create_time - timeLast > 30 * 60) {
                 //间隔半小时以上，显示时间，不足半小时，不显示
                 chatViewHolder.date.visibility = View.VISIBLE
                 chatViewHolder.date.text = DateUtil.stampToDate2(chatDetail.create_time)
