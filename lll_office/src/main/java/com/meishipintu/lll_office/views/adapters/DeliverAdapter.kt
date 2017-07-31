@@ -5,6 +5,7 @@ import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.customs.utils.NumberUtil
@@ -24,6 +25,7 @@ class DeliverAdapter(ctx: Context, dataList:List<DeliverInfo>): BasicAdapter(ctx
 
     val courses = Cookies.getConstant(2)    //获取学科数据
     val grades = Cookies.getConstant(3)     //获取年级数据
+    val glide = Glide.with(ctx)
 
     override fun getSpecialView(container: ViewGroup?): RecyclerView.ViewHolder {
         return DeliverInfoViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_teacher_interview, container, false))
@@ -40,6 +42,10 @@ class DeliverAdapter(ctx: Context, dataList:List<DeliverInfo>): BasicAdapter(ctx
             deliverInfoViewHolder.socre.text = NumberUtil.formatNumberInOne(teacher.total_score.toDouble()
                     / teacher.total_number)
             deliverInfoViewHolder.jobName.text = (dataList[position] as DeliverInfo).postion.job_name
+            if (teacher.total_number > 0) {
+                deliverInfoViewHolder.star.rating = teacher.total_score.toFloat()/ teacher.total_number
+            }
+            glide.load(teacher.avatar).error(R.drawable.teacher_default).into(deliverInfoViewHolder.head)
             deliverInfoViewHolder.chat.setOnClickListener{
                 //进入沟通页
                 val intent = Intent(ctx, ChatDetailActivity::class.java)

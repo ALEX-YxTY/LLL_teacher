@@ -20,7 +20,7 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
 
     val jobId:Int by lazy { intent.getIntExtra("jobId", 0)}
     /**
-     * type =1 不显示上下线功能，type=2 显示上下线功能
+     * type =1 不显示上下线和邀请功能，type=2 显示上下线功能
      */
     val type: Int by lazy { intent.getIntExtra("type", 1) }
     var status =1 //1-在线 2-下线
@@ -90,8 +90,10 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         when(v?.id){
             R.id.bt_back -> onBackPressed()
             R.id.bt_invite ->{
-                //TODO 去邀请
                 //进入邀请界面
+                val intent = Intent(this, InviteActivity::class.java)
+                intent.putExtra("jobId", jobId)
+                startActivity(intent)
             }
             R.id.tv_offline ->{
                 (presenter as JobManagerPresenter).changeStatus(jobId.toString(),if(status==1) 2 else 1)

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/back_grey1"
+>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/tv_cancel"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_search"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_search_small"/>
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_marginLeft="31dp"
+            android:textColorHint="@color/edit_text_color"
+            android:layout_centerVertical="true"
+            android:textSize="11sp"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textColor="@color/themeOrange"
+            android:hint="搜索你要找的教师"
+            android:textCursorDrawable="@drawable/shape_cusor"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+        <TextView
+            android:text="学科"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_12_grey"
+            android:layout_marginTop="20dp"/>
+
+        <com.meishipintu.lll_office.customs.CustomLabelSelectView
+            android:id="@+id/selectview_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:text="年级"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_12_grey"
+            android:layout_marginTop="20dp"/>
+
+        <com.meishipintu.lll_office.customs.CustomLabelSelectView
+            android:id="@+id/selectview_grade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:text="工作经验"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_12_grey"
+            android:layout_marginTop="20dp"/>
+
+        <com.meishipintu.lll_office.customs.CustomLabelSelectView
+            android:id="@+id/selectview_experience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="37dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/bt_reset"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="重置"
+            android:background="@drawable/shape_back_border2"
+            style="@style/text_12_grey"/>
+        <Button
+            android:id="@+id/bt_filtrate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="确定"
+            android:background="@color/themeOrange"
+            style="@style/text_12_white"/>
+    </LinearLayout>
+</LinearLayout>

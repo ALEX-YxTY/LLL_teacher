@@ -59,7 +59,7 @@ class ChatDetailActivity : BasicActivity(), ChatDetailContract.IView  {
             //跳转职位详情，不带机构信息
             val intent = Intent(this, JobDetailActivity::class.java)
             intent.putExtra("jobId", jobId)
-            intent.putExtra("type",2)   //不显示机构信息
+            intent.putExtra("type",1)   //不显示上下线和邀请功能
             startActivity(intent)
         }
     }

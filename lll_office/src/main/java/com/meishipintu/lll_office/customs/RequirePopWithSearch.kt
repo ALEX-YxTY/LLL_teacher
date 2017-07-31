@@ -1,28 +1,35 @@
-package com.milai.lll_teacher.custom.view
+package com.meishipintu.lll_office.customs
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.PopupWindow
-import com.milai.lll_teacher.R
+import android.widget.TextView
+import com.meishipintu.lll_office.R
 
 /**
  * Created by Administrator on 2017/6/22.
  *
  * 主要功能：
  */
-class RequirePop(val ctx: Context, val mListener: MenuClickListener, val courses: List<String>
-                 , val grades: List<String>, val experiences: List<String>) : PopupWindow(ctx) {
+class RequirePopWithSearch(val ctx: Context, val mListener: MenuClickListener, val courses: List<String>
+                 , val grades: List<String>, val experiences: List<String>, val searchListener:SearchListener) : PopupWindow(ctx) {
+
     val courseSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_course)
             as CustomLabelSelectView}
     val gradeSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_grade)
             as CustomLabelSelectView}
     val experienceSelect :CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_experience)
             as CustomLabelSelectView}
+
     init {
-        val view = LayoutInflater.from(ctx).inflate(R.layout.pop_require, null)
+        val view = LayoutInflater.from(ctx).inflate(R.layout.pop_require_with_search, null)
         contentView = view
         width = ViewGroup.LayoutParams.MATCH_PARENT
         height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -42,6 +49,15 @@ class RequirePop(val ctx: Context, val mListener: MenuClickListener, val courses
         courseSelect.setData(courses)
         gradeSelect.setData(grades)
         experienceSelect.setData(experiences)
+        val etSearch = contentView.findViewById(R.id.et_search) as EditText
+        etSearch.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchListener.onSearch(etSearch.text.toString())
+                //消费该事件
+                return@OnEditorActionListener true
+            }
+            false
+        })
         contentView.findViewById(R.id.bt_reset).setOnClickListener{
             courseSelect.setSelect(0)
             gradeSelect.setSelect(0)

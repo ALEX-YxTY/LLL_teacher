@@ -42,6 +42,7 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
 
     //改变职位状态
     override fun changeStatus(jobId: String, type: Int) {
+        //type=1 上线 type=2 下线
         addSubscription(httpApi.changeJobStatusService(jobId,type).map(HttpResultFunc<JobInfo>())
         ,object :HttpCallback<JobInfo>(){
 

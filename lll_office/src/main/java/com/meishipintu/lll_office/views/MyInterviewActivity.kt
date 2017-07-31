@@ -123,9 +123,9 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
         else R.anim.popout_anim))
     }
 
-    override fun onTjClick(index: Boolean, name: String) {
-        //0-未面试  1-未面试邀约
-        if (index) {
+    override fun onTjClick(index: Int, name: String) {
+        //1-未面试  0-未面试邀约
+        if (index == 1) {
             (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication
                     .userInfo?.uid!!, status = 1)
         } else {
@@ -133,7 +133,7 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
                     .userInfo?.uid!!, status = 1, type = 2)
         }
         changeSelect(1)
-        tvUnInterView.text = if(index) "未面试" else "未面试 邀约"
+        tvUnInterView.text = if (index == 1) "未面试" else "未面试 邀约"
     }
 
 

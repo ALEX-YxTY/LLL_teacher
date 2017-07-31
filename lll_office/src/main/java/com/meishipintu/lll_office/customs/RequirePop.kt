@@ -2,6 +2,7 @@ package com.meishipintu.lll_office.customs
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,10 @@ class RequirePop(val ctx: Context, val mListener: MenuClickListener, val courses
 
     private fun initUI() {
 
+        courseSelect.setData(courses)
+        gradeSelect.setData(grades)
+        experienceSelect.setData(experiences)
+
         contentView.findViewById(R.id.bt_reset).setOnClickListener{
             courseSelect.setSelect(0)
             gradeSelect.setSelect(0)
@@ -64,6 +69,10 @@ class RequirePop(val ctx: Context, val mListener: MenuClickListener, val courses
         courseSelect.setSelect(0)
         gradeSelect.setSelect(0)
         experienceSelect.setSelect(0)
+    }
+
+    fun getSelect():String {
+        return "course: ${courseSelect.selectIndex},grade:${gradeSelect.selectIndex},experience:${experienceSelect.selectIndex}"
     }
 
     override fun dismiss() {

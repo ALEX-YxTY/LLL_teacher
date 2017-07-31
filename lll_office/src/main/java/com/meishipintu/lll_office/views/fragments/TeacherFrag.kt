@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.annotation.Nullable
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -110,7 +111,11 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
             popRequire?.showPopDropDown(tab)
         }
         view.findViewById(R.id.rl_most).setOnClickListener{
-            (presenter as TeacherContract.IPresenter).doSearch(decending = true) //所有教师根据降序排列
+            //还原其他标签
+            tvTj?.text = "全部"
+            popTj?.setIndexNow(1)
+            popRequire?.clearSelect()
+            (presenter as TeacherContract.IPresenter).doSearch(decending = 1) //所有教师根据降序排列
         }
     }
 
@@ -133,10 +138,13 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
 
     //from MenuClickListener
     override fun onRequireSelect(indexCourse: Int, indexGrade: Int, indexExperience: Int) {
+
         //还原其他
         tvTj?.text = "全部"
         popTj?.setIndexNow(1)
         (presenter as TeacherContract.IPresenter).doSearch(experience = indexExperience, course = indexCourse, grade = indexGrade) //根据年龄，科目，年级筛选
+        Log.d("test",popRequire?.getSelect())
+
     }
 
     //from MenuClickListener

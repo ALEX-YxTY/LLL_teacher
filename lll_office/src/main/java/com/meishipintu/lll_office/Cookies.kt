@@ -107,11 +107,32 @@ object Cookies {
      */
     fun getConstant(type: Int): List<String> {
         if (getPreference() != null) {
-            return getPreference()!!.getString("constant$type", "lsjdfkljs").split(",")
+            return getPreference()!!.getString("constant$type", "").split(",")
         } else {
             return listOf()
         }
 
+    }
+
+    fun getHistory():MutableList<String> {
+        if (getPreference() != null) {
+            val historyString = getPreference()!!.getString("history", "")
+
+            if (historyString == "") {
+                return mutableListOf()
+
+            } else {
+                return historyString.split(",").toMutableList()
+            }
+        } else {
+            return mutableListOf()
+        }
+    }
+
+    fun saveHistory(history: Array<String>) {
+        val editor = getPreference()?.edit()
+        editor?.putString("history", history.toArrayString())
+        editor?.apply()
     }
 
 }

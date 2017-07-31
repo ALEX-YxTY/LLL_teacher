@@ -28,7 +28,12 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Api/getAllTeacher")
     fun getTeacherService(@Field("is_tj") tj: Int, @Field("require_year") year: Int, @Field("course") course: Int
-                          , @Field("grade") grade: Int, @Field("decending") isDecending: Boolean): Observable<HttpResult<List<TeacherInfo>>>
+                          , @Field("grade") grade: Int, @Field("is_px") isDecending: Int): Observable<HttpResult<List<TeacherInfo>>>
+
+    //根据关键字搜索教师
+    @FormUrlEncoded
+    @POST("Home/Api/searchTeacherList")
+    fun getTeacherByKeyWorkService(@Field("content") keyWord:String):Observable<HttpResult<List<TeacherInfo>>>
 
     //登录接口
     @FormUrlEncoded
@@ -118,7 +123,7 @@ interface HttpApiStores {
     //获取其他机构
     @FormUrlEncoded
     @POST("Home/organization/getAllOrganization")
-    fun getOtherOrganizationService(@Field("oid") oid: String): Observable<HttpResult<List<OfficeInfo>>>
+    fun getOtherOrganizationService(@Field("uid") oid: String): Observable<HttpResult<List<OfficeInfo>>>
 
     //教师添加收藏机构
     @FormUrlEncoded

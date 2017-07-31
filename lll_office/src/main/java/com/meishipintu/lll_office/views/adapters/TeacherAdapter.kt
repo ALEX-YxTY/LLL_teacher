@@ -19,9 +19,22 @@ import com.meishipintu.lll_office.views.TeacherDetailActivity
  */
 class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): BasicAdapter(ctx,dataList) {
 
+    constructor(ctx: Context, dataList: List<TeacherInfo>, type: Int, plus: Int, job: Int) : this(ctx, dataList, type) {
+        jobid = job
+        flag = plus
+    }
+
     val courses = Cookies.getConstant(2)    //获取学科数据
     val grades = Cookies.getConstant(3)     //获取年级数据
     val glide = Glide.with(ctx)
+    /**
+     * 标记特殊显示
+     * flag=1，显示收藏红心
+     * flag=0，不做任何显示
+     */
+    var flag = 0
+    var jobid = -1
+
     override fun getSpecialView(container: ViewGroup?): RecyclerView.ViewHolder {
         return TeacherInfoViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_teacher, container, false))
     }
@@ -43,10 +56,14 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
             } else {
                 teacherInfoViewHolder.star.rating = 0f
             }
+            when (flag) {
+                1 -> glide.load(R.drawable.icon_lile_orange).into(teacherInfoViewHolder.special)
+            }
             teacherInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, TeacherDetailActivity::class.java)
                 intent.putExtra("teacher", teacher )
                 intent.putExtra("type", type)  //1-从普通页进入，点击收藏 2-点击邀约
+                intent.putExtra("jobId", jobid)
                 ctx.startActivity(intent)
             }
         }
