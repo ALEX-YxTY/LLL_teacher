@@ -51,5 +51,4 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int, val avata
             }
         }
     }
-
 }

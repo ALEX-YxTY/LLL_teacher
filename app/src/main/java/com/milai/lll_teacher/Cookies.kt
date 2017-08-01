@@ -114,6 +114,52 @@ object Cookies {
 
     }
 
+    //获取职位搜索历史
+    fun getJobHistory():MutableList<String> {
+        if (getPreference() != null) {
+            val historyString = getPreference()!!.getString("jobHistory", "")
+
+            if (historyString == "") {
+                return mutableListOf()
+
+            } else {
+                return historyString.split(",").toMutableList()
+            }
+        } else {
+            return mutableListOf()
+        }
+    }
+
+    //保存职位搜索历史
+    fun saveJobHistory(history: Array<String>) {
+        val editor = getPreference()?.edit()
+        editor?.putString("jobHistory", history.toArrayString())
+        editor?.apply()
+    }
+
+    //获取机构搜索历史
+    fun getOfficeHistory():MutableList<String> {
+        if (getPreference() != null) {
+            val historyString = getPreference()!!.getString("officeHistory", "")
+
+            if (historyString == "") {
+                return mutableListOf()
+
+            } else {
+                return historyString.split(",").toMutableList()
+            }
+        } else {
+            return mutableListOf()
+        }
+    }
+
+    //保存机构搜索历史
+    fun saveOfficeHistory(history: Array<String>) {
+        val editor = getPreference()?.edit()
+        editor?.putString("officeHistory", history.toArrayString())
+        editor?.apply()
+    }
+
 }
 
 //扩展方法

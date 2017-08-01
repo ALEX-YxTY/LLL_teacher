@@ -3,6 +3,7 @@ package com.milai.lll_teacher.presenters
 import com.milai.lll_teacher.contracts.OfficeContract
 import com.milai.lll_teacher.contracts.OfficeDetailContract
 import com.milai.lll_teacher.contracts.OrganizationCollectionContract
+import com.milai.lll_teacher.contracts.SearchContract
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
@@ -113,6 +114,23 @@ class OfficePresenter(val iView:BasicView) : BasicPresenter(), OfficeContract.IP
                 ,object :HttpCallback<List<OfficeInfo>>(){
             override fun onSuccess(model: List<OfficeInfo>) {
                 (iView as OrganizationCollectionContract.IView).onOrganizationCollectionGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+
+        })
+    }
+
+    //搜索机构通过关键字
+    override fun searchOfficeByKeyword(keyword: String) {
+        addSubscription(httpApi.getOfficeByKeyWorkService(keyword).map(HttpResultFunc<List<OfficeInfo>>())
+                ,object :HttpCallback<List<OfficeInfo>>(){
+            override fun onSuccess(model: List<OfficeInfo>) {
+                (iView as SearchContract.IView).onOfficeGet(model)
             }
 
             override fun onFailure(msg: String?) {

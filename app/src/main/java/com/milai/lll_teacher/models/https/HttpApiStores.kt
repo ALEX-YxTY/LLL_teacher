@@ -133,4 +133,14 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Api/getTeacherDeliver")
     fun getTeacherDetailServie(@Field("tid")tid:String,@Field("type") type:Int,@Field("status") status:Int):Observable<HttpResult<List<DeliverInfo>>>
+
+    //关键字搜索职位
+    @FormUrlEncoded
+    @POST("Home/Api/searchPositionList")
+    fun getJobByKeyWorkService(@Field("content") keyWord:String):Observable<HttpResult<List<JobInfo>>>
+
+    //关键字搜索机构
+    @FormUrlEncoded
+    @POST("Home/Api/searchOrganizationList")
+    fun getOfficeByKeyWorkService(@Field("content") keyWord:String):Observable<HttpResult<List<OfficeInfo>>>
 }

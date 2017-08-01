@@ -4,6 +4,7 @@ import android.util.Log
 import com.milai.lll_teacher.contracts.CollectionContract
 import com.milai.lll_teacher.contracts.JobContract
 import com.milai.lll_teacher.contracts.JobDetailContact
+import com.milai.lll_teacher.contracts.SearchContract
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
@@ -18,6 +19,7 @@ import com.milai.lll_teacher.views.BasicView
  */
 class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresenter
         ,JobDetailContact.IPresenter,CollectionContract.IPresenter {
+
 
     val httpApi = HttpApiClinet.retrofit()
 
@@ -156,6 +158,23 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
                 }
             }
 
+        })
+    }
+
+    //根据关键词搜索职位
+    override fun getJobByKeyWord(keyword: String) {
+        addSubscription(httpApi.getJobByKeyWorkService(keyword).map(HttpResultFunc<List<JobInfo>>())
+                ,object :HttpCallback<List<JobInfo>>(){
+
+            override fun onSuccess(model: List<JobInfo>) {
+                (iView as SearchContract.IView).onJobGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
         })
     }
 }

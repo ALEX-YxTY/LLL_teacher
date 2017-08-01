@@ -20,5 +20,8 @@ interface JobContract {
 
         //查询和筛选职位方法
         fun doSearch(tj: Int = 1, area: Int = 0, course: Int = 0, grade: Int = 0, experience: Int = 0)
+
+        //根据关键字搜索职位
+        fun getJobByKeyWord(keyword:String)
     }
 }
