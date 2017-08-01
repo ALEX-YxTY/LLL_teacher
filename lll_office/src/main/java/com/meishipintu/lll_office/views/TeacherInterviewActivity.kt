@@ -33,7 +33,11 @@ class TeacherInterviewActivity : BasicActivity(),View.OnClickListener,InterviewC
         tvTitle.text = "教师详情"
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.bt_contact).setOnClickListener(this)
-        button.text = if (deliverInfo.status == 1) "面试完成" else "去评价"
+        when (deliverInfo.status) {
+            1 -> button.text = "完成面试"
+            2 -> button.text = "去评价"
+            else -> button.visibility = View.GONE
+        }
         button.setOnClickListener(this)
         initWebView()
     }
@@ -69,8 +73,6 @@ class TeacherInterviewActivity : BasicActivity(),View.OnClickListener,InterviewC
                     intent.putExtra("deliver", deliverInfo)
                     startActivity(intent)
                     finish()
-                } else {
-                    findViewById(R.id.bt_append).visibility = View.GONE
                 }
             }
         }

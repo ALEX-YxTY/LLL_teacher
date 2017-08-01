@@ -9,11 +9,9 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.meishipintu.lll_office.Cookies
-import com.meishipintu.lll_office.OfficeApplication
-import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
@@ -25,8 +23,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.ref.WeakReference
 import android.widget.Toast
+import com.meishipintu.lll_office.*
+import com.meishipintu.lll_office.modles.entities.BusMessage
 import com.meishipintu.lll_office.modles.entities.PayResult
-
 
 class UpdateActivity : BasicActivity(),View.OnClickListener {
 
@@ -37,13 +36,35 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
     val levels = Cookies.getConstant(7)
     val tvMoney:TextView by lazy { findViewById(R.id.tv_money) as TextView }
 
+    val levelNow:Int by lazy{ intent.getIntExtra("levelNow", 0)}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update)
+        RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    (type) -> run{
+                    when (type) {
+                        Constant.PAY_SUCCESS -> {
+                            //支付成功，退回
+                            this.finish()
+                        }
+                    }
+                }
+                },{},{},{
+                    t: Disposable -> disposables.add(t)
+                })
+
         initUI()
     }
 
     private fun initUI() {
+        val rl1 = findViewById(R.id.rl_1) as RelativeLayout
+        val rl2 = findViewById(R.id.rl_2) as RelativeLayout
+        val rl3 = findViewById(R.id.rl_3) as RelativeLayout
+        val rl4 = findViewById(R.id.rl_4) as RelativeLayout
+
         val title = findViewById(R.id.tv_title) as TextView
         title.text = "升级账号"
         val ivHead = findViewById(R.id.iv_head) as ImageView
@@ -52,18 +73,37 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
         val officeName = findViewById(R.id.office_name) as TextView
         officeName.text = OfficeApplication.userInfo?.name
         val accountLevel = findViewById(R.id.account_level) as TextView
-        var name:String
-        when (OfficeApplication.userInfo?.level) {
-            2 -> name = levels[1]
-            3 -> name = levels[2]
-            4 -> name = levels[3]
-            else -> name = levels[0]
+        accountLevel.text = levels[levelNow-1].substring(0,4)
+        when (levelNow) {
+            0 ->{
+                rl1.setOnClickListener(this)
+                rl2.setOnClickListener(this)
+                rl3.setOnClickListener(this)
+                rl4.setOnClickListener(this)
+                changeTo(0)
+            }
+            1 ->{
+                rl1.isClickable = false
+                rl2.setOnClickListener(this)
+                rl3.setOnClickListener(this)
+                rl4.setOnClickListener(this)
+                changeTo(1)
+            }
+            2 ->{
+                rl1.isClickable = false
+                rl2.isClickable = false
+                rl3.setOnClickListener(this)
+                rl4.setOnClickListener(this)
+                changeTo(2)
+            }
+            3 ->{
+                rl1.isClickable = false
+                rl2.isClickable = false
+                rl3.isClickable = false
+                rl4.setOnClickListener(this)
+                changeTo(3)
+            }
         }
-        accountLevel.text = name.substring(0,4)
-        findViewById(R.id.rl_1).setOnClickListener(this)
-        findViewById(R.id.rl_2).setOnClickListener(this)
-        findViewById(R.id.rl_3).setOnClickListener(this)
-        findViewById(R.id.rl_4).setOnClickListener(this)
         findViewById(R.id.bt_pay).setOnClickListener(this)
     }
 
@@ -134,7 +174,8 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
             R.id.bt_pay -> {
                 //先去完善信息
                 val intent = Intent(this, updateInformationActivity::class.java)
-                intent.putExtra("level",levels[select])
+                intent.putExtra("levelWant", levels[select + 1])
+                intent.putExtra("level", select + 1)
                 startActivity(intent)
 
 //                if (handler == null) {

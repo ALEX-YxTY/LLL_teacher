@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.modles
 
+import android.widget.AdapterView
 import com.meishipintu.lll_office.modles.entities.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -179,5 +180,20 @@ interface HttpApiStores {
     fun updateOfficeInfoService(@Part("uid") uid: RequestBody, @Part("address") address: RequestBody
                                 , @Part("name") name: RequestBody, @Part("contact") contact: RequestBody
                                 , @Part("contact_tel") contactTel: RequestBody, @Part("introduce_detail") introduce: RequestBody
-                                , @Part file1: MultipartBody.Part ):Observable<HttpResult<Any>>
+                                , @Part file1: MultipartBody.Part ):Observable<HttpResult<UserInfo>>
+
+    //修改机构信息接口2
+    @FormUrlEncoded
+    @POST("Home/organization/organization_update")
+    fun updateOfficeInfoService(@Field("uid") uid: String, @Field("address") address: String
+                                , @Field("name") name: String, @Field("contact") contact: String
+                                , @Field("contact_tel") contactTel: String
+                                , @Field("introduce_detail") introduce: String):Observable<HttpResult<UserInfo>>
+    //获取新闻内容
+    @POST("Home/Api/getNews")
+    fun getNewsService():Observable<HttpResult<List<NewsInfo>>>
+
+    //获取广告轮播内容
+    @POST("Home/Api/getAdver")
+    fun getAdsService():Observable<HttpResult<List<AdInfo>>>
 }

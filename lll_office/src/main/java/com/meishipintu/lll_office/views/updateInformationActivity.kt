@@ -41,7 +41,9 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     lateinit var tempFile:File
     var upload = false  //标记是否上传图片成功
 
-    val money:Float by lazy { this.intent.getStringExtra("level").split("&")[1].toFloat() }
+    val money:Float by lazy { this.intent.getStringExtra("levelWant").split("&")[1].toFloat() }
+    val levelWant:Int by lazy{ this.intent.getIntExtra("level", 0) }
+
     val etName:EditText by lazy { findViewById(R.id.et_name)as EditText }
     val etAddress:EditText by lazy { findViewById(R.id.et_address)as EditText }
     val etContactor:EditText by lazy { findViewById(R.id.et_contactor)as EditText }
@@ -49,7 +51,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     val etIntro:EditText by lazy { findViewById(R.id.et_intro)as EditText }
     val ivAdd:ImageView by lazy{ findViewById(R.id.iv_add) as ImageView}
 
-    lateinit var photoURI: Uri
+    var photoURI: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +68,24 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
         ivAdd.setOnClickListener(this)
         val tvMoney = findViewById(R.id.tv_money) as TextView
         tvMoney.text = "¥ ${NumberUtil.formatNumberInTwo(money)}"
+
+        if (OfficeApplication.userInfo != null) {
+            val etName = findViewById(R.id.et_name) as EditText
+            etName.setText(OfficeApplication.userInfo?.name!!)
+            val etAddress = findViewById(R.id.et_address) as EditText
+            etAddress.setText(OfficeApplication.userInfo?.address!!)
+            val etContactor = findViewById(R.id.et_contactor) as EditText
+            etContactor.setText(OfficeApplication.userInfo?.contact!!)
+            val etContactTel = findViewById(R.id.et_contact) as EditText
+            etContactTel.setText(OfficeApplication.userInfo?.contact_tel!!)
+            val etIntro = findViewById(R.id.et_intro) as EditText
+            etIntro.setText(OfficeApplication.userInfo?.introduce_detail!!)
+            val ivAdd = findViewById(R.id.iv_add) as ImageView
+            Glide.with(this).load(OfficeApplication.userInfo?.avatar).error(R.drawable.icon_add).into(ivAdd)
+            if (!OfficeApplication.userInfo?.avatar.isNullOrEmpty()) {
+                upload = true
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -81,18 +101,23 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                     toast("请上传营业执照")
                     return
                 }
-                val certificateFile: File
-                if ("file".equals(photoURI?.scheme)) {
-                    certificateFile = File(photoURI.path)
-                    Log.d("test", "name: ${certificateFile.absolutePath}")
+                if (photoURI == null) {
+                    (presenter as UpdateInfoPresenter).updateOfficeInfo(OfficeApplication.userInfo?.uid!!
+                            , etName.text.toString(), etAddress.text.toString(), etContactor.text.toString()
+                            , etContact.text.toString(), etIntro.text.toString())
                 } else {
-                    Log.d("test", "name: ${tempFile.absolutePath}")
-                    certificateFile = tempFile
+                    val certificateFile: File
+                    if ("file".equals(photoURI?.scheme)) {
+                        certificateFile = File(photoURI?.path)
+                        Log.d("test", "name: ${certificateFile.absolutePath}")
+                    } else {
+                        Log.d("test", "name: ${tempFile.absolutePath}")
+                        certificateFile = tempFile
+                    }
+                    (presenter as UpdateInfoPresenter).updateOfficeInfo(OfficeApplication.userInfo?.uid!!
+                            ,etName.text.toString(),etAddress.text.toString(),etContactor.text.toString()
+                            ,etContact.text.toString(),etIntro.text.toString(),certificateFile)
                 }
-                (presenter as UpdateInfoPresenter).updateOfficeInfo(OfficeApplication.userInfo?.uid!!
-                        ,etName.text.toString(),etAddress.text.toString(),etContactor.text.toString()
-                        ,etContact.text.toString(),etIntro.text.toString(),certificateFile)
-
             }
             R.id.iv_add -> {
                 choosePicture()
@@ -183,6 +208,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
         OfficeApplication.userInfo = userInfo
         val intent = Intent(this, PayActivity::class.java)
         intent.putExtra("money", money)
+        intent.putExtra("levelWant", levelWant)
         startActivity(intent)
         this.finish()
     }
@@ -227,6 +253,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                             Glide.with(this).load(photo).into(ivAdd)
                             //将剪切后图片保存在缓存文件中
                             UriUtils.saveBitmap(photo, tempFile)
+                            upload = true
                         }
                     }
                 }

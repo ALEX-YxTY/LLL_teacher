@@ -24,6 +24,7 @@ import com.meishipintu.lll_office.views.*
 class MineFrag:Fragment(),View.OnClickListener{
 
     var fragView: View? = null
+    val levelNow:Int? by lazy{ OfficeApplication.userInfo?.level}
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragView == null) {
@@ -34,17 +35,22 @@ class MineFrag:Fragment(),View.OnClickListener{
     }
 
     private fun initUI() {
+        val levels = Cookies.getConstant(7)
+
         val title = fragView?.findViewById(R.id.tv_title) as TextView
         title.text = "我的"
         val headView = fragView?.findViewById(R.id.iv_head) as CircleImageView
         Glide.with(this).load(OfficeApplication.userInfo?.avatar).error(R.drawable.organization_default).into(headView)
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
         userName.text = OfficeApplication.userInfo?.name
-        val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
+        if (levelNow!! > 0) {
+            val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
+            userLevel.text = levels[levelNow!! - 1].substring(0, 4)
+        }
         val timesRemain = fragView?.findViewById(R.id.tv_times_remain) as TextView
 //        timesRemain.text =
         val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
-        if (Cookies.getUserInfo()?.level == 4) {
+        if (levelNow == 4) {
             userStates.visibility = View.GONE
         } else {
             userStates.setOnClickListener(this)
@@ -62,7 +68,9 @@ class MineFrag:Fragment(),View.OnClickListener{
         when(v?.id){
             R.id.iv_status ->{
                 //升级账号
-                startActivity(Intent(this.activity, UpdateActivity::class.java))
+                val intent = Intent(this.activity, UpdateActivity::class.java)
+                intent.putExtra("levelNow", levelNow)
+                startActivity(intent)
             }
             R.id.rl_job_manage ->{
                 //职位管理

@@ -4,6 +4,7 @@ import com.meishipintu.lll_office.contract.UpdateInfoContract
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
+import com.meishipintu.lll_office.modles.entities.UserInfo
 import com.meishipintu.lll_office.views.BasicView
 import okhttp3.MediaType
 import java.io.File
@@ -33,15 +34,34 @@ class UpdateInfoPresenter(val iView:BasicView):BasicPresenter(),UpdateInfoContra
         val contactTelRequest = RequestBody.create(null, contactTel)
         val introduceRequest = RequestBody.create(null, introduce)
         addSubscription(httpApi.updateOfficeInfoService(uidRequest, addressRequest, nameRequest
-                , contactRequest, contactTelRequest, introduceRequest, photo).map(HttpResultFunc<Any>())
-                ,object :HttpCallback<Any>(){
-            override fun onSuccess(model: Any) {
+                , contactRequest, contactTelRequest, introduceRequest, photo).map(HttpResultFunc<UserInfo>())
+                ,object :HttpCallback<UserInfo>(){
+            override fun onSuccess(model: UserInfo) {
+                (iView as UpdateInfoContract.IView).onUploadSuccess(model)
             }
 
             override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
+        })
+    }
+
+    override fun updateOfficeInfo(uid: String, name: String, address: String, contact: String, contactTel: String
+                                  , introduce: String) {
+        addSubscription(httpApi.updateOfficeInfoService(uid, address, name
+                , contact, contactTel, introduce).map(HttpResultFunc<UserInfo>())
+                ,object :HttpCallback<UserInfo>(){
+            override fun onSuccess(model: UserInfo) {
+                (iView as UpdateInfoContract.IView).onUploadSuccess(model)
             }
 
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
         })
-
     }
 }

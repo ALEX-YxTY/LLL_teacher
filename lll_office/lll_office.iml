@@ -146,6 +146,7 @@
     <orderEntry type="library" scope="TEST" name="javax.inject-1" level="project" />
     <orderEntry type="library" name="gson-2.7" level="project" />
     <orderEntry type="library" name="converter-gson-2.1.0" level="project" />
+    <orderEntry type="library" name="banner-1.4.9" level="project" />
     <orderEntry type="library" name="okhttp-3.8.1" level="project" />
     <orderEntry type="library" scope="TEST" name="javawriter-2.1.1" level="project" />
     <orderEntry type="library" name="support-v4-25.4.0" level="project" />

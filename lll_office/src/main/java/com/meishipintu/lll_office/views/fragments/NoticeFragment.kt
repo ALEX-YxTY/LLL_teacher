@@ -33,7 +33,9 @@ class NoticeFragment:BasicFragment(),NoticeContract.IView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = NoticePresenter(this)
+        if (presenter == null) {
+            presenter = NoticePresenter(this)
+        }
         if (arguments != null) {
             type = arguments.get("type") as Int
         }
