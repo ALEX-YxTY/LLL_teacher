@@ -7,8 +7,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
-import com.meishipintu.lll_office.views.adapters.HistoryAdapter
-import com.meishipintu.lll_office.views.adapters.OnItemClickListener
+import com.milai.lll_teacher.views.adapters.HistoryAdapter
 import com.milai.lll_teacher.Cookies
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.JobContract
@@ -22,12 +21,12 @@ import com.milai.lll_teacher.presenters.JobPresenter
 import com.milai.lll_teacher.presenters.OfficePresenter
 import com.milai.lll_teacher.views.adapters.JobAdapter
 import com.milai.lll_teacher.views.adapters.OfficeAdapter
+import com.milai.lll_teacher.views.adapters.OnItemClickListener
 
-class SearchActivity : BasicActivity(), CustomLabelSelectListener, OnItemClickListener,SearchContract.IView {
+class SearchActivity : BasicActivity(), OnItemClickListener,SearchContract.IView,CustomLabelSelectListener {
 
     val from:Int by lazy{ intent.getIntExtra("from", 1)}    //from=1 搜索职位 from=2 搜索机构
 
-    val courses = Cookies.getConstant(2)
     val rv: RecyclerView by lazy{ findViewById(R.id.rv) as RecyclerView }
 
     val jobDataList = mutableListOf<JobInfo>()
@@ -45,13 +44,12 @@ class SearchActivity : BasicActivity(), CustomLabelSelectListener, OnItemClickLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        val courses = Cookies.getConstant(2)
         val labelSelect = findViewById(R.id.labels) as CustomLabelSingleSelectCenterView
         if (from == 1) {
             //职位搜索
             presenter = JobPresenter(this)
             history = Cookies.getJobHistory()
-            labelSelect.setData(courses.subList(1,6))
-            labelSelect.setListener(this)
         } else {
             //机构搜索
             presenter = OfficePresenter(this)
@@ -59,11 +57,17 @@ class SearchActivity : BasicActivity(), CustomLabelSelectListener, OnItemClickLi
             labelSelect.visibility = View.GONE
             findViewById(R.id.tv1).visibility = View.GONE
         }
+        labelSelect.setData(courses.subList(1,6))
+        labelSelect.setListener(this)
         etSearch.setOnEditorActionListener(TextView.OnEditorActionListener{ _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 labelSelect.clearSelect()
                 val searchName = etSearch.text.toString()
-                (presenter as JobContract.IPresenter).getJobByKeyWord(searchName)
+                if (from == 1) {
+                    (presenter as JobContract.IPresenter).getJobByKeyWord(searchName)
+                } else {
+                    (presenter as OfficeContract.IPresenter).searchOfficeByKeyword(searchName)
+                }
                 if (!(history.size > 0 && searchName == history[0])) {
                     history.add(0, searchName)
                 }
@@ -86,23 +90,22 @@ class SearchActivity : BasicActivity(), CustomLabelSelectListener, OnItemClickLi
         rv.adapter = historyAdapter
     }
 
-    //from CustomLabelSelectListener
+    //from CustomSelectListener
     override fun select(index: Int) {
         etSearch.setText("")
-        //来自职位搜索
-        (presenter as JobContract.IPresenter).doSearch(course = index + 1)
+        (presenter as SearchContract.IPresenter).getJobByCourse(index+1)
     }
 
-    //from CustomLabelSelectListener
+    //from CustomSelectListener
     override fun remove(index: Int) {
-        //无需实现
+        //空实现
     }
 
-    //from CustomLabelSelectListener
+    //from CustomSelectListener
     override fun isSelect(index: Int): Boolean {
-        //无需实现
         return false
     }
+
 
     //from OnItemClickListener
     override fun onItemClick(name: String) {

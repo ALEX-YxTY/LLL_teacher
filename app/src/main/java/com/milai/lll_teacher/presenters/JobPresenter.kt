@@ -18,7 +18,7 @@ import com.milai.lll_teacher.views.BasicView
  * 主要功能：
  */
 class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresenter
-        ,JobDetailContact.IPresenter,CollectionContract.IPresenter {
+        ,JobDetailContact.IPresenter,CollectionContract.IPresenter,SearchContract.IPresenter {
 
 
     val httpApi = HttpApiClinet.retrofit()
@@ -164,6 +164,23 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
     //根据关键词搜索职位
     override fun getJobByKeyWord(keyword: String) {
         addSubscription(httpApi.getJobByKeyWorkService(keyword).map(HttpResultFunc<List<JobInfo>>())
+                ,object :HttpCallback<List<JobInfo>>(){
+
+            override fun onSuccess(model: List<JobInfo>) {
+                (iView as SearchContract.IView).onJobGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+        })
+    }
+
+    //单独根据科目搜索职位
+    override fun getJobByCourse(courseIndex: Int) {
+        addSubscription(httpApi.getJobService(0,0,courseIndex,0,0).map(HttpResultFunc<List<JobInfo>>())
                 ,object :HttpCallback<List<JobInfo>>(){
 
             override fun onSuccess(model: List<JobInfo>) {

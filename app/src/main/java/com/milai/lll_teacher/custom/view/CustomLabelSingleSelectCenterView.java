@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.meishipintu.lll_office.R;
-import com.meishipintu.lll_office.customs.utils.DensityUtils;
+
+import com.milai.lll_teacher.R;
+import com.milai.lll_teacher.custom.util.DensityUtils;
 
 import java.util.ArrayList;
 import java.util.List;

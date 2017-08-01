@@ -16,7 +16,7 @@
         android:text="热门搜索"/>
 
 
-    <com.meishipintu.lll_office.customs.CustomLabelSingleSelectCenterView
+    <com.milai.lll_teacher.custom.view.CustomLabelSingleSelectCenterView
         android:id="@+id/labels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

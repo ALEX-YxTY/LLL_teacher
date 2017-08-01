@@ -1,4 +1,4 @@
-package com.meishipintu.lll_office.views.adapters
+package com.milai.lll_teacher.views.adapters
 
 /**
  * Created by Administrator on 2017/7/31.
