@@ -51,4 +51,7 @@ dependencies {
     implementation files('libs/alipaySdk-20170725.jar')
     //banner
     compile 'com.youth.banner:banner:1.4.9'
+    //Bugly
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
 }

@@ -73,7 +73,12 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
         val officeName = findViewById(R.id.office_name) as TextView
         officeName.text = OfficeApplication.userInfo?.name
         val accountLevel = findViewById(R.id.account_level) as TextView
-        accountLevel.text = levels[levelNow-1].substring(0,4)
+        Log.d("test","levelnow: $levelNow")
+        if (levelNow > 0) {
+            accountLevel.text = levels[levelNow - 1].substring(0, 4)
+        } else {
+            accountLevel.text = "普通会员"
+        }
         when (levelNow) {
             0 ->{
                 rl1.setOnClickListener(this)
@@ -174,7 +179,7 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
             R.id.bt_pay -> {
                 //先去完善信息
                 val intent = Intent(this, updateInformationActivity::class.java)
-                intent.putExtra("levelWant", levels[select + 1])
+                intent.putExtra("levelWant", levels[select])
                 intent.putExtra("level", select + 1)
                 startActivity(intent)
 

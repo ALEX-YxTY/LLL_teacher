@@ -4,6 +4,11 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Rect
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +24,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.meishipintu.lll_office.Constant
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
@@ -31,14 +37,15 @@ import com.meishipintu.lll_office.customs.utils.StringUtils
 import com.meishipintu.lll_office.customs.utils.UriUtils
 import com.meishipintu.lll_office.modles.entities.UserInfo
 import com.meishipintu.lll_office.presenters.UpdateInfoPresenter
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 
 
 class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateInfoContract.IView {
 
 
     //调起相机的回复
-    lateinit var tempFile:File
     var upload = false  //标记是否上传图片成功
 
     val money:Float by lazy { this.intent.getStringExtra("levelWant").split("&")[1].toFloat() }
@@ -51,7 +58,12 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     val etIntro:EditText by lazy { findViewById(R.id.et_intro)as EditText }
     val ivAdd:ImageView by lazy{ findViewById(R.id.iv_add) as ImageView}
 
-    var photoURI: Uri? = null
+    lateinit var tempFile:File
+    lateinit var cropFile:File
+    var photoURI: Uri? = null       //保存content开头Uri
+    var cropURI: Uri? = null        //保存裁剪之后的file开头Uri
+
+    val glide:RequestManager by lazy{ Glide.with(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,17 +83,17 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
 
         if (OfficeApplication.userInfo != null) {
             val etName = findViewById(R.id.et_name) as EditText
-            etName.setText(OfficeApplication.userInfo?.name!!)
+            etName.setText(OfficeApplication.userInfo?.name)
             val etAddress = findViewById(R.id.et_address) as EditText
-            etAddress.setText(OfficeApplication.userInfo?.address!!)
+            etAddress.setText(OfficeApplication.userInfo?.address)
             val etContactor = findViewById(R.id.et_contactor) as EditText
-            etContactor.setText(OfficeApplication.userInfo?.contact!!)
+            etContactor.setText(OfficeApplication.userInfo?.contact)
             val etContactTel = findViewById(R.id.et_contact) as EditText
-            etContactTel.setText(OfficeApplication.userInfo?.contact_tel!!)
+            etContactTel.setText(OfficeApplication.userInfo?.contact_tel)
             val etIntro = findViewById(R.id.et_intro) as EditText
-            etIntro.setText(OfficeApplication.userInfo?.introduce_detail!!)
+            etIntro.setText(OfficeApplication.userInfo?.introduce_detail)
             val ivAdd = findViewById(R.id.iv_add) as ImageView
-            Glide.with(this).load(OfficeApplication.userInfo?.avatar).error(R.drawable.icon_add).into(ivAdd)
+            glide.load(OfficeApplication.userInfo?.avatar).error(R.drawable.icon_add).into(ivAdd)
             if (!OfficeApplication.userInfo?.avatar.isNullOrEmpty()) {
                 upload = true
             }
@@ -106,17 +118,11 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                             , etName.text.toString(), etAddress.text.toString(), etContactor.text.toString()
                             , etContact.text.toString(), etIntro.text.toString())
                 } else {
-                    val certificateFile: File
-                    if ("file".equals(photoURI?.scheme)) {
-                        certificateFile = File(photoURI?.path)
-                        Log.d("test", "name: ${certificateFile.absolutePath}")
-                    } else {
-                        Log.d("test", "name: ${tempFile.absolutePath}")
-                        certificateFile = tempFile
-                    }
+                    //压缩后的图片都是保存在tempFile
+
                     (presenter as UpdateInfoPresenter).updateOfficeInfo(OfficeApplication.userInfo?.uid!!
                             ,etName.text.toString(),etAddress.text.toString(),etContactor.text.toString()
-                            ,etContact.text.toString(),etIntro.text.toString(),certificateFile)
+                            ,etContact.text.toString(),etIntro.text.toString(),tempFile)
                 }
             }
             R.id.iv_add -> {
@@ -128,6 +134,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     //选择图片 调用PhotoPicker
     private fun choosePicture() {
         tempFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "certificate.jpg")
+
         ChooseHeadViewDialog(this, R.style.CustomDialog, object : ChooseHeadViewDialog.OnItemClickListener {
             override fun onClickCamera(view: View, dialog: Dialog) {
                 dialog.dismiss()
@@ -238,6 +245,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                     startPhotoCrop(contentUri) // 开始对图片进行裁剪处理
                 }
                 Constant.TAKE_PHOTO ->{
+
                     //拍照返回
                     if (Build.VERSION.SDK_INT < 24) {
                         startPhotoCrop(Uri.fromFile(tempFile)) // 开始对图片进行裁剪处理
@@ -246,20 +254,40 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                     }
                 }
                 Constant.CROP_SMALL_PICTURE ->{
-                    if (data != null) {
-                        val extras = data.extras
-                        if (extras != null) {
-                            val photo = extras.getParcelable<Bitmap>("data")
-                            Glide.with(this).load(photo).into(ivAdd)
-                            //将剪切后图片保存在缓存文件中
-                            UriUtils.saveBitmap(photo, tempFile)
-                            upload = true
-                        }
-                    }
+                    //裁剪返回,调用压缩并保存到tempFile文件
+                    compressBitmapToFile(cropFile, tempFile)
+                    glide.load(photoURI).skipMemoryCache(true).into(ivAdd)
+                    upload = true
                 }
             }
         }
+    }
 
+    fun compressBitmapToFile(fileFrom: File, fileTo: File) {
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true       //这个参数设置为true才有效，
+        BitmapFactory.decodeFile(fileFrom.absolutePath, options)
+        //通过计算获取压缩比例，并设置在options.inSampleSize中（inSampleSize必须>1）
+        //压缩比例为宽高中的长边压缩到700像素
+        if (options.outHeight > options.outWidth) {
+            options.inSampleSize = options.outHeight / 500
+        } else {
+            options.inSampleSize = options.outWidth / 500
+        }
+        options.inJustDecodeBounds = false
+        var bitmap = BitmapFactory.decodeFile(fileFrom.absolutePath, options)
+
+        val baos = ByteArrayOutputStream()
+        // 把质量压缩后的数据存放到baos中
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100 ,baos)
+        try {
+            val fos = FileOutputStream(fileTo)
+            fos.write(baos.toByteArray())
+            fos.flush()
+            fos.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     //启动裁剪图片
@@ -268,15 +296,20 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
             val intent = Intent("com.android.camera.action.CROP")
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.setDataAndType(contentUri, "image/*")
-            // 设置裁剪
+            // 设置可裁剪
             intent.putExtra("crop", "true")
             // aspectX aspectY 是宽高的比例
-//            intent.putExtra("aspectX", 1)
-//            intent.putExtra("aspectY", 1)
+            //intent.putExtra("aspectX", 1)
+            //intent.putExtra("aspectY", 1)
             // outputX outputY 是裁剪图片宽高
-            intent.putExtra("outputX", 500)
-//            intent.putExtra("outputY", 120)
-            intent.putExtra("return-data", true)
+            //intent.putExtra("outputX", 500)
+            //intent.putExtra("outputY", 120)
+            intent.putExtra("return-data", false)
+            cropFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "crop.jpg")
+            cropURI = Uri.fromFile(cropFile)
+            Log.d("test", "cropUri:${cropURI?.path}")
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, cropURI)
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
             startActivityForResult(intent, Constant.CROP_SMALL_PICTURE)
         }
     }

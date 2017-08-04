@@ -3,6 +3,7 @@ package com.meishipintu.lll_office.views.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,7 @@ class MineFrag:Fragment(),View.OnClickListener{
         Glide.with(this).load(OfficeApplication.userInfo?.avatar).error(R.drawable.organization_default).into(headView)
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
         userName.text = OfficeApplication.userInfo?.name
+        Log.d("test","levelnow: $levelNow")
         if (levelNow!! > 0) {
             val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
             userLevel.text = levels[levelNow!! - 1].substring(0, 4)

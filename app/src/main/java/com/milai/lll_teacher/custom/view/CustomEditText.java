@@ -51,6 +51,7 @@ public class CustomEditText extends LinearLayout{
             } else if (type == 3) {
                 etInput.setInputType(InputType.TYPE_CLASS_NUMBER);
             }
+            etInput.setSingleLine();
             //最后记得要回收
             attributes.recycle();
         }

@@ -4,6 +4,7 @@ import android.app.Application
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpResultFunc
 import com.meishipintu.lll_office.modles.entities.UserInfo
+import com.tencent.bugly.crashreport.CrashReport
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -22,6 +23,8 @@ class OfficeApplication :Application() {
         super.onCreate()
         instance = this
         userInfo = Cookies.getUserInfo()
+        //initBugly
+        CrashReport.initCrashReport(this, "79549921d1", true)
         downloadResource()
 
     }
