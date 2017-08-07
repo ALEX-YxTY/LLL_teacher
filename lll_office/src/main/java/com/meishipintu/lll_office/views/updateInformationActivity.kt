@@ -93,8 +93,8 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
             val etIntro = findViewById(R.id.et_intro) as EditText
             etIntro.setText(OfficeApplication.userInfo?.introduce_detail)
             val ivAdd = findViewById(R.id.iv_add) as ImageView
-            glide.load(OfficeApplication.userInfo?.avatar).error(R.drawable.icon_add).into(ivAdd)
-            if (!OfficeApplication.userInfo?.avatar.isNullOrEmpty()) {
+            glide.load(OfficeApplication.userInfo?.certification).error(R.drawable.icon_add).into(ivAdd)
+            if (!OfficeApplication.userInfo?.certification.isNullOrEmpty()) {
                 upload = true
             }
         }
@@ -119,10 +119,11 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                             , etContact.text.toString(), etIntro.text.toString())
                 } else {
                     //压缩后的图片都是保存在tempFile
-
                     (presenter as UpdateInfoPresenter).updateOfficeInfo(OfficeApplication.userInfo?.uid!!
                             ,etName.text.toString(),etAddress.text.toString(),etContactor.text.toString()
                             ,etContact.text.toString(),etIntro.text.toString(),tempFile)
+                    //将支付按钮设为unable
+                    findViewById(R.id.bt_pay).isEnabled = false
                 }
             }
             R.id.iv_add -> {
@@ -208,6 +209,8 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
 
     override fun onError(e: String) {
         toast(e)
+        //将支付按钮设还原
+        findViewById(R.id.bt_pay).isEnabled = true
     }
 
     override fun onUploadSuccess(userInfo: UserInfo) {
@@ -218,6 +221,8 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
         intent.putExtra("levelWant", levelWant)
         startActivity(intent)
         this.finish()
+        //将支付按钮设还原
+        findViewById(R.id.bt_pay).isEnabled = true
     }
 
     //权限申请回调
@@ -256,7 +261,6 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                 Constant.CROP_SMALL_PICTURE ->{
                     //裁剪返回,调用压缩并保存到tempFile文件
                     compressBitmapToFile(cropFile, tempFile)
-                    glide.load(photoURI).skipMemoryCache(true).into(ivAdd)
                     upload = true
                 }
             }
@@ -285,6 +289,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
             fos.write(baos.toByteArray())
             fos.flush()
             fos.close()
+            glide.load(tempFile).skipMemoryCache(true).into(ivAdd)
         } catch (e: Exception) {
             e.printStackTrace()
         }

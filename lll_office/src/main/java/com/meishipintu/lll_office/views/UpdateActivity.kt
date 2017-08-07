@@ -49,7 +49,7 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
                         Constant.PAY_SUCCESS -> {
                             //支付成功，退回
                             this.finish()
-                        }
+                         }
                     }
                 }
                 },{},{},{
