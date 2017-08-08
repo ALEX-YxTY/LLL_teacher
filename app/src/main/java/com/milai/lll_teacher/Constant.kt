@@ -15,5 +15,6 @@ object Constant {
     const val REQUEST_CAMERA_PERMISSION: Int = 101  //请求相机权限requestCode
     const val CHOOSE_PICTURE_FROM_ALBUN: Int = 110  //从相册选取requestCode
     const val TAKE_PHOTO: Int = 120     //从相机拍照requestCode
+    const val CROP_SMALL_PICTURE: Int = 130     //启动裁剪
 
 }

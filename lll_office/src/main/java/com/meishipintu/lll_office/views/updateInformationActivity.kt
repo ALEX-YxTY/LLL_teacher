@@ -198,12 +198,11 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                 开始还以为是图片的问题呢，结果发现是因为没有添加FLAG_GRANT_READ_URI_PERMISSION。
                 如果关联了源码，点开FileProvider的getUriForFile()看看（下面有），注释就写着需要添加权限。
             */
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
             //获取相机元图片，不经过压缩，并保存在uir位置
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
             //调用系统相机
         }
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         startActivityForResult(intent, Constant.TAKE_PHOTO)
     }
 
@@ -267,6 +266,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
         }
     }
 
+    //压缩图片并保存
     fun compressBitmapToFile(fileFrom: File, fileTo: File) {
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true       //这个参数设置为true才有效，

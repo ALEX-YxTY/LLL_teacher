@@ -2,6 +2,7 @@ package com.milai.lll_teacher.presenters
 
 import com.milai.lll_teacher.contracts.ForgetPswContract
 import com.milai.lll_teacher.contracts.LoginContract
+import com.milai.lll_teacher.contracts.MineContract
 import com.milai.lll_teacher.contracts.ResetPswContract
 import com.milai.lll_teacher.models.entities.UserInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
@@ -15,7 +16,7 @@ import com.milai.lll_teacher.views.BasicView
  * 主要功能：
  */
 class AuthorPresenter(val iView:BasicView) :BasicPresenter(),LoginContract.IPresenter
-        ,ForgetPswContract.IPresenter,ResetPswContract.IPresenter{
+        ,ForgetPswContract.IPresenter,ResetPswContract.IPresenter, MineContract.IPresenter{
 
     val httpApi = HttpApiClinet.retrofit()
 
@@ -56,6 +57,23 @@ class AuthorPresenter(val iView:BasicView) :BasicPresenter(),LoginContract.IPres
                 ,object:HttpCallback<Any>(){
             override fun onSuccess(model: Any) {
                 (iView as ResetPswContract.IView).onReSetSuccsee()
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+
+        })
+    }
+
+    //获取个人详情
+    override fun getUserInfo(uid: String) {
+        addSubscription(httpApi.getTeacherDetailService(uid).map(HttpResultFunc<UserInfo>())
+                ,object :HttpCallback<UserInfo>(){
+            override fun onSuccess(model: UserInfo) {
+                (iView as MineContract.IView).onUserInfoGet(model)
             }
 
             override fun onFailure(msg: String?) {

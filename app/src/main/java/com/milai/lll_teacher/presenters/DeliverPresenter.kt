@@ -2,7 +2,6 @@ package com.milai.lll_teacher.presenters
 
 import com.milai.lll_teacher.contracts.InterviewListContract
 import com.milai.lll_teacher.models.entities.DeliverInfo
-import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpCallback
 import com.milai.lll_teacher.models.https.HttpResultFunc
@@ -17,7 +16,7 @@ class DeliverPresenter(val iView: BasicView) :BasicPresenter(), InterviewListCon
     val httpApi = HttpApiClinet.retrofit()
 
     override fun getDeliverHistory(tid: String, type: Int, status: Int) {
-        addSubscription(httpApi.getTeacherDetailServie(tid,type,status).map(HttpResultFunc<List<DeliverInfo>>())
+        addSubscription(httpApi.getTeacherDeliverServie(tid,type,status).map(HttpResultFunc<List<DeliverInfo>>())
                 ,object :HttpCallback<List<DeliverInfo>>(){
 
             override fun onSuccess(model: List<DeliverInfo>) {

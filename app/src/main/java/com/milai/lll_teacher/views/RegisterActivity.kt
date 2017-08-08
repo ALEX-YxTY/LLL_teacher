@@ -7,6 +7,7 @@ import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.ForgetPswContract
@@ -57,6 +58,8 @@ class RegisterActivity : BasicActivity(),ForgetPswContract.IView {
         btVcode.setOnClickListener{
             (presenter as ForgetPswContract.IPresenter).getVCode(etTel.text)
             //启动读秒
+            btVcode.isEnabled = false
+            btVcode.text = "$timeRemain s"
             handler.sendEmptyMessage(1)
         }
         btRegister.setOnClickListener{
@@ -85,8 +88,7 @@ class RegisterActivity : BasicActivity(),ForgetPswContract.IView {
     //from ForgetPswContract.IView
     override fun onVCodeGet(vcode: String) {
         vcodeGet = vcode
-        btVcode.isEnabled = false
-        btVcode.text = "$timeRemain s"
+        (findViewById(R.id.et_vcode) as CustomEditText).text = vcode
     }
 
 
@@ -104,6 +106,7 @@ class RegisterActivity : BasicActivity(),ForgetPswContract.IView {
                 } else {
                     activity.btVcode.text = "发送验证码"
                     activity.btVcode.isEnabled = true
+                    activity.timeRemain = 60
                 }
             }
         }

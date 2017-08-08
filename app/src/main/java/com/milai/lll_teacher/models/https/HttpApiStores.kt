@@ -132,7 +132,7 @@ interface HttpApiStores {
     //查询教师投递记录
     @FormUrlEncoded
     @POST("Home/Api/getTeacherDeliver")
-    fun getTeacherDetailServie(@Field("tid")tid:String,@Field("type") type:Int,@Field("status") status:Int):Observable<HttpResult<List<DeliverInfo>>>
+    fun getTeacherDeliverServie(@Field("tid")tid:String, @Field("type") type:Int, @Field("status") status:Int):Observable<HttpResult<List<DeliverInfo>>>
 
     //关键字搜索职位
     @FormUrlEncoded
@@ -143,4 +143,16 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Api/searchOrganizationList")
     fun getOfficeByKeyWorkService(@Field("content") keyWord:String):Observable<HttpResult<List<OfficeInfo>>>
+
+    //获取教师详情
+    @FormUrlEncoded
+    @POST("Home/Api/getTeacherDetail")
+    fun getTeacherDetailService(@Field("uid") uid: String): Observable<HttpResult<UserInfo>>
+
+    //获取最新消息接口
+    //type=1 我是老师  2 我是机构
+    //flag=1 查聊天记录  2 系统通知
+    @FormUrlEncoded
+    @POST("Home/Api/getNewsId")
+    fun getNewestIdService(@Field("type") type: Int, @Field("flag") flag: Int, @Field("uid") uid: String): Observable<HttpResult<NewsId>>
 }

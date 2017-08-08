@@ -16,6 +16,7 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
 
     val httpApi = HttpApiClinet.retrofit()
 
+    //获取系统消息
     override fun getSysNotice(tid: String) {
         addSubscription(httpApi.getSysNoticeService(tid,1).map(HttpResultFunc<List<SysNoticeInfo>>())
                 ,object : HttpCallback<List<SysNoticeInfo>>(){
@@ -32,6 +33,7 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
         })
     }
 
+    //获取私信
     override fun getMessageNotice(tid: String) {
         addSubscription(httpApi.getChatListService(tid,1,"").map(HttpResultFunc<List<MessageNoticeInfo>>())
                 ,object :HttpCallback<List<MessageNoticeInfo>>(){

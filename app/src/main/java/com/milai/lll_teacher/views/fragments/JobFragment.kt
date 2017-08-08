@@ -51,19 +51,25 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     var tvRequire:TextView?=null
     var back: View? = null
 
+    var fragView: View? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = JobPresenter(this)
+        if (presenter == null) {
+            presenter = JobPresenter(this)
+        }
     }
     override fun onCreateView(inflater: LayoutInflater?, @Nullable container: ViewGroup?, @Nullable savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.frag_job, container, false)
-        tvTj = view.findViewById(R.id.tv_1) as TextView
-        tvArea = view.findViewById(R.id.tv_2) as TextView
-        tvRequire = view.findViewById(R.id.tv_3) as TextView
-        rv = view.findViewById(R.id.rv) as RecyclerView
-        initListener(view)
-        initList()
-        return view
+        if (fragView == null) {
+            fragView = inflater!!.inflate(R.layout.frag_job, container, false)
+            tvTj = fragView?.findViewById(R.id.tv_1) as TextView
+            tvArea = fragView?.findViewById(R.id.tv_2) as TextView
+            tvRequire = fragView?.findViewById(R.id.tv_3) as TextView
+            rv = fragView?.findViewById(R.id.rv) as RecyclerView
+            initListener(fragView!!)
+            initList()
+        }
+        return fragView
     }
 
     private fun initList() {

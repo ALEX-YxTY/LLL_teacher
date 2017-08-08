@@ -17,9 +17,18 @@ interface NoticeContract {
         fun onSysNoticeGet(dataList:List<SysNoticeInfo>)
 
         fun onMessageNoticeGet(dataList:List<MessageNoticeInfo>)
+
+//        fun onNewestMessIdGet()
+
+//        fun onNewestSysIdGet()
+
     }
 
     interface IPresenter: BasicPresenterImp {
+//        fun getNewestSysId(tid: String)
+
+//        fun getNewestMessId(tid: String)
+
         fun getSysNotice(tid:String)
 
         fun getMessageNotice(tid:String)

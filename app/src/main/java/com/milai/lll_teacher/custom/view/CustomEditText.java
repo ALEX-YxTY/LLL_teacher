@@ -47,7 +47,7 @@ public class CustomEditText extends LinearLayout{
             }
             int type = attributes.getInt(R.styleable.CustomEditText_type, 2);
             if (type == 1) {
-                etInput.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                etInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             } else if (type == 3) {
                 etInput.setInputType(InputType.TYPE_CLASS_NUMBER);
             }

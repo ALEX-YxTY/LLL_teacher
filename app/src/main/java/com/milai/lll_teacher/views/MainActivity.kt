@@ -11,10 +11,7 @@ import com.milai.lll_teacher.R
 import com.milai.lll_teacher.RxBus
 import com.milai.lll_teacher.models.entities.BusMessage
 import com.milai.lll_teacher.views.adapters.MyviewPagerAdapter
-import com.milai.lll_teacher.views.fragments.JobFragment
-import com.milai.lll_teacher.views.fragments.MineFrag
-import com.milai.lll_teacher.views.fragments.NoticeFrag
-import com.milai.lll_teacher.views.fragments.OfficeFrag
+import com.milai.lll_teacher.views.fragments.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -63,7 +60,7 @@ class MainActivity : android.support.v7.app.AppCompatActivity() {
         val noticeFrag = NoticeFrag()
         val mineFrag = MineFrag()
         val dataList = listOf(jobFrag, officeFrag, noticeFrag, mineFrag)
-        vp.adapter = MyviewPagerAdapter(supportFragmentManager, dataList)
+        vp.adapter = MyviewPagerAdapter(supportFragmentManager, dataList as List<BasicFragment>)
         tabLayout.setupWithViewPager(vp)
         for (it: Int in 0..tabLayout.tabCount - 1) {
             val tab = tabLayout.getTabAt(it)

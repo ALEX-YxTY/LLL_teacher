@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,9 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = NoticePresenter(this)
+        if (presenter == null) {
+            presenter = NoticePresenter(this)
+        }
     }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragview == null) {
@@ -52,6 +55,7 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView{
 
         recyclerView.layoutManager = LinearLayoutManager(this.activity)
         recyclerView.adapter = messageAdaper
+        Log.d("test", "uid:${MyApplication.userInfo?.uid!!}")
         (presenter as NoticeContract.IPresenter).getMessageNotice(MyApplication.userInfo?.uid!!)
 
         //初始化tablayout

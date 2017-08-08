@@ -10,8 +10,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.milai.lll_teacher.Cookies
 import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
+import com.milai.lll_teacher.contracts.MineContract
+import com.milai.lll_teacher.models.entities.UserInfo
+import com.milai.lll_teacher.presenters.AuthorPresenter
 import com.milai.lll_teacher.views.*
 
 /**
@@ -19,9 +23,17 @@ import com.milai.lll_teacher.views.*
  *
  * 主要功能：
  */
-class MineFrag : Fragment(),View.OnClickListener{
+class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
 
     var fragView: View? = null
+    val Edit_RESUME = 200   //编辑简历页面requestCode
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (presenter == null) {
+            presenter = AuthorPresenter(this)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragView == null) {
@@ -53,7 +65,7 @@ class MineFrag : Fragment(),View.OnClickListener{
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.iv_head, R.id.rl_my_resume -> {
-                startActivity(Intent(this.activity,ResumeEditActivity::class.java))
+                this@MineFrag.startActivityForResult(Intent(this.activity,ResumeEditActivity::class.java),Edit_RESUME)
              }
             R.id.rl_apply_job -> {
                 val intent = Intent(this.activity, InterviewListActivity::class.java)
@@ -79,5 +91,23 @@ class MineFrag : Fragment(),View.OnClickListener{
                 startActivity(Intent(this.activity, SettingActivity::class.java))
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == Edit_RESUME) {
+            (presenter as MineContract.IPresenter).getUserInfo(MyApplication.userInfo?.uid!!)
+        }
+    }
+
+    //from MineContract.IView
+    override fun showError(err: String) {
+        toast(err)
+    }
+
+    //from MineContract.IView
+    override fun onUserInfoGet(userInfo: UserInfo) {
+        Cookies.saveUserInfo(userInfo)
+        MyApplication.userInfo = userInfo
+        initUI()
     }
 }

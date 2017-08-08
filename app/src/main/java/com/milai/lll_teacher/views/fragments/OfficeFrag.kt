@@ -30,14 +30,18 @@ class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView{
     var dataList = ArrayList<OfficeInfo>()
     var adapter: OfficeAdapter? = null
 
+    var fragView: View? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = OfficePresenter(this)
     }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.frag_office,container,false)
-        initUI(view)
-        return view
+        if (fragView == null) {
+            fragView = inflater?.inflate(R.layout.frag_office,container,false)
+            initUI(fragView)
+        }
+        return fragView
     }
 
     private fun initUI(view: View?) {
