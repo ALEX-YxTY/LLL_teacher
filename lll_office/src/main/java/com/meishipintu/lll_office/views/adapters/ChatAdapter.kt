@@ -73,11 +73,11 @@ class ChatAdapter(val ctx:Context,val dataList:List<ChatDetail>):RecyclerView.Ad
             }
 
             if (getItemViewType(position) == TYPE_LEFT) {
-                glide.load(chatDetail.avatar.organization_avatar).placeholder(R.drawable.organization_default)
-                        .error(R.drawable.organization_default).into(chatViewHolder.ivHead)
-            } else {
                 glide.load(chatDetail.avatar.teacher_avatar).placeholder(R.drawable.teacher_default)
                         .error(R.drawable.teacher_default).into(chatViewHolder.ivHead)
+            } else {
+                glide.load(chatDetail.avatar.organization_avatar).placeholder(R.drawable.organization_default)
+                        .error(R.drawable.organization_default).into(chatViewHolder.ivHead)
             }
             //渲染完毕后，将本条消息时间最为最后时间保存
             this.timeLast = chatDetail.create_time

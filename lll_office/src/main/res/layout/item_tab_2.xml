@@ -15,11 +15,15 @@
         android:paddingRight="20dp"
         android:layout_centerInParent="true"
         android:text="klsjdflkklsf"/>
+
     <View
-        android:layout_width="5dp"
-        android:layout_height="5dp"
+        android:id="@+id/red_point"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
         android:background="@drawable/shape_red_point"
+        android:layout_alignRight="@id/tv_tab"
         android:layout_alignTop="@id/tv_tab"
+        android:layout_marginRight="8dp"
         android:visibility="gone"/>
 
     <ImageView

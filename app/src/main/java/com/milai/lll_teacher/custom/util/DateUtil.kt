@@ -21,15 +21,14 @@ object DateUtil{
         val calanderTime = Calendar.getInstance()
         calanderTime.timeInMillis = timeStamp * 1000
         val calanderNow = Calendar.getInstance()
-        if (calanderNow.get(Calendar.YEAR)<calanderNow.get(Calendar.YEAR)
-                ||calanderNow.get(Calendar.MONTH)<calanderNow.get(Calendar.MONTH)
+        if (calanderTime.get(Calendar.YEAR)<calanderNow.get(Calendar.YEAR)
+                ||calanderTime.get(Calendar.MONTH)<calanderNow.get(Calendar.MONTH)
                 ||calanderTime.get(Calendar.DAY_OF_MONTH)<calanderNow.get(Calendar.DAY_OF_MONTH)) {
             val simpleDateFormat = SimpleDateFormat("MM-dd HH:mm")
             return simpleDateFormat.format(Date(timeStamp * 1000))
         } else {
             return stampToDate3(timeStamp)
         }
-
     }
 
     //timestamp -> hh:mm

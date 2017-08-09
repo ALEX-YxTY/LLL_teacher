@@ -135,6 +135,40 @@ object Cookies {
         editor?.apply()
     }
 
+    //获取最新sysNoticeId
+    fun getNewestSysId(uid:String):Int {
+        if (getPreference() != null) {
+            val sysId = getPreference()!!.getInt("${uid}sysId", 0)
+            return sysId
+        } else {
+            return 0
+        }
+    }
+
+    //保存最新sysNoticeId
+    fun saveNewestSysId(id: Int,uid:String) {
+        val editor = getPreference()?.edit()
+        editor?.putInt("${uid}sysId", id)
+        editor?.apply()
+    }
+
+    //获取最新MessageId
+    fun getNewestMesId(uid: String): Int {
+        if (getPreference() != null) {
+            val mesId = getPreference()!!.getInt("${uid}mesId", 0)
+            return mesId
+        } else {
+            return 0
+        }
+    }
+
+    //保存最新sysNoticeId
+    fun saveNewestMesId(id: Int, uid: String) {
+        val editor = getPreference()?.edit()
+        editor?.putInt("${uid}mesId", id)
+        editor?.apply()
+    }
+
 }
 
 //扩展方法

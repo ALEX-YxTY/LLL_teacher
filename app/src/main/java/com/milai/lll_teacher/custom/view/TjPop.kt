@@ -50,7 +50,17 @@ class TjPop(val ctx: Context, val mListener: MenuClickListener) : PopupWindow(ct
     }
 
     fun setIndexNow(index: Int) {
-        click(index)
+        if (index == 0) {
+            tvTj.setTextColor(ctx.resources.getColor(R.color.themeOrange))
+            ivTj.visibility = View.VISIBLE
+            tvAll.setTextColor(ctx.resources.getColor(R.color.text_black3))
+            ivAll.visibility = View.INVISIBLE
+        } else {
+            tvAll.setTextColor(ctx.resources.getColor(R.color.themeOrange))
+            ivAll.visibility = View.VISIBLE
+            tvTj.setTextColor(ctx.resources.getColor(R.color.text_black3))
+            ivTj.visibility = View.INVISIBLE
+        }
     }
 
     private fun click(index: Int) {

@@ -21,7 +21,7 @@ class OfficePresenter(val iView:BasicView) : BasicPresenter(), OfficeContract.IP
 
     val httpApi = HttpApiClinet.retrofit()
 
-    override fun getOffice() {
+    override fun getOffice(page:Int) {
         addSubscription(httpApi.getOrganizationgService().map(HttpResultFunc<List<OfficeInfo>>())
                 ,object:HttpCallback<List<OfficeInfo>>(){
             override fun onSuccess(model: List<OfficeInfo>) {

@@ -1,18 +1,23 @@
 package com.meishipintu.lll_office.presenters
 
+import com.meishipintu.lll_office.contract.NoticeActivityContract
 import com.meishipintu.lll_office.contract.NoticeContract
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
+import com.meishipintu.lll_office.modles.entities.HttpResult
 import com.meishipintu.lll_office.modles.entities.MessageNoticeInfo
+import com.meishipintu.lll_office.modles.entities.NewsId
 import com.meishipintu.lll_office.modles.entities.SysNoticeInfo
+import com.meishipintu.lll_office.views.BasicView
 
 /**
  * Created by Administrator on 2017/7/25.
  *
  * 主要功能：
  */
-class NoticePresenter(val iView:NoticeContract.IView):BasicPresenter(),NoticeContract.IPresenter {
+class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPresenter
+        ,NoticeActivityContract.IPresenter{
 
     val httpApi = HttpApiClinet.retrofit()
 
@@ -21,7 +26,22 @@ class NoticePresenter(val iView:NoticeContract.IView):BasicPresenter(),NoticeCon
                 ,object :HttpCallback<List<SysNoticeInfo>>(){
 
             override fun onSuccess(model: List<SysNoticeInfo>) {
-                iView.onSysNoticeGet(model)
+                (iView as NoticeContract.IView).onSysNoticeGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
+        })
+    }
+
+    override fun getMessageNotice(oid: String) {
+        addSubscription(httpApi.getChatListService("",2,oid).map(HttpResultFunc<List<MessageNoticeInfo>>())
+                ,object :HttpCallback<List<MessageNoticeInfo>>(){
+            override fun onSuccess(model: List<MessageNoticeInfo>) {
+                (iView as NoticeContract.IView).onMessageNoticeGet(model)
             }
 
             override fun onFailure(msg: String?) {
@@ -33,11 +53,39 @@ class NoticePresenter(val iView:NoticeContract.IView):BasicPresenter(),NoticeCon
         })
     }
 
-    override fun getMessageNotice(oid: String) {
-        addSubscription(httpApi.getChatListService("",2,oid).map(HttpResultFunc<List<MessageNoticeInfo>>())
-                ,object :HttpCallback<List<MessageNoticeInfo>>(){
-            override fun onSuccess(model: List<MessageNoticeInfo>) {
-                iView.onMessageNoticeGet(model)
+    //获取最新系统消息
+    override fun getNewestSysId(tid: String) {
+        addSubscription(httpApi.getNewestIdService(2,2,tid), object : HttpCallback<HttpResult<NewsId>>() {
+            override fun onSuccess(model: HttpResult<NewsId>) {
+                if (model.status == 1) {
+                    (iView as NoticeActivityContract.IView).onNewestSysIdGet(model.data.id)
+                }else if (model.status == 2) {
+                    (iView as NoticeActivityContract.IView).onNewestSysIdGet(-1)
+                } else {
+                    iView.onError(model.msg)
+                }
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
+
+        })
+    }
+
+    //获取最新私信消息
+    override fun getNewestMessId(tid: String) {
+        addSubscription(httpApi.getNewestIdService(2,1,tid), object : HttpCallback<HttpResult<NewsId>>() {
+            override fun onSuccess(model: HttpResult<NewsId>) {
+                if (model.status == 1) {
+                    (iView as NoticeActivityContract.IView).onNewestMessIdGet(model.data.id)
+                }else if (model.status == 2) {
+                    (iView as NoticeActivityContract.IView).onNewestMessIdGet(-1)
+                } else {
+                    iView.onError(model.msg)
+                }
             }
 
             override fun onFailure(msg: String?) {

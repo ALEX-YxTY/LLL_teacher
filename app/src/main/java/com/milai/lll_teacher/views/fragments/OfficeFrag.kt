@@ -16,6 +16,8 @@ import com.milai.lll_teacher.contracts.OfficeContract
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.presenters.OfficePresenter
 import com.milai.lll_teacher.views.SearchActivity
+import com.milai.lll_teacher.views.adapters.BasicLayoutManager
+import com.milai.lll_teacher.views.adapters.LayoutLoadMoreListener
 import com.milai.lll_teacher.views.adapters.OfficeAdapter
 
 /**
@@ -25,16 +27,19 @@ import com.milai.lll_teacher.views.adapters.OfficeAdapter
  * 主要功能：
  */
 
-class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView{
+class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView,LayoutLoadMoreListener{
 
     var dataList = ArrayList<OfficeInfo>()
     var adapter: OfficeAdapter? = null
 
     var fragView: View? = null
+    var currentPage = 0 //标记当前页
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = OfficePresenter(this)
+        if (presenter == null) {
+            presenter = OfficePresenter(this)
+        }
     }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragView == null) {
@@ -51,8 +56,15 @@ class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView{
         view.findViewById(R.id.bt_search).setOnClickListener(this)
         val rv = view.findViewById(R.id.rv) as RecyclerView
         adapter = OfficeAdapter(this.activity, dataList!!)
-        rv.layoutManager = LinearLayoutManager(this.activity)
+        val layoutManager = BasicLayoutManager(this.activity, this)
+        rv.layoutManager = layoutManager
         rv.adapter = adapter
+        rv.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                layoutManager.shouldLoadMore()
+            }
+        })
         (presenter as OfficeContract.IPresenter).getOffice()
     }
 
@@ -67,12 +79,20 @@ class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView{
     }
 
     override fun onDataGet(dataList: List<OfficeInfo>) {
-        this.dataList.clear()
-        this.dataList.addAll(dataList)
-        adapter?.notifyDataSetChanged()
+        if (dataList.isNotEmpty()) {
+            currentPage++
+            this.dataList.clear()
+            this.dataList.addAll(dataList)
+            adapter?.notifyDataSetChanged()
+        }
     }
 
     override fun showError(err: String) {
         toast(err)
+    }
+
+    //from LayoutLoadMoreListener
+    override fun onLoadMore() {
+        (presenter as OfficeContract.IPresenter).getOffice(currentPage + 1)
     }
 }

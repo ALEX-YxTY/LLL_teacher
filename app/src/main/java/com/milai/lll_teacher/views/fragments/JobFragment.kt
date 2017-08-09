@@ -12,6 +12,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.AbsListView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.milai.lll_teacher.Cookies
@@ -24,7 +25,9 @@ import com.milai.lll_teacher.custom.view.TjPop
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.presenters.JobPresenter
 import com.milai.lll_teacher.views.SearchActivity
+import com.milai.lll_teacher.views.adapters.BasicLayoutManager
 import com.milai.lll_teacher.views.adapters.JobAdapter
+import com.milai.lll_teacher.views.adapters.LayoutLoadMoreListener
 
 /**
  * Created by Administrator on 2017/6/21.
@@ -33,10 +36,13 @@ import com.milai.lll_teacher.views.adapters.JobAdapter
  * 主要功能：
  */
 
-class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
+class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutLoadMoreListener {
 
     var tj = 1 //是否推荐
     var area = 0 //0-全部，index-区序号
+    var courese = 0//学科 默认不限
+    var grade = 0   //年级 默认不限
+    var experience = 0 //经验，默认不限
 
     var rv: RecyclerView? = null
     var dataList = ArrayList<JobInfo>()
@@ -52,6 +58,7 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     var back: View? = null
 
     var fragView: View? = null
+    var currentPage = 1     //标记当前页数，每次查询后重置为1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +80,15 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     }
 
     private fun initList() {
-        rv?.layoutManager = LinearLayoutManager(this.activity)
+        val layoutManager = BasicLayoutManager(this.activity,this)
+        rv?.layoutManager = layoutManager
         rv?.adapter = jobAdapter
+        rv?.addOnScrollListener(object:RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                layoutManager.shouldLoadMore()
+            }
+        })
         (presenter as JobContract.IPresenter).doSearch()
     }
 
@@ -145,6 +159,11 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     override fun onTjClick(index: Int, name: String) {
         tj = index
         tvTj?.text = name
+        area = 0
+        courese = 0
+        grade = 0
+        experience = 0
+        currentPage = 1
         //还原其他标签
         popArea?.clearSelect()
         popRequire?.clearSelect()
@@ -155,6 +174,11 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     //from MenuClickListener
     override fun onArerSelect(index: Int, name: String) {
         area = index
+        tj = 0
+        courese = 0
+        grade = 0
+        experience = 0
+        currentPage = 1
         //还原其他标签
         tvTj?.text = "全部"
         popTj?.setIndexNow(1)
@@ -164,10 +188,17 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
 
     //from MenuClickListener
     override fun onRequireSelect(indexCourse: Int, indexGrade: Int, indexExperience: Int) {
+        courese = indexCourse
+        grade = indexGrade
+        experience = indexExperience
+        tj = 0
+        area = 0
+        currentPage = 1
         //还原其他标签
         tvTj?.text = "全部"
         popTj?.setIndexNow(1)
         popArea?.clearSelect()
+        Log.d("test", "load : $tj,$area,$courese,$grade,$experience,$currentPage")
         (presenter as JobContract.IPresenter).doSearch(tj = 0, course = indexCourse, grade = indexGrade
                 , experience = indexExperience)
     }
@@ -183,9 +214,19 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView {
     }
 
     //from JobContract.IView
-    override fun onDateGet(dataList: List<JobInfo>) {
+    override fun onDateGet(dataList: List<JobInfo>, loadMore: Boolean) {
+        if (loadMore && dataList.isNotEmpty()) {
+            currentPage++
+        }
         this.dataList.clear()
         this.dataList.addAll(dataList)
         jobAdapter.notifyDataSetChanged()
+    }
+
+    //from LayoutLoadMoreListener
+    override fun onLoadMore() {
+        Log.d("test", "on load more: $tj,$area,$courese,$grade,$experience,$currentPage")
+//        (presenter as JobContract.IPresenter).doSearch(tj = tj, area = area, course = courese, grade = grade
+//                , experience = experience, page = currentPage)
     }
 }

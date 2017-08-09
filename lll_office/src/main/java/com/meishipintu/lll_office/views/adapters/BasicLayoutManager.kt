@@ -1,4 +1,4 @@
-package com.milai.lll_teacher.views.adapters
+package com.meishipintu.lll_office.views.adapters
 
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager

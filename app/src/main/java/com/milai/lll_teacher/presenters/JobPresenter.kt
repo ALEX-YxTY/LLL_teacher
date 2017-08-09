@@ -24,12 +24,12 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
     val httpApi = HttpApiClinet.retrofit()
 
     //查找筛选职位
-    override fun doSearch(tj: Int, area: Int, course: Int, grade: Int, experience: Int) {
-        addSubscription(httpApi.getJobService(tj,area,course,grade,experience).map(HttpResultFunc<List<JobInfo>>())
-                ,object :HttpCallback<List<JobInfo>>(){
+    override fun doSearch(tj: Int, area: Int, course: Int, grade: Int, experience: Int, page: Int, loadMore: Boolean) {
+        addSubscription(httpApi.getJobService(tj, area, course, grade, experience).map(HttpResultFunc<List<JobInfo>>())
+                , object : HttpCallback<List<JobInfo>>() {
 
             override fun onSuccess(model: List<JobInfo>) {
-                (iView as JobContract.IView).onDateGet(model)
+                (iView as JobContract.IView).onDateGet(model,loadMore)
             }
 
             override fun onFailure(msg: String?) {

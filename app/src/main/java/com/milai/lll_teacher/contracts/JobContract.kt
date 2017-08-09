@@ -13,13 +13,16 @@ interface JobContract {
 
     interface IView : BasicView{
 
-        fun onDateGet(dataList:List<JobInfo>)
+        //loadMore参数用来区分加载更多和普通筛选
+        fun onDateGet(dataList: List<JobInfo>, loadMore: Boolean)
     }
 
     interface IPresenter:BasicPresenterImp {
 
         //查询和筛选职位方法
-        fun doSearch(tj: Int = 1, area: Int = 0, course: Int = 0, grade: Int = 0, experience: Int = 0)
+        //loadMore参数用来区分加载更多和普通筛选
+        fun doSearch(tj: Int = 1, area: Int = 0, course: Int = 0, grade: Int = 0, experience: Int = 0
+                     , page: Int = 1, loadMore: Boolean = false)
 
         //根据关键字搜索职位
         fun getJobByKeyWord(keyword:String)

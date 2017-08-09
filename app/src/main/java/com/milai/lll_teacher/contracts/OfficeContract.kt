@@ -16,7 +16,7 @@ interface OfficeContract {
     }
 
     interface IPresenter :BasicPresenterImp{
-        fun getOffice()
+        fun getOffice(page: Int = 1)
 
         fun searchOfficeByKeyword(keyword: String)
     }

@@ -196,4 +196,12 @@ interface HttpApiStores {
     //获取广告轮播内容
     @POST("Home/Api/getAdver")
     fun getAdsService():Observable<HttpResult<List<AdInfo>>>
+
+    //获取最新消息接口
+    //type=1 我是老师  2 我是机构
+    //flag=1 查聊天记录  2 系统通知
+    //返回state=1 有数据返回，state=2 无数据记录
+    @FormUrlEncoded
+    @POST("Home/Api/getNewsId")
+    fun getNewestIdService(@Field("type") type: Int, @Field("flag") flag: Int, @Field("uid") uid: String): Observable<HttpResult<NewsId>>
 }
