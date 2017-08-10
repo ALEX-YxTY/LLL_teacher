@@ -41,15 +41,14 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
-
 class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateInfoContract.IView {
 
-
+    val levels = Cookies.getConstant(7)
     //调起相机的回复
     var upload = false  //标记是否上传图片成功
 
-    val money:Float by lazy { this.intent.getStringExtra("levelWant").split("&")[1].toFloat() }
     val levelWant:Int by lazy{ this.intent.getIntExtra("level", 0) }
+    val money:Float by lazy{ levels[levelWant].split("&")[1].toFloat()}
 
     val etName:EditText by lazy { findViewById(R.id.et_name)as EditText }
     val etAddress:EditText by lazy { findViewById(R.id.et_address)as EditText }
@@ -73,6 +72,8 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     }
 
     private fun initUI() {
+        Log.d("test", "levelWant: $levelWant, money: ${levels[levelWant]}")
+
         val title = findViewById(R.id.tv_title) as TextView
         title.text = "信息填写"
         findViewById(R.id.bt_back).setOnClickListener(this)
@@ -216,7 +217,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
         Cookies.saveUserInfo(userInfo)
         OfficeApplication.userInfo = userInfo
         val intent = Intent(this, PayActivity::class.java)
-        intent.putExtra("money", money)
+        intent.putExtra("money",money )
         intent.putExtra("levelWant", levelWant)
         startActivity(intent)
         this.finish()
@@ -303,12 +304,6 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
             intent.setDataAndType(contentUri, "image/*")
             // 设置可裁剪
             intent.putExtra("crop", "true")
-            // aspectX aspectY 是宽高的比例
-            //intent.putExtra("aspectX", 1)
-            //intent.putExtra("aspectY", 1)
-            // outputX outputY 是裁剪图片宽高
-            //intent.putExtra("outputX", 500)
-            //intent.putExtra("outputY", 120)
             intent.putExtra("return-data", false)
             cropFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "crop.jpg")
             cropURI = Uri.fromFile(cropFile)

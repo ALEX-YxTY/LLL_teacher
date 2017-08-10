@@ -52,8 +52,8 @@ class PayActivity : BasicActivity() {
             }
             //直接支付
             addSubscription(HttpApiClinet.retrofit().getOrderStr("会员升级", "01"
-                    , 0, levels[levelWant - 1].split("&")[0], levels[levelWant - 1].split("&")[1].toFloat()
-                    , levelWant, OfficeApplication.userInfo?.uid!!).map(HttpResultFunc<OrderInfo>())
+                    , 0, levels[levelWant].split("&")[0], levels[levelWant].split("&")[1].toFloat()
+                    , levelWant+1, OfficeApplication.userInfo?.uid!!).map(HttpResultFunc<OrderInfo>())
                     , object : HttpCallback<OrderInfo>() {
                 override fun onSuccess(orderInfo: OrderInfo) {
                     Log.d("test", "resutl: ${orderInfo.url}")

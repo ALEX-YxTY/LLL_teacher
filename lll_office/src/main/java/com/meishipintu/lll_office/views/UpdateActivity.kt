@@ -113,9 +113,6 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
     }
 
     val disposables: CompositeDisposable by lazy{ CompositeDisposable() }
-    val SDK_PAY_FLAG = 1
-    var handler:MyHandler? = null
-    var orderID: String = ""
 
     //添加订阅
     open fun <M>addSubscription(observable: Observable<M>, subscriber: Observer<M>) {
@@ -132,44 +129,6 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
                 })
     }
 
-    class MyHandler internal constructor(ctx: UpdateActivity): Handler(){
-
-        private val reference: WeakReference<UpdateActivity> = WeakReference(ctx)
-
-        override fun handleMessage(msg: Message) {
-            var activity = reference.get()
-            when (msg.what) {
-                activity?.SDK_PAY_FLAG ->{
-                    val payResult = PayResult(msg.obj as Map<String, String>)
-                    /**
-                    对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
-                     */
-                    val resultInfo = payResult.result// 同步返回需要验证的信息
-                    Log.d("test","resultInfo: $resultInfo")
-                    val resultStatus = payResult.resultStatus
-                    // 判断resultStatus 为9000则代表支付成功
-                    if ("9000" == resultStatus) {
-                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        Toast.makeText(activity, "支付成功", Toast.LENGTH_SHORT).show()
-                    } else if("6001"==resultStatus){
-                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                        Toast.makeText(activity, "支付取消", Toast.LENGTH_SHORT).show()
-                        if (!activity.orderID.isNullOrEmpty()) {
-                            activity.addSubscription(HttpApiClinet.retrofit().cancelOrderService(activity.orderID)
-                                    .map(HttpResultFunc<Any>()),object :HttpCallback<Any>(){
-                                override fun onSuccess(model: Any) {
-                                }
-
-                                override fun onFailure(msg: String?) {
-                                }
-                            })
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.rl_1 -> { if(select!=0) changeTo(0)}
@@ -179,43 +138,9 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
             R.id.bt_pay -> {
                 //先去完善信息
                 val intent = Intent(this, updateInformationActivity::class.java)
-                intent.putExtra("levelWant", levels[select])
-                intent.putExtra("level", select + 1)
+                Log.d("test", "level: $select, levelWant: ${levels[select]}")
+                intent.putExtra("level", select)
                 startActivity(intent)
-
-//                if (handler == null) {
-//                    handler = MyHandler(this)
-//                }
-//                //直接支付
-//                addSubscription(HttpApiClinet.retrofit().getOrderStr("会员升级","01"
-//                        ,0,levels[select].split("&")[0],levels[select].split("&")[1].toFloat()
-//                        ,select+1,OfficeApplication.userInfo?.uid!!).map(HttpResultFunc<OrderInfo>())
-//                        ,object :HttpCallback<OrderInfo>(){
-//                    override fun onSuccess(orderInfo: OrderInfo) {
-//                        Log.d("test","resutl: ${orderInfo.url}")
-//                        val payRunnable = Runnable {
-//                            val alipay = PayTask(this@UpdateActivity)
-//                            val result = alipay.payV2(orderInfo.url, true)
-//                            orderID = orderInfo.order_id
-//                            Log.d("test", result.toString())
-//
-//                            val msg = handler?.obtainMessage()
-//                            msg?.what = SDK_PAY_FLAG
-//                            msg?.obj = result
-//                            handler?.sendMessage(msg)
-//                        }
-//
-//                        val payThread = Thread(payRunnable)
-//                        payThread.start()
-//                    }
-//
-//                    override fun onFailure(msg: String?) {
-//                        if (msg != null) {
-//                            toast("获取支付信息失败，请稍后重试")
-//                        }
-//                    }
-//                })
-
             }
         }
     }

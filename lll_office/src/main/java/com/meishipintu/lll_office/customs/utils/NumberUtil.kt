@@ -17,7 +17,7 @@ object NumberUtil{
 
     fun formatNumberInTwo(number:Float):String{
         val df = DecimalFormat("0.00")
-        df.roundingMode = RoundingMode.FLOOR
+        df.roundingMode = RoundingMode.HALF_UP
         return df.format(number)
     }
 

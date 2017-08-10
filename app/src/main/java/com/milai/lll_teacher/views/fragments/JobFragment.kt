@@ -25,6 +25,7 @@ import com.milai.lll_teacher.custom.view.TjPop
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.presenters.JobPresenter
 import com.milai.lll_teacher.views.SearchActivity
+import com.milai.lll_teacher.views.TestActivity
 import com.milai.lll_teacher.views.adapters.BasicLayoutManager
 import com.milai.lll_teacher.views.adapters.JobAdapter
 import com.milai.lll_teacher.views.adapters.LayoutLoadMoreListener
@@ -97,10 +98,13 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
         back = view.findViewById(R.id.back) as View
         val tab = view.findViewById(R.id.ll_tab) as LinearLayout
         view.findViewById(R.id.rl_search).setOnClickListener{
+            //启动测试页
+            startActivity(Intent(this@JobFragment.activity, TestActivity::class.java))
+
             //启动搜索页
-            val intent = Intent(this@JobFragment.activity, SearchActivity::class.java)
-            intent.putExtra("from", 1)  //来源 1-职位 2-机构
-            startActivity(intent)
+//            val intent = Intent(this@JobFragment.activity, SearchActivity::class.java)
+//            intent.putExtra("from", 1)  //来源 1-职位 2-机构
+//            startActivity(intent)
         }
         view.findViewById(R.id.rl_tj)?.setOnClickListener({
             if (popTj == null) {

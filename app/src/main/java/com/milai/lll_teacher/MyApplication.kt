@@ -4,6 +4,7 @@ import android.app.Application
 import com.milai.lll_teacher.models.entities.UserInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpResultFunc
+import com.tencent.bugly.Bugly
 import com.tencent.bugly.crashreport.CrashReport
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -47,7 +48,7 @@ class MyApplication : Application() {
                 }
             }
         })
-        CrashReport.initCrashReport(this, "6cd126f554", true, strategy)
+        Bugly.init(this, "6cd126f554", true, strategy)
         downloadResource()
     }
 

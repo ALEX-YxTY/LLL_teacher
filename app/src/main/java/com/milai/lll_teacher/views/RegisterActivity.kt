@@ -88,7 +88,7 @@ class RegisterActivity : BasicActivity(),ForgetPswContract.IView {
     //from ForgetPswContract.IView
     override fun onVCodeGet(vcode: String) {
         vcodeGet = vcode
-        (findViewById(R.id.et_vcode) as CustomEditText).text = vcode
+//        (findViewById(R.id.et_vcode) as CustomEditText).text = vcode
     }
 
 
