@@ -75,6 +75,7 @@ class ChatDetailActivity : BasicActivity(),ChatDetailContract.IView {
         toast(err)
     }
 
+
     //from ChatDetailContract.IView
     override fun onOfficeInfoGet(officeInfo: OfficeInfo) {
         val title = findViewById(R.id.tv_title) as TextView

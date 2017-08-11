@@ -4,6 +4,7 @@ import com.milai.lll_teacher.models.entities.MessageNoticeInfo
 import com.milai.lll_teacher.models.entities.SysNoticeInfo
 import com.milai.lll_teacher.presenters.BasicPresenterImp
 import com.milai.lll_teacher.views.BasicView
+import com.milai.lll_teacher.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/25.
@@ -12,11 +13,11 @@ import com.milai.lll_teacher.views.BasicView
  */
 interface NoticeContract {
 
-    interface IView: BasicView {
+    interface IView: BasicViewLoadError {
 
-        fun onSysNoticeGet(dataList:List<SysNoticeInfo>)
+        fun onSysNoticeGet(dataList:List<SysNoticeInfo>, page: Int)
 
-        fun onMessageNoticeGet(dataList:List<MessageNoticeInfo>)
+        fun onMessageNoticeGet(dataList:List<MessageNoticeInfo>, page: Int)
 
         fun onNewestMessIdGet(id: Int)
 
@@ -29,8 +30,8 @@ interface NoticeContract {
 
         fun getNewestMessId(tid: String)
 
-        fun getSysNotice(tid:String)
+        fun getSysNotice(tid: String, page: Int)
 
-        fun getMessageNotice(tid:String)
+        fun getMessageNotice(tid:String, page: Int)
     }
 }

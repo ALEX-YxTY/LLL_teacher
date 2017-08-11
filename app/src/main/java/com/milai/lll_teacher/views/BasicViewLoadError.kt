@@ -5,7 +5,7 @@ package com.milai.lll_teacher.views
  *
  * 功能介绍：
  */
-interface BasicView {
+interface BasicViewLoadError:BasicView {
 
-    fun showError(err: String)
+    fun onLoadError()
 }

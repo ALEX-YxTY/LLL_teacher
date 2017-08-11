@@ -3,29 +3,21 @@ package com.milai.lll_teacher.views.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.Nullable
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.AbsListView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.milai.lll_teacher.Cookies
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.JobContract
-import com.milai.lll_teacher.custom.view.AreaPop
-import com.milai.lll_teacher.custom.view.MenuClickListener
-import com.milai.lll_teacher.custom.view.RequirePop
-import com.milai.lll_teacher.custom.view.TjPop
+import com.milai.lll_teacher.custom.view.*
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.presenters.JobPresenter
 import com.milai.lll_teacher.views.SearchActivity
-import com.milai.lll_teacher.views.TestActivity
 import com.milai.lll_teacher.views.adapters.BasicLayoutManager
 import com.milai.lll_teacher.views.adapters.JobAdapter
 import com.milai.lll_teacher.views.adapters.LayoutLoadMoreListener
@@ -37,7 +29,7 @@ import com.milai.lll_teacher.views.adapters.LayoutLoadMoreListener
  * 主要功能：
  */
 
-class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutLoadMoreListener {
+class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,CanLoadMoreRecyclerView.StateChangedListener{
 
     var tj = 1 //是否推荐
     var area = 0 //0-全部，index-区序号
@@ -45,9 +37,9 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
     var grade = 0   //年级 默认不限
     var experience = 0 //经验，默认不限
 
-    var rv: RecyclerView? = null
+    var rv: CanLoadMoreRecyclerView? = null
     var dataList = ArrayList<JobInfo>()
-    val jobAdapter:JobAdapter by lazy { JobAdapter(this.activity,dataList,1) }  //type=1 job包含机构信息
+    val jobAdapter:JobAdapter by lazy { JobAdapter(this.activity, dataList as List<JobInfo>,1) }  //type=1 job包含机构信息
 
     var popTj: TjPop? = null
     var popArea: AreaPop? = null
@@ -59,7 +51,6 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
     var back: View? = null
 
     var fragView: View? = null
-    var currentPage = 1     //标记当前页数，每次查询后重置为1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +64,7 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
             tvTj = fragView?.findViewById(R.id.tv_1) as TextView
             tvArea = fragView?.findViewById(R.id.tv_2) as TextView
             tvRequire = fragView?.findViewById(R.id.tv_3) as TextView
-            rv = fragView?.findViewById(R.id.rv) as RecyclerView
+            rv = fragView?.findViewById(R.id.rv) as CanLoadMoreRecyclerView
             initListener(fragView!!)
             initList()
         }
@@ -81,15 +72,8 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
     }
 
     private fun initList() {
-        val layoutManager = BasicLayoutManager(this.activity,this)
-        rv?.layoutManager = layoutManager
-        rv?.adapter = jobAdapter
-        rv?.addOnScrollListener(object:RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                layoutManager.shouldLoadMore()
-            }
-        })
+        rv?.setAdapter(jobAdapter)
+        rv?.listener = this
         (presenter as JobContract.IPresenter).doSearch()
     }
 
@@ -98,13 +82,11 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
         back = view.findViewById(R.id.back) as View
         val tab = view.findViewById(R.id.ll_tab) as LinearLayout
         view.findViewById(R.id.rl_search).setOnClickListener{
-            //启动测试页
-            startActivity(Intent(this@JobFragment.activity, TestActivity::class.java))
 
             //启动搜索页
-//            val intent = Intent(this@JobFragment.activity, SearchActivity::class.java)
-//            intent.putExtra("from", 1)  //来源 1-职位 2-机构
-//            startActivity(intent)
+            val intent = Intent(this@JobFragment.activity, SearchActivity::class.java)
+            intent.putExtra("from", 1)  //来源 1-职位 2-机构
+            startActivity(intent)
         }
         view.findViewById(R.id.rl_tj)?.setOnClickListener({
             if (popTj == null) {
@@ -167,7 +149,6 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
         courese = 0
         grade = 0
         experience = 0
-        currentPage = 1
         //还原其他标签
         popArea?.clearSelect()
         popRequire?.clearSelect()
@@ -182,7 +163,6 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
         courese = 0
         grade = 0
         experience = 0
-        currentPage = 1
         //还原其他标签
         tvTj?.text = "全部"
         popTj?.setIndexNow(1)
@@ -197,12 +177,10 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
         experience = indexExperience
         tj = 0
         area = 0
-        currentPage = 1
         //还原其他标签
         tvTj?.text = "全部"
         popTj?.setIndexNow(1)
         popArea?.clearSelect()
-        Log.d("test", "load : $tj,$area,$courese,$grade,$experience,$currentPage")
         (presenter as JobContract.IPresenter).doSearch(tj = 0, course = indexCourse, grade = indexGrade
                 , experience = indexExperience)
     }
@@ -217,20 +195,36 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,LayoutL
         toast(err)
     }
 
-    //from JobContract.IView
-    override fun onDateGet(dataList: List<JobInfo>, loadMore: Boolean) {
-        if (loadMore && dataList.isNotEmpty()) {
-            currentPage++
-        }
-        this.dataList.clear()
-        this.dataList.addAll(dataList)
-        jobAdapter.notifyDataSetChanged()
+    override fun onLoadError() {
+        Log.d("test", "on load error")
+        rv?.dismissProgressBar()
+        rv?.dismissLoading()
     }
 
-    //from LayoutLoadMoreListener
-    override fun onLoadMore() {
-        Log.d("test", "on load more: $tj,$area,$courese,$grade,$experience,$currentPage")
-//        (presenter as JobContract.IPresenter).doSearch(tj = tj, area = area, course = courese, grade = grade
-//                , experience = experience, page = currentPage)
+    //from JobContract.IView
+    override fun onDateGet(dataList: List<JobInfo>, page: Int) {
+        Log.d("test", "dataList size ${dataList.size} and page $page")
+        if (page == 1) {
+            //首次加载
+            this.dataList.clear()
+            this.dataList.addAll(dataList)
+            rv?.onLoadSuccess(page)
+            jobAdapter.notifyDataSetChanged()
+        }else if (dataList.isNotEmpty()) {
+            //load more 并且有数据
+            this.dataList.addAll(dataList)
+            rv?.onLoadSuccess(page)
+            jobAdapter.notifyDataSetChanged()
+        } else {
+            //load more 没数据
+            rv?.dismissProgressBar()
+            rv?.dismissLoading()
+        }
+    }
+
+    //from CanLoadMoreRecyclerView.StateChangedListener
+    override fun onLoadMore(page: Int) {
+        (presenter as JobContract.IPresenter).doSearch(tj = tj, area = area, course = courese, grade = grade
+                , experience = experience, page = page)
     }
 }

@@ -2,7 +2,6 @@ package com.milai.lll_teacher.custom.view
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.drm.DrmStore
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -23,7 +22,7 @@ import com.milai.lll_teacher.R
 class CanLoadMoreRecyclerView : RelativeLayout {
 
     val swipe:SwipeRefreshLayout by lazy { findViewById(R.id.swipe) as SwipeRefreshLayout }
-    val rv:RecyclerView by lazy{ findViewById(R.id.rv) as RecyclerView}
+    val rv:RecyclerView by lazy{ findViewById(R.id.recyclerview) as RecyclerView}
     val pb:ProgressBar by lazy{ findViewById(R.id.pb) as ProgressBar}
     val layoutManager by lazy{ LinearLayoutManager(context)}
 
@@ -36,28 +35,19 @@ class CanLoadMoreRecyclerView : RelativeLayout {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initUi()
-//        val attributes = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText)
-//        if (attributes != null) {
-//            val title = attributes.getString(R.styleable.CustomEditText_title)
-//
-//            //最后记得要回收
-//            attributes.recycle()
-//        }
     }
 
     private fun initUi() {
         LayoutInflater.from(context).inflate(R.layout.custom_recyclerview, this, true)
         swipe.setOnRefreshListener {
-            listener?.onRefreshing()
+            listener?.onLoadMore(1)
         }
-        swipe.setColorSchemeResources(R.color.themeOrange, R.color.text_black1)
-        swipe.setDistanceToTriggerSync(500)
-//        pb.indeterminateTintList = ColorStateList()
+        swipe.setColorSchemeResources(R.color.themeOrange, R.color.orange_grey)
+        rv.layoutManager = layoutManager
     }
 
     //设置adapter
     fun setAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) {
-        rv.layoutManager = layoutManager
         rv.adapter = adapter
         rv.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
@@ -66,13 +56,13 @@ class CanLoadMoreRecyclerView : RelativeLayout {
                 if (dy != 0 && layoutManager.findLastCompletelyVisibleItemPosition() == layoutManager.itemCount - 1) {
                     pb.visibility = View.VISIBLE
                     listener?.onLoadMore(page + 1)
-                    Log.d("test", "load more ${page + 1}")
                 }
             }
         })
-
-        //首次加载
-        pb.visibility = View.VISIBLE
+        //复原page为0
+        page = 0
+        //首次加载,调出swipe
+        swipe.isRefreshing = true
         listener?.onLoadMore(page + 1)
     }
 
@@ -95,12 +85,10 @@ class CanLoadMoreRecyclerView : RelativeLayout {
         dismissLoading()
         dismissProgressBar()
         this.page = page
-        Log.d("test","now page is $page")
+        Log.d("test", "now page is $page")
     }
 
     interface StateChangedListener{
-        fun onRefreshing()
-
         fun onLoadMore(page: Int)
     }
 

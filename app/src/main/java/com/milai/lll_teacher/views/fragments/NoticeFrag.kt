@@ -14,6 +14,7 @@ import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.models.entities.MessageNoticeInfo
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.NoticeContract
+import com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
 import com.milai.lll_teacher.models.entities.Message
 import com.milai.lll_teacher.models.entities.SysNoticeInfo
 import com.milai.lll_teacher.presenters.NoticePresenter
@@ -26,7 +27,7 @@ import okhttp3.Cookie
  *
  * 主要功能：
  */
-class NoticeFrag :BasicFragment(),NoticeContract.IView{
+class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.StateChangedListener{
 
     var fragview: View? = null
     var messageList= mutableListOf<MessageNoticeInfo>()
@@ -34,7 +35,7 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView{
     val messageAdaper: MessageAdapter by lazy { MessageAdapter(this.activity,this.messageList) }
     val noticeAdapter: SysNoticAdapter by lazy{ SysNoticAdapter(this.activity, noticeList)}
 
-    val recyclerView:RecyclerView by lazy{ fragview?.findViewById(R.id.rv) as RecyclerView}
+    val recyclerView:CanLoadMoreRecyclerView by lazy{ fragview?.findViewById(R.id.rv) as CanLoadMoreRecyclerView}
     val tabLayout:TabLayout by lazy {fragview?.findViewById(R.id.tabLayout) as TabLayout }
     val uid = MyApplication.userInfo?.uid
 
@@ -61,9 +62,8 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView{
         val tvTitle = fragview?.findViewById(R.id.tv_title) as TextView
         tvTitle.text = "我的消息"
         //初始化recyclerview
-
-        recyclerView.layoutManager = LinearLayoutManager(this.activity)
-        recyclerView.adapter = messageAdaper
+        recyclerView.listener = this
+        recyclerView.setAdapter(messageAdaper)
 
         //初始化tablayout
         tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.item_tab_2))
@@ -96,28 +96,27 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView{
 
     }
 
+    //from NoticeContract.IView
     override fun showError(err: String) {
         toast(err)
     }
 
-    override fun onSysNoticeGet(dataList: List<SysNoticeInfo>) {
-        if (dataList.isNotEmpty()) {
-            currentPage++
-            recyclerView.adapter = noticeAdapter
-            noticeList.clear()
-            noticeList.addAll(dataList)
-            noticeAdapter.notifyDataSetChanged()
-        }
+    //from NoticeContract.IView
+    override fun onLoadError() {
+        recyclerView.dismissLoading()
+        recyclerView.dismissProgressBar()
     }
 
-    override fun onMessageNoticeGet(dataList: List<MessageNoticeInfo>) {
-        if (dataList.isNotEmpty()) {
-            currentPage++
-            recyclerView.adapter = messageAdaper
-            messageList.clear()
-            messageList.addAll(dataList)
-            messageAdaper.notifyDataSetChanged()
-        }
+    //from CanLoadMore.Listener
+    override fun onLoadMore(page: Int) {
+    }
+
+    override fun onSysNoticeGet(dataList: List<SysNoticeInfo>, page: Int) {
+
+    }
+
+    override fun onMessageNoticeGet(dataList: List<MessageNoticeInfo>, page: Int) {
+
     }
 
     override fun onNewestMessIdGet(id: Int) {

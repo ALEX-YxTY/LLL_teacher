@@ -11,7 +11,7 @@
         android:scrollbars="none">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
+            android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
@@ -27,8 +27,7 @@
         android:layout_alignParentBottom="true"
         android:visibility="gone"
         android:indeterminateTint="@color/themeOrange"
-        android:minHeight="30dp"
-        android:maxHeight="30dp"
-        android:mirrorForRtl="false"
+        android:minHeight="15dp"
+        android:maxHeight="15dp"
         />
 </RelativeLayout>

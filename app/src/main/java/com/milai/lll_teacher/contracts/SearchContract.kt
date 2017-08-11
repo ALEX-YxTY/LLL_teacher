@@ -3,7 +3,7 @@ package com.milai.lll_teacher.contracts
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.presenters.BasicPresenterImp
-import com.milai.lll_teacher.views.BasicView
+import com.milai.lll_teacher.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/8/1.
@@ -12,13 +12,13 @@ import com.milai.lll_teacher.views.BasicView
  */
 interface SearchContract {
 
-    interface IView:BasicView{
-        fun onJobGet(dataList: List<JobInfo>)
+    interface IView: BasicViewLoadError {
+        fun onJobGet(dataList: List<JobInfo>, page: Int)
 
-        fun onOfficeGet(dataList: List<OfficeInfo>)
+        fun onOfficeGet(dataList: List<OfficeInfo>, page: Int)
     }
 
     interface IPresenter:BasicPresenterImp{
-        fun getJobByCourse(courseIndex: Int)
+        fun getJobByCourse(courseIndex: Int, page: Int)
     }
 }

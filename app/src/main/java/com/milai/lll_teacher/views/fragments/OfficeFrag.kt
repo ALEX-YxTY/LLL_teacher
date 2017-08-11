@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.OfficeContract
+import com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.presenters.OfficePresenter
 import com.milai.lll_teacher.views.SearchActivity
@@ -27,13 +28,13 @@ import com.milai.lll_teacher.views.adapters.OfficeAdapter
  * 主要功能：
  */
 
-class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView,LayoutLoadMoreListener{
+class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView,CanLoadMoreRecyclerView.StateChangedListener{
 
     var dataList = ArrayList<OfficeInfo>()
     var adapter: OfficeAdapter? = null
 
     var fragView: View? = null
-    var currentPage = 0 //标记当前页
+    val rv:CanLoadMoreRecyclerView by lazy { fragView?.findViewById(R.id.rv) as CanLoadMoreRecyclerView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,20 +53,10 @@ class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView,Lay
     private fun initUI(view: View?) {
         val title = view?.findViewById(R.id.tv_title) as TextView
         title.text = "机构"
-        view.findViewById(R.id.bt_back).visibility = GONE
         view.findViewById(R.id.bt_search).setOnClickListener(this)
-        val rv = view.findViewById(R.id.rv) as RecyclerView
-        adapter = OfficeAdapter(this.activity, dataList!!)
-        val layoutManager = BasicLayoutManager(this.activity, this)
-        rv.layoutManager = layoutManager
-        rv.adapter = adapter
-        rv.addOnScrollListener(object :RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                layoutManager.shouldLoadMore()
-            }
-        })
-        (presenter as OfficeContract.IPresenter).getOffice()
+        adapter = OfficeAdapter(this.activity, dataList)
+        rv.listener = this
+        rv.setAdapter(adapter!!)
     }
 
     override fun onClick(v: View?) {
@@ -78,12 +69,22 @@ class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView,Lay
         }
     }
 
-    override fun onDataGet(dataList: List<OfficeInfo>) {
-        if (dataList.isNotEmpty()) {
-            currentPage++
+    override fun onDataGet(dataList: List<OfficeInfo>,page:Int) {
+        if (page == 1) {
+            //首次加载
             this.dataList.clear()
             this.dataList.addAll(dataList)
+            rv.onLoadSuccess(page)
             adapter?.notifyDataSetChanged()
+        }else if (dataList.isNotEmpty()) {
+            //load more 并且有数据
+            this.dataList.addAll(dataList)
+            rv.onLoadSuccess(page)
+            adapter?.notifyDataSetChanged()
+        } else {
+            //load more 没数据
+            rv.dismissProgressBar()
+            rv.dismissLoading()
         }
     }
 
@@ -91,8 +92,13 @@ class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView,Lay
         toast(err)
     }
 
-    //from LayoutLoadMoreListener
-    override fun onLoadMore() {
-        (presenter as OfficeContract.IPresenter).getOffice(currentPage + 1)
+    override fun onLoadError() {
+        rv.dismissProgressBar()
+        rv.dismissLoading()
+    }
+
+    //from CanLoadMore.StateChangedListener
+    override fun onLoadMore(page: Int) {
+        (presenter as OfficeContract.IPresenter).getOffice(page)
     }
 }

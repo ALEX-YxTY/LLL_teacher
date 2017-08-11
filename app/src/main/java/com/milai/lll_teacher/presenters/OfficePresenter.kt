@@ -10,6 +10,7 @@ import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpCallback
 import com.milai.lll_teacher.models.https.HttpResultFunc
 import com.milai.lll_teacher.views.BasicView
+import com.milai.lll_teacher.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -22,13 +23,14 @@ class OfficePresenter(val iView:BasicView) : BasicPresenter(), OfficeContract.IP
     val httpApi = HttpApiClinet.retrofit()
 
     override fun getOffice(page:Int) {
-        addSubscription(httpApi.getOrganizationgService().map(HttpResultFunc<List<OfficeInfo>>())
+        addSubscription(httpApi.getOrganizationgService(page).map(HttpResultFunc<List<OfficeInfo>>())
                 ,object:HttpCallback<List<OfficeInfo>>(){
             override fun onSuccess(model: List<OfficeInfo>) {
-                (iView as OfficeContract.IView).onDataGet(model)
+                (iView as OfficeContract.IView).onDataGet(model, page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.showError(msg)
                 }
@@ -109,34 +111,35 @@ class OfficePresenter(val iView:BasicView) : BasicPresenter(), OfficeContract.IP
     }
 
     //查询教师收藏的机构
-    override fun getOrganizationCollection(teacherId: String) {
-        addSubscription(httpApi.getOfficeCollectionService(teacherId).map(HttpResultFunc<List<OfficeInfo>>())
-                ,object :HttpCallback<List<OfficeInfo>>(){
+    override fun getOrganizationCollection(teacherId: String, page: Int) {
+        addSubscription(httpApi.getOfficeCollectionService(teacherId, page).map(HttpResultFunc<List<OfficeInfo>>())
+                , object : HttpCallback<List<OfficeInfo>>() {
             override fun onSuccess(model: List<OfficeInfo>) {
-                (iView as OrganizationCollectionContract.IView).onOrganizationCollectionGet(model)
+                (iView as OrganizationCollectionContract.IView).onOrganizationCollectionGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.showError(msg)
                 }
             }
-
         })
     }
 
     //搜索机构通过关键字
-    override fun searchOfficeByKeyword(keyword: String) {
-        addSubscription(httpApi.getOfficeByKeyWorkService(keyword).map(HttpResultFunc<List<OfficeInfo>>())
-                ,object :HttpCallback<List<OfficeInfo>>(){
+    override fun searchOfficeByKeyword(keyword: String, page: Int) {
+        addSubscription(httpApi.getOfficeByKeyWorkService(keyword,page).map(HttpResultFunc<List<OfficeInfo>>())
+                , object : HttpCallback<List<OfficeInfo>>() {
             override fun onSuccess(model: List<OfficeInfo>) {
-                (iView as SearchContract.IView).onOfficeGet(model)
+                (iView as SearchContract.IView).onOfficeGet(model, page)
             }
 
             override fun onFailure(msg: String?) {
                 if (msg != null) {
                     iView.showError(msg)
                 }
+                (iView as BasicViewLoadError).onLoadError()
             }
 
         })

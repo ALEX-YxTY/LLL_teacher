@@ -38,12 +38,13 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/organization/getAllPosition")
     fun getJobService(@Field("is_tj") isTj: Int, @Field("work_area") area: Int, @Field("course") course: Int
-                      , @Field("grade") grade: Int, @Field("require_year") experience: Int)
+                      , @Field("grade") grade: Int, @Field("require_year") experience: Int,@Field("page") page:Int)
             : Observable<HttpResult<List<JobInfo>>>
 
     //查询所有机构
+    @FormUrlEncoded
     @POST("Home/organization/getAllOrganization")
-    fun getOrganizationgService():Observable<HttpResult<List<OfficeInfo>>>
+    fun getOrganizationgService(@Field("page") page: Int):Observable<HttpResult<List<OfficeInfo>>>
 
     //查询机构详情
     @FormUrlEncoded
@@ -74,7 +75,7 @@ interface HttpApiStores {
     //查询收藏职位列表
     @FormUrlEncoded
     @POST("Home/Api/getTeacherLikedPosition")
-    fun getJobCollectService(@Field("tid") tid:String):Observable<HttpResult<List<JobInfo>>>
+    fun getJobCollectService(@Field("tid") tid: String, @Field("page") page: Int): Observable<HttpResult<List<JobInfo>>>
 
     //教师主动投递简历
     @FormUrlEncoded
@@ -95,7 +96,7 @@ interface HttpApiStores {
     //教师查询收藏的机构
     @FormUrlEncoded
     @POST("Home/Api/getTeacherLikedOrganization")
-    fun getOfficeCollectionService( @Field("tid") teacherId: String): Observable<HttpResult<List<OfficeInfo>>>
+    fun getOfficeCollectionService( @Field("tid") teacherId: String,@Field("page") page:Int): Observable<HttpResult<List<OfficeInfo>>>
 
     //教师是否收藏了机构
     @FormUrlEncoded
@@ -137,12 +138,12 @@ interface HttpApiStores {
     //关键字搜索职位
     @FormUrlEncoded
     @POST("Home/Api/searchPositionList")
-    fun getJobByKeyWorkService(@Field("content") keyWord:String):Observable<HttpResult<List<JobInfo>>>
+    fun getJobByKeyWorkService(@Field("content") keyWord: String, @Field("page") page: Int): Observable<HttpResult<List<JobInfo>>>
 
     //关键字搜索机构
     @FormUrlEncoded
     @POST("Home/Api/searchOrganizationList")
-    fun getOfficeByKeyWorkService(@Field("content") keyWord:String):Observable<HttpResult<List<OfficeInfo>>>
+    fun getOfficeByKeyWorkService(@Field("content") keyWord:String, @Field("page") page: Int):Observable<HttpResult<List<OfficeInfo>>>
 
     //获取教师详情
     @FormUrlEncoded

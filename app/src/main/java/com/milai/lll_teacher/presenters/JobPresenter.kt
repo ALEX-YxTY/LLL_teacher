@@ -11,6 +11,7 @@ import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpCallback
 import com.milai.lll_teacher.models.https.HttpResultFunc
 import com.milai.lll_teacher.views.BasicView
+import com.milai.lll_teacher.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/10.
@@ -24,15 +25,16 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
     val httpApi = HttpApiClinet.retrofit()
 
     //查找筛选职位
-    override fun doSearch(tj: Int, area: Int, course: Int, grade: Int, experience: Int, page: Int, loadMore: Boolean) {
-        addSubscription(httpApi.getJobService(tj, area, course, grade, experience).map(HttpResultFunc<List<JobInfo>>())
+    override fun doSearch(tj: Int, area: Int, course: Int, grade: Int, experience: Int, page: Int) {
+        addSubscription(httpApi.getJobService(tj, area, course, grade, experience, page).map(HttpResultFunc<List<JobInfo>>())
                 , object : HttpCallback<List<JobInfo>>() {
 
             override fun onSuccess(model: List<JobInfo>) {
-                (iView as JobContract.IView).onDateGet(model,loadMore)
+                (iView as JobContract.IView).onDateGet(model, page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.showError(msg)
                 }
@@ -110,15 +112,16 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
     }
 
     //获取收藏的职位
-    override fun getJobCollection(tid: String) {
-        addSubscription(httpApi.getJobCollectService(tid).map(HttpResultFunc<List<JobInfo>>())
-                ,object :HttpCallback<List<JobInfo>>(){
+    override fun getJobCollection(tid: String, page: Int) {
+        addSubscription(httpApi.getJobCollectService(tid,page).map(HttpResultFunc<List<JobInfo>>())
+                , object : HttpCallback<List<JobInfo>>() {
             override fun onSuccess(model: List<JobInfo>) {
-                Log.d("test","the dataList size is ${model.size}")
-                (iView as CollectionContract.IView).onJobCollectionGet(model)
+                Log.d("test", "the dataList size is ${model.size}")
+                (iView as CollectionContract.IView).onJobCollectionGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.showError(msg)
                 }
@@ -162,32 +165,34 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
     }
 
     //根据关键词搜索职位
-    override fun getJobByKeyWord(keyword: String) {
-        addSubscription(httpApi.getJobByKeyWorkService(keyword).map(HttpResultFunc<List<JobInfo>>())
-                ,object :HttpCallback<List<JobInfo>>(){
+    override fun getJobByKeyWord(keyword: String, page: Int) {
+        addSubscription(httpApi.getJobByKeyWorkService(keyword,page).map(HttpResultFunc<List<JobInfo>>())
+                , object : HttpCallback<List<JobInfo>>() {
 
             override fun onSuccess(model: List<JobInfo>) {
-                (iView as SearchContract.IView).onJobGet(model)
+                (iView as SearchContract.IView).onJobGet(model, page)
             }
 
             override fun onFailure(msg: String?) {
                 if (msg != null) {
                     iView.showError(msg)
                 }
+                (iView as BasicViewLoadError).onLoadError()
             }
         })
     }
 
     //单独根据科目搜索职位
-    override fun getJobByCourse(courseIndex: Int) {
-        addSubscription(httpApi.getJobService(0,0,courseIndex,0,0).map(HttpResultFunc<List<JobInfo>>())
+    override fun getJobByCourse(courseIndex: Int,page:Int) {
+        addSubscription(httpApi.getJobService(0,0,courseIndex,0,0,page).map(HttpResultFunc<List<JobInfo>>())
                 ,object :HttpCallback<List<JobInfo>>(){
 
             override fun onSuccess(model: List<JobInfo>) {
-                (iView as SearchContract.IView).onJobGet(model)
+                (iView as SearchContract.IView).onJobGet(model, page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as JobContract.IView).onLoadError()
                 if (msg != null) {
                     iView.showError(msg)
                 }

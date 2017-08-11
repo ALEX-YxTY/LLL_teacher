@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.CollectionContract
+import com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.presenters.JobPresenter
 import com.milai.lll_teacher.views.adapters.JobAdapter
@@ -15,9 +16,10 @@ import com.milai.lll_teacher.views.adapters.JobAdapter
 /**
  * 收藏的职位页面
  */
-class CollectionActivity : BasicActivity(), CollectionContract.IView {
+class CollectionActivity : BasicActivity(), CollectionContract.IView,CanLoadMoreRecyclerView.StateChangedListener {
 
-    val rv:RecyclerView by lazy { findViewById(R.id.rv) as RecyclerView }
+
+    val rv:CanLoadMoreRecyclerView by lazy { findViewById(R.id.rv) as CanLoadMoreRecyclerView }
 
     val jobList = mutableListOf<JobInfo>()
     val jobAdapter:JobAdapter by lazy { JobAdapter(this,jobList,1) }
@@ -29,14 +31,12 @@ class CollectionActivity : BasicActivity(), CollectionContract.IView {
         val title = findViewById(R.id.tv_title) as TextView
         title.text = "收藏的职位"
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed() }
-        val rv = findViewById(R.id.rv) as RecyclerView
-        rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = jobAdapter
+        rv.listener = this
     }
 
     override fun onResume() {
         super.onResume()
-        (presenter as JobPresenter).getJobCollection(MyApplication.userInfo?.uid!!)
+        rv.setAdapter(jobAdapter)
     }
 
     //from CollectionContract.IView
@@ -45,10 +45,33 @@ class CollectionActivity : BasicActivity(), CollectionContract.IView {
     }
 
     //from CollectionContract.IView
-    override fun onJobCollectionGet(dataList: List<JobInfo>) {
-        Log.d("test","the dataList size is ${dataList.size}")
-        this.jobList.clear()
-        this.jobList.addAll(dataList)
-        jobAdapter.notifyDataSetChanged()
+    override fun onLoadError() {
+        rv.dismissLoading()
+        rv.dismissProgressBar()
+    }
+
+    //from CanLoadMore.StateChangedListener
+    override fun onLoadMore(page: Int) {
+        (presenter as JobPresenter).getJobCollection(MyApplication.userInfo?.uid!!,page)
+    }
+
+    //from CollectionContract.IView
+    override fun onJobCollectionGet(dataList: List<JobInfo>,page:Int) {
+        if (page == 1) {
+            //首次加载
+            this.jobList.clear()
+            this.jobList.addAll(dataList)
+            rv.onLoadSuccess(page)
+            jobAdapter.notifyDataSetChanged()
+        }else if (dataList.isNotEmpty()) {
+            //load more 并且有数据
+            this.jobList.addAll(dataList)
+            rv.onLoadSuccess(page)
+            jobAdapter.notifyDataSetChanged()
+        } else {
+            //load more 没数据
+            rv.dismissProgressBar()
+            rv.dismissLoading()
+        }
     }
 }

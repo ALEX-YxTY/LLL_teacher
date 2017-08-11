@@ -28,10 +28,11 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/border2"/>
-    <android.support.v7.widget.RecyclerView
+    <com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/white"/>
 
 
 </LinearLayout>
