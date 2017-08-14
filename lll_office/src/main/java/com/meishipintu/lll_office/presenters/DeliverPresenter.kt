@@ -7,6 +7,7 @@ import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
 import com.meishipintu.lll_office.modles.entities.DeliverInfo
 import com.meishipintu.lll_office.views.BasicView
+import com.meishipintu.lll_office.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/17.
@@ -19,14 +20,15 @@ class DeliverPresenter(val iView:BasicView):BasicPresenter(), MyInterviewContrac
     val httpApi = HttpApiClinet.retrofit()
 
     //获取机构被投递记录
-    override fun getDeliverHistory(uid: String, status: Int, type: Int) {
-        addSubscription(httpApi.getDeliverHistoryService(uid,status,type)
+    override fun getDeliverHistory(uid: String, status: Int, type: Int,page:Int) {
+        addSubscription(httpApi.getDeliverHistoryService(uid,status,type,page)
                 .map(HttpResultFunc<List<DeliverInfo>>()),object :HttpCallback<List<DeliverInfo>>(){
             override fun onSuccess(model: List<DeliverInfo>) {
-                (iView as MyInterviewContract.IView).onDeleverDataGet(model)
+                (iView as MyInterviewContract.IView).onDeleverDataGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.onError(msg)
                 }

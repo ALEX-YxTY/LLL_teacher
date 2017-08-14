@@ -2,7 +2,7 @@ package com.meishipintu.lll_office.contract
 
 import com.meishipintu.lll_office.modles.entities.DeliverInfo
 import com.meishipintu.lll_office.presenters.BasicPresenterImp
-import com.meishipintu.lll_office.views.BasicView
+import com.meishipintu.lll_office.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/14.
@@ -11,11 +11,11 @@ import com.meishipintu.lll_office.views.BasicView
  */
 interface MyInterviewContract {
 
-    interface IView:BasicView{
-        fun onDeleverDataGet(dataList: List<DeliverInfo>)
+    interface IView:BasicViewLoadError{
+        fun onDeleverDataGet(dataList: List<DeliverInfo>,page:Int)
     }
 
     interface IPresenter:BasicPresenterImp{
-        fun getDeliverHistory(uid: String, status: Int = 0, type: Int = 0)
+        fun getDeliverHistory(uid: String, status: Int = 0, type: Int = 0, page: Int = 1)
     }
 }

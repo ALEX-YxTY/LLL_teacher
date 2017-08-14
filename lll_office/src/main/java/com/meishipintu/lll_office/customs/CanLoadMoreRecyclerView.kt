@@ -1,7 +1,6 @@
-package com.milai.lll_teacher.custom.view
+package com.meishipintu.lll_office.customs
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -11,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
-import com.milai.lll_teacher.R
+import com.meishipintu.lll_office.R
 
 /**
  * Created by Administrator on 2017/8/10.

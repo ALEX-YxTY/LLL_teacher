@@ -99,7 +99,7 @@ class InviteActivity : BasicActivity(),View.OnClickListener, MenuClickListener,S
 
     //from SearchListener
     override fun onSearch(keyWord: String) {
-        (presenter as TeacherContract.IPresenter).searchTeacher(keyWord)
+        (presenter as TeacherContract.IPresenter).searchTeacher(keyWord, 1)
         if (requireSearchPop?.isShowing as Boolean) {
             requireSearchPop?.dismiss()
             startBackAnimation(2)
@@ -129,8 +129,11 @@ class InviteActivity : BasicActivity(),View.OnClickListener, MenuClickListener,S
     }
 
     //from TeacherContract.IView
-    override fun onDateGet(dataList: List<TeacherInfo>) {
+    override fun onDateGet(dataList: List<TeacherInfo>,page:Int) {
         refreshList(dataList)
+    }
+
+    override fun onLoadError() {
     }
 
     private fun refreshList(dataList: List<TeacherInfo>) {

@@ -29,7 +29,8 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Api/getAllTeacher")
     fun getTeacherService(@Field("is_tj") tj: Int, @Field("require_year") year: Int, @Field("course") course: Int
-                          , @Field("grade") grade: Int, @Field("is_px") isDecending: Int): Observable<HttpResult<List<TeacherInfo>>>
+                          , @Field("grade") grade: Int, @Field("is_px") isDecending: Int
+                          , @Field("page") page: Int): Observable<HttpResult<List<TeacherInfo>>>
 
     //根据关键字搜索教师
     @FormUrlEncoded
@@ -70,7 +71,8 @@ interface HttpApiStores {
     //获取机构被投递记录
     @FormUrlEncoded
     @POST("Home/Organization/getOrganizationDeliver")
-    fun getDeliverHistoryService(@Field("oid") oid: String, @Field("status") status: Int, @Field("type") type: Int)
+    fun getDeliverHistoryService(@Field("oid") oid: String, @Field("status") status: Int, @Field("type") type: Int
+                                 ,@Field("page") page:Int)
             : Observable<HttpResult<List<DeliverInfo>>>
 
     //查询机构详情
@@ -189,9 +191,11 @@ interface HttpApiStores {
                                 , @Field("name") name: String, @Field("contact") contact: String
                                 , @Field("contact_tel") contactTel: String
                                 , @Field("introduce_detail") introduce: String):Observable<HttpResult<UserInfo>>
+
     //获取新闻内容
+    @FormUrlEncoded
     @POST("Home/Api/getNews")
-    fun getNewsService():Observable<HttpResult<List<NewsInfo>>>
+    fun getNewsService(@Field("page") page: Int): Observable<HttpResult<List<NewsInfo>>>
 
     //获取广告轮播内容
     @POST("Home/Api/getAdver")

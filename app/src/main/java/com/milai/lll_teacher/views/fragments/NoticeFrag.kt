@@ -40,7 +40,7 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
     val uid = MyApplication.userInfo?.uid
 
     var newestSysIdGet: Int = 0     //保存获取到的最新系统ID
-    var currentPage:Int = 0         //标记当前页
+    var isMessage:Boolean = true    //是否是消息列表
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +68,6 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
         //初始化tablayout
         tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.item_tab_2))
         tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.item_tab_2))
-        (presenter as NoticeContract.IPresenter).getMessageNotice(uid!!)
 
         (tabLayout.getTabAt(0)?.customView?.findViewById(R.id.tv_tab)as TextView).text = "私信"
         (tabLayout.getTabAt(1)?.customView?.findViewById(R.id.tv_tab)as TextView).text = "通知"
@@ -81,14 +80,14 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                //重置页码
-                currentPage = 0
                 if (tab?.position == 0) {
-                    (presenter as NoticeContract.IPresenter).getMessageNotice(uid)
+                    isMessage = true
+                    recyclerView.setAdapter(messageAdaper)
                 } else {
-                    (presenter as NoticeContract.IPresenter).getSysNotice(uid)
+                    isMessage = false
+                    recyclerView.setAdapter(noticeAdapter)
                     if (newestSysIdGet > 0) {
-                        Cookies.saveNewestSysId(newestSysIdGet, uid)
+                        Cookies.saveNewestSysId(newestSysIdGet, uid ?: "")
                     }
                 }
             }
@@ -109,14 +108,51 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
 
     //from CanLoadMore.Listener
     override fun onLoadMore(page: Int) {
+        if (isMessage) {
+            //message
+            (presenter as NoticeContract.IPresenter).getMessageNotice(uid?:"",page)
+        } else {
+            //notice
+            (presenter as NoticeContract.IPresenter).getSysNotice(uid?:"",page)
+        }
     }
 
     override fun onSysNoticeGet(dataList: List<SysNoticeInfo>, page: Int) {
-
+        if (page == 1) {
+            //首次加载
+            this.noticeList.clear()
+            this.noticeList.addAll(dataList)
+            recyclerView.onLoadSuccess(page)
+            noticeAdapter.notifyDataSetChanged()
+        }else if (dataList.isNotEmpty()) {
+            //load more 并且有数据
+            this.noticeList.addAll(dataList)
+            recyclerView.onLoadSuccess(page)
+            noticeAdapter.notifyDataSetChanged()
+        } else {
+            //load more 没数据
+            recyclerView.dismissProgressBar()
+            recyclerView.dismissLoading()
+        }
     }
 
     override fun onMessageNoticeGet(dataList: List<MessageNoticeInfo>, page: Int) {
-
+        if (page == 1) {
+            //首次加载
+            this.messageList.clear()
+            this.messageList.addAll(dataList)
+            recyclerView.onLoadSuccess(page)
+            messageAdaper.notifyDataSetChanged()
+        }else if (dataList.isNotEmpty()) {
+            //load more 并且有数据
+            this.messageList.addAll(dataList)
+            recyclerView.onLoadSuccess(page)
+            messageAdaper.notifyDataSetChanged()
+        } else {
+            //load more 没数据
+            recyclerView.dismissProgressBar()
+            recyclerView.dismissLoading()
+        }
     }
 
     override fun onNewestMessIdGet(id: Int) {

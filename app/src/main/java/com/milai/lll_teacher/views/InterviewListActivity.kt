@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.InterviewListContract
+import com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
 import com.milai.lll_teacher.models.entities.DeliverInfo
 import com.milai.lll_teacher.presenters.DeliverPresenter
 import com.milai.lll_teacher.views.adapters.DeliverAdapter
@@ -16,11 +17,13 @@ import com.milai.lll_teacher.views.adapters.DeliverAdapter
  *  我的投递记录和我的面试邀约界面
  */
 
-class InterviewListActivity : BasicActivity(), InterviewListContract.IView{
+class InterviewListActivity : BasicActivity(), InterviewListContract.IView,CanLoadMoreRecyclerView.StateChangedListener{
 
     val from:Int by lazy{intent.getIntExtra("from", 1)}    //1-我的投递记录，2-我的面试邀约
     val dataList = mutableListOf<DeliverInfo>()
     val adapter:DeliverAdapter by lazy{ DeliverAdapter(this, dataList)}
+    val rv:CanLoadMoreRecyclerView by lazy{ findViewById(R.id.rv) as CanLoadMoreRecyclerView }
+    var state:Int = 0 //标记查询状态，默认0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +36,8 @@ class InterviewListActivity : BasicActivity(), InterviewListContract.IView{
 
     private fun initUI() {
         //initRv
-        val rv = findViewById(R.id.rv) as RecyclerView
-        rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = adapter
-        (presenter as InterviewListContract.IPresenter).getDeliverHistory(MyApplication.userInfo?.uid!!, type = from)
+        rv.listener = this
+        rv.setAdapter(adapter)
         //初始化tablayout
         val tabLayout = findViewById(R.id.tabLayout) as TabLayout
         tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.item_tab_2))
@@ -54,19 +55,9 @@ class InterviewListActivity : BasicActivity(), InterviewListContract.IView{
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab?.position == 0) {
-                    //全部
-                    (presenter as InterviewListContract.IPresenter).getDeliverHistory(MyApplication.userInfo?.uid!!
-                            , type = from)
-                }else if (tab?.position == 1) {
-                    //未面试
-                    (presenter as InterviewListContract.IPresenter).getDeliverHistory(MyApplication.userInfo?.uid!!
-                            , type = from, status = 1)
-                } else {
-                    //已面试
-                    (presenter as InterviewListContract.IPresenter).getDeliverHistory(MyApplication.userInfo?.uid!!
-                            , type = from, status = 2)
-                }
+                //0-全部 1-未面试 2-已面试
+                state = tab?.position ?: 0
+                rv.reLoad()
             }
         })
     }
@@ -76,10 +67,33 @@ class InterviewListActivity : BasicActivity(), InterviewListContract.IView{
         toast(err)
     }
 
+    override fun onLoadError() {
+        rv.dismissProgressBar()
+        rv.dismissLoading()
+    }
+
+    override fun onLoadMore(page: Int) {
+        (presenter as InterviewListContract.IPresenter).getDeliverHistory(MyApplication.userInfo?.uid!!
+                , type = from, status = state, page = page)
+    }
+
     //from InterviewContract.IView
-    override fun onDeliverHistoryGet(dataList: List<DeliverInfo>) {
-        this.dataList.clear()
-        this.dataList.addAll(dataList)
-        adapter.notifyDataSetChanged()
+    override fun onDeliverHistoryGet(dataList: List<DeliverInfo>, page: Int) {
+        if (page == 1) {
+            //首次加载
+            this.dataList.clear()
+            this.dataList.addAll(dataList)
+            rv.onLoadSuccess(page)
+            adapter.notifyDataSetChanged()
+        }else if (dataList.isNotEmpty()) {
+            //load more 并且有数据
+            this.dataList.addAll(dataList)
+            rv.onLoadSuccess(page)
+            adapter.notifyDataSetChanged()
+        } else {
+            //load more 没数据
+            rv.dismissProgressBar()
+            rv.dismissLoading()
+        }
     }
 }

@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/border2"/>
-    <com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
+    <com.meishipintu.lll_office.customs.CanLoadMoreRecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

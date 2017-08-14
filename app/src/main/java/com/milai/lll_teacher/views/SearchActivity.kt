@@ -135,7 +135,7 @@ class SearchActivity : BasicActivity(), OnItemClickListener,SearchContract.IView
         //职位搜索，点击科目
         isHistory = false
         byKeyWork = false
-        course = index
+        course = index + 1      //学科常数从0开始，选项从1开始
         rv.setAdapter(jobAdapter)
     }
 

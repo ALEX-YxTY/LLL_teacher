@@ -9,6 +9,7 @@ import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.views.BasicView
+import com.meishipintu.lll_office.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/5.
@@ -21,14 +22,15 @@ class TeachPresenter(val iView:BasicView):BasicPresenter(),TeacherContract.IPres
     val httpApi = HttpApiClinet.retrofit()
 
     //筛选查找教师
-    override fun doSearch(tj: Int, year: Int, course: Int, grade: Int, decending: Int) {
-        addSubscription(httpApi.getTeacherService(tj,year,course,grade,decending)
+    override fun doSearch(tj: Int, year: Int, course: Int, grade: Int, decending: Int,page:Int) {
+        addSubscription(httpApi.getTeacherService(tj,year,course,grade,decending,page)
                 .map(HttpResultFunc<List<TeacherInfo>>()), object : HttpCallback<List<TeacherInfo>>(){
             override fun onSuccess(model: List<TeacherInfo>) {
-                (iView as TeacherContract.IView).onDateGet(model)
+                (iView as TeacherContract.IView).onDateGet(model, page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.onError(msg)
                 }
@@ -122,14 +124,15 @@ class TeachPresenter(val iView:BasicView):BasicPresenter(),TeacherContract.IPres
     }
 
     //根据关键字查找教师
-    override fun searchTeacher(keyWord: String) {
+    override fun searchTeacher(keyWord: String,page:Int) {
         addSubscription(httpApi.getTeacherByKeyWorkService(keyWord).map(HttpResultFunc<List<TeacherInfo>>())
                 ,object :HttpCallback<List<TeacherInfo>>(){
             override fun onSuccess(model: List<TeacherInfo>) {
-                (iView as TeacherContract.IView).onDateGet(model)
+                (iView as TeacherContract.IView).onDateGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.onError(msg)
                 }

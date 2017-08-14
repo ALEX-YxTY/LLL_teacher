@@ -15,6 +15,7 @@ import android.widget.TextView
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.TeacherContract
+import com.meishipintu.lll_office.customs.CanLoadMoreRecyclerView
 import com.meishipintu.lll_office.customs.MenuClickListener
 import com.meishipintu.lll_office.customs.RequirePop
 import com.meishipintu.lll_office.customs.TjPop
@@ -29,9 +30,9 @@ import com.meishipintu.lll_office.views.adapters.TeacherAdapter
  *
  * 主要功能：
  */
-class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
+class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView,CanLoadMoreRecyclerView.StateChangedListener{
 
-    var rv: RecyclerView? = null
+    var rv: CanLoadMoreRecyclerView? = null
     var dataList = mutableListOf<TeacherInfo>()
     val teacherAdapter: TeacherAdapter by lazy { TeacherAdapter(this.activity, dataList, 1) }
 
@@ -45,6 +46,12 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
 
     var rootView: View? = null
 
+    var tj:Int=1        //默认tj=1
+    var course: Int = 0     //默认学科不限
+    var grade:Int=0
+    var experience:Int = 0
+    var decending: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = TeachPresenter(this)
@@ -56,7 +63,7 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
             tvTj = rootView?.findViewById(R.id.tv_1) as TextView
             tvArea = rootView?.findViewById(R.id.tv_2) as TextView
             tvRequire = rootView?.findViewById(R.id.tv_3) as TextView
-            rv = rootView?.findViewById(R.id.rv) as RecyclerView
+            rv = rootView?.findViewById(R.id.rv) as CanLoadMoreRecyclerView
             initListener(rootView)
             initList()
         }
@@ -64,9 +71,8 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
     }
 
     private fun initList() {
-        rv?.layoutManager = LinearLayoutManager(this.activity)
-        rv?.adapter = teacherAdapter
-        (presenter as TeacherContract.IPresenter).doSearch(tj = 1)    //默认查询推荐
+        rv?.listener = this
+        rv?.setAdapter(teacherAdapter)
     }
 
     //筛选菜单的监听
@@ -111,11 +117,17 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
             popRequire?.showPopDropDown(tab)
         }
         view.findViewById(R.id.rl_most).setOnClickListener{
+            tj = 0
+            course = 0
+            grade = 0
+            experience = 0
+            decending = 1
             //还原其他标签
             tvTj?.text = "全部"
             popTj?.setIndexNow(1)
             popRequire?.clearSelect()
-            (presenter as TeacherContract.IPresenter).doSearch(decending = 1) //所有教师根据降序排列
+
+            rv?.reLoad()
         }
     }
 
@@ -130,21 +142,30 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
     //from MenuClickListener
     override fun onTjClick(index: Int, name: String) {
         tvTj?.text = name
+        tj = index
+        decending = 0
+        course = 0
+        grade = 0
+        experience = 0
         // 还原其他设置
         popRequire?.clearSelect()
-        (presenter as TeacherContract.IPresenter).doSearch(tj = index) //根据是否筛选推荐
+        //重新载入页面
+        rv?.reLoad()
     }
 
 
     //from MenuClickListener
     override fun onRequireSelect(indexCourse: Int, indexGrade: Int, indexExperience: Int) {
-
+        tj = 0
+        decending = 0
+        course = indexCourse
+        grade = indexGrade
+        experience = indexExperience
         //还原其他
         tvTj?.text = "全部"
         popTj?.setIndexNow(1)
-        (presenter as TeacherContract.IPresenter).doSearch(experience = indexExperience, course = indexCourse, grade = indexGrade) //根据年龄，科目，年级筛选
-        Log.d("test",popRequire?.getSelect())
 
+        rv?.reLoad()
     }
 
     //from MenuClickListener
@@ -153,14 +174,37 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView{
     }
 
     //from JobContract.IView
-    override fun onDateGet(dataList: List<TeacherInfo>) {
-        this.dataList.clear()
-        this.dataList.addAll(dataList)
-        teacherAdapter.notifyDataSetChanged()
+    override fun onDateGet(dataList: List<TeacherInfo>,page:Int) {
+        if (page == 1) {
+            //首次加载
+            this.dataList.clear()
+            this.dataList.addAll(dataList)
+            rv?.onLoadSuccess(page)
+            teacherAdapter.notifyDataSetChanged()
+        }else if (dataList.isNotEmpty()) {
+            //load more 并且有数据
+            this.dataList.addAll(dataList)
+            rv?.onLoadSuccess(page)
+            teacherAdapter.notifyDataSetChanged()
+        } else {
+            //load more 没数据
+            rv?.dismissProgressBar()
+            rv?.dismissLoading()
+        }
     }
 
     override fun onError(e: String) {
         toast(e)
+    }
+
+    override fun onLoadMore(page: Int) {
+        (presenter as TeacherContract.IPresenter).doSearch(tj = tj, course = course, grade = grade
+                , experience = experience, decending = decending, page = page)
+    }
+
+    override fun onLoadError() {
+        rv?.dismissProgressBar()
+        rv?.dismissLoading()
     }
 
 }

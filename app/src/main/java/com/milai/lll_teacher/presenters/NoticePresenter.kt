@@ -8,6 +8,7 @@ import com.milai.lll_teacher.models.entities.SysNoticeInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpCallback
 import com.milai.lll_teacher.models.https.HttpResultFunc
+import com.milai.lll_teacher.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/25.
@@ -19,15 +20,16 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
     val httpApi = HttpApiClinet.retrofit()
 
     //获取系统消息
-    override fun getSysNotice(tid: String) {
-        addSubscription(httpApi.getSysNoticeService(tid,2).map(HttpResultFunc<List<SysNoticeInfo>>())
+    override fun getSysNotice(tid: String,page:Int) {
+        addSubscription(httpApi.getSysNoticeService(tid,2,page).map(HttpResultFunc<List<SysNoticeInfo>>())
                 ,object : HttpCallback<List<SysNoticeInfo>>(){
 
             override fun onSuccess(model: List<SysNoticeInfo>) {
-                iView.onSysNoticeGet(model)
+                iView.onSysNoticeGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.showError(msg)
                 }
@@ -37,14 +39,15 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
     }
 
     //获取私信
-    override fun getMessageNotice(tid: String) {
-        addSubscription(httpApi.getChatListService(tid,1,"").map(HttpResultFunc<List<MessageNoticeInfo>>())
+    override fun getMessageNotice(tid: String,page:Int) {
+        addSubscription(httpApi.getChatListService(tid,1,"",page).map(HttpResultFunc<List<MessageNoticeInfo>>())
                 ,object :HttpCallback<List<MessageNoticeInfo>>(){
             override fun onSuccess(model: List<MessageNoticeInfo>) {
-                iView.onMessageNoticeGet(model)
+                iView.onMessageNoticeGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.showError(msg)
                 }

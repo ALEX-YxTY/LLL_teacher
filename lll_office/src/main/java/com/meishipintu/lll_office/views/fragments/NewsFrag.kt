@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.NewsContract
+import com.meishipintu.lll_office.customs.CanLoadMoreRecyclerView
 import com.meishipintu.lll_office.modles.entities.AdInfo
 import com.meishipintu.lll_office.modles.entities.NewsInfo
 import com.meishipintu.lll_office.presenters.NewsPresenter
@@ -25,15 +26,13 @@ import com.youth.banner.Transformer
  *
  * 主要功能：
  */
-class NewsFrag:BasicFragment(),NewsContract.IView{
+class NewsFrag:BasicFragment(),NewsContract.IView,CanLoadMoreRecyclerView.StateChangedListener{
 
     var rootView: View? = null
-    val rvNews:RecyclerView by lazy { rootView?.findViewById(R.id.rv_news) as RecyclerView }
+    val rvNews:CanLoadMoreRecyclerView by lazy { rootView?.findViewById(R.id.rv_news) as CanLoadMoreRecyclerView }
     val vpAdd:Banner by lazy{ rootView?.findViewById(R.id.banner) as Banner}
 
     val newsList = mutableListOf<NewsInfo>()
-    val adsList = mutableListOf<AdInfo>()
-
     val newsAdapter:NewsAdapter by lazy{ NewsAdapter(this.activity, newsList)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +51,6 @@ class NewsFrag:BasicFragment(),NewsContract.IView{
             initRv()
             if (presenter != null) {
                 (presenter as NewsContract.IPresenter).getAds()
-                (presenter as NewsContract.IPresenter).getNews()
             }
         }
         return rootView
@@ -60,8 +58,8 @@ class NewsFrag:BasicFragment(),NewsContract.IView{
 
     //新闻列表
     private fun initRv() {
-        rvNews.layoutManager = LinearLayoutManager(this.activity)
-        rvNews.adapter = newsAdapter
+        rvNews.listener = this
+        rvNews.setAdapter(newsAdapter)
     }
 
     //图片轮播
@@ -73,7 +71,6 @@ class NewsFrag:BasicFragment(),NewsContract.IView{
         vpAdd.setIndicatorGravity(BannerConfig.RIGHT)
         vpAdd.setImageLoader(MyImageLoader(this.activity))
         //设置banner动画
-        //
         vpAdd.setBannerAnimation(Transformer.Default)
         //设置自动轮播，默认为true
         vpAdd.isAutoPlay(true)
@@ -86,6 +83,15 @@ class NewsFrag:BasicFragment(),NewsContract.IView{
         toast(e)
     }
 
+    override fun onLoadMore(page: Int) {
+        (presenter as NewsContract.IPresenter).getNews(page)
+    }
+
+    override fun onLoadError() {
+        rvNews.dismissLoading()
+        rvNews.dismissProgressBar()
+    }
+
     //from NewsContract.IView
     override fun onAdsGet(adList: List<AdInfo>) {
         Log.d("test", "adList.size ${adList.size}")
@@ -95,10 +101,23 @@ class NewsFrag:BasicFragment(),NewsContract.IView{
     }
 
     //from NewsContract.IView
-    override fun onNewsGet(newsList: List<NewsInfo>) {
-        this.newsList.clear()
-        this.newsList.addAll(newsList)
-        newsAdapter.notifyDataSetChanged()
+    override fun onNewsGet(newsList: List<NewsInfo>,page: Int) {
+        if (page == 1) {
+            //首次加载
+            this.newsList.clear()
+            this.newsList.addAll(newsList)
+            rvNews.onLoadSuccess(page)
+            newsAdapter.notifyDataSetChanged()
+        }else if (newsList.isNotEmpty()) {
+            //load more 并且有数据
+            this.newsList.addAll(newsList)
+            rvNews.onLoadSuccess(page)
+            newsAdapter.notifyDataSetChanged()
+        } else {
+            //load more 没数据
+            rvNews.dismissProgressBar()
+            rvNews.dismissLoading()
+        }
     }
 
     override fun onPause() {

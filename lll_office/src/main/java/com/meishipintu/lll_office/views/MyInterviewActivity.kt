@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.MyInterviewContract
+import com.meishipintu.lll_office.customs.CanLoadMoreRecyclerView
 import com.meishipintu.lll_office.customs.MenuClickListener
 import com.meishipintu.lll_office.customs.TjPop
 import com.meishipintu.lll_office.modles.entities.DeliverInfo
@@ -21,9 +22,10 @@ import com.meishipintu.lll_office.presenters.DeliverPresenter
 import com.meishipintu.lll_office.views.adapters.DeliverAdapter
 import com.meishipintu.lll_office.views.adapters.TeacherAdapter
 
-class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListener,MyInterviewContract.IView {
+class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListener
+        ,MyInterviewContract.IView, CanLoadMoreRecyclerView.StateChangedListener{
 
-    val rv:RecyclerView by lazy { findViewById(R.id.rv)as RecyclerView }
+    val rv:CanLoadMoreRecyclerView by lazy { findViewById(R.id.rv)as CanLoadMoreRecyclerView }
     val tvAll:TextView by lazy { findViewById(R.id.tv_all)as TextView }
     val tvAlready:TextView by lazy { findViewById(R.id.tv_already)as TextView }
     val tvUnInterView:TextView by lazy { findViewById(R.id.tv_1)as TextView }
@@ -38,6 +40,9 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
     val adapter:DeliverAdapter by lazy { DeliverAdapter(this,dataList) }
 
     var select = 0  //标注当前选择栏
+    var status = 0   //标记当前选择状态,0-全部 1-未面试，2-已面试
+    var type = 0     //标记类型，0-不限 1-主动投递 2-邀约
+    var uid: String = OfficeApplication.userInfo?.uid?:""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,17 +55,13 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
         tvAlready.setOnClickListener(this)
         rlUnInterView.setOnClickListener(this)
 
-        initRv()
+        rv.listener = this
     }
 
-    private fun initRv() {
-        rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = this.adapter
-    }
 
     override fun onResume() {
         super.onResume()
-        (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication.userInfo?.uid!!)
+        rv.setAdapter(adapter)
         changeSelect(0)
     }
 
@@ -71,12 +72,16 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
             }
             R.id.tv_all ->{
                 //全部数据
-                (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication.userInfo?.uid!!)
+                status = 0
+                type = 0
+                rv.reLoad()
                 changeSelect(0)
             }
             R.id.tv_already ->{
+                status = 2
+                type = 0
+                rv.reLoad()
                 //已面试数据
-                (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication.userInfo?.uid!!,status = 2)
                 changeSelect(2)
             }
             R.id.rl_not_interview ->{
@@ -125,13 +130,9 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
 
     override fun onTjClick(index: Int, name: String) {
         //1-未面试  0-未面试邀约
-        if (index == 1) {
-            (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication
-                    .userInfo?.uid!!, status = 1)
-        } else {
-            (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication
-                    .userInfo?.uid!!, status = 1, type = 2)
-        }
+        status = 1
+        type = 2-index
+        rv.reLoad()
         changeSelect(1)
         tvUnInterView.text = if (index == 1) "未面试" else "未面试 邀约"
     }
@@ -149,11 +150,34 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
         toast(e)
     }
 
+    override fun onLoadMore(page: Int) {
+        (presenter as MyInterviewContract.IPresenter).getDeliverHistory(OfficeApplication.userInfo?.uid!!
+                , status = status, type = type, page = page)
+    }
+
+    override fun onLoadError() {
+        rv.dismissProgressBar()
+        rv.dismissLoading()
+    }
+
     //from MyInterviewContract.IView
-    override fun onDeleverDataGet(dataList: List<DeliverInfo>) {
-        this.dataList.clear()
-        this.dataList.addAll(dataList)
-        adapter.notifyDataSetChanged()
+    override fun onDeleverDataGet(dataList: List<DeliverInfo>,page:Int) {
+        if (page == 1) {
+            //首次加载
+            this.dataList.clear()
+            this.dataList.addAll(dataList)
+            rv.onLoadSuccess(page)
+            adapter.notifyDataSetChanged()
+        }else if (dataList.isNotEmpty()) {
+            //load more 并且有数据
+            this.dataList.addAll(dataList)
+            rv.onLoadSuccess(page)
+            adapter.notifyDataSetChanged()
+        } else {
+            //load more 没数据
+            rv.dismissProgressBar()
+            rv.dismissLoading()
+        }
     }
 
 }

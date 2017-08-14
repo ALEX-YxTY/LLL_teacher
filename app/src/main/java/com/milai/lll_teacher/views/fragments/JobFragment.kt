@@ -152,8 +152,8 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,CanLoad
         //还原其他标签
         popArea?.clearSelect()
         popRequire?.clearSelect()
-
-        (presenter as JobContract.IPresenter).doSearch(tj = index)
+        //重新载入页面
+        rv?.reLoad()
     }
 
     //from MenuClickListener
@@ -167,7 +167,8 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,CanLoad
         tvTj?.text = "全部"
         popTj?.setIndexNow(1)
         popRequire?.clearSelect()
-        (presenter as JobContract.IPresenter).doSearch(tj = 0, area = index)
+        //重新载入页面
+        rv?.reLoad()
     }
 
     //from MenuClickListener
@@ -181,8 +182,8 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,CanLoad
         tvTj?.text = "全部"
         popTj?.setIndexNow(1)
         popArea?.clearSelect()
-        (presenter as JobContract.IPresenter).doSearch(tj = 0, course = indexCourse, grade = indexGrade
-                , experience = indexExperience)
+        //重新载入页面
+        rv?.reLoad()
     }
 
     //from MenuClickListener

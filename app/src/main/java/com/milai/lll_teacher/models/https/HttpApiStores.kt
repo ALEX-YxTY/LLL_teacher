@@ -117,13 +117,13 @@ interface HttpApiStores {
     //获取系统通知
     @FormUrlEncoded
     @POST("Home/Api/getSystemNotice")
-    fun getSysNoticeService(@Field("uid")oid:String,@Field("type")type:Int):Observable<HttpResult<List<SysNoticeInfo>>>
+    fun getSysNoticeService(@Field("uid")oid:String,@Field("type")type:Int,@Field("page") page:Int):Observable<HttpResult<List<SysNoticeInfo>>>
 
     //获取私信通知
     @FormUrlEncoded
     @POST("Home/Api/getChatList")
-    fun getChatListService(@Field("tid")tid:String,@Field("type")type:Int,@Field("oid") oid:String)
-            :Observable<HttpResult<List<MessageNoticeInfo>>>
+    fun getChatListService(@Field("tid")tid:String,@Field("type")type:Int,@Field("oid") oid:String
+                           ,@Field("page") page:Int):Observable<HttpResult<List<MessageNoticeInfo>>>
 
     //通过职位id获取职位详情
     @FormUrlEncoded
@@ -131,9 +131,12 @@ interface HttpApiStores {
     fun getPositionDetailServie(@Field("id")pid:Int):Observable<HttpResult<JobInfo>>
 
     //查询教师投递记录
+    //tyep=1 投递记录 type=2 面试邀约
+    //status 0-全部 1-未面试 2-已面试
     @FormUrlEncoded
     @POST("Home/Api/getTeacherDeliver")
-    fun getTeacherDeliverServie(@Field("tid")tid:String, @Field("type") type:Int, @Field("status") status:Int):Observable<HttpResult<List<DeliverInfo>>>
+    fun getTeacherDeliverServie(@Field("tid")tid:String, @Field("type") type:Int, @Field("status") status:Int
+                                ,@Field("page")page:Int):Observable<HttpResult<List<DeliverInfo>>>
 
     //关键字搜索职位
     @FormUrlEncoded
