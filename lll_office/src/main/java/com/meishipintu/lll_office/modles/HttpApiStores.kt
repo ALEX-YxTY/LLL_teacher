@@ -115,7 +115,7 @@ interface HttpApiStores {
     //获取机构收藏教师列表
     @FormUrlEncoded
     @POST("Home/Api/getTeacherLike")
-    fun getTeacherCollectService(@Field("oid") uid: String): Observable<HttpResult<List<TeacherInfo>>>
+    fun getTeacherCollectService(@Field("oid") uid: String,@Field("page") page:Int): Observable<HttpResult<List<TeacherInfo>>>
 
     //机构邀请教师面试
     @FormUrlEncoded

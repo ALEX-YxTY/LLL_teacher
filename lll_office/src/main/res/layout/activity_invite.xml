@@ -48,7 +48,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
+        <com.meishipintu.lll_office.customs.CanLoadMoreRecyclerView
             android:id="@+id/rv_teacher"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

@@ -89,15 +89,16 @@ class TeachPresenter(val iView:BasicView):BasicPresenter(),TeacherContract.IPres
     }
 
     //获取教师收藏列表
-    override fun getTeacherCollectiion(oid: String) {
-        addSubscription(httpApi.getTeacherCollectService(oid).map(HttpResultFunc<List<TeacherInfo>>())
+    override fun getTeacherCollectiion(oid: String,page:Int) {
+        addSubscription(httpApi.getTeacherCollectService(oid,page).map(HttpResultFunc<List<TeacherInfo>>())
                 ,object :HttpCallback<List<TeacherInfo>>(){
             override fun onSuccess(model: List<TeacherInfo>) {
                 Log.d("test","model size:${model.size}")
-                (iView as TeacherCollectionContract.IView).onTeacherCollectionGet(model)
+                (iView as TeacherCollectionContract.IView).onTeacherCollectionGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.onError(msg)
                 }
