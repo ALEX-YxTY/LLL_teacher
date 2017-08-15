@@ -80,7 +80,7 @@ class NoticeActivity : BasicActivity(),NoticeActivityContract.IView {
 
     override fun onNewestMessIdGet(id: Int) {
         Log.d("test","message id get=$id, uid is $uid, id save is ${Cookies.getNewestMesId(uid!!)}")
-        if (id > 0 && id > Cookies.getNewestMesId(uid!!)) {
+        if (id > 0 && id > Cookies.getNewestMesId(uid)) {
             Cookies.saveNewestMesId(id, uid)
             //显示红点
             tabLayout.getTabAt(0)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
@@ -92,7 +92,7 @@ class NoticeActivity : BasicActivity(),NoticeActivityContract.IView {
 
     override fun onNewestSysIdGet(id: Int) {
         Log.d("test","sys id get=$id, id save is ${Cookies.getNewestSysId(uid!!)}")
-        if (id > 0 && id > Cookies.getNewestSysId(uid!!)) {
+        if (id > 0 && id > Cookies.getNewestSysId(uid)) {
             newestSysIdGet = id
             //显示红点
             tabLayout.getTabAt(1)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE

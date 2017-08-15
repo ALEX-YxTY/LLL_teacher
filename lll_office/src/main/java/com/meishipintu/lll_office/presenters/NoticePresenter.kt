@@ -10,6 +10,7 @@ import com.meishipintu.lll_office.modles.entities.MessageNoticeInfo
 import com.meishipintu.lll_office.modles.entities.NewsId
 import com.meishipintu.lll_office.modles.entities.SysNoticeInfo
 import com.meishipintu.lll_office.views.BasicView
+import com.meishipintu.lll_office.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/25.
@@ -21,15 +22,16 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
 
     val httpApi = HttpApiClinet.retrofit()
 
-    override fun getSysNotice(oid: String) {
+    override fun getSysNotice(oid: String,page:Int) {
         addSubscription(httpApi.getSysNoticeService(oid,1).map(HttpResultFunc<List<SysNoticeInfo>>())
                 ,object :HttpCallback<List<SysNoticeInfo>>(){
 
             override fun onSuccess(model: List<SysNoticeInfo>) {
-                (iView as NoticeContract.IView).onSysNoticeGet(model)
+                (iView as NoticeContract.IView).onSysNoticeGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.onError(msg)
                 }
@@ -37,14 +39,15 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
         })
     }
 
-    override fun getMessageNotice(oid: String) {
+    override fun getMessageNotice(oid: String,page:Int) {
         addSubscription(httpApi.getChatListService("",2,oid).map(HttpResultFunc<List<MessageNoticeInfo>>())
                 ,object :HttpCallback<List<MessageNoticeInfo>>(){
             override fun onSuccess(model: List<MessageNoticeInfo>) {
-                (iView as NoticeContract.IView).onMessageNoticeGet(model)
+                (iView as NoticeContract.IView).onMessageNoticeGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.onError(msg)
                 }

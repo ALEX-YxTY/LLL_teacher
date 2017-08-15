@@ -126,7 +126,7 @@ interface HttpApiStores {
     //获取其他机构
     @FormUrlEncoded
     @POST("Home/organization/getAllOrganization")
-    fun getOtherOrganizationService(@Field("uid") oid: String): Observable<HttpResult<List<OfficeInfo>>>
+    fun getOtherOrganizationService(@Field("uid") oid: String,@Field("page") page:Int): Observable<HttpResult<List<OfficeInfo>>>
 
     //教师添加收藏机构
     @FormUrlEncoded

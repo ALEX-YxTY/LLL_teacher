@@ -8,6 +8,7 @@ import com.meishipintu.lll_office.modles.HttpResultFunc
 import com.meishipintu.lll_office.modles.entities.JobInfo
 import com.meishipintu.lll_office.modles.entities.OfficeInfo
 import com.meishipintu.lll_office.views.BasicView
+import com.meishipintu.lll_office.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/19.
@@ -19,14 +20,15 @@ class OrganizaitonPresenter(val iView:BasicView):BasicPresenter()
 
     val httpApi = HttpApiClinet.retrofit()
 
-    override fun getOrganization(oid: String) {
-        addSubscription(httpApi.getOtherOrganizationService(oid).map(HttpResultFunc<List<OfficeInfo>>())
+    override fun getOrganization(oid: String,page:Int) {
+        addSubscription(httpApi.getOtherOrganizationService(oid,page).map(HttpResultFunc<List<OfficeInfo>>())
                 ,object :HttpCallback<List<OfficeInfo>>(){
             override fun onSuccess(model: List<OfficeInfo>) {
-                (iView as OtherOrganizationContract.IView).onOrganizationGet(model)
+                (iView as OtherOrganizationContract.IView).onOrganizationGet(model,page)
             }
 
             override fun onFailure(msg: String?) {
+                (iView as BasicViewLoadError).onLoadError()
                 if (msg != null) {
                     iView.onError(msg)
                 }
