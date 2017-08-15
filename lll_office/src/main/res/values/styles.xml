@@ -98,4 +98,9 @@
         <item name="android:windowNoTitle">true</item><!--无标题-->
     </style>
 
+    <!--custom progress dialog-->
+    <style name="CustomProgressDialog" parent="@android:style/Theme.DeviceDefault.Dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
 </resources>

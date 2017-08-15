@@ -152,8 +152,13 @@
             android:name=".views.InviteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--新闻详情页面-->
-        <activity android:name=".views.NewsDetailActivity"
+        <!-- 新闻详情页面 -->
+        <activity
+            android:name=".views.NewsDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--资料修改页面-->
+        <activity android:name=".views.EditInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 

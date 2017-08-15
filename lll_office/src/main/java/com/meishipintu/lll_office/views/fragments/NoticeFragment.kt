@@ -1,8 +1,6 @@
 package com.meishipintu.lll_office.views.fragments
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +8,6 @@ import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.NoticeContract
 import com.meishipintu.lll_office.customs.CanLoadMoreRecyclerView
-import com.meishipintu.lll_office.modles.entities.Message
 import com.meishipintu.lll_office.modles.entities.MessageNoticeInfo
 import com.meishipintu.lll_office.modles.entities.SysNoticeInfo
 import com.meishipintu.lll_office.presenters.NoticePresenter
@@ -42,6 +39,7 @@ class NoticeFragment:BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerVie
         if (arguments != null) {
             type = arguments.get("type") as Int
         }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,7 +50,7 @@ class NoticeFragment:BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerVie
         return fragView
     }
 
-    private fun initUI() {
+    private fun initUI(){
         recyclerView.listener = this
         if (type == 1) {
             recyclerView.setAdapter(messageAdaper)

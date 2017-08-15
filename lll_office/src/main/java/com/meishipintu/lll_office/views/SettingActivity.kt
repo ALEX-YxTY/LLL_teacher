@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -16,11 +17,13 @@ class SettingActivity : AppCompatActivity(),View.OnClickListener {
         tvTitle.text = "我的设置"
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.bt_logout).setOnClickListener(this)
+        findViewById(R.id.rl_edit_info).setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.bt_back -> onBackPressed()
+            R.id.rl_edit_info -> startActivity(Intent(this, EditInfoActivity::class.java))
             R.id.bt_logout -> {
                 //清除数据
                 Cookies.clearUserInfo()
