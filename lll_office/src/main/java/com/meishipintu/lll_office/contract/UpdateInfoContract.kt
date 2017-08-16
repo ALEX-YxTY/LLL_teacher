@@ -17,10 +17,16 @@ interface UpdateInfoContract {
     }
 
     interface IPresenter:BasicPresenterImp{
-        fun updateOfficeInfo(uid:String, name: String, address: String, contact: String, contactTel: String
+        fun updateOfficeInfoCertificate(uid:String, name: String, address: String, contact: String, contactTel: String
                              , introduce: String, certificate: File)
 
-        fun updateOfficeInfo(uid:String, name: String, address: String, contact: String, contactTel: String
+        fun updateOfficeInfoAvatar(uid:String, name: String, address: String, contact: String, contactTel: String
+                                        , introduce: String, certificate: File)
+
+        fun updateOfficeInfo(uid: String, name: String, address: String, contact: String, contactTel: String
+                             , introduce: String, certificate: File, avatar: File)
+
+        fun updateOfficeInfoWithoutPic(uid:String, name: String, address: String, contact: String, contactTel: String
                              , introduce: String)
     }
 }

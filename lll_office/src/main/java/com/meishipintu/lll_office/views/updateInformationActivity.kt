@@ -31,6 +31,7 @@ import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.UpdateInfoContract
 import com.meishipintu.lll_office.customs.ChooseHeadViewDialog
+import com.meishipintu.lll_office.customs.CustomProgressDialog
 import com.meishipintu.lll_office.customs.utils.DialogUtils
 import com.meishipintu.lll_office.customs.utils.NumberUtil
 import com.meishipintu.lll_office.customs.utils.StringUtils
@@ -63,6 +64,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     var cropURI: Uri? = null        //保存裁剪之后的file开头Uri
 
     val glide:RequestManager by lazy{ Glide.with(this) }
+    val progressDialog: CustomProgressDialog by lazy { CustomProgressDialog(this,R.style.CustomProgressDialog) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,13 +116,14 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                     toast("请上传营业执照")
                     return
                 }
+                progressDialog.dialogShow()
                 if (photoURI == null) {
-                    (presenter as UpdateInfoPresenter).updateOfficeInfo(OfficeApplication.userInfo?.uid!!
+                    (presenter as UpdateInfoPresenter).updateOfficeInfoWithoutPic(OfficeApplication.userInfo?.uid!!
                             , etName.text.toString(), etAddress.text.toString(), etContactor.text.toString()
                             , etContact.text.toString(), etIntro.text.toString())
                 } else {
                     //压缩后的图片都是保存在tempFile
-                    (presenter as UpdateInfoPresenter).updateOfficeInfo(OfficeApplication.userInfo?.uid!!
+                    (presenter as UpdateInfoPresenter).updateOfficeInfoCertificate(OfficeApplication.userInfo?.uid!!
                             ,etName.text.toString(),etAddress.text.toString(),etContactor.text.toString()
                             ,etContact.text.toString(),etIntro.text.toString(),tempFile)
                     //将支付按钮设为unable
@@ -208,12 +211,14 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     }
 
     override fun onError(e: String) {
+        progressDialog.dialogDismiss()
         toast(e)
         //将支付按钮设还原
         findViewById(R.id.bt_pay).isEnabled = true
     }
 
     override fun onUploadSuccess(userInfo: UserInfo) {
+        progressDialog.dialogDismiss()
         Cookies.saveUserInfo(userInfo)
         OfficeApplication.userInfo = userInfo
         val intent = Intent(this, PayActivity::class.java)

@@ -38,8 +38,8 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragView == null) {
             fragView = inflater?.inflate(R.layout.frag_mine, container, false)
-            initUI()
         }
+        initUI()
         return fragView
     }
 

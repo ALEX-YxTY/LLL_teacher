@@ -27,7 +27,6 @@ class OfficeApplication :Application() {
         //initBugly
         Bugly.init(this, "79549921d1", true)
         downloadResource()
-
     }
 
     private fun downloadResource() {

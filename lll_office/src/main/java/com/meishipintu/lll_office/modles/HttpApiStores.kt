@@ -177,6 +177,7 @@ interface HttpApiStores {
     fun cancelOrderService(@Field("order_id") order_id: String):Observable<HttpResult<Any>>
 
     //修改机构信息接口
+    //上传单个文件
     @Multipart
     @POST("Home/organization/organization_update")
     fun updateOfficeInfoService(@Part("uid") uid: RequestBody, @Part("address") address: RequestBody
@@ -185,12 +186,22 @@ interface HttpApiStores {
                                 , @Part file1: MultipartBody.Part ):Observable<HttpResult<UserInfo>>
 
     //修改机构信息接口2
+    //不上传图片
     @FormUrlEncoded
     @POST("Home/organization/organization_update")
     fun updateOfficeInfoService(@Field("uid") uid: String, @Field("address") address: String
                                 , @Field("name") name: String, @Field("contact") contact: String
                                 , @Field("contact_tel") contactTel: String
                                 , @Field("introduce_detail") introduce: String):Observable<HttpResult<UserInfo>>
+
+    //修改机构信息接口3
+    //上传两个图片
+    @Multipart
+    @POST("Home/organization/organization_update")
+    fun updateOfficeInfoService(@Part("uid") uid: RequestBody, @Part("address") address: RequestBody
+                                , @Part("name") name: RequestBody, @Part("contact") contact: RequestBody
+                                , @Part("contact_tel") contactTel: RequestBody, @Part("introduce_detail") introduce: RequestBody
+                                , @Part file1: MultipartBody.Part ,@Part file2:MultipartBody.Part):Observable<HttpResult<UserInfo>>
 
     //获取新闻内容
     @FormUrlEncoded
