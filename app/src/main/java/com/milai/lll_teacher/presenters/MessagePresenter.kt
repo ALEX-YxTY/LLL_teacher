@@ -8,6 +8,7 @@ import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpCallback
 import com.milai.lll_teacher.models.https.HttpResultFunc
 import com.milai.lll_teacher.views.BasicView
+import com.milai.lll_teacher.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/13.

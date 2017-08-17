@@ -1,7 +1,6 @@
 package com.milai.lll_teacher.custom.view
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView

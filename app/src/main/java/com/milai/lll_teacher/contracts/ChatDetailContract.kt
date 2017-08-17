@@ -5,6 +5,7 @@ import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.presenters.BasicPresenterImp
 import com.milai.lll_teacher.views.BasicView
+import com.milai.lll_teacher.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/13.
@@ -12,7 +13,7 @@ import com.milai.lll_teacher.views.BasicView
  * 主要功能：
  */
 interface ChatDetailContract {
-    interface IView:BasicView{
+    interface IView: BasicView {
         fun onOfficeInfoGet(officeInfo: OfficeInfo)
 
         fun onJobInfoGet(jobInfo:JobInfo)

@@ -154,7 +154,7 @@ interface HttpApiStores {
     fun getTeacherDetailService(@Field("uid") uid: String): Observable<HttpResult<UserInfo>>
 
     //获取最新消息接口
-    //type=1 我是老师  2 我是机构
+    //type=2 我是老师  1 我是机构
     //flag=1 查聊天记录  2 系统通知
     //返回state=1 有数据返回，state=2 无数据记录
     @FormUrlEncoded

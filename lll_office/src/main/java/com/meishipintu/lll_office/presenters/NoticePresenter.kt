@@ -23,7 +23,7 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
     val httpApi = HttpApiClinet.retrofit()
 
     override fun getSysNotice(oid: String,page:Int) {
-        addSubscription(httpApi.getSysNoticeService(oid,1).map(HttpResultFunc<List<SysNoticeInfo>>())
+        addSubscription(httpApi.getSysNoticeService(oid,1,page).map(HttpResultFunc<List<SysNoticeInfo>>())
                 ,object :HttpCallback<List<SysNoticeInfo>>(){
 
             override fun onSuccess(model: List<SysNoticeInfo>) {
@@ -40,7 +40,7 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
     }
 
     override fun getMessageNotice(oid: String,page:Int) {
-        addSubscription(httpApi.getChatListService("",2,oid).map(HttpResultFunc<List<MessageNoticeInfo>>())
+        addSubscription(httpApi.getChatListService("",2,oid,page).map(HttpResultFunc<List<MessageNoticeInfo>>())
                 ,object :HttpCallback<List<MessageNoticeInfo>>(){
             override fun onSuccess(model: List<MessageNoticeInfo>) {
                 (iView as NoticeContract.IView).onMessageNoticeGet(model,page)
@@ -58,7 +58,7 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
 
     //获取最新系统消息
     override fun getNewestSysId(tid: String) {
-        addSubscription(httpApi.getNewestIdService(2,2,tid), object : HttpCallback<HttpResult<NewsId>>() {
+        addSubscription(httpApi.getNewestIdService(1,2,tid), object : HttpCallback<HttpResult<NewsId>>() {
             override fun onSuccess(model: HttpResult<NewsId>) {
                 if (model.status == 1) {
                     (iView as NoticeActivityContract.IView).onNewestSysIdGet(model.data.id)
@@ -80,7 +80,7 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
 
     //获取最新私信消息
     override fun getNewestMessId(tid: String) {
-        addSubscription(httpApi.getNewestIdService(2,1,tid), object : HttpCallback<HttpResult<NewsId>>() {
+        addSubscription(httpApi.getNewestIdService(1,1,tid), object : HttpCallback<HttpResult<NewsId>>() {
             override fun onSuccess(model: HttpResult<NewsId>) {
                 if (model.status == 1) {
                     (iView as NoticeActivityContract.IView).onNewestMessIdGet(model.data.id)

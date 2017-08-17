@@ -20,6 +20,7 @@ interface NoticeContract {
     }
 
     interface IPresenter:BasicPresenterImp{
+
         fun getSysNotice(oid:String,page:Int)
 
         fun getMessageNotice(oid:String,page:Int)

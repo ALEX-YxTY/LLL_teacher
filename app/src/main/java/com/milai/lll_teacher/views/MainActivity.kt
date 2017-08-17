@@ -3,13 +3,16 @@ package com.milai.lll_teacher.views
 import android.content.Intent
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.milai.lll_teacher.Constant
-import com.milai.lll_teacher.R
-import com.milai.lll_teacher.RxBus
+import com.milai.lll_teacher.*
+import com.milai.lll_teacher.contracts.NoticeContract
 import com.milai.lll_teacher.models.entities.BusMessage
+import com.milai.lll_teacher.models.entities.MessageNoticeInfo
+import com.milai.lll_teacher.models.entities.SysNoticeInfo
+import com.milai.lll_teacher.presenters.NoticePresenter
 import com.milai.lll_teacher.views.adapters.MyviewPagerAdapter
 import com.milai.lll_teacher.views.fragments.*
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,24 +21,24 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 
-class MainActivity : android.support.v7.app.AppCompatActivity() {
+class MainActivity : BasicActivity(),NoticeContract.IView {
 
     val disposables: CompositeDisposable by lazy{ CompositeDisposable() }
 
     val vp:ViewPager by lazy { findViewById(R.id.vp) as ViewPager }
     val tabLayout:TabLayout by lazy { findViewById(R.id.tabLayout) as TabLayout }
-
+    val uid = MyApplication.userInfo?.uid!!
     var clickTime: Long = 0
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.milai.lll_teacher.R.layout.activity_main)
+        presenter = NoticePresenter(this)
         RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     (type) -> run{
                     when (type) {
-//                        Constant.EXIT -> this@MainActivity.finish()
                         Constant.LOGOUT -> {
                             //退出登录后启动注册登录页面，并退出主页
                             startActivity(Intent(this,LoginAndRegistActivity::class.java))
@@ -72,6 +75,12 @@ class MainActivity : android.support.v7.app.AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        (presenter as NoticeContract.IPresenter).getNewestMessId(uid)
+        (presenter as NoticeContract.IPresenter).getNewestSysId(uid)
+    }
+
     override fun onBackPressed() {
         if (System.currentTimeMillis() - clickTime > 1000) {
             Toast.makeText(this,"再次点击退出程序", Toast.LENGTH_SHORT).show()
@@ -85,5 +94,41 @@ class MainActivity : android.support.v7.app.AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
+    }
+
+    override fun onNewestMessIdGet(id: Int) {
+        if (id > 0 && id > Cookies.getNewestMesId(uid)) {
+            //显示红点
+            tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
+        } else {
+            //隐藏红点
+            tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
+        }
+    }
+
+    override fun onNewestSysIdGet(id: Int) {
+        if (id > 0 && id > Cookies.getNewestSysId(uid)) {
+            //显示红点
+            tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
+        } else {
+            //隐藏红点
+            tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
+        }
+    }
+
+    override fun showError(err: String) {
+        toast(err)
+    }
+
+    override fun onLoadError() {
+        //none
+    }
+
+    override fun onSysNoticeGet(dataList: List<SysNoticeInfo>, page: Int) {
+        //none
+    }
+
+    override fun onMessageNoticeGet(dataList: List<MessageNoticeInfo>, page: Int) {
+        //none
     }
 }

@@ -105,7 +105,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.meishipintu.lll_office.customs.CanLoadMoreRecyclerView
+        <com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

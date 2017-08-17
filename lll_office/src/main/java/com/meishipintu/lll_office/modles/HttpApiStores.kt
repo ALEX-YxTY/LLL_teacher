@@ -146,12 +146,12 @@ interface HttpApiStores {
     //获取系统通知
     @FormUrlEncoded
     @POST("Home/Api/getSystemNotice")
-    fun getSysNoticeService(@Field("uid") oid: String, @Field("type") type: Int): Observable<HttpResult<List<SysNoticeInfo>>>
+    fun getSysNoticeService(@Field("uid") oid: String, @Field("type") type: Int,@Field("page") page:Int): Observable<HttpResult<List<SysNoticeInfo>>>
 
     //获取私信通知
     @FormUrlEncoded
     @POST("Home/Api/getChatList")
-    fun getChatListService(@Field("tid") tid: String, @Field("type") type: Int, @Field("oid") oid: String)
+    fun getChatListService(@Field("tid") tid: String, @Field("type") type: Int, @Field("oid") oid: String,@Field("page") page:Int)
             : Observable<HttpResult<List<MessageNoticeInfo>>>
 
     //通过职位id获取职位详情
@@ -213,7 +213,7 @@ interface HttpApiStores {
     fun getAdsService():Observable<HttpResult<List<AdInfo>>>
 
     //获取最新消息接口
-    //type=1 我是老师  2 我是机构
+    //type=2 我是老师  1 我是机构
     //flag=1 查聊天记录  2 系统通知
     //返回state=1 有数据返回，state=2 无数据记录
     @FormUrlEncoded

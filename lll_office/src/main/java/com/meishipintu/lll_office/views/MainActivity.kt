@@ -6,14 +6,15 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
+import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.meishipintu.lll_office.Constant
-import com.meishipintu.lll_office.Cookies
-import com.meishipintu.lll_office.R
-import com.meishipintu.lll_office.RxBus
+import com.meishipintu.lll_office.*
+import com.meishipintu.lll_office.contract.NoticeActivityContract
 import com.meishipintu.lll_office.modles.entities.BusMessage
+import com.meishipintu.lll_office.presenters.NoticePresenter
 import com.meishipintu.lll_office.views.fragments.ActivityFrag
 import com.meishipintu.lll_office.views.fragments.MineFrag
 import com.meishipintu.lll_office.views.fragments.NewsFrag
@@ -24,17 +25,19 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BasicActivity(), NoticeActivityContract.IView {
 
     val disposables: CompositeDisposable by lazy{ CompositeDisposable() }
 
     val vp: ViewPager by lazy { findViewById(R.id.vp) as ViewPager }
     val tabLayout: TabLayout by lazy { findViewById(R.id.tabLayout) as TabLayout }
     var clickTime: Long = 0
+    val uid = OfficeApplication.userInfo?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        presenter = NoticePresenter(this)
         RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -50,6 +53,15 @@ class MainActivity : AppCompatActivity() {
                     t: Disposable -> disposables.add(t)
                 })
         initViewPager()
+    }
+
+    override fun onResume() {
+        Log.d("test", "uid $uid")
+        super.onResume()
+        if (uid != null) {
+            (presenter as NoticeActivityContract.IPresenter).getNewestMessId(uid)
+            (presenter as NoticeActivityContract.IPresenter).getNewestSysId(uid)
+        }
     }
 
 
@@ -89,5 +101,37 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
+    }
+
+    override fun onError(e: String) {
+        toast(e)
+    }
+
+    override fun onNewestMessIdGet(id: Int) {
+        Log.d("test","mes id get=$id, id save is ${Cookies.getNewestMesId(uid!!)}")
+
+        if (uid != null) {
+            if (id > 0 && id > Cookies.getNewestMesId(uid)) {
+                //显示红点
+                tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
+            } else {
+                //隐藏红点
+                tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun onNewestSysIdGet(id: Int) {
+        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestSysId(uid!!)}")
+
+        if (uid != null) {
+            if (id > 0 && id > Cookies.getNewestSysId(uid)) {
+                //显示红点
+                tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
+            } else {
+                //隐藏红点
+                tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
+            }
+        }
     }
 }

@@ -28,6 +28,7 @@ class InterviewListActivity : BasicActivity(), InterviewListContract.IView,CanLo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interview_list)
+        findViewById(R.id.bt_back).setOnClickListener{ onBackPressed() }
         presenter = DeliverPresenter(this)
         val title = findViewById(R.id.tv_title) as TextView
         title.text = if(from==1) "我的投递记录" else "我的面试邀约"

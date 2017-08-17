@@ -1,52 +1,28 @@
 package com.meishipintu.lll_office.views
 
-import android.app.Dialog
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Rect
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.FileProvider
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.meishipintu.lll_office.Constant
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.UpdateInfoContract
-import com.meishipintu.lll_office.customs.ChooseHeadViewDialog
 import com.meishipintu.lll_office.customs.CustomProgressDialog
-import com.meishipintu.lll_office.customs.utils.DialogUtils
-import com.meishipintu.lll_office.customs.utils.NumberUtil
-import com.meishipintu.lll_office.customs.utils.StringUtils
-import com.meishipintu.lll_office.customs.utils.UriUtils
+import com.meishipintu.lll_office.customs.utils.*
 import com.meishipintu.lll_office.modles.entities.UserInfo
 import com.meishipintu.lll_office.presenters.UpdateInfoPresenter
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 
-class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateInfoContract.IView {
+class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateInfoContract.IView
+        ,PicGetUtil.SuccessListener {
 
     val levels = Cookies.getConstant(7)
-    //调起相机的回复
-    var upload = false  //标记是否上传图片成功
 
     val levelWant:Int by lazy{ this.intent.getIntExtra("level", 0) }
     val money:Float by lazy{ levels[levelWant].split("&")[1].toFloat()}
@@ -58,10 +34,8 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
     val etIntro:EditText by lazy { findViewById(R.id.et_intro)as EditText }
     val ivAdd:ImageView by lazy{ findViewById(R.id.iv_add) as ImageView}
 
-    lateinit var tempFile:File
-    lateinit var cropFile:File
-    var photoURI: Uri? = null       //保存content开头Uri
-    var cropURI: Uri? = null        //保存裁剪之后的file开头Uri
+    var upload = false  //标记是否上传图片成功
+    var tempFile: File? = null      //保存最终存储的图片
 
     val glide:RequestManager by lazy{ Glide.with(this) }
     val progressDialog: CustomProgressDialog by lazy { CustomProgressDialog(this,R.style.CustomProgressDialog) }
@@ -117,7 +91,7 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                     return
                 }
                 progressDialog.dialogShow()
-                if (photoURI == null) {
+                if (tempFile == null) {
                     (presenter as UpdateInfoPresenter).updateOfficeInfoWithoutPic(OfficeApplication.userInfo?.uid!!
                             , etName.text.toString(), etAddress.text.toString(), etContactor.text.toString()
                             , etContact.text.toString(), etIntro.text.toString())
@@ -125,89 +99,21 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
                     //压缩后的图片都是保存在tempFile
                     (presenter as UpdateInfoPresenter).updateOfficeInfoCertificate(OfficeApplication.userInfo?.uid!!
                             ,etName.text.toString(),etAddress.text.toString(),etContactor.text.toString()
-                            ,etContact.text.toString(),etIntro.text.toString(),tempFile)
+                            ,etContact.text.toString(),etIntro.text.toString(),tempFile!!)
                     //将支付按钮设为unable
                     findViewById(R.id.bt_pay).isEnabled = false
                 }
             }
             R.id.iv_add -> {
-                choosePicture()
+                PicGetUtil.choosePicture(this, this)
             }
         }
     }
 
-    //选择图片 调用PhotoPicker
-    private fun choosePicture() {
-        tempFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "certificate.jpg")
-
-        ChooseHeadViewDialog(this, R.style.CustomDialog, object : ChooseHeadViewDialog.OnItemClickListener {
-            override fun onClickCamera(view: View, dialog: Dialog) {
-                dialog.dismiss()
-                startCameraWapper()
-            }
-
-            override fun onClickAlbum(view: View, dialog: Dialog) {
-                dialog.dismiss()
-                //调用相册
-                val intent = Intent.createChooser(Intent()
-                        .setAction(Intent.ACTION_GET_CONTENT).setType("image/*"), "选择相册")
-                startActivityForResult(intent, Constant.CHOOSE_PICTURE_FROM_ALBUN)
-            }
-        }).show()
-    }
-
-    //相机权限申请包装方法
-    fun startCameraWapper() {
-        val hasStoragePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
-        Log.d("test","permission has: $hasStoragePermission")
-
-        if (hasStoragePermission != PackageManager.PERMISSION_GRANTED) {        //未授权
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)) {                    //系统申请权限框不再弹出
-                DialogUtils.showCustomDialog(this, "本应用需要获取使用相机权限", { dialog, _ ->
-                    ActivityCompat.requestPermissions(this@updateInformationActivity, arrayOf(android.Manifest.permission.CAMERA)
-                            , Constant.REQUEST_CAMERA_PERMISSION)
-                    dialog.dismiss()
-                }) { dialog, _ -> dialog.dismiss() }
-                return
-            }
-            //系统框弹出时直接申请
-            ActivityCompat.requestPermissions(this@updateInformationActivity, arrayOf(android
-                    .Manifest.permission.CAMERA), Constant.REQUEST_CAMERA_PERMISSION)
-            return
-        }
-
-        startCamera()
-    }
-
-    //启动相机
-    private fun startCamera() {
-        /* getUriForFile(Context context, String authority, File file):此处的authority需要和manifest里面保持一致。
-                photoURI打印结果：content://cn.lovexiaoai.myapp.fileprovider/camera_photos/Pictures/Screenshots/testImg.png 。
-                这里的camera_photos:对应filepaths.xml中的name
-            */
-        photoURI = FileProvider.getUriForFile(this, "com.meishipintu.lll_office", tempFile)
-        /**
-         *  调用相机，获取压缩后的图片
-         *  如需获取不压缩图片，需要intent.intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-         *  此时还分当前SDK是否>7.0，如果小于7.0可以file//类型Uri存储照片，如果>=7.0，则只接受content://类型Uri
-         *  还需要配置FileProvider来提供更存储Uri
-         */
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val currentapiVersion = android.os.Build.VERSION.SDK_INT
-        if (currentapiVersion < 24) {
-            //7.0以前版本
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile))
-        } else {
-            /* 这句要记得写：这是申请权限，之前因为没有添加这个，打开裁剪页面时，一直提示“无法修改低于50*50像素的图片”，
-                开始还以为是图片的问题呢，结果发现是因为没有添加FLAG_GRANT_READ_URI_PERMISSION。
-                如果关联了源码，点开FileProvider的getUriForFile()看看（下面有），注释就写着需要添加权限。
-            */
-            //获取相机元图片，不经过压缩，并保存在uir位置
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            //调用系统相机
-        }
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        startActivityForResult(intent, Constant.TAKE_PHOTO)
+    //from PicGetUtils.SuccessListener
+    override fun onSuccess(file: File) {
+        tempFile = file
+        glide.load(tempFile).skipMemoryCache(true).into(ivAdd)
     }
 
     override fun onError(e: String) {
@@ -232,90 +138,10 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
 
     //权限申请回调
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        Log.d("test","permission Granted: ${grantResults[0]}")
-        when (requestCode) {
-            Constant.REQUEST_CAMERA_PERMISSION ->{
-                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    //拒绝授权
-                    Toast.makeText(this, "没有相机权限，将有部分功能无法使用，请在系统设置中增加应用的相应授权", Toast.LENGTH_SHORT)
-                            .show()
-                } else {
-                    startCamera()
-                }
-            }
-        }
+        PicGetUtil.onPermissiionRequestResult(this, requestCode, permissions, grantResults)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                Constant.CHOOSE_PICTURE_FROM_ALBUN ->{
-                    //相册选择图片返回
-                    val contentUri = data?.data
-                    startPhotoCrop(contentUri) // 开始对图片进行裁剪处理
-                }
-                Constant.TAKE_PHOTO ->{
-
-                    //拍照返回
-                    if (Build.VERSION.SDK_INT < 24) {
-                        startPhotoCrop(Uri.fromFile(tempFile)) // 开始对图片进行裁剪处理
-                    } else {
-                        startPhotoCrop(photoURI)
-                    }
-                }
-                Constant.CROP_SMALL_PICTURE ->{
-                    //裁剪返回,调用压缩并保存到tempFile文件
-                    compressBitmapToFile(cropFile, tempFile)
-                    upload = true
-                }
-            }
-        }
-    }
-
-    //压缩图片并保存
-    fun compressBitmapToFile(fileFrom: File, fileTo: File) {
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true       //这个参数设置为true才有效，
-        BitmapFactory.decodeFile(fileFrom.absolutePath, options)
-        //通过计算获取压缩比例，并设置在options.inSampleSize中（inSampleSize必须>1）
-        //压缩比例为宽高中的长边压缩到700像素
-        if (options.outHeight > options.outWidth) {
-            options.inSampleSize = options.outHeight / 500
-        } else {
-            options.inSampleSize = options.outWidth / 500
-        }
-        options.inJustDecodeBounds = false
-        var bitmap = BitmapFactory.decodeFile(fileFrom.absolutePath, options)
-
-        val baos = ByteArrayOutputStream()
-        // 把质量压缩后的数据存放到baos中
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100 ,baos)
-        try {
-            val fos = FileOutputStream(fileTo)
-            fos.write(baos.toByteArray())
-            fos.flush()
-            fos.close()
-            glide.load(tempFile).skipMemoryCache(true).into(ivAdd)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    //启动裁剪图片
-    private fun startPhotoCrop(contentUri: Uri?) {
-        if (contentUri != null) {
-            val intent = Intent("com.android.camera.action.CROP")
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            intent.setDataAndType(contentUri, "image/*")
-            // 设置可裁剪
-            intent.putExtra("crop", "true")
-            intent.putExtra("return-data", false)
-            cropFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "crop.jpg")
-            cropURI = Uri.fromFile(cropFile)
-            Log.d("test", "cropUri:${cropURI?.path}")
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, cropURI)
-            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
-            startActivityForResult(intent, Constant.CROP_SMALL_PICTURE)
-        }
+        PicGetUtil.onActivityResult(this, requestCode, resultCode, data)
     }
 }

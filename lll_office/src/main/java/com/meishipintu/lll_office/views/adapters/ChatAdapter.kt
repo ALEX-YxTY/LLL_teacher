@@ -79,8 +79,12 @@ class ChatAdapter(val ctx:Context,val dataList:List<ChatDetail>):RecyclerView.Ad
                 glide.load(chatDetail.avatar.organization_avatar).placeholder(R.drawable.organization_default)
                         .error(R.drawable.organization_default).into(chatViewHolder.ivHead)
             }
-            //渲染完毕后，将本条消息时间最为最后时间保存
-            this.timeLast = chatDetail.create_time
+            //渲染完毕后，将本条消息时间最为最后时间保存,全部渲染后timeLast还原为0
+            if (position == dataList.size - 1) {
+                this.timeLast = 0
+            } else {
+                this.timeLast = chatDetail.create_time
+            }
         }
     }
 }

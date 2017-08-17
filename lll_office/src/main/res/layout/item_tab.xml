@@ -10,7 +10,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:paddingTop="3dp"
+        android:paddingRight="3dp"
+        android:paddingLeft="3dp"
         android:layout_marginTop="9dp"/>
+
+    <View
+        android:id="@+id/red_point"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/shape_red_point"
+        android:layout_alignRight="@id/iv_icon"
+        android:layout_alignTop="@id/iv_icon"
+        android:visibility="gone"/>
     <TextView
         android:textSize="11sp"
         android:id="@+id/tv_icon"

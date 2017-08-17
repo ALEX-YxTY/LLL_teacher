@@ -229,6 +229,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/item_margin12"
             android:src="@drawable/icon_notice"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -239,12 +240,25 @@
             android:text="@string/notice_center"
             />
         <ImageView
+            android:id="@+id/iv_news"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="13dp"
+            android:paddingTop="3dp"
+            android:paddingRight="3dp"
             android:src="@drawable/icon_next"/>
+
+        <View
+            android:id="@+id/red_point"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:background="@drawable/shape_red_point"
+            android:layout_alignRight="@id/iv_news"
+            android:layout_alignTop="@id/iv_news"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <!--设置过-->

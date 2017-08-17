@@ -1,4 +1,4 @@
-package com.milai.lll_teacher.custom.util
+package com.meishipintu.lll_office.customs.utils
 
 import android.app.Activity
 import android.app.Dialog
@@ -17,9 +17,9 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.milai.lll_teacher.Constant
-import com.milai.lll_teacher.R
-import com.milai.lll_teacher.custom.view.ChooseHeadViewDialog
+import com.meishipintu.lll_office.Constant
+import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.customs.ChooseHeadViewDialog
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -31,11 +31,11 @@ import java.io.FileOutputStream
  */
 object PicGetUtil {
 
-    var tempFile: File? = null
-    var tempURI: Uri? = null
-    var cropFile: File? = null
-    var cropURI: Uri? = null
-    var successListener: SuccessListener? = null
+    var tempFile: File? = null  //存放临时图片
+    var tempURI: Uri? = null    //临时图片的URI
+    var cropFile: File? = null  //存放裁剪后图片
+    var cropURI: Uri? = null    //裁剪后图片的URI
+    var successListener: SuccessListener? = null  //成功回调
 
     //选择图片 调用PhotoPicker
     fun choosePicture(context: Activity, listener: SuccessListener) {

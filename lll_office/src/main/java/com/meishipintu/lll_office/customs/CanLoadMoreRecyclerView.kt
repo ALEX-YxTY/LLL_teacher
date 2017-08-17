@@ -93,6 +93,13 @@ class CanLoadMoreRecyclerView : RelativeLayout {
         listener?.onLoadMore(page + 1)
     }
 
+    //是的recyclerView滚动到底部
+    fun scrollToEnd() {
+        if (layoutManager.itemCount > 0) {
+            rv.scrollToPosition(layoutManager.itemCount - 1)
+        }
+    }
+
     interface StateChangedListener{
         fun onLoadMore(page: Int)
     }

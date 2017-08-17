@@ -163,6 +163,8 @@ class SearchActivity : BasicActivity(),CustomLabelSelectListener ,TeacherContrac
         if (history.size > 5) {
             history = history.subList(0, 5)
         }
-        Cookies.saveHistory(history.toTypedArray())
+        if (history.size > 0) {
+            Cookies.saveHistory(history.toTypedArray())
+        }
     }
 }

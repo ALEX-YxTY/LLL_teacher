@@ -87,5 +87,8 @@ class TeacherInterviewActivity : BasicActivity(),View.OnClickListener,InterviewC
     override fun onStatusUpdateSuccess(status: Int) {
         deliverInfo.status = status
         button.text = if (deliverInfo.status == 1) "面试完成" else "去评价"
+        if (status == 2) {
+            toast("面试完成" )
+        }
     }
 }

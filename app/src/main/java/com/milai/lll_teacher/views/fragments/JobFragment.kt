@@ -3,7 +3,6 @@ package com.milai.lll_teacher.views.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.Nullable
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +17,7 @@ import com.milai.lll_teacher.custom.view.*
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.presenters.JobPresenter
 import com.milai.lll_teacher.views.SearchActivity
-import com.milai.lll_teacher.views.adapters.BasicLayoutManager
 import com.milai.lll_teacher.views.adapters.JobAdapter
-import com.milai.lll_teacher.views.adapters.LayoutLoadMoreListener
 
 /**
  * Created by Administrator on 2017/6/21.
@@ -29,7 +26,7 @@ import com.milai.lll_teacher.views.adapters.LayoutLoadMoreListener
  * 主要功能：
  */
 
-class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView,CanLoadMoreRecyclerView.StateChangedListener{
+class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView, CanLoadMoreRecyclerView.StateChangedListener{
 
     var tj = 1 //是否推荐
     var area = 0 //0-全部，index-区序号

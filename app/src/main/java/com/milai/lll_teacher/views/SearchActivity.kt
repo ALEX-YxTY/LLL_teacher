@@ -221,10 +221,12 @@ class SearchActivity : BasicActivity(), OnItemClickListener,SearchContract.IView
         if (history.size > 5) {
             history = history.subList(0, 5)
         }
-        if (from == 1) {
-            Cookies.saveJobHistory(history.toTypedArray())
-        } else {
-            Cookies.saveOfficeHistory(history.toTypedArray() )
+        if (history.size > 0) {
+            if (from == 1) {
+                Cookies.saveJobHistory(history.toTypedArray())
+            } else {
+                Cookies.saveOfficeHistory(history.toTypedArray() )
+            }
         }
     }
 }

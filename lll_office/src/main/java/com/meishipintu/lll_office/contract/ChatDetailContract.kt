@@ -5,6 +5,7 @@ import com.meishipintu.lll_office.modles.entities.JobInfo
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.presenters.BasicPresenterImp
 import com.meishipintu.lll_office.views.BasicView
+import com.meishipintu.lll_office.views.BasicViewLoadError
 
 /**
  * Created by Administrator on 2017/7/13.

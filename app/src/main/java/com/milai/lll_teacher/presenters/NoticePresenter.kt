@@ -57,7 +57,7 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
 
     //获取最新系统消息
     override fun getNewestSysId(tid: String) {
-        addSubscription(httpApi.getNewestIdService(1,2,tid), object : HttpCallback<HttpResult<NewsId>>() {
+        addSubscription(httpApi.getNewestIdService(2,2,tid), object : HttpCallback<HttpResult<NewsId>>() {
             override fun onSuccess(model: HttpResult<NewsId>) {
                 if (model.status == 1) {
                     iView.onNewestSysIdGet(model.data.id)
@@ -79,7 +79,7 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
 
     //获取最新私信消息
     override fun getNewestMessId(tid: String) {
-        addSubscription(httpApi.getNewestIdService(1,1,tid), object : HttpCallback<HttpResult<NewsId>>() {
+        addSubscription(httpApi.getNewestIdService(2,1,tid), object : HttpCallback<HttpResult<NewsId>>() {
             override fun onSuccess(model: HttpResult<NewsId>) {
                 if (model.status == 1) {
                     iView.onNewestMessIdGet(model.data.id)

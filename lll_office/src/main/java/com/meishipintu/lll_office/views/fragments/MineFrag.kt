@@ -14,7 +14,9 @@ import com.bumptech.glide.Glide
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.contract.NoticeActivityContract
 import com.meishipintu.lll_office.customs.CircleImageView
+import com.meishipintu.lll_office.presenters.NoticePresenter
 import com.meishipintu.lll_office.views.*
 
 /**
@@ -22,10 +24,20 @@ import com.meishipintu.lll_office.views.*
  *
  * 主要功能：
  */
-class MineFrag:Fragment(),View.OnClickListener{
+class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView{
 
     var fragView: View? = null
     val levelNow:Int? by lazy{ OfficeApplication.userInfo?.level}
+    val uid = OfficeApplication.userInfo?.uid
+    val redPoint: View? by lazy { fragView?.findViewById(R.id.red_point) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (presenter == null) {
+            Log.d("test","presenter init")
+            presenter = NoticePresenter(this)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragView == null) {
@@ -33,6 +45,14 @@ class MineFrag:Fragment(),View.OnClickListener{
         }
         initUI()
         return fragView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (uid != null) {
+            (presenter as NoticeActivityContract.IPresenter).getNewestSysId(uid)
+            (presenter as NoticeActivityContract.IPresenter).getNewestMessId(uid)
+        }
     }
 
     private fun initUI() {
@@ -100,6 +120,32 @@ class MineFrag:Fragment(),View.OnClickListener{
                 //设置
                 startActivity(Intent(this.activity,SettingActivity::class.java))
             }
+        }
+    }
+
+    override fun onError(e: String) {
+        toast(e)
+    }
+
+    override fun onNewestMessIdGet(id: Int) {
+        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestSysId(uid!!)}")
+        if (id > 0 && id > Cookies.getNewestSysId(uid)) {
+            //显示红点
+            redPoint?.visibility = View.VISIBLE
+        } else {
+            //隐藏红点
+            redPoint?.visibility = View.GONE
+        }
+    }
+
+    override fun onNewestSysIdGet(id: Int) {
+        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestSysId(uid!!)}")
+        if (id > 0 && id > Cookies.getNewestSysId(uid)) {
+            //显示红点
+            redPoint?.visibility = View.VISIBLE
+        } else {
+            //隐藏红点
+            redPoint?.visibility = View.GONE
         }
     }
 }

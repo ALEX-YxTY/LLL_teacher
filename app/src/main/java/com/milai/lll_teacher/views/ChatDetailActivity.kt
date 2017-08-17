@@ -32,6 +32,9 @@ class ChatDetailActivity : BasicActivity(),ChatDetailContract.IView {
 
     val et:EditText by lazy { findViewById(R.id.et_message) as EditText }
     val rlJob:RelativeLayout by lazy { findViewById(R.id.item_job) as RelativeLayout }
+    val rv:RecyclerView by lazy{findViewById(R.id.rv) as RecyclerView }
+    val layoutmanager:RecyclerView.LayoutManager by lazy{ LinearLayoutManager(this)}
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,7 @@ class ChatDetailActivity : BasicActivity(),ChatDetailContract.IView {
                 toast("输入内容不能为空")
             } else {
                 (presenter as ChatDetailContract.IPresenter).sendChat(jobId, teacherId, oid, et.text.toString())
+                et.setText("")
             }
         }
         rlJob.setOnClickListener{
@@ -64,10 +68,9 @@ class ChatDetailActivity : BasicActivity(),ChatDetailContract.IView {
     }
 
     private fun initList() {
-        (presenter as ChatDetailContract.IPresenter).getChatList(teacherId, jobId)
-        val rv = findViewById(R.id.rv) as RecyclerView
-        rv.layoutManager = LinearLayoutManager(this)
+        rv.layoutManager = layoutmanager
         rv.adapter = adapter
+        (presenter as ChatDetailContract.IPresenter).getChatList(teacherId, jobId)
     }
 
     //from ChatDetailContract.IView
@@ -102,14 +105,19 @@ class ChatDetailActivity : BasicActivity(),ChatDetailContract.IView {
 
     //from ChatDetailContract.IView
     override fun onChaListGet(dataList: List<ChatDetail>) {
-        this.data.clear()
-        this.data.addAll(dataList)
-        adapter.notifyDataSetChanged()
+        if (dataList.isNotEmpty()) {
+            //有数据
+            this.data.clear()
+            this.data.addAll(dataList)
+            adapter.notifyDataSetChanged()
+            if (layoutmanager.itemCount > 0) {
+                rv.smoothScrollToPosition(layoutmanager.itemCount - 1)
+            }
+        }
     }
 
     //from ChatDetailContract.IView
     override fun onSendChatSuccess() {
-        et.setText("")
         et.clearFocus()
         changSoftInputWindow(true)
         (presenter as ChatDetailContract.IPresenter).getChatList(teacherId, jobId)
