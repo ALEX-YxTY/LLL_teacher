@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.views.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,26 +12,32 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.meishipintu.lll_office.Cookies
-import com.meishipintu.lll_office.OfficeApplication
-import com.meishipintu.lll_office.R
+import com.meishipintu.lll_office.*
+import com.meishipintu.lll_office.contract.MineContract
 import com.meishipintu.lll_office.contract.NoticeActivityContract
 import com.meishipintu.lll_office.customs.CircleImageView
+import com.meishipintu.lll_office.modles.entities.BusMessage
+import com.meishipintu.lll_office.modles.entities.UserInfo
 import com.meishipintu.lll_office.modles.entities.VersionInfo
 import com.meishipintu.lll_office.presenters.NoticePresenter
 import com.meishipintu.lll_office.views.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by Administrator on 2017/6/29.
  *
  * 主要功能：
  */
-class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView{
+class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView,MineContract.IView{
 
     var fragView: View? = null
     val levelNow:Int? by lazy{ OfficeApplication.userInfo?.level}
     val uid = OfficeApplication.userInfo?.uid
     val redPoint: View? by lazy { fragView?.findViewById(R.id.red_point) }
+    val disposables: CompositeDisposable by lazy{ CompositeDisposable() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +45,22 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
             Log.d("test","presenter init")
             presenter = NoticePresenter(this)
         }
+        RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    (type) -> run{
+                    when (type) {
+                        Constant.UpdateSuccess ->{
+
+                        }
+                        Constant.EditInfo_Success ->{
+
+                        }
+                    }
+                }
+                },{},{},{
+                    t: Disposable -> disposables.add(t)
+                })
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,7 +68,17 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
             fragView = inflater?.inflate(R.layout.frag_mine, container, false)
         }
         initUI()
+        setListener()
         return fragView
+    }
+
+    private fun setListener() {
+        fragView?.findViewById(R.id.rl_job_manage)?.setOnClickListener(this)
+        fragView?.findViewById(R.id.rl_my_interview)?.setOnClickListener(this)
+        fragView?.findViewById(R.id.rl_my_collection)?.setOnClickListener(this)
+        fragView?.findViewById(R.id.rl_notice_center)?.setOnClickListener(this)
+        fragView?.findViewById(R.id.rl_other_office)?.setOnClickListener(this)
+        fragView?.findViewById(R.id.rl_setting)?.setOnClickListener(this)
     }
 
     override fun onResume() {
@@ -71,20 +104,14 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
             userLevel.text = levels[levelNow!! - 1].substring(0, 4)
         }
         val timesRemain = fragView?.findViewById(R.id.tv_times_remain) as TextView
-//        timesRemain.text =
+        timesRemain.text = "剩余发布职位：${OfficeApplication.userInfo?.job_time_remain}个   " +
+                "剩余邀约次数：${OfficeApplication.userInfo?.interview_time_remain}次"
         val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
         if (levelNow == 4) {
             userStates.visibility = View.GONE
         } else {
             userStates.setOnClickListener(this)
         }
-
-        fragView?.findViewById(R.id.rl_job_manage)?.setOnClickListener(this)
-        fragView?.findViewById(R.id.rl_my_interview)?.setOnClickListener(this)
-        fragView?.findViewById(R.id.rl_my_collection)?.setOnClickListener(this)
-        fragView?.findViewById(R.id.rl_notice_center)?.setOnClickListener(this)
-        fragView?.findViewById(R.id.rl_other_office)?.setOnClickListener(this)
-        fragView?.findViewById(R.id.rl_setting)?.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -93,7 +120,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
                 //升级账号
                 val intent = Intent(this.activity, UpdateActivity::class.java)
                 intent.putExtra("levelNow", levelNow)
-                startActivity(intent)
+                this@MineFrag.startActivityForResult(intent,Constant.Update)
             }
             R.id.rl_job_manage ->{
                 //职位管理
@@ -152,5 +179,28 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
 
     override fun onVersionGet(versionInfo: VersionInfo) {
         //空实现
+    }
+
+    override fun onUserInfoGet(userInfo: UserInfo) {
+        Cookies.saveUserInfo(userInfo)
+        OfficeApplication.userInfo = userInfo
+        initUI()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                Constant.Update ->{
+                    //刷新用户信息
+                    (presenter as MineContract.IPresenter).getUserInfo(uid!!)
+                }
+            }
+        }
     }
 }

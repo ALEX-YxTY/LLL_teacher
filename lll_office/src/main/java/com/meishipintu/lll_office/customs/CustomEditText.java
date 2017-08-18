@@ -46,6 +46,7 @@ public class CustomEditText extends LinearLayout{
             if (hint != null) {
                 etInput.setHint(hint);
             }
+            etInput.setSingleLine();
             int type = attributes.getInt(R.styleable.CustomEditText_type, 2);
             Log.d("custom", "type:" + type);
             if (type == 1) {

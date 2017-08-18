@@ -28,7 +28,6 @@ class ResumeEditActivity : AppCompatActivity(),PicGetUtil.SuccessListener {
             startActivity(Intent(this,MyResumeActivity::class.java))
         }
         initWebView()
-
     }
 
     private fun initWebView() {

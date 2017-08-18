@@ -3,6 +3,7 @@ package com.milai.lll_teacher.views.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,7 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
         if (presenter == null) {
             presenter = AuthorPresenter(this)
         }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -40,26 +42,36 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
             fragView = inflater?.inflate(R.layout.frag_mine, container, false)
         }
         initUI()
+        setListener()
         return fragView
     }
 
-    private fun initUI() {
-        val title = fragView?.findViewById(R.id.tv_title) as TextView
-        title.text = "我的"
-        val headView = fragView?.findViewById(R.id.iv_head) as ImageView
-        Glide.with(this).load(MyApplication.userInfo?.avatar).error(R.drawable.teacher_default).into(headView)
-        headView.setOnClickListener(this)
-        val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
-        userName.text = MyApplication.userInfo?.name
-        val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
-        val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
-
+    private fun setListener() {
         fragView?.findViewById(R.id.rl_my_resume)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_apply_job)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_my_interview)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_my_job_collection)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_my_attention_office)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_setting)?.setOnClickListener(this)
+    }
+
+    private fun initUI() {
+        val userInfo = MyApplication.userInfo
+        val title = fragView?.findViewById(R.id.tv_title) as TextView
+        title.text = "我的"
+        val headView = fragView?.findViewById(R.id.iv_head) as ImageView
+        Glide.with(this).load(userInfo?.avatar).error(R.drawable.teacher_default).into(headView)
+        headView.setOnClickListener(this)
+        val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
+        userName.text = userInfo?.name
+
+        //status 0-未审核 1-已审核
+        if (userInfo?.status == 1) {
+            val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
+            val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
+            userLevel.text = "普通会员"
+            userStates.visibility = View.GONE
+        }
     }
 
     override fun onClick(v: View?) {
@@ -95,6 +107,7 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Edit_RESUME) {
+            Log.d("test","onActivityResult")
             (presenter as MineContract.IPresenter).getUserInfo(MyApplication.userInfo?.uid!!)
         }
     }

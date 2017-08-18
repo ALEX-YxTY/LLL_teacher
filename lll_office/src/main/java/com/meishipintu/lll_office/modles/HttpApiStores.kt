@@ -35,7 +35,7 @@ interface HttpApiStores {
     //根据关键字搜索教师
     @FormUrlEncoded
     @POST("Home/Api/searchTeacherList")
-    fun getTeacherByKeyWorkService(@Field("content") keyWord:String):Observable<HttpResult<List<TeacherInfo>>>
+    fun getTeacherByKeyWorkService(@Field("content") keyWord: String): Observable<HttpResult<List<TeacherInfo>>>
 
     //登录接口
     @FormUrlEncoded
@@ -72,13 +72,13 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Organization/getOrganizationDeliver")
     fun getDeliverHistoryService(@Field("oid") oid: String, @Field("status") status: Int, @Field("type") type: Int
-                                 ,@Field("page") page:Int)
+                                 , @Field("page") page: Int)
             : Observable<HttpResult<List<DeliverInfo>>>
 
     //查询机构详情
     @FormUrlEncoded
     @POST("Home/Organization/getOrganizationDetail ")
-    fun getOrganizationDetaioService(@Field("uid") uid: String): Observable<HttpResult<OfficeInfo>>
+    fun getOrganizationDetailService(@Field("uid") uid: String): Observable<HttpResult<UserInfo>>
 
     //获取聊天详情
     @FormUrlEncoded
@@ -115,7 +115,7 @@ interface HttpApiStores {
     //获取机构收藏教师列表
     @FormUrlEncoded
     @POST("Home/Api/getTeacherLike")
-    fun getTeacherCollectService(@Field("oid") uid: String,@Field("page") page:Int): Observable<HttpResult<List<TeacherInfo>>>
+    fun getTeacherCollectService(@Field("oid") uid: String, @Field("page") page: Int): Observable<HttpResult<List<TeacherInfo>>>
 
     //机构邀请教师面试
     @FormUrlEncoded
@@ -126,7 +126,7 @@ interface HttpApiStores {
     //获取其他机构
     @FormUrlEncoded
     @POST("Home/organization/getAllOrganization")
-    fun getOtherOrganizationService(@Field("uid") oid: String,@Field("page") page:Int): Observable<HttpResult<List<OfficeInfo>>>
+    fun getOtherOrganizationService(@Field("uid") oid: String, @Field("page") page: Int): Observable<HttpResult<List<OfficeInfo>>>
 
     //教师添加收藏机构
     @FormUrlEncoded
@@ -146,12 +146,12 @@ interface HttpApiStores {
     //获取系统通知
     @FormUrlEncoded
     @POST("Home/Api/getSystemNotice")
-    fun getSysNoticeService(@Field("uid") oid: String, @Field("type") type: Int,@Field("page") page:Int): Observable<HttpResult<List<SysNoticeInfo>>>
+    fun getSysNoticeService(@Field("uid") oid: String, @Field("type") type: Int, @Field("page") page: Int): Observable<HttpResult<List<SysNoticeInfo>>>
 
     //获取私信通知
     @FormUrlEncoded
     @POST("Home/Api/getChatList")
-    fun getChatListService(@Field("tid") tid: String, @Field("type") type: Int, @Field("oid") oid: String,@Field("page") page:Int)
+    fun getChatListService(@Field("tid") tid: String, @Field("type") type: Int, @Field("oid") oid: String, @Field("page") page: Int)
             : Observable<HttpResult<List<MessageNoticeInfo>>>
 
     //通过职位id获取职位详情
@@ -167,14 +167,14 @@ interface HttpApiStores {
     //获取订单orderStr
     @FormUrlEncoded
     @POST("Home/Payment/pay")
-    fun getOrderStr(@Field("subject") subject: String, @Field("type") type: String, @Field("aid") aid:Int
-                    ,@Field("body") name: String, @Field("money") money: Float,@Field("level") level:Int
-                    , @Field("oid") uid: String):Observable<HttpResult<OrderInfo>>
+    fun getOrderStr(@Field("subject") subject: String, @Field("type") type: String, @Field("aid") aid: Int
+                    , @Field("body") name: String, @Field("money") money: Float, @Field("level") level: Int
+                    , @Field("oid") uid: String): Observable<HttpResult<OrderInfo>>
 
     //订单取消接口
     @FormUrlEncoded
     @POST("Home/Payment/cancelOrder")
-    fun cancelOrderService(@Field("order_id") order_id: String):Observable<HttpResult<Any>>
+    fun cancelOrderService(@Field("order_id") order_id: String): Observable<HttpResult<Any>>
 
     //修改机构信息接口
     //上传单个文件
@@ -183,7 +183,7 @@ interface HttpApiStores {
     fun updateOfficeInfoService(@Part("uid") uid: RequestBody, @Part("address") address: RequestBody
                                 , @Part("name") name: RequestBody, @Part("contact") contact: RequestBody
                                 , @Part("contact_tel") contactTel: RequestBody, @Part("introduce_detail") introduce: RequestBody
-                                , @Part file1: MultipartBody.Part ):Observable<HttpResult<UserInfo>>
+                                , @Part file1: MultipartBody.Part): Observable<HttpResult<UserInfo>>
 
     //修改机构信息接口2
     //不上传图片
@@ -192,7 +192,7 @@ interface HttpApiStores {
     fun updateOfficeInfoService(@Field("uid") uid: String, @Field("address") address: String
                                 , @Field("name") name: String, @Field("contact") contact: String
                                 , @Field("contact_tel") contactTel: String
-                                , @Field("introduce_detail") introduce: String):Observable<HttpResult<UserInfo>>
+                                , @Field("introduce_detail") introduce: String): Observable<HttpResult<UserInfo>>
 
     //修改机构信息接口3
     //上传两个图片
@@ -201,7 +201,7 @@ interface HttpApiStores {
     fun updateOfficeInfoService(@Part("uid") uid: RequestBody, @Part("address") address: RequestBody
                                 , @Part("name") name: RequestBody, @Part("contact") contact: RequestBody
                                 , @Part("contact_tel") contactTel: RequestBody, @Part("introduce_detail") introduce: RequestBody
-                                , @Part file1: MultipartBody.Part ,@Part file2:MultipartBody.Part):Observable<HttpResult<UserInfo>>
+                                , @Part file1: MultipartBody.Part, @Part file2: MultipartBody.Part): Observable<HttpResult<UserInfo>>
 
     //获取新闻内容
     @FormUrlEncoded
@@ -210,7 +210,7 @@ interface HttpApiStores {
 
     //获取广告轮播内容
     @POST("Home/Api/getAdver")
-    fun getAdsService():Observable<HttpResult<List<AdInfo>>>
+    fun getAdsService(): Observable<HttpResult<List<AdInfo>>>
 
     //获取最新消息接口
     //type=2 我是老师  1 我是机构
@@ -225,4 +225,14 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Api/getSystemVerision")
     fun getNewestVersion(@Field("type") type: Int): Observable<HttpResult<VersionInfo>>
+
+    //动作统计接口
+    //flag=1教师端，flag=2 机构端
+    //type=1 新闻事件
+    //id_detail 事件详情，新闻为新闻id
+    @FormUrlEncoded
+    @POST("Home/Api/log")
+    fun doActionSattistic(@Field("uid") uid:String,@Field("flag") flag:Int,@Field("type") type:Int
+                          ,@Field("id_detail") detail:String):Observable<HttpResult<Any>>
+
 }

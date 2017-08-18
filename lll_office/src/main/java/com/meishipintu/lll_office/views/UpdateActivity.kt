@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -48,7 +49,9 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
                     when (type) {
                         Constant.PAY_SUCCESS -> {
                             //支付成功，退回
+                            setResult(Activity.RESULT_OK)
                             this.finish()
+
                          }
                     }
                 }
@@ -136,11 +139,20 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
             R.id.rl_3 -> {if(select!=2) changeTo(2)}
             R.id.rl_4 -> {if(select!=3) changeTo(3)}
             R.id.bt_pay -> {
-                //先去完善信息
-                val intent = Intent(this, updateInformationActivity::class.java)
-                Log.d("test", "level: $select, levelWant: ${levels[select]}")
-                intent.putExtra("level", select)
-                startActivity(intent)
+                if (levelNow == 0) {
+                    //先去完善信息
+                    val intent = Intent(this, updateInformationActivity::class.java)
+                    Log.d("test", "level: $select, levelWant: ${levels[select]}")
+                    intent.putExtra("level", select)
+                    startActivity(intent)
+                } else {
+                    //直接去付款
+                    val intent = Intent(this, PayActivity::class.java)
+                    intent.putExtra("money",levels[select].split("&")[1].toFloat() )
+                    intent.putExtra("levelWant", select)
+                    startActivity(intent)
+                }
+
             }
         }
     }

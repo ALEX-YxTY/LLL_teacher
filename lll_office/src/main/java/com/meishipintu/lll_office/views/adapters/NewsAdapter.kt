@@ -33,6 +33,7 @@ class NewsAdapter(ctx: Context, dataList:List<NewsInfo>):BasicAdapter(ctx,dataLi
             newsViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, NewsDetailActivity::class.java)
                 intent.putExtra("url", newsData.content)
+                intent.putExtra("newsId",newsData.id)
                 ctx.startActivity(intent)
             }
         }

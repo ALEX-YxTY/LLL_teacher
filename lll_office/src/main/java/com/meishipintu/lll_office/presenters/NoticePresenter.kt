@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.presenters
 
+import com.meishipintu.lll_office.contract.MineContract
 import com.meishipintu.lll_office.contract.NoticeActivityContract
 import com.meishipintu.lll_office.contract.NoticeContract
 import com.meishipintu.lll_office.modles.HttpApiClinet
@@ -15,7 +16,7 @@ import com.meishipintu.lll_office.views.BasicViewLoadError
  * 主要功能：
  */
 class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPresenter
-        ,NoticeActivityContract.IPresenter{
+        ,NoticeActivityContract.IPresenter,MineContract.IPresenter{
 
     val httpApi = HttpApiClinet.retrofit()
 
@@ -97,11 +98,29 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
         })
     }
 
+    //获取系统版本
     override fun getNewsetVersiton() {
         addSubscription(httpApi.getNewestVersion(2).map(HttpResultFunc<VersionInfo>())
                 ,object :HttpCallback<VersionInfo>(){
             override fun onSuccess(model: VersionInfo) {
                 (iView as NoticeActivityContract.IView).onVersionGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
+
+        })
+    }
+
+    //获取机构详情
+    override fun getUserInfo(uid: String) {
+        addSubscription(httpApi.getOrganizationDetailService(uid).map(HttpResultFunc<UserInfo>())
+                ,object :HttpCallback<UserInfo>(){
+            override fun onSuccess(model: UserInfo) {
+                (iView as MineContract.IView).onUserInfoGet(model)
             }
 
             override fun onFailure(msg: String?) {
