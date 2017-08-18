@@ -1,10 +1,13 @@
 package com.meishipintu.lll_office.views
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.TabLayout
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.View
@@ -13,7 +16,10 @@ import android.widget.TextView
 import android.widget.Toast
 import com.meishipintu.lll_office.*
 import com.meishipintu.lll_office.contract.NoticeActivityContract
+import com.meishipintu.lll_office.customs.utils.DialogUtils
+import com.meishipintu.lll_office.customs.utils.MyAsy
 import com.meishipintu.lll_office.modles.entities.BusMessage
+import com.meishipintu.lll_office.modles.entities.VersionInfo
 import com.meishipintu.lll_office.presenters.NoticePresenter
 import com.meishipintu.lll_office.views.fragments.ActivityFrag
 import com.meishipintu.lll_office.views.fragments.MineFrag
@@ -34,10 +40,14 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
     var clickTime: Long = 0
     val uid = OfficeApplication.userInfo?.uid
 
+    var downLoadUrl:String?=null    //标记新版本的下载地址
+    var versionName:String?=null    //标记最新版版本名
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter = NoticePresenter(this)
+        (presenter as NoticeActivityContract.IPresenter).getNewsetVersiton()
         RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -64,6 +74,42 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
         }
     }
 
+    override fun onVersionGet(versionInfo: VersionInfo) {
+        val packageInfo = this.packageManager.getPackageInfo(this.packageName, 0)
+        val versionCodeNow = packageInfo.versionCode
+        if (versionInfo.verison_name > versionCodeNow) {
+            DialogUtils.showCustomDialog(this,"发现新版本","最新版本：${versionInfo.verison} " +
+                    "\n 更新内容：${versionInfo.verison_detail}", { dialog, _ ->
+                dialog.dismiss()
+                downLoadUrl = versionInfo.download_url
+                versionName = versionInfo.verison
+                downLoadWapper()
+            })
+        }
+    }
+
+    //下载权限封装方法
+    fun downLoadWapper() {
+        val hasStoragePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        if (hasStoragePermission != PackageManager.PERMISSION_GRANTED) {        //未授权
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)) {                    //系统申请权限框不再弹出
+                DialogUtils.showCustomDialog(this, "本应用需要获取使用相机权限", { dialog, _ ->
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA)
+                            , Constant.REQUEST_STORAGE_PERMISSION)
+                    dialog.dismiss()
+                }) { dialog, _ -> dialog.dismiss() }
+                return
+            }
+            //系统框弹出时直接申请
+            ActivityCompat.requestPermissions(this, arrayOf(android
+                    .Manifest.permission.WRITE_EXTERNAL_STORAGE), Constant.REQUEST_STORAGE_PERMISSION)
+            return
+        }
+        if (downLoadUrl != null) {
+            MyAsy(this,versionName?:"last").execute(downLoadUrl)
+        }
+    }
 
     private fun initViewPager() {
         val iconList = listOf(R.drawable.selector_icon_news, R.drawable.selector_icon_teacher
@@ -131,6 +177,20 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
             } else {
                 //隐藏红点
                 tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            Constant.REQUEST_STORAGE_PERMISSION ->{
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    //拒绝授权
+                    Toast.makeText(this, "没有内存读写权限，将有部分功能无法使用，请在系统设置中增加应用的相应授权", Toast.LENGTH_SHORT)
+                            .show()
+                } else {
+                    downLoadWapper()
+                }
             }
         }
     }

@@ -17,6 +17,7 @@ import com.milai.lll_teacher.contracts.NoticeContract
 import com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
 import com.milai.lll_teacher.models.entities.Message
 import com.milai.lll_teacher.models.entities.SysNoticeInfo
+import com.milai.lll_teacher.models.entities.VersionInfo
 import com.milai.lll_teacher.presenters.NoticePresenter
 import com.milai.lll_teacher.views.adapters.MessageAdapter
 import com.milai.lll_teacher.views.adapters.SysNoticAdapter
@@ -104,6 +105,10 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
     override fun onLoadError() {
         recyclerView.dismissLoading()
         recyclerView.dismissProgressBar()
+    }
+
+    override fun onVersionGet(versionInfo: VersionInfo) {
+        //空实现
     }
 
     //from CanLoadMore.Listener

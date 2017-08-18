@@ -160,4 +160,9 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Api/getNewsId")
     fun getNewestIdService(@Field("type") type: Int, @Field("flag") flag: Int, @Field("uid") uid: String): Observable<HttpResult<NewsId>>
+
+    //获取最新版本信息
+    @FormUrlEncoded
+    @POST("Home/Api/getSystemVerision")
+    fun getNewestVersion(@Field("type") type: Int): Observable<HttpResult<VersionInfo>>
 }

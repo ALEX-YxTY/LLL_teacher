@@ -16,6 +16,7 @@ import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.NoticeActivityContract
 import com.meishipintu.lll_office.customs.CircleImageView
+import com.meishipintu.lll_office.modles.entities.VersionInfo
 import com.meishipintu.lll_office.presenters.NoticePresenter
 import com.meishipintu.lll_office.views.*
 
@@ -147,5 +148,9 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
             //隐藏红点
             redPoint?.visibility = View.GONE
         }
+    }
+
+    override fun onVersionGet(versionInfo: VersionInfo) {
+        //空实现
     }
 }

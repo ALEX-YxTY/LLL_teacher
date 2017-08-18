@@ -1,14 +1,12 @@
 package com.milai.lll_teacher.presenters
 
 import com.milai.lll_teacher.contracts.NoticeContract
-import com.milai.lll_teacher.models.entities.HttpResult
-import com.milai.lll_teacher.models.entities.MessageNoticeInfo
-import com.milai.lll_teacher.models.entities.NewsId
-import com.milai.lll_teacher.models.entities.SysNoticeInfo
+import com.milai.lll_teacher.models.entities.*
 import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpCallback
 import com.milai.lll_teacher.models.https.HttpResultFunc
 import com.milai.lll_teacher.views.BasicViewLoadError
+import junit.runner.Version
 
 /**
  * Created by Administrator on 2017/7/25.
@@ -88,6 +86,22 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
                 } else {
                     iView.showError(model.msg)
                 }
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+
+        })
+    }
+
+    override fun getNewsetVersiton() {
+        addSubscription(httpApi.getNewestVersion(1).map(HttpResultFunc<VersionInfo>())
+                ,object :HttpCallback<VersionInfo>(){
+            override fun onSuccess(model: VersionInfo) {
+                iView.onVersionGet(model)
             }
 
             override fun onFailure(msg: String?) {

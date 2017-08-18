@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.contract
 
+import com.meishipintu.lll_office.modles.entities.VersionInfo
 import com.meishipintu.lll_office.presenters.BasicPresenterImp
 import com.meishipintu.lll_office.views.BasicView
 
@@ -14,11 +15,16 @@ interface NoticeActivityContract {
         fun onNewestMessIdGet(id: Int)
 
         fun onNewestSysIdGet(id:Int)
+
+        fun onVersionGet(versionInfo: VersionInfo)
+
     }
 
     interface IPresenter:BasicPresenterImp{
         fun getNewestSysId(tid: String)
 
         fun getNewestMessId(tid: String)
+
+        fun getNewsetVersiton()
     }
 }

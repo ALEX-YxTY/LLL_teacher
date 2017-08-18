@@ -11,6 +11,7 @@ import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.NoticeActivityContract
+import com.meishipintu.lll_office.modles.entities.VersionInfo
 import com.meishipintu.lll_office.presenters.NoticePresenter
 import com.meishipintu.lll_office.views.adapters.MyviewPagerAdapter
 import com.meishipintu.lll_office.views.fragments.NoticeFragment
@@ -100,5 +101,9 @@ class NoticeActivity : BasicActivity(),NoticeActivityContract.IView {
             //隐藏红点
             tabLayout.getTabAt(1)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
         }
+    }
+
+    override fun onVersionGet(versionInfo: VersionInfo) {
+        //空实现
     }
 }

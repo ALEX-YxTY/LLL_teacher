@@ -28,4 +28,15 @@ public class DialogUtils {
                 .create()
                 .show();
     }
+
+    public static void showCustomDialog(Context context, String title,String message
+            , DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setTitle(title)
+                .setPositiveButton("确定",okListener)
+                .setNegativeButton("取消",null)
+                .create()
+                .show();
+    }
 }

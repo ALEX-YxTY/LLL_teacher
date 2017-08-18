@@ -5,10 +5,7 @@ import com.meishipintu.lll_office.contract.NoticeContract
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
-import com.meishipintu.lll_office.modles.entities.HttpResult
-import com.meishipintu.lll_office.modles.entities.MessageNoticeInfo
-import com.meishipintu.lll_office.modles.entities.NewsId
-import com.meishipintu.lll_office.modles.entities.SysNoticeInfo
+import com.meishipintu.lll_office.modles.entities.*
 import com.meishipintu.lll_office.views.BasicView
 import com.meishipintu.lll_office.views.BasicViewLoadError
 
@@ -89,6 +86,22 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
                 } else {
                     iView.onError(model.msg)
                 }
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
+
+        })
+    }
+
+    override fun getNewsetVersiton() {
+        addSubscription(httpApi.getNewestVersion(2).map(HttpResultFunc<VersionInfo>())
+                ,object :HttpCallback<VersionInfo>(){
+            override fun onSuccess(model: VersionInfo) {
+                (iView as NoticeActivityContract.IView).onVersionGet(model)
             }
 
             override fun onFailure(msg: String?) {

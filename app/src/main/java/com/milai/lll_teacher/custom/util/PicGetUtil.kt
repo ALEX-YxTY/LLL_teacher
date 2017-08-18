@@ -187,7 +187,8 @@ object PicGetUtil {
         }
     }
 
-    fun onPermissiionRequestResult(context: Activity,requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    fun onPermissiionRequestResult(context: Activity,requestCode: Int, permissions: Array<out String>
+                                   , grantResults: IntArray) {
         when (requestCode) {
             Constant.REQUEST_CAMERA_PERMISSION ->{
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {

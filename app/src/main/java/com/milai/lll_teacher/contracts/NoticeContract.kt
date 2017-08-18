@@ -2,6 +2,7 @@ package com.milai.lll_teacher.contracts
 
 import com.milai.lll_teacher.models.entities.MessageNoticeInfo
 import com.milai.lll_teacher.models.entities.SysNoticeInfo
+import com.milai.lll_teacher.models.entities.VersionInfo
 import com.milai.lll_teacher.presenters.BasicPresenterImp
 import com.milai.lll_teacher.views.BasicView
 import com.milai.lll_teacher.views.BasicViewLoadError
@@ -23,6 +24,8 @@ interface NoticeContract {
 
         fun onNewestSysIdGet(id:Int)
 
+        fun onVersionGet(versionInfo:VersionInfo)
+
     }
 
     interface IPresenter: BasicPresenterImp {
@@ -33,5 +36,7 @@ interface NoticeContract {
         fun getSysNotice(tid: String, page: Int)
 
         fun getMessageNotice(tid:String, page: Int)
+
+        fun getNewsetVersiton()
     }
 }
