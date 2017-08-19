@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -141,5 +142,6 @@ class EditInfoActivity : BasicActivity(),View.OnClickListener, UpdateInfoContrac
         Cookies.saveUserInfo(userInfo)
         OfficeApplication.userInfo = userInfo
         toast("资料修改成功！")
+        setResult(Activity.RESULT_OK)
     }
 }

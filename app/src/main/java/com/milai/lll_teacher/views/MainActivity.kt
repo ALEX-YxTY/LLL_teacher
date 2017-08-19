@@ -1,15 +1,20 @@
 package com.milai.lll_teacher.views
 
-import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.design.widget.TabLayout
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.milai.lll_teacher.*
 import com.milai.lll_teacher.contracts.NoticeContract
+import com.milai.lll_teacher.custom.util.DialogUtils
+import com.milai.lll_teacher.custom.util.MyAsy
 import com.milai.lll_teacher.models.entities.BusMessage
 import com.milai.lll_teacher.models.entities.MessageNoticeInfo
 import com.milai.lll_teacher.models.entities.SysNoticeInfo
@@ -21,13 +26,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import com.milai.lll_teacher.custom.util.DialogUtils
-import com.milai.lll_teacher.custom.util.MyAsy
-import com.milai.lll_teacher.custom.util.PicGetUtil
 
 
 class MainActivity : BasicActivity(),NoticeContract.IView {
@@ -41,6 +39,9 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
 
     var downLoadUrl:String?=null    //标记新版本的下载地址
     var versionName:String?=null    //标记最新版版本名
+
+    var newestSysId = -2         //记录获取到的最新系统信息id，默认-2，因为无消息时获取到为-1
+    var newestMessId = -2        //记录获取到的最新私信信息id，默认-2，因为无消息时获取到为-1
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,8 +146,9 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
         disposables.clear()
     }
 
-    override fun onNewestMessIdGet(id: Int) {
-        if (id > 0 && id > Cookies.getNewestMesId(uid)) {
+    //改变红点显示
+    private fun changeRedPoint() {
+        if (newestMessId > Cookies.getNewestMesId(uid) || newestSysId > Cookies.getNewestSysId(uid)) {
             //显示红点
             tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
         } else {
@@ -155,14 +157,19 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
         }
     }
 
+    override fun onNewestMessIdGet(id: Int) {
+        Log.d("test","main activity messageId get :Cookies get ${Cookies.getNewestMesId(uid)}, net get $id while uid=$uid")
+        //记录最新id
+        newestMessId = id
+        changeRedPoint()
+    }
+
+
     override fun onNewestSysIdGet(id: Int) {
-        if (id > 0 && id > Cookies.getNewestSysId(uid)) {
-            //显示红点
-            tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
-        } else {
-            //隐藏红点
-            tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
-        }
+        Log.d("test","main activity sysNoticeId get :Cookies get ${Cookies.getNewestSysId(uid)}, net get $id while uid=$uid")
+        newestSysId = id
+        changeRedPoint()
+
     }
 
     override fun showError(err: String) {

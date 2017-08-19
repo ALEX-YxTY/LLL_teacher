@@ -29,11 +29,11 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     var certificateSelect = 0   //0-无要求 1-有
 
 
-    val etJobName: EditText by lazy { findViewById(R.id.et_job_name) as EditText }
-    val etMoney: EditText by lazy { findViewById(R.id.et_money) as EditText }
-    val etAddress: EditText by lazy { findViewById(R.id.et_address) as EditText }
-    val etJobRequire: EditText by lazy { findViewById(R.id.et_job_require) as EditText }
-    val etOtherRequire: EditText by lazy { findViewById(R.id.et_other_require) as EditText }
+    private val etJobName: EditText by lazy { findViewById(R.id.et_job_name) as EditText }
+    private val etMoney: EditText by lazy { findViewById(R.id.et_money) as EditText }
+    private val etAddress: EditText by lazy { findViewById(R.id.et_address) as EditText }
+    private val etJobRequire: EditText by lazy { findViewById(R.id.et_job_require) as EditText }
+    private val etOtherRequire: EditText by lazy { findViewById(R.id.et_other_require) as EditText }
 
     val tvCourse: TextView by lazy { findViewById(R.id.tv_course) as TextView }
     val tvGrade: TextView by lazy { findViewById(R.id.tv_grade) as TextView }

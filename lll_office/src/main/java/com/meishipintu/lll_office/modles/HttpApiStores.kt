@@ -1,6 +1,5 @@
 package com.meishipintu.lll_office.modles
 
-import android.widget.AdapterView
 import com.meishipintu.lll_office.modles.entities.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -213,7 +212,7 @@ interface HttpApiStores {
     fun getAdsService(): Observable<HttpResult<List<AdInfo>>>
 
     //获取最新消息接口
-    //type=2 我是老师  1 我是机构
+    //type=2 机构 type=1 老师
     //flag=1 查聊天记录  2 系统通知
     //返回state=1 有数据返回，state=2 无数据记录
     @FormUrlEncoded

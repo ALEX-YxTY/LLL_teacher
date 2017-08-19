@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -23,7 +24,7 @@ class SettingActivity : AppCompatActivity(),View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.bt_back -> onBackPressed()
-            R.id.rl_edit_info -> startActivity(Intent(this, EditInfoActivity::class.java))
+            R.id.rl_edit_info -> startActivityForResult(Intent(this, EditInfoActivity::class.java),Constant.EditInfo)
             R.id.bt_logout -> {
                 //清除数据
                 Cookies.clearUserInfo()
@@ -31,6 +32,13 @@ class SettingActivity : AppCompatActivity(),View.OnClickListener {
                 RxBus.send(BusMessage(Constant.LOGOUT))
                 this.finish()
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == Constant.EditInfo) {
+            //修改资料成功
+            setResult(Activity.RESULT_OK)
         }
     }
 }

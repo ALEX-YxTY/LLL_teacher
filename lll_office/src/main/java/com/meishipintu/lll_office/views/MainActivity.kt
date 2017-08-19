@@ -2,9 +2,7 @@ package com.meishipintu.lll_office.views
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -21,11 +19,11 @@ import com.meishipintu.lll_office.customs.utils.MyAsy
 import com.meishipintu.lll_office.modles.entities.BusMessage
 import com.meishipintu.lll_office.modles.entities.VersionInfo
 import com.meishipintu.lll_office.presenters.NoticePresenter
+import com.meishipintu.lll_office.views.adapters.MyviewPagerAdapter
 import com.meishipintu.lll_office.views.fragments.ActivityFrag
 import com.meishipintu.lll_office.views.fragments.MineFrag
 import com.meishipintu.lll_office.views.fragments.NewsFrag
 import com.meishipintu.lll_office.views.fragments.TeacherFrag
-import com.meishipintu.lll_office.views.adapters.MyviewPagerAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -124,7 +122,7 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
         val dataList = listOf(newsFrag, teacherFrag, activityFrag, mineFrag)
         vp.adapter = MyviewPagerAdapter(supportFragmentManager, dataList)
         tabLayout.setupWithViewPager(vp)
-        for (it: Int in 0..tabLayout.tabCount - 1) {
+        for (it: Int in 0 until tabLayout.tabCount) {
             val tab = tabLayout.getTabAt(it)
             tab?.setCustomView(R.layout.item_tab)
             val textView = tab?.customView?.findViewById(R.id.tv_icon) as TextView
@@ -154,7 +152,7 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
     }
 
     override fun onNewestMessIdGet(id: Int) {
-        Log.d("test","mes id get=$id, id save is ${Cookies.getNewestMesId(uid!!)}")
+        Log.d("test","main activity messageId get :Cookies get ${Cookies.getNewestMesId(uid!!)}, net get $id while uid-$uid")
 
         if (uid != null) {
             if (id > 0 && id > Cookies.getNewestMesId(uid)) {
@@ -168,7 +166,8 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
     }
 
     override fun onNewestSysIdGet(id: Int) {
-        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestSysId(uid!!)}")
+        Log.d("test","main activity sysNoticeId get :Cookies get ${Cookies.getNewestSysId(uid!!)}, net get $id while uid-$uid")
+
 
         if (uid != null) {
             if (id > 0 && id > Cookies.getNewestSysId(uid)) {

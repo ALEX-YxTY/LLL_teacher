@@ -22,5 +22,5 @@ object Constant {
     const val CROP_SMALL_PICTURE: Int = 130 //调用裁剪
     const val REQUEST_STORAGE_PERMISSION: Int = 140 //请求存储权限
     const val Update:Int = 150   //升级requestCode
-
+    const val EditInfo:Int = 160 //修改信息requestCode
 }

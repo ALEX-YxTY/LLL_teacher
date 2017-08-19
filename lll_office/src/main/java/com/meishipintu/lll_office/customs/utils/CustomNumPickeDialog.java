@@ -1,10 +1,10 @@
 package com.meishipintu.lll_office.customs.utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.NumberPicker;
 

@@ -1,17 +1,14 @@
 package com.meishipintu.lll_office.presenters
 
-import android.util.Log
 import com.meishipintu.lll_office.contract.JobDetailContract
 import com.meishipintu.lll_office.contract.JobManagerContract
 import com.meishipintu.lll_office.contract.NewJobContract
-import com.meishipintu.lll_office.contract.TeacherDetailContract
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
 import com.meishipintu.lll_office.modles.entities.HttpResult
 import com.meishipintu.lll_office.modles.entities.JobInfo
 import com.meishipintu.lll_office.views.BasicView
-import okhttp3.ResponseBody
 
 /**
  * Created by Administrator on 2017/7/6.
@@ -71,6 +68,7 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
             override fun onSuccess(result: HttpResult<Any>) {
                 if (result.status == 1) {
                     (iView as NewJobContract.IView).onJobAddSucess()
+                    //TODO 刷新用户数据
                 } else {
                     iView.onError(result.msg)
                 }

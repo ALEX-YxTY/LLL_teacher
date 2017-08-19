@@ -56,14 +56,12 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
 
     //获取最新系统消息
     override fun getNewestSysId(tid: String) {
-        addSubscription(httpApi.getNewestIdService(1,2,tid), object : HttpCallback<HttpResult<NewsId>>() {
+        addSubscription(httpApi.getNewestIdService(2,2,tid), object : HttpCallback<HttpResult<NewsId>>() {
             override fun onSuccess(model: HttpResult<NewsId>) {
-                if (model.status == 1) {
-                    (iView as NoticeActivityContract.IView).onNewestSysIdGet(model.data.id)
-                }else if (model.status == 2) {
-                    (iView as NoticeActivityContract.IView).onNewestSysIdGet(-1)
-                } else {
-                    iView.onError(model.msg)
+                when {
+                    model.status == 1 -> (iView as NoticeActivityContract.IView).onNewestSysIdGet(model.data.id)
+                    model.status == 2 -> (iView as NoticeActivityContract.IView).onNewestSysIdGet(-1)
+                    else -> iView.onError(model.msg)
                 }
             }
 
@@ -78,14 +76,12 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
 
     //获取最新私信消息
     override fun getNewestMessId(tid: String) {
-        addSubscription(httpApi.getNewestIdService(1,1,tid), object : HttpCallback<HttpResult<NewsId>>() {
+        addSubscription(httpApi.getNewestIdService(2,1,tid), object : HttpCallback<HttpResult<NewsId>>() {
             override fun onSuccess(model: HttpResult<NewsId>) {
-                if (model.status == 1) {
-                    (iView as NoticeActivityContract.IView).onNewestMessIdGet(model.data.id)
-                }else if (model.status == 2) {
-                    (iView as NoticeActivityContract.IView).onNewestMessIdGet(-1)
-                } else {
-                    iView.onError(model.msg)
+                when {
+                    model.status == 1 -> (iView as NoticeActivityContract.IView).onNewestMessIdGet(model.data.id)
+                    model.status == 2 -> (iView as NoticeActivityContract.IView).onNewestMessIdGet(-1)
+                    else -> iView.onError(model.msg)
                 }
             }
 

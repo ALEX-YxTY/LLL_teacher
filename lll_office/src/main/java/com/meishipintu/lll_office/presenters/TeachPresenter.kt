@@ -114,6 +114,7 @@ class TeachPresenter(val iView:BasicView):BasicPresenter(),TeacherContract.IPres
                 ,object :HttpCallback<Any>(){
             override fun onSuccess(model: Any) {
                 (iView as TeacherDetailContract.IView).onInviteSuccess()
+                //TODO 刷新用户数据
             }
 
             override fun onFailure(msg: String?) {

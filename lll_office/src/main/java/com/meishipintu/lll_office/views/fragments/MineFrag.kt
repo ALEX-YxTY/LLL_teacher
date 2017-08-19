@@ -3,12 +3,10 @@ package com.meishipintu.lll_office.views.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -38,6 +36,9 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
     val uid = OfficeApplication.userInfo?.uid
     val redPoint: View? by lazy { fragView?.findViewById(R.id.red_point) }
     val disposables: CompositeDisposable by lazy{ CompositeDisposable() }
+
+    var newestSysId = -2         //记录获取到的最新系统信息id，默认-2，因为无消息时获取到为-1
+    var newestMessId = -2        //记录获取到的最新私信信息id，默认-2，因为无消息时获取到为-1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +89,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
             (presenter as NoticeActivityContract.IPresenter).getNewestMessId(uid)
         }
     }
+
 
     private fun initUI() {
         val levels = Cookies.getConstant(7)
@@ -146,7 +148,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
             }
             R.id.rl_setting ->{
                 //设置
-                startActivity(Intent(this.activity,SettingActivity::class.java))
+                startActivityForResult(Intent(this.activity,SettingActivity::class.java),Constant.EditInfo)
             }
         }
     }
@@ -155,9 +157,9 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
         toast(e)
     }
 
-    override fun onNewestMessIdGet(id: Int) {
-        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestSysId(uid!!)}")
-        if (id > 0 && id > Cookies.getNewestSysId(uid)) {
+    //改变红点显示
+    private fun changeRedPoint() {
+        if (newestMessId > Cookies.getNewestMesId(uid!!) || newestSysId > Cookies.getNewestSysId(uid)) {
             //显示红点
             redPoint?.visibility = View.VISIBLE
         } else {
@@ -166,15 +168,16 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
         }
     }
 
+    override fun onNewestMessIdGet(id: Int) {
+        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestMesId(uid!!)}")
+        newestMessId = id
+        changeRedPoint()
+    }
+
     override fun onNewestSysIdGet(id: Int) {
         Log.d("test","sys id get=$id, id save is ${Cookies.getNewestSysId(uid!!)}")
-        if (id > 0 && id > Cookies.getNewestSysId(uid)) {
-            //显示红点
-            redPoint?.visibility = View.VISIBLE
-        } else {
-            //隐藏红点
-            redPoint?.visibility = View.GONE
-        }
+        newestSysId = id
+        changeRedPoint()
     }
 
     override fun onVersionGet(versionInfo: VersionInfo) {
@@ -196,7 +199,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                Constant.Update ->{
+                Constant.Update, Constant.EditInfo -> {
                     //刷新用户信息
                     (presenter as MineContract.IPresenter).getUserInfo(uid!!)
                 }
