@@ -36,7 +36,7 @@ class DeliverAdapter(ctx: Context, dataList:List<DeliverInfo>): BasicAdapter(ctx
         if (getItemViewType(position) == TYPE_NORMAL) {
             val teacher = (dataList[position] as DeliverInfo).teacher
             val deliverInfoViewHolder = holder as DeliverInfoViewHolder
-            deliverInfoViewHolder.teacherName.text = teacher.name
+            deliverInfoViewHolder.teacherName.text = "${teacher.name}老师"
             deliverInfoViewHolder.course.text = "${courses[teacher.course]} ${grades[teacher.grade]}"
             deliverInfoViewHolder.number.text = "${teacher.total_number} 人评价"
             deliverInfoViewHolder.socre.text = NumberUtil.formatNumberInOne(teacher.total_score.toDouble()

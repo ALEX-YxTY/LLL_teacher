@@ -50,9 +50,13 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
             fragview = inflater?.inflate(R.layout.frag_notice, container, false)
             initUI()
         }
+        return fragview
+    }
+
+    override fun onResume() {
+        super.onResume()
         (presenter as NoticeContract.IPresenter).getNewestSysId(uid!!)
         (presenter as NoticeContract.IPresenter).getNewestMessId(uid)
-        return fragview
     }
 
     private fun initUI() {

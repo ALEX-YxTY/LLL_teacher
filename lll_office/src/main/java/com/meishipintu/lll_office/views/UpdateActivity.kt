@@ -49,9 +49,7 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
                     when (type) {
                         Constant.PAY_SUCCESS -> {
                             //支付成功，退回
-                            setResult(Activity.RESULT_OK)
                             this.finish()
-
                          }
                     }
                 }

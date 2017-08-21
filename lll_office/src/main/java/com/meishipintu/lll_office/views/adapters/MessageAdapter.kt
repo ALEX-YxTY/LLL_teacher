@@ -32,7 +32,7 @@ class MessageAdapter(ctx: Context, dataList:MutableList<MessageNoticeInfo>): Bas
             val messageInfo = dataList[position] as MessageNoticeInfo
 
             glide.load(messageInfo.avatar).error(R.drawable.teacher_default).into(messageViewHolder.ivHead)
-            messageViewHolder.officeName.text = messageInfo.name
+            messageViewHolder.officeName.text = "${messageInfo.name}老师"
             messageViewHolder.address.text = messageInfo.job_name
             messageViewHolder.recently.text = messageInfo.content
             messageViewHolder.date.text = DateUtil.stampToDate(messageInfo.chat_create_time.toString())

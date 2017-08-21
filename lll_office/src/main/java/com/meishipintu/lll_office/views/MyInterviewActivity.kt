@@ -137,7 +137,6 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
         tvUnInterView.text = if (index == 1) "未面试" else "未面试 邀约"
     }
 
-
     override fun onRequireSelect(indexYear: Int, indexWorkYear: Int, indexEducation: Int) {
     }
 

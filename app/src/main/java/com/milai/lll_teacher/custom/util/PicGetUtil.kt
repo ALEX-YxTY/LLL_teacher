@@ -2,6 +2,7 @@ package com.milai.lll_teacher.custom.util
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -36,25 +37,34 @@ object PicGetUtil {
     var cropFile: File? = null
     var cropURI: Uri? = null
     var successListener: SuccessListener? = null
+    var isGettingPic = false        //标记是否正在选择图片中，用来在用户中途取消时判断
 
     //选择图片 调用PhotoPicker
     fun choosePicture(context: Activity, listener: SuccessListener) {
         successListener = listener
         tempFile = File(context.getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES), "temp.jpg")
-        ChooseHeadViewDialog(context, R.style.CustomDialog, object : ChooseHeadViewDialog.OnItemClickListener {
+        val chooseHeadViewDialog = ChooseHeadViewDialog(context, R.style.CustomDialog, object : ChooseHeadViewDialog.OnItemClickListener {
             override fun onClickCamera(view: View, dialog: Dialog) {
+                isGettingPic = true
                 dialog.dismiss()
                 startCameraWapper(context, tempFile!!)
             }
 
             override fun onClickAlbum(view: View, dialog: Dialog) {
+                isGettingPic = true
                 dialog.dismiss()
                 //调用相册
                 val intent = Intent.createChooser(Intent()
                         .setAction(Intent.ACTION_GET_CONTENT).setType("image/*"), "选择相册")
                 context.startActivityForResult(intent, Constant.CHOOSE_PICTURE_FROM_ALBUN)
             }
-        }).show()
+        })
+        chooseHeadViewDialog.setOnDismissListener {
+            if (!isGettingPic) {
+                //如果没有点击任何一种获取图片的方式，只是取消的dialog,给出取消的回调
+                successListener?.onCancle()
+            }}
+        chooseHeadViewDialog.show()
     }
 
     //相机权限申请包装方法
@@ -156,6 +166,8 @@ object PicGetUtil {
             fos.write(baos.toByteArray())
             fos.flush()
             fos.close()
+            //还原获取图片的状态值
+            isGettingPic = false
             successListener?.onSuccess(fileTo)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -184,6 +196,10 @@ object PicGetUtil {
                     compressBitmapToFile(cropFile!!, finalFile)
                 }
             }
+        } else {
+            //还原获取图片的状态
+            isGettingPic = false
+            successListener?.onCancle()
         }
     }
 
@@ -203,6 +219,10 @@ object PicGetUtil {
     }
 
     interface SuccessListener{
+        //成功获取照片并保存在file的回调
         fun onSuccess(file: File)
+
+        //中途取消的回调
+        fun onCancle()
     }
 }

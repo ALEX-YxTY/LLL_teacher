@@ -124,6 +124,18 @@ class InformationCommitActivity : AppCompatActivity(),PicGetUtil.SuccessListener
         }
     }
 
+    //from PicGetUtil.SuccessListener
+    override fun onCancle() {
+        if (null != mUploadMessage) {
+            //4.4-5.0
+            mUploadMessage?.onReceiveValue(null)
+            mUploadMessage = null
+        }else if (null != mUploadMessageAboveLollipop) {
+            mUploadMessageAboveLollipop?.onReceiveValue(null)
+            mUploadMessageAboveLollipop = null
+        }
+    }
+
     override fun onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack()
@@ -133,18 +145,7 @@ class InformationCommitActivity : AppCompatActivity(),PicGetUtil.SuccessListener
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == RESULT_OK) {
-            PicGetUtil.onActivityResult(this, requestCode, resultCode, data)
-        } else {
-            if (null != mUploadMessage) {
-                //4.4-5.0
-                mUploadMessage?.onReceiveValue(null)
-                mUploadMessage = null
-            }else if (null != mUploadMessageAboveLollipop) {
-                mUploadMessageAboveLollipop?.onReceiveValue(null)
-                mUploadMessageAboveLollipop = null
-            }
-        }
+        PicGetUtil.onActivityResult(this, requestCode, resultCode, data)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

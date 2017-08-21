@@ -43,7 +43,6 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (presenter == null) {
-            Log.d("test","presenter init")
             presenter = NoticePresenter(this)
         }
         RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
@@ -85,11 +84,13 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
     override fun onResume() {
         super.onResume()
         if (uid != null) {
-            (presenter as NoticeActivityContract.IPresenter).getNewestSysId(uid)
+            Log.d("test","getInfo when visible")
+            (presenter as NoticeActivityContract.IPresenter).getNewestSysId(uid!!)
             (presenter as NoticeActivityContract.IPresenter).getNewestMessId(uid)
+            //刷新用户信息
+            (presenter as MineContract.IPresenter).getUserInfo(uid)
         }
     }
-
 
     private fun initUI() {
         val levels = Cookies.getConstant(7)
@@ -100,10 +101,11 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
         Glide.with(this).load(OfficeApplication.userInfo?.avatar).error(R.drawable.organization_default).into(headView)
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
         userName.text = OfficeApplication.userInfo?.name
-        Log.d("test","levelnow: $levelNow")
+        val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
         if (levelNow!! > 0) {
-            val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
             userLevel.text = levels[levelNow!! - 1].substring(0, 4)
+        } else {
+            userLevel.text = "普通会员"
         }
         val timesRemain = fragView?.findViewById(R.id.tv_times_remain) as TextView
         timesRemain.text = "剩余发布职位：${OfficeApplication.userInfo?.job_time_remain}个   " +
@@ -122,7 +124,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
                 //升级账号
                 val intent = Intent(this.activity, UpdateActivity::class.java)
                 intent.putExtra("levelNow", levelNow)
-                this@MineFrag.startActivityForResult(intent,Constant.Update)
+                startActivity(intent)
             }
             R.id.rl_job_manage ->{
                 //职位管理
@@ -148,7 +150,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
             }
             R.id.rl_setting ->{
                 //设置
-                startActivityForResult(Intent(this.activity,SettingActivity::class.java),Constant.EditInfo)
+                startActivity(Intent(this.activity,SettingActivity::class.java))
             }
         }
     }
@@ -169,13 +171,13 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
     }
 
     override fun onNewestMessIdGet(id: Int) {
-        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestMesId(uid!!)}")
+//        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestMesId(uid!!)}")
         newestMessId = id
         changeRedPoint()
     }
 
     override fun onNewestSysIdGet(id: Int) {
-        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestSysId(uid!!)}")
+//        Log.d("test","sys id get=$id, id save is ${Cookies.getNewestSysId(uid!!)}")
         newestSysId = id
         changeRedPoint()
     }
@@ -193,17 +195,5 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                Constant.Update, Constant.EditInfo -> {
-                    //刷新用户信息
-                    (presenter as MineContract.IPresenter).getUserInfo(uid!!)
-                }
-            }
-        }
     }
 }

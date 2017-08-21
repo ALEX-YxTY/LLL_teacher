@@ -44,7 +44,7 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
         if (getItemViewType(position) == TYPE_NORMAL) {
             val teacher = dataList[position]as TeacherInfo
             val teacherInfoViewHolder = holder as TeacherInfoViewHolder
-            teacherInfoViewHolder.teacherName.text = teacher.name
+            teacherInfoViewHolder.teacherName.text = "${teacher.name}老师"
             teacherInfoViewHolder.course.text = "${courses[teacher.course]} ${grades[teacher.grade]}"
             teacherInfoViewHolder.number.text = "${teacher.total_number} 人评价"
             teacherInfoViewHolder.socre.text = NumberUtil.formatNumberInOne(teacher.total_score.toDouble()

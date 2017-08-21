@@ -82,7 +82,7 @@ class ChatDetailActivity : BasicActivity(), ChatDetailContract.IView{
     //from ChatDetailContract.IView
     override fun onTeacherInfoGet(teacherInfo: TeacherInfo) {
         val title = findViewById(R.id.tv_title) as TextView
-        title.text = teacherInfo.name
+        title.text = "${teacherInfo.name}老师"
     }
 
     //from ChatDetailContract.IView
