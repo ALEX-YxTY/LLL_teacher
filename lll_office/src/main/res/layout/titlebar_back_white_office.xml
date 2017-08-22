@@ -15,20 +15,15 @@
         />
 
     <ImageView
-        android:id="@+id/bt_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="19dp"
-        android:src="@drawable/icon_return"/>
-
-    <ImageView
         android:id="@+id/bt_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:src="@drawable/icon_search_big"
         android:layout_marginRight="19dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         android:layout_alignParentRight="true"/>
 
     <View

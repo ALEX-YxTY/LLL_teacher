@@ -66,67 +66,61 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
 
             //选择科目
             R.id.rl_course -> {
-                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, courses.toTypedArray(), object : CustomNumPickeDialog.OnOkClickListener {
-                    override fun onOkClick(vlueChoose: Int) {
-                        courseSelect = vlueChoose
-                        tvCourse.text = courses[vlueChoose]
-                        dialog?.dismiss()
-                    }
+                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, courses.toTypedArray()
+                        , CustomNumPickeDialog.OnOkClickListener { vlueChoose ->
+                    courseSelect = vlueChoose
+                    tvCourse.text = courses[vlueChoose]
+                    dialog?.dismiss()
                 })
                 dialog?.show()
             }
             //选择年级
             R.id.rl_grade -> {
-                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, grades.toTypedArray(), object : CustomNumPickeDialog.OnOkClickListener {
-                    override fun onOkClick(vlueChoose: Int) {
-                        gradeSelect = vlueChoose
-                        tvGrade.text = grades[vlueChoose]
-                        dialog?.dismiss()
-                    }
+                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, grades.toTypedArray()
+                        , CustomNumPickeDialog.OnOkClickListener { vlueChoose ->
+                    gradeSelect = vlueChoose
+                    tvGrade.text = grades[vlueChoose]
+                    dialog?.dismiss()
                 })
                 dialog?.show()
             }
             //工作区域
             R.id.rl_work_area -> {
-                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, areas.toTypedArray(), object : CustomNumPickeDialog.OnOkClickListener {
-                    override fun onOkClick(vlueChoose: Int) {
-                        areaSelect = vlueChoose
-                        tvWorkArea.text = areas[vlueChoose]
-                        dialog?.dismiss()
-                    }
+                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, areas.toTypedArray()
+                        , CustomNumPickeDialog.OnOkClickListener { vlueChoose ->
+                    areaSelect = vlueChoose
+                    tvWorkArea.text = areas[vlueChoose]
+                    dialog?.dismiss()
                 })
                 dialog?.show()
             }
             //性别
             R.id.rl_sex -> {
-                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, sexs, object : CustomNumPickeDialog.OnOkClickListener {
-                    override fun onOkClick(vlueChoose: Int) {
-                        sexSelect = vlueChoose
-                        tvSex.text = sexs[vlueChoose]
-                        dialog?.dismiss()
-                    }
+                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, sexs
+                        , CustomNumPickeDialog.OnOkClickListener { vlueChoose ->
+                    sexSelect = vlueChoose
+                    tvSex.text = sexs[vlueChoose]
+                    dialog?.dismiss()
                 })
                 dialog?.show()
             }
             //教学经验要求
             R.id.rl_work_year -> {
-                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, experiences.toTypedArray(), object : CustomNumPickeDialog.OnOkClickListener {
-                    override fun onOkClick(vlueChoose: Int) {
-                        experienceSelect = vlueChoose
-                        tvWorkYear.text = experiences[vlueChoose]
-                        dialog?.dismiss()
-                    }
+                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, experiences.toTypedArray()
+                        , CustomNumPickeDialog.OnOkClickListener { vlueChoose ->
+                    experienceSelect = vlueChoose
+                    tvWorkYear.text = experiences[vlueChoose]
+                    dialog?.dismiss()
                 })
                 dialog?.show()
             }
             //教师资格证有无
             R.id.rl_certification -> {
-                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, certificates, object : CustomNumPickeDialog.OnOkClickListener {
-                    override fun onOkClick(vlueChoose: Int) {
-                        certificateSelect = vlueChoose
-                        tvCertification.text = certificates[vlueChoose]
-                        dialog?.dismiss()
-                    }
+                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, certificates
+                        , CustomNumPickeDialog.OnOkClickListener { vlueChoose ->
+                    certificateSelect = vlueChoose
+                    tvCertification.text = certificates[vlueChoose]
+                    dialog?.dismiss()
                 })
                 dialog?.show()
             }

@@ -20,6 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="19dp"
+        android:paddingRight="20dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         android:src="@drawable/icon_return"/>
 
     <View

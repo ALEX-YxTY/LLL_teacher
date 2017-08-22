@@ -106,10 +106,10 @@ object Cookies {
      * 9评语
      */
     fun getConstant(type: Int): List<String> {
-        if (getPreference() != null) {
-            return getPreference()!!.getString("constant$type", "").split(",")
+        return if (getPreference() != null) {
+            getPreference()!!.getString("constant$type", "").split(",")
         } else {
-            return listOf()
+            listOf()
         }
 
     }

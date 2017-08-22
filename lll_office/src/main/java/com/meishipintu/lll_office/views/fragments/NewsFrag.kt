@@ -20,6 +20,7 @@ import com.meishipintu.lll_office.views.plugs.MyImageLoader
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
+import com.youth.banner.listener.OnBannerListener
 
 /**
  * Created by Administrator on 2017/6/29.
@@ -76,6 +77,12 @@ class NewsFrag:BasicFragment(),NewsContract.IView,CanLoadMoreRecyclerView.StateC
         vpAdd.isAutoPlay(true)
         //设置轮播时间
         vpAdd.setDelayTime(3000)
+        vpAdd.setOnBannerListener(object :OnBannerListener{
+            override fun OnBannerClick(position: Int) {
+
+            }
+
+        })
     }
 
     //from NewsContract.IView

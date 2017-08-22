@@ -227,8 +227,8 @@ interface HttpApiStores {
 
     //动作统计接口
     //flag=1教师端，flag=2 机构端
-    //type=1 新闻事件
-    //id_detail 事件详情，新闻为新闻id
+    //type=1 新闻事件  type=2 浏览简历 type=3 浏览职位
+    //id_detail 事件详情，新闻为新闻id 简历为uid  职位pid
     @FormUrlEncoded
     @POST("Home/Api/log")
     fun doActionSattistic(@Field("uid") uid:String,@Field("flag") flag:Int,@Field("type") type:Int

@@ -11,15 +11,17 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
+        android:paddingRight="10dp"
         android:src="@drawable/icon_return2"/>
 
     <ImageView
         android:id="@+id/bt_collect"
-        android:layout_width="18dp"
+        android:layout_width="28dp"
         android:layout_height="18dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="19dp"
+        android:paddingLeft="10dp"
         android:src="@drawable/icon_star_unfill"/>
 
 </RelativeLayout>

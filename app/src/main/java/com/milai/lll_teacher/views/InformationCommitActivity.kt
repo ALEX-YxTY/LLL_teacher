@@ -92,13 +92,17 @@ class InformationCommitActivity : AppCompatActivity(),PicGetUtil.SuccessListener
             }
 
             override fun onJsAlert(webView: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
-                if (url =="http://lll.domobile.net/Home/Index/success" && message =="注册成功") {
-                    DialogUtils.showCustomDialog(this@InformationCommitActivity, "注册成功",{ dialog, _ ->
+                Log.d("test","alert: ${message?:"aaaa"}")
+                if (message != null) {
+                    DialogUtils.showCustomDialog(this@InformationCommitActivity, message,{ dialog, _ ->
                         dialog.dismiss()
+                        if(message=="注册成功")
                         this@InformationCommitActivity.finish()
                     })
+                    result?.cancel()
                     return true
                 }
+
                 return super.onJsAlert(webView, url, message, result)
             }
 
