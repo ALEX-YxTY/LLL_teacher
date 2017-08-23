@@ -7,9 +7,12 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import com.meishipintu.lll_office.Cookies
+import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.NewJobContract
 import com.meishipintu.lll_office.customs.utils.CustomNumPickeDialog
+import com.meishipintu.lll_office.customs.utils.CustomNumPickeDialog2
+import com.meishipintu.lll_office.modles.entities.JobInfo
 import com.meishipintu.lll_office.presenters.JobManagerPresenter
 
 class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView {
@@ -20,9 +23,11 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     val experiences = Cookies.getConstant(5)
     val certificates = arrayOf("无要求", "有")
     val sexs = arrayOf("不限", "男", "女")
+    val status = Cookies.getConstant(10)
 
     var courseSelect = 0
     var gradeSelect = 0
+    var gradeDetailSelect = 0
     var areaSelect = 0
     var experienceSelect = 0
     var sexSelect = 0           //0-不限 1-男 2-女
@@ -43,14 +48,40 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     val tvCertification: TextView by lazy { findViewById(R.id.tv_certification) as TextView }
 
     var dialog: CustomNumPickeDialog? = null
+    var dialog2: CustomNumPickeDialog2? = null
+    var saveNewJob: JobInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_job)
         presenter = JobManagerPresenter(this)
+        initUI()
+    }
+
+    //页面初始化
+    private fun initUI() {
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = "发布职位"
         findViewById(R.id.bt_back).setOnClickListener(this)
+        val newJob = Cookies.getJobAdd()
+        etJobName.setText(newJob?.job_name)
+        tvCourse.text = if (newJob!=null) courses[newJob.course] else "请选择"
+        courseSelect = newJob?.course?:0
+        tvGrade.text = if (newJob!=null) grades[newJob.grade] else "请选择"
+        gradeSelect = newJob?.grade?:0
+        etMoney.setText(newJob?.money)
+        tvWorkArea.text = if (newJob!=null) areas[newJob.work_area] else "请选择"
+        areaSelect = newJob?.work_area?:0
+        etAddress.setText(newJob?.work_address)
+        tvSex.text = sexs[newJob?.sex ?: 0]
+        sexSelect = newJob?.sex?:0
+        tvWorkYear.text = experiences[newJob?.require_year ?: 0]
+        experienceSelect = newJob?.require_year?:0
+        tvCertification.text = certificates[newJob?.have_certificate ?: 0]
+        certificateSelect = newJob?.have_certificate ?: 0
+        etJobRequire.setText(newJob?.require)
+        etOtherRequire.setText(newJob?.other_demand)
+
         findViewById(R.id.rl_course).setOnClickListener(this)
         findViewById(R.id.rl_grade).setOnClickListener(this)
         findViewById(R.id.rl_work_area).setOnClickListener(this)
@@ -76,13 +107,18 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
             }
             //选择年级
             R.id.rl_grade -> {
-                dialog = CustomNumPickeDialog(this@NewJobActivity, R.style.DialogNoAction, grades.toTypedArray()
-                        , CustomNumPickeDialog.OnOkClickListener { vlueChoose ->
-                    gradeSelect = vlueChoose
-                    tvGrade.text = grades[vlueChoose]
-                    dialog?.dismiss()
+                dialog2 = CustomNumPickeDialog2(this@NewJobActivity, R.style.DialogNoAction
+                        , grades.toTypedArray(), status.toTypedArray()
+                        , object : CustomNumPickeDialog2.OnOk2ClickListener{
+                    override fun onOkClick(vlueChooseFirst: Int, vlueChooseSecond: Int) {
+                        gradeSelect = vlueChooseFirst
+                        gradeDetailSelect = vlueChooseSecond
+                        tvGrade.text = "${grades[vlueChooseFirst]} ${status[gradeDetailSelect]}"
+                        dialog2?.dismiss()
+                    }
+
                 })
-                dialog?.show()
+                dialog2?.show()
             }
             //工作区域
             R.id.rl_work_area -> {
@@ -130,18 +166,25 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
                 if (arrayOf(etJobName.text, etAddress.text, etMoney.text, etJobRequire.text).isNullOrEmpty()) {
                     toast("输入项不能为空")
                 } else {
-                    Log.d("require:","${etJobRequire.text.toString()} and ${etOtherRequire.text.toString()}")
-                    (presenter as JobManagerPresenter).addJob(etJobName.text.toString(), Cookies.getUserInfo()!!.uid
-                            , areaSelect, etAddress.text.toString(), courseSelect, gradeSelect, sexSelect
+                    Log.d("require:","${etJobRequire.text} and ${etOtherRequire.text}")
+                    (presenter as JobManagerPresenter).addJob(etJobName.text.toString(), OfficeApplication.userInfo?.uid!!
+                            , areaSelect, etAddress.text.toString(), courseSelect, gradeSelect, gradeDetailSelect, sexSelect
                             , experienceSelect, etMoney.text.toString(), certificateSelect, etJobRequire.text.toString()
                             , etOtherRequire.text.toString())
+                    saveNewJob = JobInfo(etJobName.text.toString(), OfficeApplication.userInfo?.uid!!
+                            , areaSelect, etAddress.text.toString(), courseSelect, gradeSelect, gradeDetailSelect
+                            ,sexSelect, experienceSelect, etJobRequire.text.toString(), etMoney.text.toString()
+                            , certificateSelect, etOtherRequire.text.toString())
                 }
             }
         }
-
     }
 
     override fun onJobAddSucess() {
+        //保存已添加的职位
+        if (saveNewJob != null) {
+            Cookies.saveJobAdd(saveNewJob!!)
+        }
         //添加职位成功
         toast("添加职位成功")
         setResult(Activity.RESULT_OK)
@@ -153,7 +196,7 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     }
 
     private fun <T> Array<T>.isNullOrEmpty(): Boolean {
-        return this.any { it.toString().isNullOrEmpty() }
+        return this.any { it.toString().isEmpty() }
     }
 }
 

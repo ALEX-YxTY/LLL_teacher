@@ -45,7 +45,8 @@ class DeliverAdapter(ctx: Context, dataList:List<DeliverInfo>): BasicAdapter(ctx
             if (teacher.total_number > 0) {
                 deliverInfoViewHolder.star.rating = teacher.total_score.toFloat()/ teacher.total_number
             }
-            glide.load(teacher.avatar).error(R.drawable.teacher_default).into(deliverInfoViewHolder.head)
+            glide.load(teacher.avatar).error(if(teacher.sex==1) R.drawable.teacher_default_female
+                else R.drawable.teacher_default).into(deliverInfoViewHolder.head)
             deliverInfoViewHolder.chat.setOnClickListener{
                 //进入沟通页
                 val intent = Intent(ctx, ChatDetailActivity::class.java)

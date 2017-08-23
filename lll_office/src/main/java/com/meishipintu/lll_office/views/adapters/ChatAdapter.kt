@@ -26,30 +26,28 @@ class ChatAdapter(val ctx:Context,val dataList:List<ChatDetail>):RecyclerView.Ad
     val glide = Glide.with(ctx)
 
     override fun onCreateViewHolder(container: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType==TYPE_EMPTY) {
-            return EmptyViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_empty, container, false))
-        } else if (viewType == TYPE_LEFT) {
-            return ChatViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_talk_left, container, false))
-        } else {
-            return ChatViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_talk_right, container, false))
+        return when (viewType) {
+            TYPE_EMPTY -> EmptyViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_empty, container, false))
+            TYPE_LEFT -> ChatViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_talk_left, container, false))
+            else -> ChatViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_talk_right, container, false))
         }
     }
 
     override fun getItemCount(): Int {
-        if(dataList.isEmpty()) {
-            return 1
+        return if(dataList.isEmpty()) {
+            1
         } else {
-            return dataList.size
+            dataList.size
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(dataList.isEmpty()&&position==0) {
-            return TYPE_EMPTY
+        return if(dataList.isEmpty()&&position==0) {
+            TYPE_EMPTY
         } else if (dataList[position].type == 1) {
-            return TYPE_LEFT
+            TYPE_LEFT
         } else {
-            return TYPE_RIGHT
+            TYPE_RIGHT
         }
     }
 
@@ -73,8 +71,9 @@ class ChatAdapter(val ctx:Context,val dataList:List<ChatDetail>):RecyclerView.Ad
             }
 
             if (getItemViewType(position) == TYPE_LEFT) {
-                glide.load(chatDetail.avatar.teacher_avatar).placeholder(R.drawable.teacher_default)
-                        .error(R.drawable.teacher_default).into(chatViewHolder.ivHead)
+                glide.load(chatDetail.avatar.teacher_avatar).error(if(chatDetail.sex==1) R.drawable.teacher_default_female
+                    else R.drawable.teacher_default)
+                        .into(chatViewHolder.ivHead)
             } else {
                 glide.load(chatDetail.avatar.organization_avatar).placeholder(R.drawable.organization_default)
                         .error(R.drawable.organization_default).into(chatViewHolder.ivHead)

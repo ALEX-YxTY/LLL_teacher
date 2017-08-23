@@ -49,7 +49,8 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
             teacherInfoViewHolder.number.text = "${teacher.total_number} 人评价"
             teacherInfoViewHolder.socre.text = NumberUtil.formatNumberInOne(teacher.total_score.toDouble()
                     / teacher.total_number)
-            glide.load(teacher.avatar).error(R.drawable.teacher_default).into(teacherInfoViewHolder.head)
+            glide.load(teacher.avatar).error(if(teacher.sex==1) R.drawable.teacher_default_female
+                else R.drawable.teacher_default).into(teacherInfoViewHolder.head)
             if (teacher.total_number > 0) {
                 //评价大于1人
                 teacherInfoViewHolder.star.rating = (teacher.total_score.toFloat() / teacher.total_number)

@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="nativecrashreport-3.3.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/nativecrashreport-3.3.1.aar/f49096d680ef4c5b65f44b0cbbc8f762/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/nativecrashreport-3.3.1.aar/f49096d680ef4c5b65f44b0cbbc8f762/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/nativecrashreport-3.3.1.aar/f5da028d61d515f741066255bc4747f4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/nativecrashreport-3.3.1.aar/f5da028d61d515f741066255bc4747f4/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

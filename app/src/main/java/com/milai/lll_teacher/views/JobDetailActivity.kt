@@ -39,6 +39,8 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_job_detail)
         presenter = JobPresenter(this)
+        //添加统计，判断收藏，获取详情
+        (presenter as JobDetailContact.IPresenter).addStatistic(MyApplication.userInfo?.uid!!, jobId)
         (presenter as JobDetailContact.IPresenter).isJobCollect(jobId, MyApplication.userInfo?.uid!!)
         (presenter as JobDetailContact.IPresenter).getJobDetail(jobId)
         if (type != 2) {

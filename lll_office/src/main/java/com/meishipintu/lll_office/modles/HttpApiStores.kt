@@ -47,8 +47,8 @@ interface HttpApiStores {
     @POST("Home/organization/addPosition")
     fun addJobService(@Field("job_name") jobName: String, @Field("oid") oid: String, @Field("work_area") area: Int
                       , @Field("work_address") address: String, @Field("course") course: Int, @Field("grade") grade: Int
-                      , @Field("sex") sex: Int, @Field("require_year") rYear: Int, @Field("money") money: String
-                      , @Field("have_certificate") have_certificate: Int
+                      , @Field("grade_detail") grade_detail: Int, @Field("sex") sex: Int, @Field("require_year") rYear: Int
+                      , @Field("money") money: String, @Field("have_certificate") have_certificate: Int
                       , @Field("require") require: String, @Field("other_demand") other: String)
             : Observable<HttpResult<Any>>
 
@@ -62,7 +62,20 @@ interface HttpApiStores {
     @POST("Home/Organization/updatePostionStatus")
     fun changeJobStatusService(@Field("id") jid: String, @Field("status") status: Int): Observable<HttpResult<JobInfo>>
 
-    //获取常数接口，type=1~9
+    /**
+     * 获取常数接口，type=1~9
+     * type取值：
+     * 1 区域
+     * 2 学科
+     * 3年级
+     * 4年龄范围
+     * 5工作年限范围
+     * 6学历
+     * 7套餐
+     * 8评价
+     * 9评语
+     * 10 求职状态
+     */
     @FormUrlEncoded
     @POST("Home/Base/cs")
     fun getConstantArraysService(@Field("type") type: Int): Observable<HttpResult<Array<String>>>

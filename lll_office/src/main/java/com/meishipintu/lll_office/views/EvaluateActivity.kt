@@ -68,7 +68,7 @@ class EvaluateActivity : BasicActivity(),View.OnClickListener,InterviewContract.
             }
 
         })
-        ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+        ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { _, rating, fromUser ->
             run {
                 if (rating > 0) {
                     multiSelect.visibility = View.VISIBLE

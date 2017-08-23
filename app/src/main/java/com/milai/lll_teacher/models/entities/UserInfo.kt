@@ -10,4 +10,4 @@ import java.io.Serializable
 data class UserInfo(val id: Int, val uid: String, val tel: String, val name: String, val first_name:String
                     ,val sex:Int,val birthday:String, val identityid:String, val course:Int, val avatar: String
                     , val certification: String, val create_time: Long, val grade: Int
-                    , val email: String, val work_year: Int,val status:Int): Serializable
+                    , val email: String, val work_year: Int,val status:Int,val qz_status:Int): Serializable

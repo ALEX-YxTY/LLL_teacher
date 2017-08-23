@@ -199,4 +199,19 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
             }
         })
     }
+
+    //添加职位浏览的统计
+    //flag=1教师端，flag=2 机构端
+    //type=1 新闻事件  type=2 浏览简历 type=3 浏览职位
+    //id_detail 事件详情，新闻为新闻id 简历为uid  职位pid
+    override fun addStatistic(uid: String, pid: Int) {
+        addSubscription(httpApi.doActionSattistic(uid,1,3,pid.toString()).map(HttpResultFunc())
+                ,object :HttpCallback<Any>(){
+            override fun onSuccess(model: Any) {
+            }
+
+            override fun onFailure(msg: String?) {
+            }
+        })
+    }
 }

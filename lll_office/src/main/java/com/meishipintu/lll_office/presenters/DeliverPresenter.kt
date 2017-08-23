@@ -22,7 +22,7 @@ class DeliverPresenter(val iView:BasicView):BasicPresenter(), MyInterviewContrac
     //获取机构被投递记录
     override fun getDeliverHistory(uid: String, status: Int, type: Int,page:Int) {
         addSubscription(httpApi.getDeliverHistoryService(uid,status,type,page)
-                .map(HttpResultFunc<List<DeliverInfo>>()),object :HttpCallback<List<DeliverInfo>>(){
+                .map(HttpResultFunc()),object :HttpCallback<List<DeliverInfo>>(){
             override fun onSuccess(model: List<DeliverInfo>) {
                 (iView as MyInterviewContract.IView).onDeleverDataGet(model,page)
             }

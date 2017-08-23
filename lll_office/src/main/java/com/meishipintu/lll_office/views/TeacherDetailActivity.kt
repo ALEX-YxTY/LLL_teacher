@@ -31,10 +31,11 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher_detail)
         presenter = TeachPresenter(this)
+        (presenter as TeacherDetailContract.IPresenter).doActionStatistic(OfficeApplication.userInfo?.uid!!, teacher.uid)
         val tvTitle = findViewById(R.id.tv_title)as TextView
         tvTitle.text = "教师详情"
         if (type == 1) {
-            (presenter as TeachPresenter).isCollectedTeacher(OfficeApplication.userInfo?.uid!!, teacher.uid)
+            (presenter as TeacherDetailContract.IPresenter).isCollectedTeacher(OfficeApplication.userInfo?.uid!!, teacher.uid)
         } else {
             ivButton.visibility = View.GONE
             tvButton.text = "邀请TA面试"

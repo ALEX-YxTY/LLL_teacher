@@ -31,8 +31,8 @@ class OfficeApplication :Application() {
 
     private fun downloadResource() {
         val httpApi = HttpApiClinet.retrofit()
-        for (type: Int in 1..9) {
-            httpApi.getConstantArraysService(type).map(HttpResultFunc<Array<String>>())
+        for (type: Int in 1..10) {
+            httpApi.getConstantArraysService(type).map(HttpResultFunc())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

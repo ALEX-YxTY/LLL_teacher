@@ -34,5 +34,8 @@ interface JobDetailContact {
         fun getJobDetail(pid:Int)
 
         fun getOfficeDetail(oid:String)
+
+        //浏览职位统计接口
+        fun addStatistic(uid: String, pid: Int)
     }
 }

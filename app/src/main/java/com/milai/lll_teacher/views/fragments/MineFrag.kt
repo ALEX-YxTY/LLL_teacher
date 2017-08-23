@@ -2,7 +2,6 @@ package com.milai.lll_teacher.views.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,15 +25,14 @@ import com.milai.lll_teacher.views.*
  */
 class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
 
-    var fragView: View? = null
-    val Edit_RESUME = 200   //编辑简历页面requestCode
+    private var fragView: View? = null
+    private val Edit_RESUME = 200   //编辑简历页面requestCode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (presenter == null) {
             presenter = AuthorPresenter(this)
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,10 +58,11 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
         val title = fragView?.findViewById(R.id.tv_title) as TextView
         title.text = "我的"
         val headView = fragView?.findViewById(R.id.iv_head) as ImageView
-        Glide.with(this).load(userInfo?.avatar).error(R.drawable.teacher_default).into(headView)
+        Glide.with(this).load(userInfo?.avatar).error(if(userInfo?.sex==1) R.drawable.teacher_default_female
+        else R.drawable.teacher_default).into(headView)
         headView.setOnClickListener(this)
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
-        userName.text = userInfo?.name
+        userName.text = "${userInfo?.name} ${userInfo?.first_name}"
 
         //status 0-未审核 1-已审核
         if (userInfo?.status == 1) {

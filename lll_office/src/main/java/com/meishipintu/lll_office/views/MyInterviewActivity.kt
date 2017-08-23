@@ -20,7 +20,6 @@ import com.meishipintu.lll_office.modles.entities.DeliverInfo
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.presenters.DeliverPresenter
 import com.meishipintu.lll_office.views.adapters.DeliverAdapter
-import com.meishipintu.lll_office.views.adapters.TeacherAdapter
 
 class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListener
         ,MyInterviewContract.IView, CanLoadMoreRecyclerView.StateChangedListener{
@@ -98,7 +97,7 @@ class MyInterviewActivity : BasicActivity(),View.OnClickListener,MenuClickListen
         }
     }
 
-    fun changeSelect(index:Int){
+    private fun changeSelect(index:Int){
         if (select != index) {
             when(select){
                 0 -> tvAll.setTextColor(0xff505d67.toInt())

@@ -30,5 +30,8 @@ interface TeacherDetailContract {
 
         //邀请面试
         fun inviteInterview(jobId:Int,tid:String,oid:String)
+
+        //添加tongji
+        fun doActionStatistic(uid: String, tid: String)
     }
 }

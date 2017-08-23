@@ -139,8 +139,19 @@ class TeachPresenter(val iView:BasicView):BasicPresenter(),TeacherContract.IPres
                     iView.onError(msg)
                 }
             }
-
         })
     }
 
+    //添加浏览简历统计
+    override fun doActionStatistic(uid: String, tid: String) {
+        addSubscription(httpApi.doActionSattistic(uid,2,2,tid).map(HttpResultFunc())
+                ,object :HttpCallback<Any>(){
+            override fun onSuccess(model: Any) {
+            }
+
+            override fun onFailure(msg: String?) {
+            }
+
+        })
+    }
 }
