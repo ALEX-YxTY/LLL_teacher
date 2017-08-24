@@ -26,6 +26,7 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
 
     val courses = Cookies.getConstant(2)    //获取学科数据
     val grades = Cookies.getConstant(3)     //获取年级数据
+    val status = Cookies.getConstant(10)    //求职状态数据
     val glide = Glide.with(ctx)
     /**
      * 标记特殊显示
@@ -45,7 +46,7 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
             val teacher = dataList[position]as TeacherInfo
             val teacherInfoViewHolder = holder as TeacherInfoViewHolder
             teacherInfoViewHolder.teacherName.text = "${teacher.name}老师"
-            teacherInfoViewHolder.course.text = "${courses[teacher.course]} ${grades[teacher.grade]}"
+            teacherInfoViewHolder.course.text = "${courses[teacher.course]} ${grades[teacher.grade]}   ${status[teacher.qz_status]}"
             teacherInfoViewHolder.number.text = "${teacher.total_number} 人评价"
             teacherInfoViewHolder.socre.text = NumberUtil.formatNumberInOne(teacher.total_score.toDouble()
                     / teacher.total_number)

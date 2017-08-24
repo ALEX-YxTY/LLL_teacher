@@ -140,21 +140,6 @@ interface HttpApiStores {
     @POST("Home/organization/getAllOrganization")
     fun getOtherOrganizationService(@Field("uid") oid: String, @Field("page") page: Int): Observable<HttpResult<List<OfficeInfo>>>
 
-    //教师添加收藏机构
-    @FormUrlEncoded
-    @POST("Home/Api/addTeacherLikedOrganization")
-    fun addOfficeCollectionService(@Field("oid") officeId: String, @Field("tid") teacherId: String): Observable<HttpResult<Any>>
-
-    //教师删除收藏机构
-    @FormUrlEncoded
-    @POST("Home/Api/deleteTeacherLikedOrganization")
-    fun deletOfficeCollectionService(@Field("oid") officeId: String, @Field("tid") teacherId: String): Observable<HttpResult<Any>>
-
-    //教师是否收藏了机构
-    @FormUrlEncoded
-    @POST("Home/Api/getTeacherIsLikedOrganization")
-    fun isOfficeCollectedService(@Field("oid") officeId: String, @Field("tid") teacherId: String): Observable<HttpResult<List<Any>>>
-
     //获取系统通知
     @FormUrlEncoded
     @POST("Home/Api/getSystemNotice")
@@ -246,5 +231,9 @@ interface HttpApiStores {
     @POST("Home/Api/log")
     fun doActionSattistic(@Field("uid") uid:String,@Field("flag") flag:Int,@Field("type") type:Int
                           ,@Field("id_detail") detail:String):Observable<HttpResult<Any>>
+
+    //获取会员描述
+    @POST("Home/Api/getMembersDesc")
+    fun getMemberDesc():Observable<HttpResult<Array<String>>>
 
 }

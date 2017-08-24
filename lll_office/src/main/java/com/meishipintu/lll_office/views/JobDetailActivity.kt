@@ -51,6 +51,8 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         val sexs = arrayOf("性别无要求", "男", "女")
         val experiences = Cookies.getConstant(5)
         val areas = Cookies.getConstant(1)
+        val gradeDetail = Cookies.getConstant(11)
+
 
         val tvStatusChange = findViewById(R.id.tv_offline) as TextView
         val btInvite = findViewById(R.id.bt_invite)
@@ -64,10 +66,11 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
             btInvite.visibility = if (jobInfo.status > 1) View.GONE else View.VISIBLE
         }
         (findViewById(R.id.job_name) as TextView).text = jobInfo?.job_name
-        (findViewById(R.id.tv_course_grade) as TextView).text = "${grades[jobInfo.grade]} " +
-                "${courses[jobInfo.course]}"
+        (findViewById(R.id.tv_course_grade) as TextView).text = "${grades[jobInfo!!.grade]} " +
+                "${gradeDetail[jobInfo?.grade_detail]}" +
+                " ${courses[jobInfo!!.course]}"
         (findViewById(R.id.tv_sex) as TextView).text = "${sexs[jobInfo.sex]}"
-        (findViewById(R.id.tv_experience) as TextView).text = "${experiences[jobInfo.require_year]}"
+        (findViewById(R.id.tv_experience) as TextView).text = "教学经验${experiences[jobInfo.require_year]}"
         val tvCertificate = findViewById(R.id.tv_certificate) as TextView
         tvCertificate.visibility = if(jobInfo.have_certificate==0) View.GONE else View.VISIBLE
         (findViewById(R.id.tv_money) as TextView).text = jobInfo.money

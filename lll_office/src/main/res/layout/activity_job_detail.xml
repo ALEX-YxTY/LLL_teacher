@@ -92,7 +92,8 @@
                         android:ellipsize="end"
                         android:textSize="12sp"
                         android:text="有教师资格证"
-                        android:textColor="@color/text_grey1" />
+                        android:textColor="@color/text_grey1"
+                        android:layout_marginLeft="4dp"/>
                 </LinearLayout>
 
 

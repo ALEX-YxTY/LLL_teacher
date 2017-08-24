@@ -54,8 +54,9 @@ class MyApplication : Application() {
 
     private fun downloadResource() {
         val httpApi = HttpApiClinet.retrofit()
+        Cookies.saveConstant(11, arrayOf("全年级", "一年级", "二年级", "三年级", "四年级", "五年级", "六年级"))
         for (type: Int in 1..6) {
-            httpApi.getConstantArraysService(type).map(HttpResultFunc<Array<String>>())
+            httpApi.getConstantArraysService(type).map(HttpResultFunc())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -63,6 +64,7 @@ class MyApplication : Application() {
                         Cookies.saveConstant(type, result)
                     })
         }
+
     }
 
 }

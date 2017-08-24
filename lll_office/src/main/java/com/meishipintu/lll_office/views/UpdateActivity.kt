@@ -1,42 +1,32 @@
 package com.meishipintu.lll_office.views
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.meishipintu.lll_office.modles.HttpApiClinet
-import com.meishipintu.lll_office.modles.HttpCallback
-import com.meishipintu.lll_office.modles.HttpResultFunc
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java.lang.ref.WeakReference
-import android.widget.Toast
 import com.meishipintu.lll_office.*
 import com.meishipintu.lll_office.modles.entities.BusMessage
-import com.meishipintu.lll_office.modles.entities.PayResult
 
 class UpdateActivity : BasicActivity(),View.OnClickListener {
 
     var select = 0      //当前选择项
+    var descs = Cookies.getConstant(12)
     val idList:List<View> by lazy {
         listOf(findViewById(R.id.rl_1), findViewById(R.id.rl_2), findViewById(R.id.rl_3), findViewById(R.id.rl_4))
     }
     val levels = Cookies.getConstant(7)
     val tvMoney:TextView by lazy { findViewById(R.id.tv_money) as TextView }
-
+    val tvDetail:TextView by lazy{findViewById(R.id.level_detail) as TextView}
     val levelNow:Int by lazy{ intent.getIntExtra("levelNow", 0)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +79,7 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
                 changeTo(0)
             }
             1 ->{
-                rl1.isClickable = false
+                rl1.setOnClickListener(this)
                 rl2.setOnClickListener(this)
                 rl3.setOnClickListener(this)
                 rl4.setOnClickListener(this)
@@ -97,7 +87,7 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
             }
             2 ->{
                 rl1.isClickable = false
-                rl2.isClickable = false
+                rl2.setOnClickListener(this)
                 rl3.setOnClickListener(this)
                 rl4.setOnClickListener(this)
                 changeTo(2)
@@ -105,7 +95,7 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
             3 ->{
                 rl1.isClickable = false
                 rl2.isClickable = false
-                rl3.isClickable = false
+                rl3.setOnClickListener(this)
                 rl4.setOnClickListener(this)
                 changeTo(3)
             }
@@ -155,8 +145,6 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
         }
     }
 
-
-
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
@@ -167,5 +155,6 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
         select = index
         idList[select].setBackgroundResource(R.drawable.shape_tv_lable_radiu8)
         tvMoney.text = "¥ ${levels[select].split("&")[1]}"
+        tvDetail.text = descs[index]
     }
 }

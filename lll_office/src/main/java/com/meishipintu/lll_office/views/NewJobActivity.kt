@@ -1,6 +1,7 @@
 package com.meishipintu.lll_office.views
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -23,7 +24,7 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     val experiences = Cookies.getConstant(5)
     val certificates = arrayOf("无要求", "有")
     val sexs = arrayOf("不限", "男", "女")
-    val status = Cookies.getConstant(10)
+    val status = Cookies.getConstant(11)
 
     var courseSelect = 0
     var gradeSelect = 0
@@ -47,8 +48,7 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     val tvSex: TextView by lazy { findViewById(R.id.tv_sex) as TextView }
     val tvCertification: TextView by lazy { findViewById(R.id.tv_certification) as TextView }
 
-    var dialog: CustomNumPickeDialog? = null
-    var dialog2: CustomNumPickeDialog2? = null
+    var dialog: AlertDialog? = null
     var saveNewJob: JobInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,18 +107,15 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
             }
             //选择年级
             R.id.rl_grade -> {
-                dialog2 = CustomNumPickeDialog2(this@NewJobActivity, R.style.DialogNoAction
+                dialog = CustomNumPickeDialog2(this@NewJobActivity, R.style.DialogNoAction
                         , grades.toTypedArray(), status.toTypedArray()
-                        , object : CustomNumPickeDialog2.OnOk2ClickListener{
-                    override fun onOkClick(vlueChooseFirst: Int, vlueChooseSecond: Int) {
-                        gradeSelect = vlueChooseFirst
-                        gradeDetailSelect = vlueChooseSecond
-                        tvGrade.text = "${grades[vlueChooseFirst]} ${status[gradeDetailSelect]}"
-                        dialog2?.dismiss()
-                    }
-
+                        , CustomNumPickeDialog2.OnOk2ClickListener { vlueChooseFirst, vlueChooseSecond ->
+                    gradeSelect = vlueChooseFirst
+                    gradeDetailSelect = vlueChooseSecond
+                    tvGrade.text = "${grades[vlueChooseFirst]} ${status[gradeDetailSelect]}"
+                    dialog?.dismiss()
                 })
-                dialog2?.show()
+                dialog?.show()
             }
             //工作区域
             R.id.rl_work_area -> {

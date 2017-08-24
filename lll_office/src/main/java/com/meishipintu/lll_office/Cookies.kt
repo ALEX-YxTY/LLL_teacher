@@ -106,6 +106,8 @@ object Cookies {
      * 8评价
      * 9评语
      * 10求职状态
+     * 11年级名称
+     * 12 会员套餐介绍
      */
     fun getConstant(type: Int): List<String> {
         return if (getPreference() != null) {

@@ -39,7 +39,7 @@
             android:layout_marginTop="10dp"
             android:textSize="10sp"
             android:textColor="@color/edit_text_color"
-            android:text="未审核用户"
+            android:text="正在审核中"
         />
 
         <LinearLayout

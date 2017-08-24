@@ -25,6 +25,7 @@ class DeliverAdapter(ctx: Context, dataList:List<DeliverInfo>): BasicAdapter(ctx
 
     val courses = Cookies.getConstant(2)    //获取学科数据
     val grades = Cookies.getConstant(3)     //获取年级数据
+    val status = Cookies.getConstant(10)    //求职状态数据
     val glide = Glide.with(ctx)
 
     override fun getSpecialView(container: ViewGroup?): RecyclerView.ViewHolder {
@@ -37,7 +38,7 @@ class DeliverAdapter(ctx: Context, dataList:List<DeliverInfo>): BasicAdapter(ctx
             val teacher = (dataList[position] as DeliverInfo).teacher
             val deliverInfoViewHolder = holder as DeliverInfoViewHolder
             deliverInfoViewHolder.teacherName.text = "${teacher.name}老师"
-            deliverInfoViewHolder.course.text = "${courses[teacher.course]} ${grades[teacher.grade]}"
+            deliverInfoViewHolder.course.text = "${courses[teacher.course]} ${grades[teacher.grade]}   ${status[teacher.qz_status]}"
             deliverInfoViewHolder.number.text = "${teacher.total_number} 人评价"
             deliverInfoViewHolder.socre.text = NumberUtil.formatNumberInOne(teacher.total_score.toDouble()
                     / teacher.total_number)

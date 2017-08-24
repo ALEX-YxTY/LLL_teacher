@@ -31,15 +31,27 @@ class OfficeApplication :Application() {
 
     private fun downloadResource() {
         val httpApi = HttpApiClinet.retrofit()
-        for (type: Int in 1..10) {
-            httpApi.getConstantArraysService(type).map(HttpResultFunc())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        result ->
-                        Cookies.saveConstant(type, result)
-                    })
+        for (type: Int in 1..11) {
+            if (type == 11) {
+                Cookies.saveConstant(11, arrayOf("全年级", "一年级", "二年级", "三年级", "四年级", "五年级", "六年级"))
+            } else {
+                httpApi.getConstantArraysService(type).map(HttpResultFunc())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            result ->
+                            Cookies.saveConstant(type, result)
+                        })
+            }
         }
+        httpApi.getMemberDesc().map(HttpResultFunc())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    result ->
+                    //type=12 会员描述
+                    Cookies.saveConstant(12, result)
+                })
     }
 
 }

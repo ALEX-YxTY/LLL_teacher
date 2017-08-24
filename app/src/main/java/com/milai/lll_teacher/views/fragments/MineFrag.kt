@@ -38,9 +38,9 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragView == null) {
             fragView = inflater?.inflate(R.layout.frag_mine, container, false)
+            setListener()
         }
         initUI()
-        setListener()
         return fragView
     }
 
@@ -63,13 +63,22 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
         headView.setOnClickListener(this)
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
         userName.text = "${userInfo?.name} ${userInfo?.first_name}"
-
-        //status 0-未审核 1-已审核
-        if (userInfo?.status == 1) {
-            val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
-            val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
-            userLevel.text = "普通会员"
-            userStates.visibility = View.GONE
+        val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
+        val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
+        //status 0-未审核 1-已审核  2-审核未通过
+        when (userInfo?.status) {
+            0 -> {
+                userLevel.text = "正在审核中"
+                userStates.visibility = View.VISIBLE
+            }
+            1 ->{
+                userLevel.text = "普通会员"
+                userStates.visibility = View.GONE
+            }
+            2 ->{
+                userLevel.text = "审核未通过"
+                userStates.visibility = View.GONE
+            }
         }
     }
 

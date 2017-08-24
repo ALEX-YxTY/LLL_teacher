@@ -20,6 +20,11 @@ import com.meishipintu.lll_office.views.JobDetailActivity
  */
 class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int): BasicAdapter(ctx,dataList) {
 
+    constructor(ctx: Context, dataList: List<JobInfo>, type: Int, avatar: String) : this(ctx,dataList,type) {
+        this.avatar = avatar
+    }
+
+    var avatar: String? = null
     val area = Cookies.getConstant(1)
     val glide = Glide.with(ctx)
 
@@ -32,8 +37,10 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int): BasicAda
         if (getItemViewType(position) == TYPE_NORMAL) {
             val jobInfoViewHolder = (holder as JobInfoViewHolder)
             val job = dataList[position] as JobInfo
-
-            glide.load(OfficeApplication.userInfo?.avatar).error(R.drawable.organization_default).into(jobInfoViewHolder.head)
+            if (avatar == null) {
+                avatar = OfficeApplication.userInfo?.avatar
+            }
+            glide.load(avatar).error(R.drawable.organization_default).into(jobInfoViewHolder.head)
             jobInfoViewHolder.jobName.text = job.job_name
             jobInfoViewHolder.address.text = if (job.work_area == 0) "全南京" else "南京市 ${area[job.work_area]}"
             jobInfoViewHolder.money.text = job.money

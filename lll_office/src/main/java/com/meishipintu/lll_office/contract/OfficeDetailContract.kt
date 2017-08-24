@@ -14,18 +14,10 @@ interface OfficeDetailContract{
     interface IView: BasicView {
         fun onPositionGet(data: List<JobInfo>)
 
-        fun isOfficeCollected(isCollect: Boolean)
-
-        fun onOfficeCollectResult(isAdd: Boolean)
-
     }
 
     interface IPresenter: BasicPresenterImp {
 
         fun getOrganizationPosition(uid: String)
-
-        fun isOfficeCollect(officeId: String, teacherId: String)
-
-        fun addOrganizationCollection(officeId: String, teacherId: String, isAddded: Boolean)
     }
 }
