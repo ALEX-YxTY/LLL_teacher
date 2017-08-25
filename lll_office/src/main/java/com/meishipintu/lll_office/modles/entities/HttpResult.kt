@@ -8,6 +8,13 @@ import com.google.gson.annotations.SerializedName
  * 主要功能：
  */
 data class HttpResult<T> (
-        @SerializedName("grade_detail") var status:Int
+        @SerializedName("status") var status:Int
         ,@SerializedName("msg") var msg:String
-        ,@SerializedName("data") var data:T)
+        ,@SerializedName("data") var data:T){
+    /**
+     * Returns a string representation of the object.
+     */
+    override fun toString(): String {
+        return "HttpResult: "
+    }
+}

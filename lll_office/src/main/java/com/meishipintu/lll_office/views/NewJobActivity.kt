@@ -65,19 +65,16 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
         findViewById(R.id.bt_back).setOnClickListener(this)
         val newJob = Cookies.getJobAdd()
         etJobName.setText(newJob?.job_name)
-        etJobName.setSelection(etJobName.text.length - 1)
 
         tvCourse.text = if (newJob!=null) courses[newJob.course] else "请选择"
         courseSelect = newJob?.course?:0
         tvGrade.text = if (newJob!=null) "${grades[newJob.grade]} ${grade_detail[newJob.grade_detail]}" else "请选择"
         gradeSelect = newJob?.grade?:0
         etMoney.setText(newJob?.money)
-        etMoney.setSelection(etMoney.text.length - 1)
 
         tvWorkArea.text = if (newJob!=null) areas[newJob.work_area] else "请选择"
         areaSelect = newJob?.work_area?:0
         etAddress.setText(newJob?.work_address)
-        etAddress.setSelection(etAddress.text.length - 1)
 
         tvSex.text = sexs[newJob?.sex ?: 0]
         sexSelect = newJob?.sex?:0
@@ -86,11 +83,8 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
         tvCertification.text = certificates[newJob?.have_certificate ?: 0]
         certificateSelect = newJob?.have_certificate ?: 0
         etJobRequire.setText(newJob?.require)
-        etJobRequire.setSelection(etJobRequire.text.length - 1)
 
         etOtherRequire.setText(newJob?.other_demand)
-        etOtherRequire.setSelection(etOtherRequire.text.length - 1)
-
 
         findViewById(R.id.rl_course).setOnClickListener(this)
         findViewById(R.id.rl_grade).setOnClickListener(this)

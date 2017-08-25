@@ -21,7 +21,6 @@ import com.meishipintu.lll_office.modles.entities.BusMessage
 import com.meishipintu.lll_office.modles.entities.VersionInfo
 import com.meishipintu.lll_office.presenters.NoticePresenter
 import com.meishipintu.lll_office.views.adapters.MyviewPagerAdapter
-import com.meishipintu.lll_office.views.fragments.ActivityFrag
 import com.meishipintu.lll_office.views.fragments.MineFrag
 import com.meishipintu.lll_office.views.fragments.NewsFrag
 import com.meishipintu.lll_office.views.fragments.TeacherFrag
@@ -157,10 +156,10 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
 
         if (id > 0 && id > Cookies.getNewestMesId(uid)) {
             //显示红点
-            tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
+            tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
         } else {
             //隐藏红点
-            tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
+            tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
         }
     }
 
@@ -170,10 +169,10 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
         if (uid != null) {
             if (id > 0 && id > Cookies.getNewestSysId(uid)) {
                 //显示红点
-                tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
+                tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
             } else {
                 //隐藏红点
-                tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
+                tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
             }
         }
     }

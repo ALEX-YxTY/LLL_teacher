@@ -55,12 +55,12 @@ interface HttpApiStores {
     //获取机构发布的职位
     @FormUrlEncoded
     @POST("Home/Organization/getOrganizationPosition")
-    fun getOfficeJobService(@Field("oid") oid: String, @Field("grade_detail") status: Int): Observable<HttpResult<List<JobInfo>>>
+    fun getOfficeJobService(@Field("oid") oid: String, @Field("status") status: Int): Observable<HttpResult<List<JobInfo>>>
 
     //修改职位状态接口
     @FormUrlEncoded
     @POST("Home/Organization/updatePostionStatus")
-    fun changeJobStatusService(@Field("id") jid: String, @Field("grade_detail") status: Int): Observable<HttpResult<JobInfo>>
+    fun changeJobStatusService(@Field("id") jid: String, @Field("status") status: Int): Observable<HttpResult<JobInfo>>
 
     /**
      * 获取常数接口，type=1~9
@@ -83,7 +83,7 @@ interface HttpApiStores {
     //获取机构被投递记录
     @FormUrlEncoded
     @POST("Home/Organization/getOrganizationDeliver")
-    fun getDeliverHistoryService(@Field("oid") oid: String, @Field("grade_detail") status: Int, @Field("type") type: Int
+    fun getDeliverHistoryService(@Field("oid") oid: String, @Field("status") status: Int, @Field("type") type: Int
                                  , @Field("page") page: Int)
             : Observable<HttpResult<List<DeliverInfo>>>
 
@@ -106,7 +106,7 @@ interface HttpApiStores {
     //变更投递记录的状态（已面试，已评价等）
     @FormUrlEncoded
     @POST("Home/Api/updateInterviewStatus")
-    fun updateDeliverStatusService(@Field("id") deliverId: Int, @Field("grade_detail") status: Int, @Field("score") score: Int
+    fun updateDeliverStatusService(@Field("id") deliverId: Int, @Field("status") status: Int, @Field("score") score: Int
                                    , @Field("evaluate") evaluat: String): Observable<HttpResult<DeliverInfo>>
 
     //机构是否收藏该教师
