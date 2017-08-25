@@ -117,7 +117,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
         }
 
         val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
-        if (levelNow == 4 || OfficeApplication.userInfo?.status != 1) {
+        if (OfficeApplication.userInfo?.status != 1) {
             userStates.visibility = View.GONE
         } else {
             userStates.setOnClickListener(this)
