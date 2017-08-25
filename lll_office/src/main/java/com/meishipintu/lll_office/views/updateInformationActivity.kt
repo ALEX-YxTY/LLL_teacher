@@ -112,6 +112,8 @@ class updateInformationActivity : BasicActivity(),View.OnClickListener, UpdateIn
 
     //from PicGetUtils.SuccessListener
     override fun onSuccess(file: File) {
+        //上传成功
+        upload = true
         tempFile = file
         glide.load(tempFile).skipMemoryCache(true).into(ivAdd)
     }

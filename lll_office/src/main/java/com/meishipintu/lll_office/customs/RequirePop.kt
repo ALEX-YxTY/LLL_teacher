@@ -18,11 +18,11 @@ class RequirePop(val ctx: Context, val mListener: MenuClickListener, val courses
                  , val grades: List<String>, val experiences: List<String>) : PopupWindow(ctx) {
 
     val courseSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_course)
-            as CustomLabelSelectView}
+        as CustomLabelSelectView}
     val gradeSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_grade)
-            as CustomLabelSelectView}
+        as CustomLabelSelectView }
     val experienceSelect :CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_experience)
-            as CustomLabelSelectView}
+        as CustomLabelSelectView}
 
     init {
         val view = LayoutInflater.from(ctx).inflate(R.layout.pop_require, null)

@@ -202,21 +202,25 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView, CanLoa
     //from JobContract.IView
     override fun onDateGet(dataList: List<JobInfo>, page: Int) {
         Log.d("test", "dataList size ${dataList.size} and page $page")
-        if (page == 1) {
-            //首次加载
-            this.dataList.clear()
-            this.dataList.addAll(dataList)
-            rv?.onLoadSuccess(page)
-            jobAdapter.notifyDataSetChanged()
-        }else if (dataList.isNotEmpty()) {
-            //load more 并且有数据
-            this.dataList.addAll(dataList)
-            rv?.onLoadSuccess(page)
-            jobAdapter.notifyDataSetChanged()
-        } else {
-            //load more 没数据
-            rv?.dismissProgressBar()
-            rv?.dismissLoading()
+        when {
+            page == 1 -> {
+                //首次加载
+                this.dataList.clear()
+                this.dataList.addAll(dataList)
+                rv?.onLoadSuccess(page)
+                jobAdapter.notifyDataSetChanged()
+            }
+            dataList.isNotEmpty() -> {
+                //load more 并且有数据
+                this.dataList.addAll(dataList)
+                rv?.onLoadSuccess(page)
+                jobAdapter.notifyDataSetChanged()
+            }
+            else -> {
+                //load more 没数据
+                rv?.dismissProgressBar()
+                rv?.dismissLoading()
+            }
         }
     }
 

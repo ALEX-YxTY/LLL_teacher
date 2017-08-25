@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.Log
@@ -111,23 +112,23 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
 
     private fun initViewPager() {
         val iconList = listOf(R.drawable.selector_icon_news, R.drawable.selector_icon_teacher
-                , R.drawable.selector_icon_activity, R.drawable.selector_icon_mine)
-        val nameList = listOf("资讯", "教师", "活动", "我的")
+                , R.drawable.selector_icon_mine)
+        val nameList = listOf("资讯", "教师", "我的")
 
         val newsFrag = NewsFrag()
         val teacherFrag = TeacherFrag()
-        val activityFrag = ActivityFrag()
+//        val activityFrag = ActivityFrag()
         val mineFrag = MineFrag()
 
-        val dataList = listOf(newsFrag, teacherFrag, activityFrag, mineFrag)
-        vp.adapter = MyviewPagerAdapter(supportFragmentManager, dataList)
+        val dataList = listOf(newsFrag, teacherFrag, mineFrag)
+        vp.adapter = MyviewPagerAdapter(supportFragmentManager, dataList as List<Fragment>)
         tabLayout.setupWithViewPager(vp)
         for (it: Int in 0 until tabLayout.tabCount) {
             val tab = tabLayout.getTabAt(it)
             tab?.setCustomView(R.layout.item_tab)
-            val textView = tab?.customView?.findViewById(R.id.tv_icon) as TextView
-            textView.text = nameList[it]
-            val imageView = tab.customView?.findViewById(R.id.iv_icon) as ImageView
+            val textView:TextView? = tab?.customView?.findViewById(R.id.tv_icon) as TextView?
+            textView?.text = nameList[it]
+            val imageView = tab?.customView?.findViewById(R.id.iv_icon) as ImageView
             imageView.setImageResource(iconList[it])
         }
     }
@@ -154,20 +155,17 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
     override fun onNewestMessIdGet(id: Int) {
         Log.d("test","main activity messageId get :Cookies get ${Cookies.getNewestMesId(uid!!)}, net get $id while uid-$uid")
 
-        if (uid != null) {
-            if (id > 0 && id > Cookies.getNewestMesId(uid)) {
-                //显示红点
-                tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
-            } else {
-                //隐藏红点
-                tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
-            }
+        if (id > 0 && id > Cookies.getNewestMesId(uid)) {
+            //显示红点
+            tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
+        } else {
+            //隐藏红点
+            tabLayout.getTabAt(3)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
         }
     }
 
     override fun onNewestSysIdGet(id: Int) {
         Log.d("test","main activity sysNoticeId get :Cookies get ${Cookies.getNewestSysId(uid!!)}, net get $id while uid-$uid")
-
 
         if (uid != null) {
             if (id > 0 && id > Cookies.getNewestSysId(uid)) {

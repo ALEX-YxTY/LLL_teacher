@@ -65,7 +65,7 @@ class TeacherInterviewActivity : BasicActivity(),View.OnClickListener,InterviewC
             }
             R.id.bt_append -> {
                 if (deliverInfo.status == 1) {
-                    //去面试,status=2 完成面试
+                    //去面试,grade_detail=2 完成面试
                     (presenter as DeliverPresenter).updateDeliverStatus(deliverInfo.id, 2, 0, "")
                 }else if (deliverInfo.status == 2) {
                     //去评价

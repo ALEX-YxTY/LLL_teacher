@@ -67,11 +67,11 @@ class NoticeActivity : BasicActivity(),NoticeActivityContract.IView {
             }
         })
 
-        for (it: Int in 0..tabLayout.tabCount - 1) {
+        for (it: Int in 0 until tabLayout.tabCount) {
             val tab = tabLayout.getTabAt(it)
             tab?.setCustomView(R.layout.item_tab_2)
-            val textView = tab?.customView?.findViewById(R.id.tv_tab) as TextView
-            textView.text = nameList[it]
+            val textView:TextView? = tab?.customView?.findViewById(R.id.tv_tab) as TextView
+            textView?.text = nameList[it]
         }
     }
 

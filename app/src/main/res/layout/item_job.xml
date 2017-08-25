@@ -6,8 +6,6 @@
     android:layout_marginLeft="@dimen/item_margin13"
     android:layout_marginRight="@dimen/item_margin13"
     android:layout_marginTop="@dimen/item_margin13"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:background="@drawable/shape_back_item_border">
 
     <ImageView

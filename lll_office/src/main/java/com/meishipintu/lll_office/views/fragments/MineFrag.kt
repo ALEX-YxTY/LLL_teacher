@@ -101,16 +101,22 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
         userName.text = OfficeApplication.userInfo?.name
         val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
-        when (OfficeApplication.userInfo?.status){
-            0 -> userLevel.text = "正在审核中"
-            2 -> userLevel.text = "审核未通过"
+        val timesRemain = fragView?.findViewById(R.id.tv_times_remain) as TextView
+        when (OfficeApplication.userInfo?.status) {
+            0 -> {
+                userLevel.text = "正在审核中"
+                timesRemain.visibility = View.INVISIBLE
+            }
+            2 -> {
+                userLevel.text = "审核未通过"
+                timesRemain.visibility = View.INVISIBLE
+            }
             1 -> {
                 if (levelNow!! > 0) {
                     userLevel.text = levels[levelNow!! - 1].substring(0, 4)
                 } else {
                     userLevel.text = "普通会员"
                 }
-                val timesRemain = fragView?.findViewById(R.id.tv_times_remain) as TextView
                 timesRemain.text = "剩余发布职位：${OfficeApplication.userInfo?.job_time_remain}个   " +
                         "剩余邀约次数：${OfficeApplication.userInfo?.interview_time_remain}次"
             }

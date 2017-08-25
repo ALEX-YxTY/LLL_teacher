@@ -24,7 +24,7 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     val experiences = Cookies.getConstant(5)
     val certificates = arrayOf("无要求", "有")
     val sexs = arrayOf("不限", "男", "女")
-    val status = Cookies.getConstant(11)
+    val grade_detail = Cookies.getConstant(11)
 
     var courseSelect = 0
     var gradeSelect = 0
@@ -65,14 +65,20 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
         findViewById(R.id.bt_back).setOnClickListener(this)
         val newJob = Cookies.getJobAdd()
         etJobName.setText(newJob?.job_name)
+        etJobName.setSelection(etJobName.text.length - 1)
+
         tvCourse.text = if (newJob!=null) courses[newJob.course] else "请选择"
         courseSelect = newJob?.course?:0
-        tvGrade.text = if (newJob!=null) grades[newJob.grade] else "请选择"
+        tvGrade.text = if (newJob!=null) "${grades[newJob.grade]} ${grade_detail[newJob.grade_detail]}" else "请选择"
         gradeSelect = newJob?.grade?:0
         etMoney.setText(newJob?.money)
+        etMoney.setSelection(etMoney.text.length - 1)
+
         tvWorkArea.text = if (newJob!=null) areas[newJob.work_area] else "请选择"
         areaSelect = newJob?.work_area?:0
         etAddress.setText(newJob?.work_address)
+        etAddress.setSelection(etAddress.text.length - 1)
+
         tvSex.text = sexs[newJob?.sex ?: 0]
         sexSelect = newJob?.sex?:0
         tvWorkYear.text = experiences[newJob?.require_year ?: 0]
@@ -80,7 +86,11 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
         tvCertification.text = certificates[newJob?.have_certificate ?: 0]
         certificateSelect = newJob?.have_certificate ?: 0
         etJobRequire.setText(newJob?.require)
+        etJobRequire.setSelection(etJobRequire.text.length - 1)
+
         etOtherRequire.setText(newJob?.other_demand)
+        etOtherRequire.setSelection(etOtherRequire.text.length - 1)
+
 
         findViewById(R.id.rl_course).setOnClickListener(this)
         findViewById(R.id.rl_grade).setOnClickListener(this)
@@ -108,11 +118,11 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
             //选择年级
             R.id.rl_grade -> {
                 dialog = CustomNumPickeDialog2(this@NewJobActivity, R.style.DialogNoAction
-                        , grades.toTypedArray(), status.toTypedArray()
+                        , grades.toTypedArray(), grade_detail.toTypedArray()
                         , CustomNumPickeDialog2.OnOk2ClickListener { vlueChooseFirst, vlueChooseSecond ->
                     gradeSelect = vlueChooseFirst
                     gradeDetailSelect = vlueChooseSecond
-                    tvGrade.text = "${grades[vlueChooseFirst]} ${status[gradeDetailSelect]}"
+                    tvGrade.text = "${grades[vlueChooseFirst]} ${grade_detail[gradeDetailSelect]}"
                     dialog?.dismiss()
                 })
                 dialog?.show()

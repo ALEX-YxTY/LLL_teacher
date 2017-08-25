@@ -20,7 +20,7 @@ import com.meishipintu.lll_office.R
 
 class CanLoadMoreRecyclerView : RelativeLayout {
 
-    val swipe:SwipeRefreshLayout by lazy { findViewById(R.id.swipe) as SwipeRefreshLayout }
+    val swipe:SwipeRefreshLayout by lazy { findViewById(R.id.swipe) as SwipeRefreshLayout}
     val rv:RecyclerView by lazy{ findViewById(R.id.recyclerview) as RecyclerView}
     val pb:ProgressBar by lazy{ findViewById(R.id.pb) as ProgressBar}
     val layoutManager by lazy{ LinearLayoutManager(context)}

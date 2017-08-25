@@ -64,20 +64,20 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
         val userName = fragView?.findViewById(R.id.tv_user_name) as TextView
         userName.text = "${userInfo?.name} ${userInfo?.first_name}"
         val userLevel = fragView?.findViewById(R.id.tv_user_level) as TextView
-        val userStates = fragView?.findViewById(R.id.iv_status) as LinearLayout
+        val userStates = fragView?.findViewById(R.id.tv_status) as TextView
         //status 0-未审核 1-已审核  2-审核未通过
         when (userInfo?.status) {
             0 -> {
                 userLevel.text = "正在审核中"
-                userStates.visibility = View.VISIBLE
+                userStates.text = "正在审核中"
             }
             1 ->{
-                userLevel.text = "普通会员"
-                userStates.visibility = View.GONE
+                userLevel.text = "通过审核"
+                userStates.text = "通过审核"
             }
             2 ->{
                 userLevel.text = "审核未通过"
-                userStates.visibility = View.GONE
+                userStates.text = "审核未通过"
             }
         }
     }

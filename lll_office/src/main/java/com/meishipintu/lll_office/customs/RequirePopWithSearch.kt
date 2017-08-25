@@ -21,12 +21,9 @@ import com.meishipintu.lll_office.R
 class RequirePopWithSearch(val ctx: Context, val mListener: MenuClickListener, val courses: List<String>
                  , val grades: List<String>, val experiences: List<String>, val searchListener:SearchListener) : PopupWindow(ctx) {
 
-    val courseSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_course)
-            as CustomLabelSelectView}
-    val gradeSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_grade)
-            as CustomLabelSelectView}
-    val experienceSelect :CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_experience)
-            as CustomLabelSelectView}
+    val courseSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_course) as CustomLabelSelectView}
+    val gradeSelect:CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_grade) as CustomLabelSelectView}
+    val experienceSelect :CustomLabelSelectView by lazy{contentView.findViewById(R.id.selectview_experience) as CustomLabelSelectView}
 
     init {
         val view = LayoutInflater.from(ctx).inflate(R.layout.pop_require_with_search, null)
