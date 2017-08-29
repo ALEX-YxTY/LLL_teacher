@@ -70,36 +70,11 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
         } else {
             accountLevel.text = "普通会员"
         }
-        when (levelNow) {
-            0 ->{
-                rl1.setOnClickListener(this)
-                rl2.setOnClickListener(this)
-                rl3.setOnClickListener(this)
-                rl4.setOnClickListener(this)
-                changeTo(0)
-            }
-            1 ->{
-                rl1.setOnClickListener(this)
-                rl2.setOnClickListener(this)
-                rl3.setOnClickListener(this)
-                rl4.setOnClickListener(this)
-                changeTo(1)
-            }
-            2 ->{
-                rl1.isClickable = false
-                rl2.setOnClickListener(this)
-                rl3.setOnClickListener(this)
-                rl4.setOnClickListener(this)
-                changeTo(2)
-            }
-            3 ->{
-                rl1.isClickable = false
-                rl2.isClickable = false
-                rl3.setOnClickListener(this)
-                rl4.setOnClickListener(this)
-                changeTo(3)
-            }
-        }
+        changeTo(levelNow)
+        rl1.setOnClickListener(this)
+        rl2.setOnClickListener(this)
+        rl3.setOnClickListener(this)
+        rl4.setOnClickListener(this)
         findViewById(R.id.bt_pay).setOnClickListener(this)
     }
 

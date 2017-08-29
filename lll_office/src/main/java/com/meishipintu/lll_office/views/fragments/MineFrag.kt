@@ -126,6 +126,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
         if (OfficeApplication.userInfo?.status != 1) {
             userStates.visibility = View.GONE
         } else {
+            userStates.visibility = View.VISIBLE
             userStates.setOnClickListener(this)
         }
     }
