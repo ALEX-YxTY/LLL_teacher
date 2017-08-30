@@ -19,6 +19,8 @@ import com.milai.lll_teacher.presenters.JobPresenter
 
 class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact.IView{
 
+    //TODO 添加分享
+
     val jobId:Int by lazy { intent.getIntExtra("jobId", 0)}
     val oid:String by lazy { intent.getStringExtra("oid")}
     //from 1:默认情况，2：隐藏投递简历

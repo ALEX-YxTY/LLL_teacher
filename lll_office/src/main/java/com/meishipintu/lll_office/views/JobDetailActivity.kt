@@ -18,6 +18,8 @@ import com.meishipintu.lll_office.presenters.JobManagerPresenter
 
 class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract.IView{
 
+    //TODO 添加分享
+
     val jobId:Int by lazy { intent.getIntExtra("jobId", 0)}
     /**
      * type =1 不显示上下线和邀请功能，type=2 显示上下线功能

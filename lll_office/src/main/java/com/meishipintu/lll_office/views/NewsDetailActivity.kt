@@ -12,6 +12,7 @@ import com.meishipintu.lll_office.presenters.StatisticPresenter
 
 class NewsDetailActivity : BasicActivity() {
 
+    //TODO 添加分享
     val url:String by lazy{ intent.getStringExtra("url")}
     val newsId:String by lazy{ intent.getIntExtra("newsId", 0).toString()}
 

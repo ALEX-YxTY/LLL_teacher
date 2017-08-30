@@ -6,6 +6,8 @@ import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpResultFunc
 import com.tencent.bugly.Bugly
 import com.tencent.bugly.crashreport.CrashReport
+import com.umeng.socialize.PlatformConfig
+import com.umeng.socialize.UMShareAPI
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.nio.charset.Charset
@@ -49,6 +51,10 @@ class MyApplication : Application() {
             }
         })
         Bugly.init(this, "6cd126f554", true, strategy)
+        //分享
+        //TODO 待修改
+        UMShareAPI.get(this)
+        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3")
         downloadResource()
     }
 

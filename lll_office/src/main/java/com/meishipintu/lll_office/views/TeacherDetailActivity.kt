@@ -17,6 +17,8 @@ import com.meishipintu.lll_office.presenters.TeachPresenter
 
 class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetailContract.IView {
 
+    //TODO 添加分享
+
     val teacher:TeacherInfo by lazy { intent.getSerializableExtra("teacher") as TeacherInfo }
     //type=1 底部收藏，type=2 底部邀请
     val type:Int by lazy{ intent.getIntExtra("type", 1)}

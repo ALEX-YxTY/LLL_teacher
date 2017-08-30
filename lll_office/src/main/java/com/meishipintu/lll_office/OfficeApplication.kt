@@ -8,6 +8,9 @@ import com.meishipintu.lll_office.modles.entities.UserInfo
 import com.tencent.bugly.Bugly
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import com.umeng.socialize.PlatformConfig
+import com.umeng.socialize.UMShareAPI
+
 
 /**
  * Created by Administrator on 2017/7/4.
@@ -27,6 +30,10 @@ class OfficeApplication :Application() {
         //initBugly
         Bugly.init(this, "79549921d1", true)
         downloadResource()
+        //分享
+        //TODO 待修改
+        UMShareAPI.get(this)
+        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3")
     }
 
     private fun downloadResource() {

@@ -20,6 +20,8 @@ import com.meishipintu.lll_office.views.adapters.JobAdapter
 
 class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
 
+    //TODO 添加分享
+
     val office: OfficeInfo by lazy { intent.getSerializableExtra("office") as OfficeInfo }
     val scrollView: ScrollView by lazy { findViewById(R.id.scroll) as ScrollView }
 

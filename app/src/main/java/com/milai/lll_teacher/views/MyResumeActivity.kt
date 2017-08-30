@@ -14,6 +14,8 @@ import com.tencent.smtt.sdk.WebViewClient
 
 class MyResumeActivity : AppCompatActivity() {
 
+    //TODO 添加分享
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_resume_edit)
