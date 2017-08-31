@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.milai.lll_teacher.views.ResumeEditActivity">
 
-    <include layout="@layout/titlebar_back_white_preview"
+    <include layout="@layout/titlebar_back_white"
         android:id="@+id/title_bar"/>
     <com.tencent.smtt.sdk.WebView
         android:id="@+id/webview"

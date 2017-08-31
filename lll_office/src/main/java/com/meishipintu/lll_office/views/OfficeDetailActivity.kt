@@ -1,5 +1,6 @@
 package com.meishipintu.lll_office.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -10,7 +11,6 @@ import android.widget.ScrollView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.OfficeDetailContract
 import com.meishipintu.lll_office.modles.entities.JobInfo
@@ -19,8 +19,6 @@ import com.meishipintu.lll_office.presenters.OrganizaitonPresenter
 import com.meishipintu.lll_office.views.adapters.JobAdapter
 
 class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
-
-    //TODO 添加分享
 
     val office: OfficeInfo by lazy { intent.getSerializableExtra("office") as OfficeInfo }
     val scrollView: ScrollView by lazy { findViewById(R.id.scroll) as ScrollView }

@@ -80,10 +80,14 @@ class RegistActivity : BasicActivity(),RegisterContract.IView {
                     intent = Intent(this,SetPsActivity::class.java)
                     intent.putExtra("mobile",etTel.text.toString())
                     intent.putExtra("vcode", vcodeGet)
+                    startActivityForResult(intent,REGISTER)
                 } else {
                     intent = Intent(this, ReSetPswActivity::class.java)
+                    intent.putExtra("tel",etTel.text.toString())
+                    intent.putExtra("verify", vcodeGet)
+                    startActivity(intent)
+                    this.finish()
                 }
-                startActivityForResult(intent,REGISTER)
             }
         }
     }

@@ -28,6 +28,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        PlatformConfig.setWeixin("wxc34852351a32fb42", "14021b2d0938ea54d0ee6f15d1da126d")
         instance = this
         userInfo = Cookies.getUserInfo()
         //initBugly
@@ -52,9 +53,7 @@ class MyApplication : Application() {
         })
         Bugly.init(this, "6cd126f554", true, strategy)
         //分享
-        //TODO 待修改
         UMShareAPI.get(this)
-        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3")
         downloadResource()
     }
 

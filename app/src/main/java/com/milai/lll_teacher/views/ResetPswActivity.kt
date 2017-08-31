@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.ResetPswContract
+import com.milai.lll_teacher.custom.util.Encoder
 import com.milai.lll_teacher.custom.view.CustomEditText
 import com.milai.lll_teacher.presenters.AuthorPresenter
 
@@ -54,8 +55,8 @@ class ResetPswActivity : BasicActivity(),ResetPswContract.IView {
         })
         btReset.setOnClickListener{
             if (etPsw.text == etPsw2.text) {
-                //重设密码
-                (presenter as ResetPswContract.IPresenter).resetPsw(tel, vcode, etPsw.text)
+                // 重设密码
+                (presenter as ResetPswContract.IPresenter).resetPsw(tel, vcode, Encoder.md5(etPsw.text))
             } else {
                 toast("两次输入密码不一致")
             }

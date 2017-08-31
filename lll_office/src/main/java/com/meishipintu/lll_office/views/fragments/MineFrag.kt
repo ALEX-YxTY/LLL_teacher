@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.meishipintu.lll_office.*
 import com.meishipintu.lll_office.contract.MineContract
@@ -19,6 +21,11 @@ import com.meishipintu.lll_office.modles.entities.UserInfo
 import com.meishipintu.lll_office.modles.entities.VersionInfo
 import com.meishipintu.lll_office.presenters.NoticePresenter
 import com.meishipintu.lll_office.views.*
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
+import com.umeng.socialize.media.UMImage
+import com.umeng.socialize.media.UMWeb
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -72,6 +79,9 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
     }
 
     private fun setListener() {
+        val ivShare = fragView?.findViewById(R.id.iv_share) as ImageView
+        ivShare.visibility = View.VISIBLE
+        ivShare.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_job_manage)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_my_interview)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_my_collection)?.setOnClickListener(this)
@@ -164,6 +174,33 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
             R.id.rl_setting ->{
                 //设置
                 startActivity(Intent(this.activity,SettingActivity::class.java))
+            }
+            R.id.iv_share ->{
+                val umShareListener = object:UMShareListener {
+                    override fun onResult(p0: SHARE_MEDIA?) {
+                        toast("分享成功")
+                    }
+
+                    override fun onCancel(p0: SHARE_MEDIA?) {
+                        toast("分享被取消")
+                    }
+
+                    override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+                        toast("分享发生错误")
+                        if (p1 != null) {
+                            Log.d("MyResumeActivity", "share error: ${p1.message}")
+                        }
+                    }
+
+                    override fun onStart(p0: SHARE_MEDIA?) {
+                    }
+                }
+                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/orginfo?uid=${OfficeApplication.userInfo?.uid}")
+                umWeb.title = "拉力郎师资"
+                umWeb.description = "欢迎查看我的机构"
+                umWeb.setThumb(UMImage(this.activity,R.mipmap.office_share))
+                ShareAction(this@MineFrag.activity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .setCallback(umShareListener).withMedia(umWeb).open()
             }
         }
     }

@@ -28,7 +28,8 @@ class OfficeDetailActivity : BasicActivity(),OfficeDetailContract.IView {
     val glide: RequestManager by lazy{ Glide.with(this)}
     var isCollected = false   //标记是否已经收藏0
     val dataList = mutableListOf<JobInfo>()
-    val adapter:JobAdapter by lazy{ JobAdapter(this, dataList,2,avatar = office.avatar)}   //type=2 job不包含机构信息
+    val adapter:JobAdapter by lazy{ JobAdapter(this, dataList,2,avatar = office.avatar
+            ,officeName = office.name)}   //type=2 job不包含机构信息
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

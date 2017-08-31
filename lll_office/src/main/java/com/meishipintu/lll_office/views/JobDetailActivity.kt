@@ -3,9 +3,11 @@ package com.meishipintu.lll_office.views
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
@@ -13,12 +15,37 @@ import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.JobDetailContract
 import com.meishipintu.lll_office.customs.utils.DateUtil
 import com.meishipintu.lll_office.modles.entities.JobInfo
-import com.meishipintu.lll_office.modles.entities.UserInfo
 import com.meishipintu.lll_office.presenters.JobManagerPresenter
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.UMShareAPI
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
+import com.umeng.socialize.media.UMImage
+import com.umeng.socialize.media.UMWeb
 
 class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract.IView{
 
-    //TODO 添加分享
+    val ivShare: ImageView by lazy { findViewById(R.id.iv_share) as ImageView }
+    private val umShareListener: UMShareListener by lazy {object: UMShareListener {
+        override fun onResult(p0: SHARE_MEDIA?) {
+            Toast.makeText(this@JobDetailActivity, " 分享成功", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onCancel(p0: SHARE_MEDIA?) {
+            Toast.makeText(this@JobDetailActivity,"分享被取消", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+            Toast.makeText(this@JobDetailActivity,"分享发生错误", Toast.LENGTH_SHORT).show()
+            if (p1 != null) {
+                Log.d("MyResumeActivity", "share error: ${p1.message}")
+            }
+        }
+
+        override fun onStart(p0: SHARE_MEDIA?) {
+        }
+
+    }}
 
     val jobId:Int by lazy { intent.getIntExtra("jobId", 0)}
     /**
@@ -37,7 +64,7 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
     private fun initUI() {
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = "职位详情"
-
+        ivShare.setOnClickListener(this)
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.include_office).visibility=View.GONE
 
@@ -103,6 +130,14 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
             R.id.tv_offline ->{
                 (presenter as JobManagerPresenter).changeStatus(jobId.toString(),if(status==1) 2 else 1)
             }
+            R.id.iv_share ->{
+                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId")
+                umWeb.title = "拉力郎师资"
+                umWeb.description = "快来查看这个机构的职位"
+                umWeb.setThumb(UMImage(this,R.mipmap.office_share))
+                ShareAction(this@JobDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .setCallback(umShareListener).withMedia(umWeb).open()
+            }
         }
     }
 
@@ -118,5 +153,10 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         }
         setResult(Activity.RESULT_OK)
         this.finish()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
     }
 }

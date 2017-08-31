@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.milai.lll_teacher.Cookies
@@ -16,10 +17,36 @@ import com.milai.lll_teacher.custom.util.DateUtil
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.presenters.JobPresenter
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.UMShareAPI
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
+import com.umeng.socialize.media.UMImage
+import com.umeng.socialize.media.UMWeb
 
 class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact.IView{
 
-    //TODO 添加分享
+    val ivShare:ImageView by lazy { findViewById(R.id.iv_share) as ImageView }
+    private val umShareListener: UMShareListener by lazy {object: UMShareListener {
+        override fun onResult(p0: SHARE_MEDIA?) {
+            Toast.makeText(this@JobDetailActivity, " 分享成功", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onCancel(p0: SHARE_MEDIA?) {
+            Toast.makeText(this@JobDetailActivity,"分享被取消", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+            Toast.makeText(this@JobDetailActivity,"分享发生错误", Toast.LENGTH_SHORT).show()
+            if (p1 != null) {
+                Log.d("MyResumeActivity", "share error: ${p1.message}")
+            }
+        }
+
+        override fun onStart(p0: SHARE_MEDIA?) {
+        }
+
+    }}
 
     val jobId:Int by lazy { intent.getIntExtra("jobId", 0)}
     val oid:String by lazy { intent.getStringExtra("oid")}
@@ -60,6 +87,8 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         findViewById(R.id.bt_contact).setOnClickListener(this)
         findViewById(R.id.bt_append).setOnClickListener(this)
         findViewById(R.id.include_office).setOnClickListener(this)
+        ivShare.visibility = View.VISIBLE
+        ivShare.setOnClickListener(this)
         star.setOnClickListener(this)
         if (from == 2) {
             findViewById(R.id.bt_append).visibility = View.GONE
@@ -92,6 +121,16 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
                     intent.putExtra("office", this.officeInfo)
                     startActivity(intent)
                 }
+            }
+            R.id.iv_share -> {
+                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId")
+                umWeb.title = "拉力郎师资"
+                umWeb.description = "快来查看这个职位"
+                umWeb.setThumb(UMImage(this,R.mipmap.teacher_share))
+                ShareAction(this@JobDetailActivity)
+                        .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .withMedia(umWeb)
+                        .setCallback(umShareListener).open()
             }
         }
     }
@@ -179,5 +218,10 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         }
         val officeHead = findViewById(R.id.iv_head) as ImageView
         Glide.with(this).load(this.officeInfo?.avatar).error(R.drawable.organization_default).into(officeHead)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
     }
 }

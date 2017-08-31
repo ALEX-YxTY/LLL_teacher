@@ -152,9 +152,12 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <!--友盟appkey-教师版-->
+        <meta-data android:name="UMENG_APPKEY" android:value="59a67c8a07fe650746000e5b" > </meta-data>
+
     </application>
 
-    <!--友盟appkey-教师版-->
-    <meta-data android:name="UMENG_APPKEY" android:value="59a67c8a07fe650746000e5b" > </meta-data>
 
 </manifest>

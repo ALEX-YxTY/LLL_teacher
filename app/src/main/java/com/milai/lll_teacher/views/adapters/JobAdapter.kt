@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.milai.lll_teacher.Cookies
@@ -17,7 +18,7 @@ import com.milai.lll_teacher.views.JobDetailActivity
  *
  *  type=1 job包含organization信息，type=2 job不包含organization信息
  */
-class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int, val avatar: String? = null):BasicAdapter(ctx,dataList) {
+class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int, val avatar: String? = null, val officeName: String? = null):BasicAdapter(ctx,dataList) {
 
     val area = Cookies.getConstant(1)
     val glide = Glide.with(ctx)
@@ -37,6 +38,7 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int, val avata
                 jobInfoViewHolder.officeName.text = job.organization.name
                 glide.load(job.organization.avatar).error(R.drawable.organization_default).into(jobInfoViewHolder.hear)
             } else {
+                jobInfoViewHolder.officeName.text = officeName
                 glide.load(avatar).error(R.drawable.organization_default).into(jobInfoViewHolder.hear)
             }
             jobInfoViewHolder.money.text = job.money

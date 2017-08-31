@@ -24,6 +24,13 @@ interface HttpApiStores {
     fun registerService(@Field("tel") tel: String, @Field("name") name: String, @Field("password") password: String
                         , @Field("verify") verify: String): Observable<HttpResult<UserInfo>>
 
+    //重设密码
+    //TODO 机构重设
+    @FormUrlEncoded
+    @POST("Home/Api/forgetTeacherPassword")
+    fun resetPswService(@Field("tel") tel: String, @Field("verify") vcode: String, @Field("password") psw: String): Observable<HttpResult<Any>>
+
+
     //教师查询及筛选
     @FormUrlEncoded
     @POST("Home/Api/getAllTeacher")
@@ -89,7 +96,7 @@ interface HttpApiStores {
 
     //查询机构详情
     @FormUrlEncoded
-    @POST("Home/Organization/getOrganizationDetail ")
+    @POST("Home/Organization/getOrganizationDetail")
     fun getOrganizationDetailService(@Field("uid") uid: String): Observable<HttpResult<UserInfo>>
 
     //获取聊天详情

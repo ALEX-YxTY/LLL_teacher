@@ -24,6 +24,7 @@ import com.meishipintu.lll_office.views.adapters.MyviewPagerAdapter
 import com.meishipintu.lll_office.views.fragments.MineFrag
 import com.meishipintu.lll_office.views.fragments.NewsFrag
 import com.meishipintu.lll_office.views.fragments.TeacherFrag
+import com.umeng.socialize.UMShareAPI
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -189,5 +190,10 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
                 }
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
     }
 }

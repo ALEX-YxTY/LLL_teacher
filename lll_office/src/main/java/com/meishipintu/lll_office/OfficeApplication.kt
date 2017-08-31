@@ -25,15 +25,15 @@ class OfficeApplication :Application() {
 
     override fun onCreate() {
         super.onCreate()
+        PlatformConfig.setWeixin("wxe5ad8590f4758f52", "fbfd75214fe1485807ccbae265f25e79")
+
         instance = this
         userInfo = Cookies.getUserInfo()
         //initBugly
         Bugly.init(this, "79549921d1", true)
         downloadResource()
         //分享
-        //TODO 待修改
         UMShareAPI.get(this)
-        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3")
     }
 
     private fun downloadResource() {

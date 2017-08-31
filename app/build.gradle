@@ -28,10 +28,10 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
+            storeFile file('msptkeystore.keystore')
+            storePassword "domobile"
+            keyAlias "msptkeystore"
+            keyPassword "domobile"
         }
     }
 }
@@ -64,12 +64,13 @@ dependencies {
     //Bugly
     compile 'com.tencent.bugly:crashreport_upgrade:1.3.1'
     compile 'com.tencent.bugly:nativecrashreport:3.3.1'
-    implementation files('libs/SocialSDK_WeChat_Simplify.jar')
     implementation files('libs/umeng_shareboard_widget.jar')
     implementation files('libs/umeng_social_api.jar')
     implementation files('libs/umeng_social_net.jar')
     implementation files('libs/umeng_social_shareboard.jar')
     implementation files('libs/umeng_social_tool.jar')
+    implementation files('libs/SocialSDK_WeiXin_Full.jar')
+    implementation files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
 }
 
 

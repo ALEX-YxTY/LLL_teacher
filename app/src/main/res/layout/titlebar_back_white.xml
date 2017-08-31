@@ -30,4 +30,17 @@
         android:layout_height="1dp"
         android:background="@color/border1"
         android:layout_alignParentBottom="true"/>
+
+    <ImageView
+        android:id="@+id/iv_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_share"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="19dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="20dp"
+        android:visibility="gone"/>
 </RelativeLayout>

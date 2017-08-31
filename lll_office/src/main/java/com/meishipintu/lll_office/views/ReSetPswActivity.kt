@@ -10,15 +10,21 @@ import android.widget.TextView
 import com.meishipintu.lll_office.Constant
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.RxBus
+import com.meishipintu.lll_office.contract.ReSetPswContract
 import com.meishipintu.lll_office.customs.CustomEditText
+import com.meishipintu.lll_office.customs.utils.Encoder
 import com.meishipintu.lll_office.customs.utils.StringUtils
-import com.meishipintu.lll_office.modles.entities.BusMessage
+import com.meishipintu.lll_office.presenters.AuthorPresenter
 
-class ReSetPswActivity : AppCompatActivity() {
+class ReSetPswActivity : BasicActivity(),ReSetPswContract.IView {
+
+    val vcode:String by lazy{intent.getStringExtra("verify")}
+    val tel:String by lazy{intent.getStringExtra("tel")}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_re_set_psw)
+        presenter = AuthorPresenter(this)
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed()}
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = "设置新密码"
@@ -44,12 +50,22 @@ class ReSetPswActivity : AppCompatActivity() {
         etPsw.setListener(textWatcher)
         etPswRe.setListener(textWatcher)
         btRegister.setOnClickListener{
-            //TODO 注册 成功后跳转主页
-            //重新进入首页
-            startActivity(Intent(this, MainActivity::class.java))
-            //退出登录页和登录注册页
-            RxBus.send(BusMessage(Constant.LOGIN_SUCCESS))
-            this.finish()
+            if (etPsw.text == etPswRe.text) {
+                // 重设密码
+                (presenter as ReSetPswContract.IPresenter).resetPsw(tel, vcode, Encoder.md5(etPsw.text))
+            } else {
+                toast("两次输入密码不一致")
+            }
         }
+    }
+
+    override fun onError(e: String) {
+        toast(e)
+    }
+
+    //from ResetPswContract.IView
+    override fun onReSetSuccsee() {
+        toast("修改密码成功")
+        this.finish()
     }
 }

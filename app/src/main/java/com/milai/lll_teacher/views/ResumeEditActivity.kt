@@ -22,7 +22,7 @@ class ResumeEditActivity : AppCompatActivity(),PicGetUtil.SuccessListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_resume_edit)
+        setContentView(R.layout.activity_resume_edit_first)
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed()}
         findViewById(R.id.preview).setOnClickListener{
             startActivity(Intent(this,MyResumeActivity::class.java))

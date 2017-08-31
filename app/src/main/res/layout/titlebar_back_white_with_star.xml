@@ -24,15 +24,39 @@
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:src="@drawable/icon_return"/>
-
-    <ImageView
-        android:id="@+id/bt_collect"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_centerVertical="true"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal"
+        android:gravity="right"
         android:layout_marginRight="19dp"
-        android:src="@drawable/icon_star_unfill"/>
+        >
+
+        <ImageView
+            android:id="@+id/bt_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_star_unfill"
+            android:paddingLeft="10dp"/>
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_share"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
