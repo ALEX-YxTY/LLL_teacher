@@ -123,7 +123,8 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
                 }
             }
             R.id.iv_share -> {
-                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId")
+                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
+                        "&actionId=${MyApplication.userInfo?.uid}&type=5&flag=1")
                 umWeb.title = "拉力郎师资"
                 umWeb.description = "快来查看这个职位"
                 umWeb.setThumb(UMImage(this,R.mipmap.teacher_share))

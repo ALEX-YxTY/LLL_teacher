@@ -141,9 +141,9 @@ object PicGetUtil {
         //通过计算获取压缩比例，并设置在options.inSampleSize中（inSampleSize必须>1）
         //压缩比例为宽高中的长边压缩到700像素
         if (options.outHeight > options.outWidth) {
-            options.inSampleSize = options.outHeight / 500
+            options.inSampleSize = options.outHeight / 800
         } else {
-            options.inSampleSize = options.outWidth / 500
+            options.inSampleSize = options.outWidth / 800
         }
         options.inJustDecodeBounds = false
         var bitmap = BitmapFactory.decodeFile(fileFrom.absolutePath, options)

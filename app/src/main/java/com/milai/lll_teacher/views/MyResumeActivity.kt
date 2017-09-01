@@ -51,7 +51,8 @@ class MyResumeActivity : AppCompatActivity() {
         tvTitle.text = "我的简历"
         findViewById(R.id.bt_back).setOnClickListener{ onBackPressed()}
         ivShare.visibility = View.VISIBLE
-        val umWeb = UMWeb("http://lll.domobile.net/Home/Index/tcinfo?uid=${MyApplication.userInfo?.uid}")
+        val umWeb = UMWeb("http://lll.domobile.net/Home/Index/tcinfo?uid=${MyApplication.userInfo?.uid}" +
+                "&actionId=${MyApplication.userInfo?.uid}&type=4&flag=1")
         umWeb.title = "拉力郎师资"
         umWeb.description = "欢迎查看我的简历"
         umWeb.setThumb(UMImage(this,R.mipmap.teacher_share))

@@ -110,7 +110,8 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
                 }
             }
             R.id.iv_share ->{
-                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/detail?uid=${teacher.uid}")
+                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/tcinfo?uid=${teacher.uid}" +
+                        "&actionId=${OfficeApplication.userInfo?.uid}&type=7&flag=2")
                 umWeb.title = "拉力郎师资"
                 umWeb.description = "快来查看这个教师的简历"
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))

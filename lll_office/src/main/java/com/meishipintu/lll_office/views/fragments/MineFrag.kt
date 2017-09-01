@@ -195,7 +195,8 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
                     override fun onStart(p0: SHARE_MEDIA?) {
                     }
                 }
-                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/orginfo?uid=${OfficeApplication.userInfo?.uid}")
+                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/orginfo?uid=${OfficeApplication.userInfo?.uid}" +
+                        "&actionId=${OfficeApplication.userInfo?.uid}&type=6&flag=2")
                 umWeb.title = "拉力郎师资"
                 umWeb.description = "欢迎查看我的机构"
                 umWeb.setThumb(UMImage(this.activity,R.mipmap.office_share))

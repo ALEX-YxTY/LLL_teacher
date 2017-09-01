@@ -27,7 +27,7 @@ interface HttpApiStores {
     //重设密码
     //TODO 机构重设
     @FormUrlEncoded
-    @POST("Home/Api/forgetTeacherPassword")
+    @POST("Home/organization/forgetTeacherPassword")
     fun resetPswService(@Field("tel") tel: String, @Field("verify") vcode: String, @Field("password") psw: String): Observable<HttpResult<Any>>
 
 

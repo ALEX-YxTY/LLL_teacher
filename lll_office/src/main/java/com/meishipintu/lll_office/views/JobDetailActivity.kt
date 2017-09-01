@@ -131,7 +131,8 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
                 (presenter as JobManagerPresenter).changeStatus(jobId.toString(),if(status==1) 2 else 1)
             }
             R.id.iv_share ->{
-                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId")
+                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
+                        "&actionId=${OfficeApplication.userInfo?.uid}&type=8&flag=2")
                 umWeb.title = "拉力郎师资"
                 umWeb.description = "快来查看这个机构的职位"
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))
