@@ -34,7 +34,6 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
 
     val vp:ViewPager by lazy { findViewById(R.id.vp) as ViewPager }
     val tabLayout:TabLayout by lazy { findViewById(R.id.tabLayout) as TabLayout }
-    val uid = MyApplication.userInfo?.uid!!
     var clickTime: Long = 0
 
     var downLoadUrl:String?=null    //标记新版本的下载地址
@@ -54,9 +53,10 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
                     (type) -> run{
                     when (type) {
                         Constant.LOGOUT -> {
+                            vp.currentItem = 0
+                            tabLayout.getTabAt(0)?.select()
                             //退出登录后启动注册登录页面，并退出主页
                             startActivity(Intent(this,LoginAndRegistActivity::class.java))
-                            this.finish()
                         }
                     }
                 }
@@ -114,21 +114,57 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
         val mineFrag = MineFrag()
         val dataList = listOf(jobFrag, officeFrag, noticeFrag, mineFrag)
         vp.adapter = MyviewPagerAdapter(supportFragmentManager, dataList as List<BasicFragment>)
-        tabLayout.setupWithViewPager(vp)
-        for (it: Int in 0..tabLayout.tabCount - 1) {
-            val tab = tabLayout.getTabAt(it)
+        for (it: Int in 0 until dataList.size) {
+            val tab = tabLayout.newTab()
             tab?.setCustomView(R.layout.item_tab)
             val textView = tab?.customView?.findViewById(R.id.tv_icon) as TextView
             textView.text = nameList[it]
             val imageView = tab.customView?.findViewById(R.id.iv_icon) as ImageView
             imageView.setImageResource(iconList[it])
+            tabLayout.addTab(tab)
         }
+        //默认选择第一个
+        tabLayout.getTabAt(0)?.select()
+        vp.addOnPageChangeListener(object :ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                tabLayout.getTabAt(position)?.select()
+            }
+
+        })
+        tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (MyApplication.userInfo == null && (tab?.position == 2 || tab?.position == 3)) {
+                    vp.currentItem = 0
+                    tabLayout.getTabAt(0)?.select()
+                    startActivity(Intent(this@MainActivity,LoginAndRegistActivity::class.java))
+                } else {
+                    vp.currentItem = tab?.position?:0
+                }
+            }
+        })
     }
 
     override fun onResume() {
         super.onResume()
-        (presenter as NoticeContract.IPresenter).getNewestMessId(uid)
-        (presenter as NoticeContract.IPresenter).getNewestSysId(uid)
+        if (MyApplication.userInfo != null) {
+            (presenter as NoticeContract.IPresenter).getNewestMessId(MyApplication.userInfo?.uid!!)
+            (presenter as NoticeContract.IPresenter).getNewestSysId(MyApplication.userInfo?.uid!!)
+        } else {
+            //隐藏红点
+            tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
+        }
     }
 
     override fun onBackPressed() {
@@ -148,7 +184,7 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
 
     //改变红点显示
     private fun changeRedPoint() {
-        if (newestMessId > Cookies.getNewestMesId(uid) || newestSysId > Cookies.getNewestSysId(uid)) {
+        if (newestMessId > Cookies.getNewestMesId(MyApplication.userInfo?.uid!!) || newestSysId > Cookies.getNewestSysId(MyApplication.userInfo?.uid!!)) {
             //显示红点
             tabLayout.getTabAt(2)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
         } else {
@@ -158,7 +194,7 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
     }
 
     override fun onNewestMessIdGet(id: Int) {
-        Log.d("test","main activity messageId get :Cookies get ${Cookies.getNewestMesId(uid)}, net get $id while uid=$uid")
+        Log.d("test","main activity messageId get :Cookies get ${Cookies.getNewestMesId(MyApplication.userInfo?.uid!!)}, net get $id while uid=${MyApplication.userInfo?.uid}")
         //记录最新id
         newestMessId = id
         changeRedPoint()
@@ -166,7 +202,7 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
 
 
     override fun onNewestSysIdGet(id: Int) {
-        Log.d("test","main activity sysNoticeId get :Cookies get ${Cookies.getNewestSysId(uid)}, net get $id while uid=$uid")
+        Log.d("test","main activity sysNoticeId get :Cookies get ${Cookies.getNewestSysId(MyApplication.userInfo?.uid!!)}, net get $id while uid=${MyApplication.userInfo?.uid}")
         newestSysId = id
         changeRedPoint()
 

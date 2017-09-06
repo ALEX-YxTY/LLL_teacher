@@ -79,9 +79,6 @@ class LoginActivity : BasicActivity(),LoginContract.IView {
         MyApplication.userInfo = user
         //重新进入首页
         startActivity(Intent(this, MainActivity::class.java))
-        //退出登录页和登录注册页
-        this.finish()
-        RxBus.send(BusMessage(Constant.LOGIN_SUCCESS))
     }
 
 }

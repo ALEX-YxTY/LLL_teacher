@@ -14,6 +14,7 @@ import com.milai.lll_teacher.Cookies
 import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.MineContract
+import com.milai.lll_teacher.contracts.NoticeContract
 import com.milai.lll_teacher.models.entities.UserInfo
 import com.milai.lll_teacher.presenters.AuthorPresenter
 import com.milai.lll_teacher.views.*
@@ -40,8 +41,15 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
             fragView = inflater?.inflate(R.layout.frag_mine, container, false)
             setListener()
         }
-        initUI()
         return fragView
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (fragView != null && MyApplication.userInfo != null) {
+            initUI()
+        }
     }
 
     private fun setListener() {

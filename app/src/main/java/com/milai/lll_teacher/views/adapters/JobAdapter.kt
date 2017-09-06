@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.milai.lll_teacher.Cookies
+import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.custom.util.DateUtil
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.views.JobDetailActivity
+import com.milai.lll_teacher.views.LoginAndRegistActivity
 
 /**
  * Created by Administrator on 2017/6/22.
@@ -45,11 +47,18 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int, val avata
             jobInfoViewHolder.time.text = DateUtil.stampToDate(job.create_time)
 
             jobInfoViewHolder.itemView.setOnClickListener{
-                val intent = Intent(ctx, JobDetailActivity::class.java)
-                intent.putExtra("oid",job.oid)
-                intent.putExtra("jobId", job.id)
-                intent.putExtra("type", type)   //通知职位详情页是否要显示机构信息
-                ctx.startActivity(intent)
+                if (MyApplication.userInfo != null) {
+                    val intent = Intent(ctx, JobDetailActivity::class.java)
+                    intent.putExtra("oid", job.oid)
+                    intent.putExtra("jobId", job.id)
+                    intent.putExtra("type", type)   //通知职位详情页是否要显示机构信息
+                    ctx.startActivity(intent)
+                } else {
+                    //跳转登录页面
+                    val intent = Intent(ctx, LoginAndRegistActivity::class.java)
+                    ctx.startActivity(intent)
+                }
+
             }
         }
     }

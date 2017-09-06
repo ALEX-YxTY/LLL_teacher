@@ -11,11 +11,13 @@ import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.milai.lll_teacher.Cookies
+import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.JobContract
 import com.milai.lll_teacher.custom.view.*
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.presenters.JobPresenter
+import com.milai.lll_teacher.views.LoginAndRegistActivity
 import com.milai.lll_teacher.views.SearchActivity
 import com.milai.lll_teacher.views.adapters.JobAdapter
 
@@ -79,11 +81,14 @@ class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView, CanLoa
         back = view.findViewById(R.id.back) as View
         val tab = view.findViewById(R.id.ll_tab) as LinearLayout
         view.findViewById(R.id.rl_search).setOnClickListener{
-
-            //启动搜索页
-            val intent = Intent(this@JobFragment.activity, SearchActivity::class.java)
-            intent.putExtra("from", 1)  //来源 1-职位 2-机构
-            startActivity(intent)
+            if (MyApplication.userInfo == null) {
+                startActivity(Intent(this@JobFragment.activity, LoginAndRegistActivity::class.java))
+            } else {
+                //启动搜索页
+                val intent = Intent(this@JobFragment.activity, SearchActivity::class.java)
+                intent.putExtra("from", 1)  //来源 1-职位 2-机构
+                startActivity(intent)
+            }
         }
         view.findViewById(R.id.rl_tj)?.setOnClickListener({
             if (popTj == null) {

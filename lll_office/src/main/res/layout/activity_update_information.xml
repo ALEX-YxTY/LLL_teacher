@@ -109,18 +109,28 @@
             <RelativeLayout
                 android:id="@+id/rl_push"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:gravity="center"
+                android:layout_height="wrap_content"
                 android:background="@color/white">
 
+                <TextView
+                    android:id="@+id/tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_black2"
+                    android:text="@string/office_address"
+                    android:layout_marginTop="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="19dp"
-                    android:layout_centerVertical="true"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_black2"
-                    android:text="@string/office_address" />
+                    android:textSize="10sp"
+                    android:textColor="@color/text_grey1"
+                    android:text="@string/only_backend"
+                    android:layout_below="@id/tv_1"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="4dp"/>
 
                 <ImageView
                     android:src="@drawable/icon_next"
@@ -155,18 +165,28 @@
             <RelativeLayout
                 android:id="@+id/rl_clear_cache"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:gravity="center"
+                android:layout_height="wrap_content"
                 android:background="@color/white">
 
+                <TextView
+                    android:id="@+id/tv_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_black2"
+                    android:text="@string/contact_people"
+                    android:layout_marginTop="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="19dp"
-                    android:layout_centerVertical="true"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_black2"
-                    android:text="@string/contact_people" />
+                    android:textSize="10sp"
+                    android:textColor="@color/text_grey1"
+                    android:text="@string/only_backend"
+                    android:layout_below="@id/tv_2"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="4dp"/>
 
                 <ImageView
                     android:src="@drawable/icon_next"
@@ -195,19 +215,29 @@
             <!-- 联系方式 -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:gravity="center"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:background="@color/white">
 
                 <TextView
+                    android:id="@+id/tv_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="19dp"
-                    android:layout_centerVertical="true"
                     android:textSize="14sp"
                     android:textColor="@color/text_black2"
-                    android:text="@string/contact_way" />
+                    android:text="@string/contact_way"
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_grey1"
+                    android:text="@string/only_backend"
+                    android:layout_below="@id/tv_3"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="4dp"/>
 
                 <ImageView
                     android:src="@drawable/icon_next"
@@ -260,7 +290,7 @@
                     android:gravity="top"
                     android:maxLength="100"
                     android:textColor="@color/text_black2"
-                    android:hint="用简单的话介绍机构概况"
+                    android:hint="用简单的话介绍机构概况,最多200个汉字"
                     android:textColorHint="@color/edit_text_color_grey"
                     android:background="@color/back_grey1"
                     android:layout_marginLeft="19dp"
@@ -287,6 +317,16 @@
                     android:textColor="@color/text_black2"
                     android:text="营业执照"
                     android:id="@+id/component4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_grey1"
+                    android:text="@string/only_backend"
+                    android:layout_toRightOf="@id/component4"
+                    android:layout_alignBaseline="@id/component4" />
 
                 <ImageView
                     android:id="@+id/iv_add"

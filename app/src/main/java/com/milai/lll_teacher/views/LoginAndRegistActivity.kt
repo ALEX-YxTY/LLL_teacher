@@ -23,20 +23,6 @@ class LoginAndRegistActivity : AppCompatActivity() ,View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_and_regist)
-        RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    (type) -> run{
-                    when (type) {
-                        Constant.LOGIN_SUCCESS -> {
-                            //登陆成功后退出此页面
-                            this.finish()
-                        }
-                    }
-                }
-                },{},{},{
-                    t: Disposable -> disposables.add(t)
-                })
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.bt_login).setOnClickListener(this)
         findViewById(R.id.bt_register).setOnClickListener(this)
@@ -55,12 +41,7 @@ class LoginAndRegistActivity : AppCompatActivity() ,View.OnClickListener{
     }
 
     override fun onBackPressed() {
-        if (System.currentTimeMillis() - clickTime > 1000) {
-            Toast.makeText(this,"再次点击退出程序", Toast.LENGTH_SHORT).show()
-            clickTime = System.currentTimeMillis()
-        } else {
-            this.finish()
-        }
+        this.finish()
     }
 
     override fun onDestroy() {

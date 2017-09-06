@@ -11,11 +11,13 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
+import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.OfficeContract
 import com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.presenters.OfficePresenter
+import com.milai.lll_teacher.views.LoginAndRegistActivity
 import com.milai.lll_teacher.views.SearchActivity
 import com.milai.lll_teacher.views.adapters.BasicLayoutManager
 import com.milai.lll_teacher.views.adapters.LayoutLoadMoreListener
@@ -62,9 +64,13 @@ class OfficeFrag : BasicFragment(),View.OnClickListener,OfficeContract.IView,Can
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.bt_search -> {
-                val intent = Intent(this.activity, SearchActivity::class.java)
-                intent.putExtra("from", 2)  //来源 1-职位 2-机构
-                startActivity(intent)
+                if (MyApplication.userInfo == null) {
+                    startActivity(Intent(this@OfficeFrag.activity, LoginAndRegistActivity::class.java))
+                } else {
+                    val intent = Intent(this.activity, SearchActivity::class.java)
+                    intent.putExtra("from", 2)  //来源 1-职位 2-机构
+                    startActivity(intent)
+                }
             }
         }
     }

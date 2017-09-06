@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.util.Log
@@ -16,6 +17,7 @@ import com.milai.lll_teacher.models.entities.MessageNoticeInfo
 import com.milai.lll_teacher.models.entities.SysNoticeInfo
 import com.milai.lll_teacher.models.entities.VersionInfo
 import com.milai.lll_teacher.presenters.NoticePresenter
+import com.milai.lll_teacher.views.LoginAndRegistActivity
 import com.milai.lll_teacher.views.adapters.MessageAdapter
 import com.milai.lll_teacher.views.adapters.SysNoticAdapter
 
@@ -34,7 +36,6 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
 
     val recyclerView:CanLoadMoreRecyclerView by lazy{ fragview?.findViewById(R.id.rv) as CanLoadMoreRecyclerView}
     val tabLayout: TabLayout by lazy {fragview?.findViewById(R.id.tabLayout) as TabLayout }
-    val uid = MyApplication.userInfo?.uid
 
     var newestSysIdGet: Int = 0     //保存获取到的最新系统ID
     var isMessage:Boolean = true    //是否是消息列表
@@ -48,15 +49,17 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (fragview == null) {
             fragview = inflater?.inflate(R.layout.frag_notice, container, false)
-            initUI()
         }
         return fragview
     }
 
     override fun onResume() {
         super.onResume()
-        (presenter as NoticeContract.IPresenter).getNewestSysId(uid!!)
-        (presenter as NoticeContract.IPresenter).getNewestMessId(uid)
+        if (fragview != null && MyApplication.userInfo != null) {
+            initUI()
+            (presenter as NoticeContract.IPresenter).getNewestSysId(MyApplication.userInfo?.uid!!)
+            (presenter as NoticeContract.IPresenter).getNewestMessId(MyApplication.userInfo?.uid!!)
+        }
     }
 
     private fun initUI() {
@@ -67,6 +70,7 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
         recyclerView.setAdapter(messageAdaper)
 
         //初始化tablayout
+        tabLayout.removeAllTabs()
         tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.item_tab_2))
         tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.item_tab_2))
 
@@ -88,7 +92,7 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
                     isMessage = false
                     recyclerView.setAdapter(noticeAdapter)
                     if (newestSysIdGet > 0) {
-                        Cookies.saveNewestSysId(newestSysIdGet, uid ?: "")
+                        Cookies.saveNewestSysId(newestSysIdGet, MyApplication.userInfo?.uid ?: "")
                     }
                 }
             }
@@ -115,10 +119,10 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
     override fun onLoadMore(page: Int) {
         if (isMessage) {
             //message
-            (presenter as NoticeContract.IPresenter).getMessageNotice(uid?:"",page)
+            (presenter as NoticeContract.IPresenter).getMessageNotice(MyApplication.userInfo?.uid?:"",page)
         } else {
             //notice
-            (presenter as NoticeContract.IPresenter).getSysNotice(uid?:"",page)
+            (presenter as NoticeContract.IPresenter).getSysNotice(MyApplication.userInfo?.uid?:"",page)
         }
     }
 
@@ -161,10 +165,10 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
     }
 
     override fun onNewestMessIdGet(id: Int) {
-        Log.d("test","NoticeFrag messageId get :Cookies get ${Cookies.getNewestMesId(uid!!)}, net get $id")
+        Log.d("test","NoticeFrag messageId get :Cookies get ${Cookies.getNewestMesId(MyApplication.userInfo?.uid!!)}, net get $id")
 
-        if (id > 0 && id > Cookies.getNewestMesId(uid!!)) {
-            Cookies.saveNewestMesId(id, uid)
+        if (id > 0 && id > Cookies.getNewestMesId(MyApplication.userInfo?.uid!!)) {
+            Cookies.saveNewestMesId(id, MyApplication.userInfo?.uid?:"")
             //显示红点
             tabLayout.getTabAt(0)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE
         } else {
@@ -174,8 +178,8 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
     }
 
     override fun onNewestSysIdGet(id: Int) {
-        Log.d("test","NoticeFrag sysId get :Cookies get ${Cookies.getNewestSysId(uid!!)}, net get $id")
-        if (id > 0 && id > Cookies.getNewestSysId(uid!!)) {
+        Log.d("test","NoticeFrag sysId get :Cookies get ${Cookies.getNewestSysId(MyApplication.userInfo?.uid!!)}, net get $id")
+        if (id > 0 && id > Cookies.getNewestSysId(MyApplication.userInfo?.uid!!)) {
             newestSysIdGet = id
             //显示红点
             tabLayout.getTabAt(1)?.customView?.findViewById(R.id.red_point)?.visibility = View.VISIBLE

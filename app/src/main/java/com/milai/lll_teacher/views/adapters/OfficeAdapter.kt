@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.models.entities.OfficeInfo
+import com.milai.lll_teacher.views.LoginAndRegistActivity
 import com.milai.lll_teacher.views.OfficeDetailActivity
 
 /**
@@ -37,9 +39,15 @@ class OfficeAdapter(ctx: Context, dataList: List<OfficeInfo>)
             }
             glide.load(office.avatar).error(R.drawable.organization_default).into(officeInfoViewHolder.ivHead)
             officeInfoViewHolder.itemView.setOnClickListener{
-                val intent = Intent(ctx, OfficeDetailActivity::class.java)
-                intent.putExtra("office", dataList[position] as OfficeInfo)
-                ctx.startActivity(intent)
+                if (MyApplication.userInfo != null) {
+                    val intent = Intent(ctx, OfficeDetailActivity::class.java)
+                    intent.putExtra("office", dataList[position] as OfficeInfo)
+                    ctx.startActivity(intent)
+                } else {
+                    val intent = Intent(ctx, LoginAndRegistActivity::class.java)
+                    ctx.startActivity(intent)
+                }
+
             }
         }
     }
