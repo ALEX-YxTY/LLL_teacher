@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="banner-1.4.9">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/banner-1.4.9.aar/2a7144bb30f439e142ff87fbc07f1d2d/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/banner-1.4.9.aar/2a7144bb30f439e142ff87fbc07f1d2d/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/banner-1.4.9.aar/368afeb3e010d449ed79bf4f9740ec87/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/banner-1.4.9.aar/368afeb3e010d449ed79bf4f9740ec87/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
