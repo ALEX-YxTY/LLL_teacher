@@ -49,5 +49,6 @@
     <string name="work_area">工作区域</string>
     <string name="go_interview">去面试</string>
     <string name="only_backend">仅在后台显示</string>
+    <string name="only_backend2">(仅在后台显示)</string>
 
 </resources>
