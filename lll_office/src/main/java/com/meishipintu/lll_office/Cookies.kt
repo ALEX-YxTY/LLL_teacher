@@ -235,6 +235,21 @@ object Cookies {
         return job
     }
 
+    fun isFirstLogin(): Boolean {
+        return if (getPreference() != null) {
+            val isFirstLogin = getPreference()!!.getBoolean("isFirstLogin", true)
+            isFirstLogin
+        } else {
+            true
+        }
+    }
+
+    fun setFirstLogin() {
+        val editor = getPreference()?.edit()
+        editor?.putBoolean("isFirstLogin", false)
+        editor?.apply()
+    }
+
 }
 
 //扩展方法

@@ -63,6 +63,7 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
 
     val glide:RequestManager by lazy{ Glide.with(this) }
     var isCollect = false       //标记是否已收藏
+    val courses = Cookies.getConstant(2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,8 +126,8 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
             R.id.iv_share -> {
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
                         "&actionId=${MyApplication.userInfo?.uid}&type=5&flag=1")
-                umWeb.title = "拉力郎师资"
-                umWeb.description = "快来查看这个职位"
+                umWeb.title = "拉力郎教师端"
+                umWeb.description = "${officeInfo?.name?:"某"}机构正在招聘${courses[jobInfo!!.course]}老师，海量职位尽在拉力郎共享师资"
                 umWeb.setThumb(UMImage(this,R.mipmap.teacher_share))
                 ShareAction(this@JobDetailActivity)
                         .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
@@ -173,13 +174,11 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
     //from JobDetailContract.IView
     override fun onJobDetailGet(jobInf: JobInfo) {
         this.jobInfo = jobInf
-        val grades = Cookies.getConstant(3)
-        val courses = Cookies.getConstant(2)
         val sexs = arrayOf("性别无要求", "男", "女")
         val experiences = Cookies.getConstant(5)
         val areas = Cookies.getConstant(1)
+        val grades = Cookies.getConstant(3)
         val gradeDetail = Cookies.getConstant(11)
-
         (findViewById(R.id.job_name) as TextView).text = jobInfo?.job_name
         (findViewById(R.id.tv_course_grade) as TextView).text = "${grades[jobInfo!!.grade]} " +
                 "${gradeDetail[jobInfo?.grade_detail?:0]}" +

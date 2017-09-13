@@ -32,10 +32,10 @@ class SplashActivity : AppCompatActivity() {
                     activity.timeRemian--
                     this.sendEmptyMessageDelayed(1, 1000)
                 } else {
-                    if (Cookies.getUserInfo() != null) {
-                        activity.startActivity(Intent(activity, MainActivity::class.java))
-                    } else {
-                        activity.startActivity(Intent(activity,LoginAndRegisterActivity::class.java))
+                    when {
+                        Cookies.isFirstLogin() -> activity.startActivity(Intent(activity, GuideActivity::class.java))
+                        Cookies.getUserInfo() != null -> activity.startActivity(Intent(activity, MainActivity::class.java))
+                        else -> activity.startActivity(Intent(activity,LoginAndRegisterActivity::class.java))
                     }
                     activity.finish()
                 }

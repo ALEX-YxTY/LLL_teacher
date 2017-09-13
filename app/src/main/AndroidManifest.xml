@@ -34,6 +34,11 @@
             </intent-filter>
         </activity>
 
+        <!--引导页-->
+        <activity android:name=".views.GuideActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <!-- 主页 -->
         <activity
             android:name=".views.MainActivity"

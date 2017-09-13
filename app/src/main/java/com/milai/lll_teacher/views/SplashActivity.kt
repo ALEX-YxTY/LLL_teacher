@@ -37,11 +37,11 @@ class SplashActivity : AppCompatActivity() {
                     activity.timeRemian--
                     this.sendEmptyMessageDelayed(1, 1000)
                 } else {
-//                    if (Cookies.getUserInfo() != null) {
+                    if (Cookies.isFirstLogin()) {
+                        activity.startActivity(Intent(activity, GuideActivity::class.java))
+                    } else {
                         activity.startActivity(Intent(activity, MainActivity::class.java))
-//                    } else {
-//                        activity.startActivity(Intent(activity,LoginAndRegistActivity::class.java))
-//                    }
+                    }
                     activity.finish()
                 }
             }

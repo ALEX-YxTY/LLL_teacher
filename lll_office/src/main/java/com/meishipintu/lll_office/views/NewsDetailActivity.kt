@@ -46,6 +46,7 @@ class NewsDetailActivity : BasicActivity() {
 
     val url:String by lazy{ intent.getStringExtra("url")}
     val newsId:String by lazy{ intent.getIntExtra("newsId", 0).toString()}
+    val newsName:String by lazy{ intent.getStringExtra("newsName")}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +56,8 @@ class NewsDetailActivity : BasicActivity() {
         val tvTitle = findViewById(R.id.tv_title) as TextView
         ivShare.visibility = View.VISIBLE
         val umWeb = UMWeb(url)
-        umWeb.title = "拉力郎师资"
-        umWeb.description = "快来查看拉力郎师资的新闻"
+        umWeb.title = "拉力郎机构端"
+        umWeb.description = newsName
         umWeb.setThumb(UMImage(this,R.mipmap.office_share))
         ivShare.setOnClickListener{
             ShareAction(this@NewsDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)

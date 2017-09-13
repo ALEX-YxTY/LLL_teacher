@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.TeacherDetailContract
@@ -57,6 +58,7 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
     val tvButton:TextView by lazy{ findViewById(R.id.tv_action) as TextView}
     var isCollected = false     //标记是否已经收藏
     val glide:RequestManager by lazy{ Glide.with(this) }
+    val courses = Cookies.getConstant(2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,8 +114,8 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
             R.id.iv_share ->{
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/tcinfo?uid=${teacher.uid}" +
                         "&actionId=${OfficeApplication.userInfo?.uid}&type=7&flag=2")
-                umWeb.title = "拉力郎师资"
-                umWeb.description = "快来查看这个教师的简历"
+                umWeb.title = "拉力郎机构端"
+                umWeb.description = "我在拉力郎共享师资发现一位${teacher.name}老师，拥有*年${courses[teacher.course]}教学经验，点击查看"
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))
                 ShareAction(this@TeacherDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(umShareListener).withMedia(umWeb).open()

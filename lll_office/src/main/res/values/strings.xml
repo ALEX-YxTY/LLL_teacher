@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">拉力郎机构版</string>
+    <string name="app_name">拉力郎机构端</string>
 
     <string name="tel_login">登 录</string>
     <string name="register">注 册</string>

@@ -53,6 +53,8 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
      */
     val type: Int by lazy { intent.getIntExtra("type", 1) }
     var status =1 //1-在线 2-下线
+    var jobInfo:JobInfo? = null
+    val courses = Cookies.getConstant(2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,21 +69,21 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         ivShare.setOnClickListener(this)
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.include_office).visibility=View.GONE
-
+        if (type == 1) {
+            findViewById(R.id.iv_share).visibility = View.GONE
+        }
         (presenter as JobDetailContract.IPresenter).getJobDetail(jobId)
     }
 
     //from JobDetailContract.IView
     override fun onJobDetailGet(jobInfo: JobInfo) {
         this.status = jobInfo.status
-
-        val grades = Cookies.getConstant(3)
-        val courses = Cookies.getConstant(2)
+        this.jobInfo = jobInfo
         val sexs = arrayOf("性别无要求", "男", "女")
         val experiences = Cookies.getConstant(5)
         val areas = Cookies.getConstant(1)
+        val grades = Cookies.getConstant(3)
         val gradeDetail = Cookies.getConstant(11)
-
 
         val tvStatusChange = findViewById(R.id.tv_offline) as TextView
         val btInvite = findViewById(R.id.bt_invite)
@@ -133,8 +135,8 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
             R.id.iv_share ->{
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
                         "&actionId=${OfficeApplication.userInfo?.uid}&type=8&flag=2")
-                umWeb.title = "拉力郎师资"
-                umWeb.description = "快来查看这个机构的职位"
+                umWeb.title = "拉力郎机构端"
+                umWeb.description = "${OfficeApplication.userInfo?.name}机构正在招聘${courses[jobInfo!!.course]}老师，海量职位尽在拉力郎共享师资。"
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))
                 ShareAction(this@JobDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(umShareListener).withMedia(umWeb).open()
