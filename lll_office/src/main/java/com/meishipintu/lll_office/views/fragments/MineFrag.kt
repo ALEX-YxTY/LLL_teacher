@@ -88,6 +88,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
         fragView?.findViewById(R.id.rl_notice_center)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_other_office)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_setting)?.setOnClickListener(this)
+        fragView?.findViewById(R.id.iv_head)?.setOnClickListener(this)
     }
 
     override fun onResume() {
@@ -143,6 +144,7 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
 
     override fun onClick(v: View?) {
         when(v?.id){
+            R.id.iv_head -> startActivity(Intent(this.activity, EditInfoActivity::class.java))
             R.id.iv_status ->{
                 //升级账号
                 val intent = Intent(this.activity, UpdateActivity::class.java)

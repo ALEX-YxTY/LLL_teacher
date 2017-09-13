@@ -59,6 +59,7 @@ class MineFrag : BasicFragment(),View.OnClickListener,MineContract.IView{
         fragView?.findViewById(R.id.rl_my_job_collection)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_my_attention_office)?.setOnClickListener(this)
         fragView?.findViewById(R.id.rl_setting)?.setOnClickListener(this)
+        fragView?.findViewById(R.id.iv_head)?.setOnClickListener(this)
     }
 
     private fun initUI() {
