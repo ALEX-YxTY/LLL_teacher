@@ -24,6 +24,12 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
     val idList:List<View> by lazy {
         listOf(findViewById(R.id.rl_1), findViewById(R.id.rl_2), findViewById(R.id.rl_3), findViewById(R.id.rl_4))
     }
+    val nameList:List<View> by lazy{
+        listOf(findViewById(R.id.good1),findViewById(R.id.good2),findViewById(R.id.good3),findViewById(R.id.good4))
+    }
+    val valueList:List<View> by lazy {
+        listOf(findViewById(R.id.value1), findViewById(R.id.value2), findViewById(R.id.value3), findViewById(R.id.value4))
+    }
     val levels = Cookies.getConstant(7)
     val tvMoney:TextView by lazy { findViewById(R.id.tv_money) as TextView }
     val tvDetail:TextView by lazy{findViewById(R.id.level_detail) as TextView}
@@ -51,10 +57,12 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
     }
 
     private fun initUI() {
-        val rl1 = findViewById(R.id.rl_1) as RelativeLayout
-        val rl2 = findViewById(R.id.rl_2) as RelativeLayout
-        val rl3 = findViewById(R.id.rl_3) as RelativeLayout
-        val rl4 = findViewById(R.id.rl_4) as RelativeLayout
+        for (i: Int in 0 until idList.size) {
+            idList[i].setOnClickListener(this)
+            val menus = levels[i].split("&")
+            (nameList[i] as TextView).text = menus[0]
+            (valueList[i] as TextView).text = "¥ ${menus[1]}"
+        }
 
         val title = findViewById(R.id.tv_title) as TextView
         title.text = "升级账号"
@@ -71,17 +79,13 @@ class UpdateActivity : BasicActivity(),View.OnClickListener {
             accountLevel.text = "普通会员"
         }
         changeTo(levelNow)
-        rl1.setOnClickListener(this)
-        rl2.setOnClickListener(this)
-        rl3.setOnClickListener(this)
-        rl4.setOnClickListener(this)
         findViewById(R.id.bt_pay).setOnClickListener(this)
     }
 
     val disposables: CompositeDisposable by lazy{ CompositeDisposable() }
 
     //添加订阅
-    open fun <M>addSubscription(observable: Observable<M>, subscriber: Observer<M>) {
+    fun <M>addSubscription(observable: Observable<M>, subscriber: Observer<M>) {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
