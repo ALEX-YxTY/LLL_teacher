@@ -46,7 +46,7 @@ class TeacherFrag:BasicFragment(), MenuClickListener, TeacherContract.IView,CanL
 
     var rootView: View? = null
 
-    var tj:Int=1        //默认tj=1
+    var tj:Int=0        //默认tj=1
     var course: Int = 0     //默认学科不限
     var grade:Int=0
     var experience:Int = 0

@@ -30,7 +30,7 @@ import com.milai.lll_teacher.views.adapters.JobAdapter
 
 class JobFragment : BasicFragment(), MenuClickListener,JobContract.IView, CanLoadMoreRecyclerView.StateChangedListener{
 
-    var tj = 1 //是否推荐
+    var tj = 0 //是否推荐
     var area = 0 //0-全部，index-区序号
     var courese = 0//学科 默认不限
     var grade = 0   //年级 默认不限
