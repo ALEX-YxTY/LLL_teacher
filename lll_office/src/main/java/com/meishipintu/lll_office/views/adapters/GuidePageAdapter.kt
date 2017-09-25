@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.meishipintu.lll_office.Cookies
+import com.meishipintu.lll_office.views.ContractorActivity
 import com.meishipintu.lll_office.views.GuideActivity
 import com.meishipintu.lll_office.views.LoginAndRegisterActivity
 import com.meishipintu.lll_office.views.MainActivity

@@ -34,8 +34,9 @@
             </intent-filter>
         </activity>
 
-        <!--引导页-->
-        <activity android:name=".views.GuideActivity"
+        <!-- 引导页 -->
+        <activity
+            android:name=".views.GuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
@@ -51,6 +52,12 @@
             android:name=".views.LoginAndRegistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!--协议页面-->
+        <activity android:name=".views.ContractorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
 
         <!-- 登录页 -->
         <activity
@@ -144,13 +151,13 @@
                 android:resource="@xml/filepath" />
         </provider>
 
-        <!--Bugly-->
+        <!-- Bugly -->
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
 
-        <!--微信分享-->
+        <!-- 微信分享 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -158,11 +165,11 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-
-        <!--友盟appkey-教师版-->
-        <meta-data android:name="UMENG_APPKEY" android:value="59a67c8a07fe650746000e5b" > </meta-data>
+        <!-- 友盟appkey-教师版 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="59a67c8a07fe650746000e5b"></meta-data>
 
     </application>
-
 
 </manifest>

@@ -47,9 +47,7 @@ class LoginAndRegisterActivity : BasicActivity(),View.OnClickListener{
             }
             R.id.bt_login -> startActivity(Intent(this, LoginActivity::class.java))
             R.id.bt_register -> {
-                val intent = Intent(this, RegistActivity::class.java)
-                intent.putExtra("from", 1)  //from=1 注册  from=2 找回密码
-                startActivity(intent)
+                startActivity(Intent(this, ContractorActivity::class.java))
             }
         }
     }

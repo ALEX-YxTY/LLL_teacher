@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.milai.lll_teacher.views.ContractorActivity">
+
+    <include layout="@layout/titlebar_back"
+        android:id="@+id/titlebar"/>
+
+    <RelativeLayout
+        android:id="@+id/clickbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:id="@+id/refuse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="拒绝"
+            android:textColor="#3C4A55"
+            />
+        <TextView
+            android:id="@+id/agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="同意"
+            android:textColor="@color/themeOrange"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@id/titlebar"
+        android:layout_above="@id/clickbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="21dp"
+        android:paddingRight="21dp"
+        android:scrollbars="none">
+        <TextView
+            android:id="@+id/contractor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </ScrollView>
+</RelativeLayout>

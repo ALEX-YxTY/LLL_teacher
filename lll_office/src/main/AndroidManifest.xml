@@ -35,8 +35,9 @@
             </intent-filter>
         </activity>
 
-        <!--引导页-->
-        <activity android:name=".views.GuideActivity"
+        <!-- 引导页 -->
+        <activity
+            android:name=".views.GuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
@@ -56,6 +57,11 @@
             android:name=".views.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--注册协议页-->
+        <activity android:name=".views.ContractorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <!-- 注册和找回密码 -->
         <activity
             android:name=".views.RegistActivity"
@@ -227,7 +233,7 @@
         <!-- 友盟appkey-机构版 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="59a67cde07fe65034900089a"></meta-data>
+            android:value="59a67cde07fe65034900089a" />
 
         <!-- FileProvider 供跨程序使用Uri文件 -->
         <provider
