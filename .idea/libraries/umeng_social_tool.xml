@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="umeng_social_tool">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lll_office/libs/umeng_social_tool.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/libs/umeng_social_tool.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

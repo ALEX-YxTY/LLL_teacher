@@ -135,8 +135,7 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
             R.id.iv_share ->{
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
                         "&actionId=${OfficeApplication.userInfo?.uid}&type=8&flag=2")
-                umWeb.title = "拉力郎机构端"
-                umWeb.description = "${OfficeApplication.userInfo?.name}机构正在招聘${courses[jobInfo!!.course]}老师，海量职位尽在拉力郎共享师资。"
+                umWeb.title = "${OfficeApplication.userInfo?.name?:""}正在招聘${courses[jobInfo!!.course]}老师，海量职位尽在拉力郎共享师资。"
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))
                 ShareAction(this@JobDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(umShareListener).withMedia(umWeb).open()

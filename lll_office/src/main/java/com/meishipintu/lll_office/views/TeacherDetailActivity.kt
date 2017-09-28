@@ -114,8 +114,7 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
             R.id.iv_share ->{
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/tcinfo?uid=${teacher.uid}" +
                         "&actionId=${OfficeApplication.userInfo?.uid}&type=7&flag=2")
-                umWeb.title = "拉力郎机构端"
-                umWeb.description = "我在拉力郎共享师资发现一位${teacher.name}老师，拥有*年${courses[teacher.course]}教学经验，点击查看"
+                umWeb.title = "我在拉力郎共享师资发现一位${teacher.name}老师，拥有*年${courses[teacher.course]}教学经验，点击查看"
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))
                 ShareAction(this@TeacherDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(umShareListener).withMedia(umWeb).open()

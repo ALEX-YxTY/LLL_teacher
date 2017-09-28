@@ -56,8 +56,7 @@ class NewsDetailActivity : BasicActivity() {
         val tvTitle = findViewById(R.id.tv_title) as TextView
         ivShare.visibility = View.VISIBLE
         val umWeb = UMWeb(url)
-        umWeb.title = "拉力郎机构端"
-        umWeb.description = newsName
+        umWeb.title = newsName
         umWeb.setThumb(UMImage(this,R.mipmap.office_share))
         ivShare.setOnClickListener{
             ShareAction(this@NewsDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)

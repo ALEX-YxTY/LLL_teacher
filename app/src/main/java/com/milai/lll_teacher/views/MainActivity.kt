@@ -85,9 +85,9 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
         val hasStoragePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         if (hasStoragePermission != PackageManager.PERMISSION_GRANTED) {        //未授权
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)) {                    //系统申请权限框不再弹出
-                DialogUtils.showCustomDialog(this, "本应用需要获取使用相机权限", { dialog, _ ->
-                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA)
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {                    //系统申请权限框不再弹出
+                DialogUtils.showCustomDialog(this, "本应用需要获取内存读写的权限", { dialog, _ ->
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             , Constant.REQUEST_STORAGE_PERMISSION)
                     dialog.dismiss()
                 }) { dialog, _ -> dialog.dismiss() }
