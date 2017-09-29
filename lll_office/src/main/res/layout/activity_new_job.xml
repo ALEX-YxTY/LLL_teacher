@@ -186,12 +186,13 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textColor="@color/themeOrange"
-                    android:hint="请填写"
+                    android:hint="最多十个字符"
                     android:textColorHint="@color/themeOrange"
                     android:background="@null"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="13dp"
                     android:layout_centerVertical="true"
+                    android:maxLength="10"
                     android:gravity="end"/>
             </RelativeLayout>
 
