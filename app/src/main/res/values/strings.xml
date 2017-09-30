@@ -28,4 +28,6 @@
     <string name="empty">暂无数据</string>
     <string name="bm">投递简历</string>
     <string name="go_contact">立即沟通</string>
+    <string name="version_now">当前版本</string>
+    <string name="download_code">下载二维码</string>
 </resources>

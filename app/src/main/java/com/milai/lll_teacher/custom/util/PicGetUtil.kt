@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.custom.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
@@ -67,23 +68,36 @@ object PicGetUtil {
         chooseHeadViewDialog.show()
     }
 
+    @SuppressLint("WrongConstant")
     //相机权限申请包装方法
     fun startCameraWapper(context: Activity, file: File) {
-        val hasStoragePermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
-
-        if (hasStoragePermission != PackageManager.PERMISSION_GRANTED) {        //未授权
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(context, android.Manifest.permission.CAMERA)) {                    //系统申请权限框不再弹出
-                DialogUtils.showCustomDialog(context, "本应用需要获取使用相机权限", { dialog, _ ->
-                    ActivityCompat.requestPermissions(context, arrayOf(android.Manifest.permission.CAMERA)
-                            , Constant.REQUEST_CAMERA_PERMISSION)
-                    dialog.dismiss()
-                }) { dialog, _ -> dialog.dismiss() }
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            if (PackageManager.PERMISSION_DENIED ==
+                    context.packageManager.checkPermission("android.permission.CAMERA", context.packageName)) {
+                Toast.makeText(context,"该软件暂无相机权限，请在系统设置中授予使用相机的权限方可使用本功能",Toast.LENGTH_SHORT).show()
+                successListener?.onCancle()
                 return
             }
-            //系统框弹出时直接申请
-            ActivityCompat.requestPermissions(context, arrayOf(android
-                    .Manifest.permission.CAMERA), Constant.REQUEST_CAMERA_PERMISSION)
-            return
+        } else {
+            val hasStoragePermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+
+            if (hasStoragePermission != PackageManager.PERMISSION_GRANTED) {        //未授权
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(context, android.Manifest.permission.CAMERA)) {     //系统申请权限框不再弹出
+                    DialogUtils.showCustomDialog(context, "本应用需要获取使用相机权限", { dialog, _ ->
+                        ActivityCompat.requestPermissions(context, arrayOf(android.Manifest.permission.CAMERA)
+                                , Constant.REQUEST_CAMERA_PERMISSION)
+                        dialog.dismiss()
+                    }) {
+                        dialog, _ -> dialog.dismiss()
+                        successListener?.onCancle()
+                    }
+                    return
+                }
+                //系统框弹出时直接申请
+                ActivityCompat.requestPermissions(context, arrayOf(android
+                        .Manifest.permission.CAMERA), Constant.REQUEST_CAMERA_PERMISSION)
+                return
+            }
         }
         startCamera(context, file)
     }
@@ -116,7 +130,12 @@ object PicGetUtil {
             //调用系统相机
         }
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        context.startActivityForResult(intent, Constant.TAKE_PHOTO)
+        try {
+            context.startActivityForResult(intent, Constant.TAKE_PHOTO)
+        } catch (e: Exception) {
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+            successListener?.onCancle()
+        }
     }
 
     //启动裁剪图片

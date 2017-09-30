@@ -57,8 +57,9 @@
             android:name=".views.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--注册协议页-->
-        <activity android:name=".views.ContractorActivity"
+        <!-- 注册协议页 -->
+        <activity
+            android:name=".views.ContractorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
@@ -147,6 +148,11 @@
             android:name=".views.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--下载二维码页面-->
+        <activity android:name=".views.DownloadCodeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <!-- 教师详情-未面试/已面试 -->
         <activity
             android:name=".views.TeacherInterviewActivity"

@@ -9,8 +9,8 @@ android {
         applicationId "com.milai.lll_teacher"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 10
-        versionName "1.0.9"
+        versionCode 11
+        versionName "1.0.10"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -72,6 +72,7 @@ dependencies {
     implementation files('libs/SocialSDK_WeiXin_Full.jar')
     implementation files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
 }
+
 
 
 

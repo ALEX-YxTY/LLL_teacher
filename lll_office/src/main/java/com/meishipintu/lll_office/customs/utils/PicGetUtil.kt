@@ -67,7 +67,9 @@ object PicGetUtil {
                     ActivityCompat.requestPermissions(context, arrayOf(android.Manifest.permission.CAMERA)
                             , Constant.REQUEST_CAMERA_PERMISSION)
                     dialog.dismiss()
-                }) { dialog, _ -> dialog.dismiss() }
+                }) {
+                    dialog, _ -> dialog.dismiss()
+                }
                 return
             }
             //系统框弹出时直接申请
@@ -106,7 +108,11 @@ object PicGetUtil {
             //调用系统相机
         }
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        context.startActivityForResult(intent, Constant.TAKE_PHOTO)
+        try {
+            context.startActivityForResult(intent, Constant.TAKE_PHOTO)
+        } catch (e: Exception) {
+            Toast.makeText(context,"该软件暂无相机权限，请在系统设置中授予使用相机的权限方可使用本功能",Toast.LENGTH_SHORT).show()
+        }
     }
 
     //启动裁剪图片

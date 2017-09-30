@@ -29,7 +29,7 @@ class GuideActivity : AppCompatActivity() {
                 indicatorIndex -> indicator.setBackgroundResource(R.drawable.shape_cicle_orange)
                 else ->{
                     indicator.setBackgroundResource(R.drawable.shape_cicle_grey)
-                    params.marginStart = 20
+                    params.leftMargin = 20
                 }
             }
             indicator.layoutParams = params

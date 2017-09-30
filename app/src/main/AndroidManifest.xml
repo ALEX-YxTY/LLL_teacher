@@ -53,11 +53,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--协议页面-->
-        <activity android:name=".views.ContractorActivity"
+        <!-- 协议页面 -->
+        <activity
+            android:name=".views.ContractorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
 
         <!-- 登录页 -->
         <activity
@@ -119,6 +119,12 @@
             android:name=".views.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!--二维码下载页面-->
+        <activity android:name=".views.DownloadCodeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <!-- 面试邀约和投递记录页面 -->
         <activity
             android:name=".views.InterviewListActivity"
@@ -168,7 +174,7 @@
         <!-- 友盟appkey-教师版 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="59a67c8a07fe650746000e5b"></meta-data>
+            android:value="59a67c8a07fe650746000e5b" />
 
     </application>
 

@@ -15,9 +15,12 @@ class SettingActivity : AppCompatActivity(),View.OnClickListener {
         setContentView(R.layout.activity_setting)
         val tvTitle = findViewById(R.id.tv_title) as TextView
         tvTitle.text = "我的设置"
+        val tvVersion = findViewById(R.id.tv_version) as TextView
+        tvVersion.text = packageManager.getPackageInfo(packageName,0).versionName
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.bt_logout).setOnClickListener(this)
         findViewById(R.id.rl_edit_info).setOnClickListener(this)
+        findViewById(R.id.rl_down_code).setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -31,6 +34,7 @@ class SettingActivity : AppCompatActivity(),View.OnClickListener {
                 RxBus.send(BusMessage(Constant.LOGOUT))
                 this.finish()
             }
+            R.id.rl_down_code -> startActivity(Intent(this, DownloadCodeActivity::class.java))
         }
     }
 }

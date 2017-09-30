@@ -13,6 +13,7 @@ import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.ForgetPswContract
 import com.milai.lll_teacher.custom.util.StringUtils
 import com.milai.lll_teacher.custom.view.CustomEditText
+import com.milai.lll_teacher.presenters.AuthorPresenter
 import java.lang.ref.WeakReference
 
 class ForgetPswActivity : BasicActivity(),ForgetPswContract.IView {
@@ -25,7 +26,7 @@ class ForgetPswActivity : BasicActivity(),ForgetPswContract.IView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forget_psw)
-
+        presenter = AuthorPresenter(this)
         val tvTitle = findViewById(R.id.tv_title) as TextView
         val etTel = findViewById(R.id.et_tel) as CustomEditText
         val etVcode = findViewById(R.id.et_vcode) as CustomEditText
