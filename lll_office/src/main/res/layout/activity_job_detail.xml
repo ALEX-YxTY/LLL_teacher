@@ -183,37 +183,6 @@
                     android:layout_marginTop="5dp" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_other"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="10dp"
-                android:layout_marginLeft="@dimen/item_margin13"
-                android:layout_marginRight="@dimen/item_margin13"
-                android:layout_marginTop="@dimen/item_margin13"
-                android:background="@drawable/shape_back_item_border">
-
-                <TextView
-                    android:id="@+id/component3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="其他要求"
-                    android:textColor="@color/text_black1"/>
-
-                <TextView
-                    android:id="@+id/tv_other_demand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_grey1"
-                    android:layout_below="@id/component3"
-                    android:layout_marginTop="5dp" />
-            </RelativeLayout>
-
             <include layout="@layout/item_office"
                 android:id="@+id/include_office"/>
 

@@ -16,8 +16,8 @@
         android:layout_marginTop="9dp"/>
     <View
         android:id="@+id/red_point"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:background="@drawable/shape_red_point"
         android:layout_alignRight="@id/iv_icon"
         android:layout_alignTop="@id/iv_icon"

@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             app:title="账号："
-            app:hint1="请设置账号"
+            app:hint1="机构名称"
             app:type="string"
             />
         <com.meishipintu.lll_office.customs.CustomEditText

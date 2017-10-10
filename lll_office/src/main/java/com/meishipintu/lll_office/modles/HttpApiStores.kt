@@ -56,7 +56,7 @@ interface HttpApiStores {
                       , @Field("work_address") address: String, @Field("course") course: Int, @Field("grade") grade: Int
                       , @Field("grade_detail") grade_detail: Int, @Field("sex") sex: Int, @Field("require_year") rYear: Int
                       , @Field("money") money: String, @Field("have_certificate") have_certificate: Int
-                      , @Field("require") require: String, @Field("other_demand") other: String)
+                      , @Field("require") require: String)
             : Observable<HttpResult<Any>>
 
     //获取机构发布的职位

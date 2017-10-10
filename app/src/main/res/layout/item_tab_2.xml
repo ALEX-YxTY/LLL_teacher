@@ -18,8 +18,8 @@
 
     <View
         android:id="@+id/red_point"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:background="@drawable/shape_red_point"
         android:layout_alignRight="@id/tv_tab"
         android:layout_alignTop="@id/tv_tab"

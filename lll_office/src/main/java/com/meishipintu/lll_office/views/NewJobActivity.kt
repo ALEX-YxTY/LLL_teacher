@@ -39,7 +39,6 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     private val etMoney: EditText by lazy { findViewById(R.id.et_money) as EditText }
     private val etAddress: EditText by lazy { findViewById(R.id.et_address) as EditText }
     private val etJobRequire: EditText by lazy { findViewById(R.id.et_job_require) as EditText }
-    private val etOtherRequire: EditText by lazy { findViewById(R.id.et_other_require) as EditText }
 
     val tvCourse: TextView by lazy { findViewById(R.id.tv_course) as TextView }
     val tvGrade: TextView by lazy { findViewById(R.id.tv_grade) as TextView }
@@ -84,7 +83,6 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
         certificateSelect = newJob?.have_certificate ?: 0
         etJobRequire.setText(newJob?.require)
 
-        etOtherRequire.setText(newJob?.other_demand)
 
         findViewById(R.id.rl_course).setOnClickListener(this)
         findViewById(R.id.rl_grade).setOnClickListener(this)
@@ -167,15 +165,14 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
                 if (arrayOf(etJobName.text, etAddress.text, etMoney.text, etJobRequire.text).isNullOrEmpty()) {
                     toast("输入项不能为空")
                 } else {
-                    Log.d("require:","${etJobRequire.text} and ${etOtherRequire.text}")
                     (presenter as JobManagerPresenter).addJob(etJobName.text.toString(), OfficeApplication.userInfo?.uid!!
                             , areaSelect, etAddress.text.toString(), courseSelect, gradeSelect, gradeDetailSelect, sexSelect
                             , experienceSelect, etMoney.text.toString(), certificateSelect, etJobRequire.text.toString()
-                            , etOtherRequire.text.toString())
+                            )
                     saveNewJob = JobInfo(etJobName.text.toString(), OfficeApplication.userInfo?.uid!!
                             , areaSelect, etAddress.text.toString(), courseSelect, gradeSelect, gradeDetailSelect
                             ,sexSelect, experienceSelect, etJobRequire.text.toString(), etMoney.text.toString()
-                            , certificateSelect, etOtherRequire.text.toString())
+                            , certificateSelect)
                 }
             }
         }

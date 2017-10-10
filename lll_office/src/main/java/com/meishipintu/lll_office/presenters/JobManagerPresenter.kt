@@ -62,9 +62,9 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
     //添加职位
     override fun addJob(name: String, oid: String, workArea: Int, workAddress: String, course: Int
                         , grade: Int, grade_detail:Int, sex: Int, requireYear: Int, money: String
-                        , certificate: Int, require: String, other: String) {
+                        , certificate: Int, require: String) {
         addSubscription(httpApi.addJobService(name,oid,workArea,workAddress,course,grade,grade_detail,sex
-                ,requireYear,money,certificate,require,other),object :HttpCallback<HttpResult<Any>>(){
+                ,requireYear,money,certificate,require),object :HttpCallback<HttpResult<Any>>(){
             override fun onSuccess(result: HttpResult<Any>) {
                 if (result.status == 1) {
                     (iView as NewJobContract.IView).onJobAddSucess()

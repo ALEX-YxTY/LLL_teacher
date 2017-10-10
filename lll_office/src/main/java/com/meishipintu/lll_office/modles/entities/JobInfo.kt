@@ -21,14 +21,14 @@ import java.io.Serializable
  */
 data class JobInfo(val id: Int, val job_name: String, val oid: String, val work_area: Int, val work_address: String
                    , val course: Int, val grade: Int, val grade_detail:Int, val sex: Int, val year: String, var status: Int
-                   , val require_year: Int, val require: String, val money: String, val other_demand: String
+                   , val require_year: Int, val require: String, val money: String
                    , val organization: OfficeInfo?, val have_certificate: Int, val create_time: String): Serializable{
     constructor(job_name: String, oid: String, work_area: Int, work_address: String
                 , course: Int, grade: Int, grade_detail:Int, sex: Int, require_year: Int, require: String
-                , money: String, have_certificate: Int, other_demand: String)
+                , money: String, have_certificate: Int)
             : this(job_name = job_name, oid = oid, work_address = work_address, work_area = work_area
             , course = course, grade = grade, grade_detail= grade_detail, sex = sex, require_year = require_year, require = require
-            , money = money, other_demand = other_demand, have_certificate = have_certificate
+            , money = money, have_certificate = have_certificate
             ,id = 0, year = "", status = 0, organization = null, create_time = "")
 }
 

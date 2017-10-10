@@ -463,43 +463,6 @@
                 android:layout_marginLeft="12dp"
                 android:background="@color/border2" />
 
-            <!--其他要求-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="156dp"
-                android:background="@color/white"
-                >
-                <TextView
-                    android:id="@+id/component4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="19dp"
-                    android:layout_marginTop="11dp"
-                    android:text="其他要求"
-                    android:textColor="@color/text_black2"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/et_other_require"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_below="@id/component4"
-                    android:padding="7dp"
-                    android:textSize="13sp"
-                    android:gravity="top"
-                    android:maxLines="20"
-                    android:textColor="@color/text_black2"
-                    android:hint="请描述您的其他要求（可以为空）"
-                    android:textColorHint="@color/edit_text_color_grey"
-                    android:background="@color/back_grey1"
-                    android:layout_marginLeft="19dp"
-                    android:layout_marginRight="13dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="8dp"
-
-                    />
-            </RelativeLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"

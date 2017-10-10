@@ -108,16 +108,13 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         (findViewById(R.id.tv_time) as TextView).text = DateUtil.stampToDate(jobInfo.create_time)
 
         var area:String
-        if(jobInfo.work_area==0) {area = "${areas[jobInfo.work_area]} ${jobInfo.work_address}"} else {
-            area = "南京市${jobInfo.work_area} ${jobInfo.work_address}"
+        area = if(jobInfo.work_area==0) {
+            "${areas[jobInfo.work_area]} ${jobInfo.work_address}"
+        } else {
+            "南京市${jobInfo.work_area} ${jobInfo.work_address}"
         }
         (findViewById(R.id.tv_address_detail) as TextView).text = area
         (findViewById(R.id.tv_job_detail) as TextView).text = jobInfo.require
-        if (jobInfo.other_demand.isNullOrEmpty()) {
-            findViewById(R.id.rl_other).visibility = View.GONE
-        } else {
-            (findViewById(R.id.tv_other_demand)as TextView).text = jobInfo.other_demand
-        }
     }
 
     override fun onClick(v: View?) {
