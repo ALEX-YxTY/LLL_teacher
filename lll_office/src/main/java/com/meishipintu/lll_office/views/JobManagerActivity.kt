@@ -17,6 +17,7 @@ import com.meishipintu.lll_office.views.adapters.JobAdapter
 
 class JobManagerActivity : BasicActivity(),View.OnClickListener,JobManagerContract.IView{
 
+
     val dataList: MutableList<JobInfo> = mutableListOf()
     val adapter: JobAdapter by lazy { JobAdapter(this,dataList,2) } //type=2 显示上下线功能
 
@@ -74,6 +75,11 @@ class JobManagerActivity : BasicActivity(),View.OnClickListener,JobManagerContra
                 startActivityForResult(Intent(this,NewJobActivity::class.java), Constant.START_NEW_JOB)
             }
         }
+    }
+
+    //当邀约成功时调用
+    override fun onInviteSuccess() {
+        //空实现
     }
 
     //from JobManagerContract.IView

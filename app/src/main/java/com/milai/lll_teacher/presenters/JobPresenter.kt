@@ -5,6 +5,7 @@ import com.milai.lll_teacher.contracts.CollectionContract
 import com.milai.lll_teacher.contracts.JobContract
 import com.milai.lll_teacher.contracts.JobDetailContact
 import com.milai.lll_teacher.contracts.SearchContract
+import com.milai.lll_teacher.models.entities.HttpResult
 import com.milai.lll_teacher.models.entities.JobInfo
 import com.milai.lll_teacher.models.entities.OfficeInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
@@ -193,6 +194,32 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
 
             override fun onFailure(msg: String?) {
                 (iView as JobContract.IView).onLoadError()
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+        })
+    }
+
+    //判断是否投递或是否邀约
+    override fun isJobDeliver(pid: Int, tid: String) {
+        addSubscription(httpApi.isDeliverPosition(tid,pid.toString()),object :HttpCallback<HttpResult<Any>>(){
+            override fun onSuccess(model: HttpResult<Any>) {
+                when (model.status) {
+                    1 -> {
+                        iView.showError("已投递过该职位")
+                        (iView as JobDetailContact.IView).onJobNotDeliver(true)
+                    }
+
+                    2 -> {
+                        iView.showError("该职位已邀请您面试")
+                        (iView as JobDetailContact.IView).onJobNotDeliver(true)
+                    }
+                    else -> (iView as JobDetailContact.IView).onJobNotDeliver(false)
+                }
+            }
+
+            override fun onFailure(msg: String?) {
                 if (msg != null) {
                     iView.showError(msg)
                 }

@@ -148,8 +148,9 @@
             android:name=".views.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--下载二维码页面-->
-        <activity android:name=".views.DownloadCodeActivity"
+        <!-- 下载二维码页面 -->
+        <activity
+            android:name=".views.DownloadCodeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
@@ -174,6 +175,12 @@
             android:name=".views.InviteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!--已发布职位列表页面-->
+        <activity android:name=".views.JobOnlineListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <!-- 新闻详情页面 -->
         <activity
             android:name=".views.NewsDetailActivity"

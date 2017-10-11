@@ -33,5 +33,6 @@ interface TeacherDetailContract {
 
         //添加tongji
         fun doActionStatistic(uid: String, tid: String)
+
     }
 }

@@ -1,6 +1,7 @@
 package com.meishipintu.lll_office.views.adapters
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,6 +11,9 @@ import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.customs.utils.DateUtil
+import com.meishipintu.lll_office.customs.utils.DialogUtils
+import com.meishipintu.lll_office.modles.HttpApiClinet
+import com.meishipintu.lll_office.modles.HttpApiStores
 import com.meishipintu.lll_office.modles.entities.JobInfo
 import com.meishipintu.lll_office.views.JobDetailActivity
 
@@ -24,6 +28,12 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int): BasicAda
         this.avatar = avatar
     }
 
+    //直接邀约adapter的构造方法
+    constructor(ctx: Context, dataList: List<JobInfo>, type: Int, listener:OnItemClickListener) : this(ctx, dataList, type){
+        this.listener = listener
+    }
+
+    var listener: OnItemClickListener? = null
     var avatar: String? = null
     val area = Cookies.getConstant(1)
     val glide = Glide.with(ctx)
@@ -48,10 +58,15 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int): BasicAda
             jobInfoViewHolder.time.text = DateUtil.stampToDate(job.create_time)
 
             jobInfoViewHolder.itemView.setOnClickListener{
-                val intent = Intent(ctx, JobDetailActivity::class.java)
-                intent.putExtra("jobId", (dataList[position] as JobInfo).id)
-                intent.putExtra("type", type)   //通知职位详情页是否要显示上下线及邀请功能
-                ctx.startActivity(intent)
+                if (type == 3) {
+                    //弹窗，直接邀约,返回职位id
+                    this.listener?.onItemClick(job.id.toString())
+                } else {
+                    val intent = Intent(ctx, JobDetailActivity::class.java)
+                    intent.putExtra("jobId", job.id)
+                    intent.putExtra("type", type)   //通知职位详情页是否要显示上下线及邀请功能
+                    ctx.startActivity(intent)
+                }
             }
         }
     }

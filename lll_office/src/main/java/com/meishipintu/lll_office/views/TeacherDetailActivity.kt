@@ -1,6 +1,7 @@
 package com.meishipintu.lll_office.views
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -50,10 +51,11 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
     }}
 
     val teacher:TeacherInfo by lazy { intent.getSerializableExtra("teacher") as TeacherInfo }
-    //type=1 底部收藏，type=2 底部邀请
+    //type=1 底部收藏+邀约，type=2 底部邀请
     val type:Int by lazy{ intent.getIntExtra("type", 1)}
     val jobId:Int by lazy{ intent.getIntExtra("jobId", -1)}
 
+    val btInvite:TextView by lazy{ findViewById(R.id.bt_invite) as TextView}
     val ivButton:ImageView by lazy{ findViewById(R.id.iv_special) as ImageView}
     val tvButton:TextView by lazy{ findViewById(R.id.tv_action) as TextView}
     var isCollected = false     //标记是否已经收藏
@@ -71,10 +73,13 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
         ivShare.setOnClickListener(this)
         if (type == 1) {
             (presenter as TeacherDetailContract.IPresenter).isCollectedTeacher(OfficeApplication.userInfo?.uid!!, teacher.uid)
+            //显示立即邀约
+            btInvite.visibility = View.VISIBLE
         } else {
             ivButton.visibility = View.GONE
             tvButton.text = "邀请TA面试"
         }
+        btInvite.setOnClickListener(this)
         findViewById(R.id.bt_back).setOnClickListener(this)
         findViewById(R.id.bt_collect).setOnClickListener(this)
         initWebView()
@@ -118,6 +123,12 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))
                 ShareAction(this@TeacherDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(umShareListener).withMedia(umWeb).open()
+            }
+            R.id.bt_invite ->{
+                //进入机构职位列表页面
+                val intent = Intent(this, JobOnlineListActivity::class.java)
+                intent.putExtra("tid",teacher.uid)
+                startActivity(intent)
             }
         }
     }

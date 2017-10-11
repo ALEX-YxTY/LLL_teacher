@@ -149,7 +149,7 @@ class SearchActivity : BasicActivity(),CustomLabelSelectListener ,TeacherContrac
         }
     }
 
-    //历史记录OnItemClickListener
+    //历史记录或搜索条目OnItemClickListener
     override fun onItemClick(name: String) {
         isHistory = false
         byKeyWork = true

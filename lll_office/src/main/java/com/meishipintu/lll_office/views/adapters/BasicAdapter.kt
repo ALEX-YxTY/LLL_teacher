@@ -17,10 +17,10 @@ abstract class BasicAdapter(val ctx: Context, val dataList:List<Any>) : Recycler
     val TYPE_EMPTY: Int = 2
 
     override fun onCreateViewHolder(container: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType==TYPE_EMPTY) {
-            return EmptyViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_empty, container, false))
+        return if (viewType==TYPE_EMPTY) {
+            EmptyViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_empty, container, false))
         } else {
-            return getSpecialView(container)
+            getSpecialView(container)
         }
     }
 

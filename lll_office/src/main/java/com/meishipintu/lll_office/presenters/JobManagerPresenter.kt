@@ -3,6 +3,7 @@ package com.meishipintu.lll_office.presenters
 import com.meishipintu.lll_office.contract.JobDetailContract
 import com.meishipintu.lll_office.contract.JobManagerContract
 import com.meishipintu.lll_office.contract.NewJobContract
+import com.meishipintu.lll_office.contract.TeacherDetailContract
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
@@ -96,6 +97,23 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
                 }
             }
 
+        })
+    }
+
+    //主动邀约教师
+    override fun inviteInterview(jobId: Int, tid: String, oid: String) {
+        //type=2 机构主动邀请教师面试
+        addSubscription(httpApi.sendResumeService(jobId,tid,oid,2).map(HttpResultFunc<Any>())
+                ,object :HttpCallback<Any>(){
+            override fun onSuccess(model: Any) {
+                (iView as TeacherDetailContract.IView).onInviteSuccess()
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
         })
     }
 

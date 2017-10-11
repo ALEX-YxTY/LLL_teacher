@@ -21,6 +21,9 @@ interface JobDetailContact {
         fun onOfficeInfoGet(officeInfo:OfficeInfo)
 
         fun onResumeSendSuccess()
+
+        //此职位尚未投递或被邀约
+        fun onJobNotDeliver(isDeliver: Boolean)
     }
 
     interface IPresenter:BasicPresenterImp{
@@ -34,6 +37,8 @@ interface JobDetailContact {
         fun getJobDetail(pid:Int)
 
         fun getOfficeDetail(oid:String)
+
+        fun isJobDeliver(pid: Int, tid: String)
 
         //浏览职位统计接口
         fun addStatistic(uid: String, pid: Int)

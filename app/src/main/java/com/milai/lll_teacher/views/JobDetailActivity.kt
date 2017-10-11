@@ -93,6 +93,17 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         star.setOnClickListener(this)
         if (from == 2) {
             findViewById(R.id.bt_append).visibility = View.GONE
+        } else {
+            //判断是否已经投递
+            (presenter as JobPresenter).isJobDeliver(jobId, MyApplication.userInfo?.uid!!)
+        }
+    }
+
+    override fun onJobNotDeliver(isDeliver: Boolean) {
+        if (isDeliver) {
+            findViewById(R.id.bt_append).visibility = View.GONE
+        } else {
+            findViewById(R.id.bt_contact).visibility = View.GONE
         }
     }
 

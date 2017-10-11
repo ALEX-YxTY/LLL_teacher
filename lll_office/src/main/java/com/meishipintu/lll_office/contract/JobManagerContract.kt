@@ -13,10 +13,14 @@ interface JobManagerContract {
 
     interface IView:BasicView{
         fun onDateGet(dataList:List<JobInfo>)
+
+        fun onInviteSuccess()
     }
 
     interface IPresenter:BasicPresenterImp{
         fun getDataList(uid: String, status: Int)
 
+        //邀请面试
+        fun inviteInterview(jobId:Int,tid:String,oid:String)
     }
 }

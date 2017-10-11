@@ -174,4 +174,9 @@ interface HttpApiStores {
     fun doActionSattistic(@Field("uid") uid: String, @Field("flag") flag: Int, @Field("type") type: Int
                           , @Field("id_detail") detail: String): Observable<HttpResult<Any>>
 
+    //判断教师是否投递过该职位或是否被邀请面试
+    //status = 1 主动投递过  status = 2 被邀请
+    @FormUrlEncoded
+    @POST("Home/Api/getTeacherIsDeliverPosition")
+    fun isDeliverPosition(@Field("tid") tid: String, @Field("pid") pid: String):Observable<HttpResult<Any>>
 }

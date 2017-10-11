@@ -7,40 +7,61 @@
 
     <include layout="@layout/titlebar_back_white" 
         android:id="@+id/titleBar"/>
-    <RelativeLayout
-        android:id="@+id/bt_collect"
+    <LinearLayout
+        android:id="@+id/bt_container"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/themeOrange">
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/bt_invite"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="49dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="@color/themeOrange"
+            android:text="立即邀约"
+            android:background="@drawable/shape_bt_transparent_black"
+            android:visibility="gone"
+            />
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-            <ImageView
-                android:id="@+id/iv_special"
+            android:id="@+id/bt_collect"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="49dp"
+            android:background="@color/themeOrange">
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/icon_like_pre"
-                android:layout_centerVertical="true"/>
-            <TextView
-                android:id="@+id/tv_action"
-                android:layout_toRightOf="@id/iv_special"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:layout_centerVertical="true"
-                android:text="收藏"/>
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:id="@+id/iv_special"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:src="@drawable/icon_like_pre"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/tv_action"
+                    android:layout_toRightOf="@id/iv_special"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:layout_centerVertical="true"
+                    android:text="收藏"/>
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
+
+    </LinearLayout>
 
     <WebView
         android:id="@+id/wv"
         android:layout_below="@id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bt_collect"/>
+        android:layout_above="@id/bt_container"/>
 
 </RelativeLayout>
