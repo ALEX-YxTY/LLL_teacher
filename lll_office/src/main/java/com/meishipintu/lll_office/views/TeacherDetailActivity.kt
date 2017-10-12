@@ -163,7 +163,7 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
     }
 
     //from TeacherDetailContract.IView
-    override fun onInviteSuccess() {
+    override fun onInviteSuccess(jobId: Int) {
         toast("邀请面试成功，请至我的面试查看")
     }
 

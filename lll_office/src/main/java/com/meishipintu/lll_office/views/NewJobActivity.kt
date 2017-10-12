@@ -11,6 +11,7 @@ import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.NewJobContract
+import com.meishipintu.lll_office.customs.CustomProgressDialog
 import com.meishipintu.lll_office.customs.utils.CustomNumPickeDialog
 import com.meishipintu.lll_office.customs.utils.CustomNumPickeDialog2
 import com.meishipintu.lll_office.modles.entities.JobInfo
@@ -48,6 +49,7 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     val tvCertification: TextView by lazy { findViewById(R.id.tv_certification) as TextView }
 
     var dialog: AlertDialog? = null
+    val loadingDialog:CustomProgressDialog by lazy{ CustomProgressDialog(this,R.style.CustomProgressDialog) }
     var saveNewJob: JobInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -161,6 +163,9 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
             }
             //发布职位
             R.id.bt_release -> {
+                //先取消按钮功能
+                findViewById(R.id.bt_release).isEnabled = false
+                loadingDialog.dialogShow()
                 //验证输入
                 if (arrayOf(etJobName.text, etAddress.text, etMoney.text, etJobRequire.text).isNullOrEmpty()) {
                     toast("输入项不能为空")
@@ -179,6 +184,7 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     }
 
     override fun onJobAddSucess() {
+        loadingDialog.dialogDismiss()
         //保存已添加的职位
         if (saveNewJob != null) {
             Cookies.saveJobAdd(saveNewJob!!)
@@ -190,6 +196,9 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     }
 
     override fun onError(e: String) {
+        //恢复按钮功能
+        findViewById(R.id.bt_release).isEnabled = true
+        loadingDialog.dialogDismiss()
         toast(e)
     }
 

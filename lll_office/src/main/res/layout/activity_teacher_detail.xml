@@ -21,7 +21,7 @@
             android:gravity="center"
             android:textSize="14sp"
             android:textColor="@color/themeOrange"
-            android:text="立即邀约"
+            android:text="立即沟通"
             android:background="@drawable/shape_bt_transparent_black"
             android:visibility="gone"
             />

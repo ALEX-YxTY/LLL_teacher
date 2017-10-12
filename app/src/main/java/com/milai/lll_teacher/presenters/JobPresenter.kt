@@ -91,14 +91,13 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
                         iView.showError(msg)
                     }
                 }
-
             })
         }
     }
 
     //投递简历
     override fun sendResume(jobId: Int, uid: String, oid: String) {
-        addSubscription(httpApi.sendResumeService(jobId,uid,oid,1).map(HttpResultFunc<Any>())
+        addSubscription(httpApi.sendResumeService(jobId,uid,oid,4).map(HttpResultFunc<Any>())
                 ,object :HttpCallback<Any>(){
             override fun onSuccess(model: Any) {
                 (iView as JobDetailContact.IView).onResumeSendSuccess()
@@ -206,16 +205,10 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
         addSubscription(httpApi.isDeliverPosition(tid,pid.toString()),object :HttpCallback<HttpResult<Any>>(){
             override fun onSuccess(model: HttpResult<Any>) {
                 when (model.status) {
-                    1 -> {
-                        iView.showError("已投递过该职位")
-                        (iView as JobDetailContact.IView).onJobNotDeliver(true)
+                    1,2 -> {
+                        (iView as JobDetailContact.IView).onJobDeliver(true)
                     }
-
-                    2 -> {
-                        iView.showError("该职位已邀请您面试")
-                        (iView as JobDetailContact.IView).onJobNotDeliver(true)
-                    }
-                    else -> (iView as JobDetailContact.IView).onJobNotDeliver(false)
+                    else -> (iView as JobDetailContact.IView).onJobDeliver(false)
                 }
             }
 

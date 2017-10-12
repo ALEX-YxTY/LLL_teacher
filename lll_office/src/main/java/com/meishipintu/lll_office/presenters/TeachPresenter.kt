@@ -110,10 +110,10 @@ class TeachPresenter(val iView:BasicView):BasicPresenter(),TeacherContract.IPres
     //主动邀约教师
     override fun inviteInterview(jobId: Int, tid: String, oid: String) {
         //type=2 机构主动邀请教师面试
-        addSubscription(httpApi.sendResumeService(jobId,tid,oid,2).map(HttpResultFunc<Any>())
+        addSubscription(httpApi.sendResumeService(jobId,tid,oid,5).map(HttpResultFunc<Any>())
                 ,object :HttpCallback<Any>(){
             override fun onSuccess(model: Any) {
-                (iView as TeacherDetailContract.IView).onInviteSuccess()
+                (iView as TeacherDetailContract.IView).onInviteSuccess(jobId)
             }
 
             override fun onFailure(msg: String?) {
@@ -126,7 +126,7 @@ class TeachPresenter(val iView:BasicView):BasicPresenter(),TeacherContract.IPres
 
     //根据关键字查找教师
     override fun searchTeacher(keyWord: String,page:Int) {
-        addSubscription(httpApi.getTeacherByKeyWorkService(keyWord).map(HttpResultFunc<List<TeacherInfo>>())
+        addSubscription(httpApi.getTeacherByKeyWorkService(keyWord,page).map(HttpResultFunc<List<TeacherInfo>>())
                 ,object :HttpCallback<List<TeacherInfo>>(){
             override fun onSuccess(model: List<TeacherInfo>) {
                 (iView as TeacherContract.IView).onDateGet(model,page)

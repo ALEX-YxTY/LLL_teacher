@@ -28,6 +28,7 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
 
     val ivShare:ImageView by lazy { findViewById(R.id.iv_share) as ImageView }
     private val umShareListener: UMShareListener by lazy {object: UMShareListener {
+
         override fun onResult(p0: SHARE_MEDIA?) {
             Toast.makeText(this@JobDetailActivity, " 分享成功", Toast.LENGTH_SHORT).show()
         }
@@ -50,7 +51,7 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
 
     val jobId:Int by lazy { intent.getIntExtra("jobId", 0)}
     val oid:String by lazy { intent.getStringExtra("oid")}
-    //from 1:默认情况，2：隐藏投递简历
+    //from 1:默认情况，2：隐藏投递简历， 3：从消息进入
     val from:Int by lazy{ intent.getIntExtra("from", 1)}
     /**
      * type：定义职位详情页面从哪里进入，从总职位列表进入，会自带机构信息，type=1
@@ -91,20 +92,20 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         ivShare.visibility = View.VISIBLE
         ivShare.setOnClickListener(this)
         star.setOnClickListener(this)
-        if (from == 2) {
-            findViewById(R.id.bt_append).visibility = View.GONE
-        } else {
-            //判断是否已经投递
-            (presenter as JobPresenter).isJobDeliver(jobId, MyApplication.userInfo?.uid!!)
+        when (from) {
+            2 -> findViewById(R.id.bt_append).visibility = View.GONE
+            3 -> {
+                findViewById(R.id.bt_append).visibility = View.GONE
+                findViewById(R.id.bt_contact).visibility = View.VISIBLE
+            }
+            else -> //判断是否已经投递
+                (presenter as JobPresenter).isJobDeliver(jobId, MyApplication.userInfo?.uid!!)
         }
     }
 
-    override fun onJobNotDeliver(isDeliver: Boolean) {
-        if (isDeliver) {
-            findViewById(R.id.bt_append).visibility = View.GONE
-        } else {
-            findViewById(R.id.bt_contact).visibility = View.GONE
-        }
+    override fun onJobDeliver(isDeliver: Boolean) {
+            findViewById(R.id.bt_append).visibility = if(isDeliver) View.GONE else View.VISIBLE
+            findViewById(R.id.bt_contact).visibility = if(!isDeliver) View.GONE else View.VISIBLE
     }
 
     override fun onClick(v: View?) {

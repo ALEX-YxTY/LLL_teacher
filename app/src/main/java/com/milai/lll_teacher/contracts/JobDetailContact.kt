@@ -22,8 +22,8 @@ interface JobDetailContact {
 
         fun onResumeSendSuccess()
 
-        //此职位尚未投递或被邀约
-        fun onJobNotDeliver(isDeliver: Boolean)
+        //获取职位投递状态的回调
+        fun onJobDeliver(isDeliver: Boolean)
     }
 
     interface IPresenter:BasicPresenterImp{
@@ -38,6 +38,7 @@ interface JobDetailContact {
 
         fun getOfficeDetail(oid:String)
 
+        //获取职位投递状态
         fun isJobDeliver(pid: Int, tid: String)
 
         //浏览职位统计接口

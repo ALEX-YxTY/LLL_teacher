@@ -65,7 +65,6 @@ class SearchActivity : BasicActivity(),CustomLabelSelectListener ,TeacherContrac
                     //消费该事件
                     return@OnEditorActionListener true
                 }
-
             }
             false
         })

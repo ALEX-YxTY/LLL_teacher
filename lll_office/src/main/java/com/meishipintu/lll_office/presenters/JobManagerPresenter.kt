@@ -9,6 +9,7 @@ import com.meishipintu.lll_office.modles.HttpCallback
 import com.meishipintu.lll_office.modles.HttpResultFunc
 import com.meishipintu.lll_office.modles.entities.HttpResult
 import com.meishipintu.lll_office.modles.entities.JobInfo
+import com.meishipintu.lll_office.views.BasicInviteView
 import com.meishipintu.lll_office.views.BasicView
 
 /**
@@ -100,13 +101,28 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
         })
     }
 
+    //判断是否已投递，
+    override fun isDieliverPosition(tid: String, pid: String) {
+        addSubscription(httpApi.isDeliverPosition(tid,pid),object :HttpCallback<HttpResult<List<Any>>>(){
+            override fun onSuccess(model: HttpResult<List<Any>>) {
+                (iView as JobManagerContract.IView).onDeliverGet(model.status == 1 || model.status == 2, pid)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError("网络错误，请稍后重试")
+                }
+            }
+        })
+    }
+
     //主动邀约教师
     override fun inviteInterview(jobId: Int, tid: String, oid: String) {
         //type=2 机构主动邀请教师面试
         addSubscription(httpApi.sendResumeService(jobId,tid,oid,2).map(HttpResultFunc<Any>())
                 ,object :HttpCallback<Any>(){
             override fun onSuccess(model: Any) {
-                (iView as TeacherDetailContract.IView).onInviteSuccess()
+                (iView as BasicInviteView).onInviteSuccess(jobId)
             }
 
             override fun onFailure(msg: String?) {

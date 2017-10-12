@@ -232,7 +232,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="49dp"
-            android:background="@drawable/shape_bt_transparent_black">
+            android:background="@drawable/shape_bt_transparent_black"
+            android:visibility="gone">
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

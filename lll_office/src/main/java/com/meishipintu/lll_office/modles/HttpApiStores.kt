@@ -41,7 +41,7 @@ interface HttpApiStores {
     //根据关键字搜索教师
     @FormUrlEncoded
     @POST("Home/Api/searchTeacherList")
-    fun getTeacherByKeyWorkService(@Field("content") keyWord: String): Observable<HttpResult<List<TeacherInfo>>>
+    fun getTeacherByKeyWorkService(@Field("content") keyWord: String,@Field("page") page:Int): Observable<HttpResult<List<TeacherInfo>>>
 
     //登录接口
     @FormUrlEncoded
@@ -247,7 +247,7 @@ interface HttpApiStores {
     //status = 1 主动投递过  status = 2 被邀请
     @FormUrlEncoded
     @POST("Home/Api/getTeacherIsDeliverPosition")
-    fun isDeliverPosition(@Field("tid") tid: String, @Field("pid") pid: String):Observable<HttpResult<Any>>
+    fun isDeliverPosition(@Field("tid") tid: String, @Field("pid") pid: String):Observable<HttpResult<List<Any>>>
 
 
 }
