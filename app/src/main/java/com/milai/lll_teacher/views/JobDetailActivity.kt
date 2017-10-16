@@ -139,6 +139,7 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
                         "&actionId=${MyApplication.userInfo?.uid}&type=5&flag=1")
                 umWeb.title = "${officeInfo?.name?:"这家机构"}正在招聘${courses[jobInfo!!.course]}老师，海量职位尽在拉力郎共享师资"
+                umWeb.description = "拉力郎师资"
                 umWeb.setThumb(UMImage(this,R.mipmap.teacher_share))
                 ShareAction(this@JobDetailActivity)
                         .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
@@ -202,8 +203,10 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         (findViewById(R.id.tv_time) as TextView).text = DateUtil.stampToDate(jobInfo!!.create_time)
 
         var area:String
-        if(jobInfo?.work_area==0) {area = "${areas[jobInfo!!.work_area]} ${jobInfo!!.work_address}"} else {
-            area = "南京市${jobInfo!!.work_area} ${jobInfo!!.work_address}"
+        area = if(jobInfo?.work_area==0) {
+            "${areas[jobInfo!!.work_area]} ${jobInfo!!.work_address}"
+        } else {
+            "南京市${areas[jobInfo!!.work_area]} ${jobInfo!!.work_address}"
         }
         (findViewById(R.id.tv_address_detail) as TextView).text = area
         (findViewById(R.id.tv_job_detail) as TextView).text = jobInfo!!.require

@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import cn.jpush.android.api.JPushInterface
 import com.meishipintu.lll_office.*
 import com.meishipintu.lll_office.contract.NoticeActivityContract
 import com.meishipintu.lll_office.customs.utils.DialogUtils
@@ -47,6 +48,8 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
         setContentView(R.layout.activity_main)
         presenter = NoticePresenter(this)
         (presenter as NoticeActivityContract.IPresenter).getNewsetVersiton()
+        //初始化JPush
+        JPushInterface.setAlias(this, OfficeApplication.userInfo?.uid ?: "", null)
         RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -54,6 +57,8 @@ class MainActivity : BasicActivity(), NoticeActivityContract.IView {
                     when (type) {
                         Constant.LOGOUT -> {
                             startActivity(Intent(this,LoginAndRegisterActivity::class.java))
+                            //注销JPush
+                            JPushInterface.setAlias(this, "", null)
                             this.finish()
                         }
                     }

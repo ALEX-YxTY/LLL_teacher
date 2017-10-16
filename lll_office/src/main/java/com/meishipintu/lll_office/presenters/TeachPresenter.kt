@@ -153,4 +153,19 @@ class TeachPresenter(val iView:BasicView):BasicPresenter(),TeacherContract.IPres
 
         })
     }
+
+    //获取教师详情
+    override fun getTeacherInfo(tid: String) {
+        addSubscription(httpApi.getTeacherDetailServie(tid).map(HttpResultFunc()),object :HttpCallback<TeacherInfo>(){
+            override fun onSuccess(model: TeacherInfo) {
+                (iView as TeacherDetailContract.IView).onTeacherInfoGet(model)
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.onError(msg)
+                }
+            }
+        })
+    }
 }

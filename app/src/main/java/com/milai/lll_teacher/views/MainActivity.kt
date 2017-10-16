@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import cn.jpush.android.api.JPushInterface
 import com.milai.lll_teacher.*
 import com.milai.lll_teacher.contracts.NoticeContract
 import com.milai.lll_teacher.custom.util.DialogUtils
@@ -56,6 +57,7 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
                             vp.currentItem = 0
                             tabLayout.getTabAt(0)?.select()
                             //退出登录后启动注册登录页面，并退出主页
+                            JPushInterface.setAlias(this@MainActivity, "", null)
                             startActivity(Intent(this,LoginAndRegistActivity::class.java))
                         }
                     }

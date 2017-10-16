@@ -1,12 +1,15 @@
 package com.meishipintu.lll_office.views.adapters
 
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.meishipintu.lll_office.Constant
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
@@ -65,7 +68,7 @@ class JobAdapter(ctx: Context, dataList: List<JobInfo>, val type: Int): BasicAda
                     val intent = Intent(ctx, JobDetailActivity::class.java)
                     intent.putExtra("jobId", job.id)
                     intent.putExtra("type", type)   //通知职位详情页是否要显示上下线及邀请功能
-                    ctx.startActivity(intent)
+                    (ctx as AppCompatActivity).startActivityForResult(intent, Constant.CHANGE_JOB_STATE)
                 }
             }
         }

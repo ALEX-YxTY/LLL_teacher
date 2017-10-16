@@ -199,7 +199,8 @@ class MineFrag:BasicFragment(),View.OnClickListener,NoticeActivityContract.IView
                 }
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/orginfo?uid=${OfficeApplication.userInfo?.uid}" +
                         "&actionId=${OfficeApplication.userInfo?.uid}&type=6&flag=2")
-                umWeb.title = "${OfficeApplication.userInfo?.name}机构入驻拉力郎平台，更多稀缺岗位尽在拉力郎共享师资。"
+                umWeb.title = "${OfficeApplication.userInfo?.name}入驻拉力郎平台，更多稀缺岗位尽在拉力郎共享师资。"
+                umWeb.description = "拉力郎师资"
                 umWeb.setThumb(UMImage(this.activity,R.mipmap.office_share))
                 ShareAction(this@MineFrag.activity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(umShareListener).withMedia(umWeb).open()

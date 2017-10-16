@@ -54,6 +54,7 @@ class MyResumeActivity : AppCompatActivity() {
         val umWeb = UMWeb("http://lll.domobile.net/Home/Index/tcinfo?uid=${MyApplication.userInfo?.uid}" +
                 "&actionId=${MyApplication.userInfo?.uid}&type=4&flag=1")
         umWeb.title = "欢迎查看我的简历"
+        umWeb.description = "拉力郎师资"
         umWeb.setThumb(UMImage(this,R.mipmap.teacher_share))
         ivShare.setOnClickListener{
             ShareAction(this@MyResumeActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)

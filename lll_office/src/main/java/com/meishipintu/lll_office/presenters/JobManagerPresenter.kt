@@ -119,7 +119,7 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
     //主动邀约教师
     override fun inviteInterview(jobId: Int, tid: String, oid: String) {
         //type=2 机构主动邀请教师面试
-        addSubscription(httpApi.sendResumeService(jobId,tid,oid,2).map(HttpResultFunc<Any>())
+        addSubscription(httpApi.sendResumeService(jobId,tid,oid,5).map(HttpResultFunc<Any>())
                 ,object :HttpCallback<Any>(){
             override fun onSuccess(model: Any) {
                 (iView as BasicInviteView).onInviteSuccess(jobId)

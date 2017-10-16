@@ -1,6 +1,8 @@
 package com.milai.lll_teacher
 
 import android.app.Application
+import android.util.Log
+import cn.jpush.android.api.JPushInterface
 import com.milai.lll_teacher.models.entities.UserInfo
 import com.milai.lll_teacher.models.https.HttpApiClinet
 import com.milai.lll_teacher.models.https.HttpResultFunc
@@ -54,6 +56,10 @@ class MyApplication : Application() {
         Bugly.init(this, "6cd126f554", true, strategy)
         //分享
         UMShareAPI.get(this)
+        //init JPUsh
+        JPushInterface.init(this)
+        Log.d("regist", JPushInterface.getRegistrationID(this))
+
         downloadResource()
     }
 

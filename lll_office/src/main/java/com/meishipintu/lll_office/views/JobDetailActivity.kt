@@ -111,7 +111,7 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         area = if(jobInfo.work_area==0) {
             "${areas[jobInfo.work_area]} ${jobInfo.work_address}"
         } else {
-            "南京市${jobInfo.work_area} ${jobInfo.work_address}"
+            "南京市${areas[jobInfo!!.work_area]} ${jobInfo.work_address}"
         }
         (findViewById(R.id.tv_address_detail) as TextView).text = area
         (findViewById(R.id.tv_job_detail) as TextView).text = jobInfo.require
@@ -133,6 +133,7 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
                         "&actionId=${OfficeApplication.userInfo?.uid}&type=8&flag=2")
                 umWeb.title = "${OfficeApplication.userInfo?.name?:""}正在招聘${courses[jobInfo!!.course]}老师，海量职位尽在拉力郎共享师资。"
+                umWeb.description = "拉力郎师资"
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))
                 ShareAction(this@JobDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(umShareListener).withMedia(umWeb).open()

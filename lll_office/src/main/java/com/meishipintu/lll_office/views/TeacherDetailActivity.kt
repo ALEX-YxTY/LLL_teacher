@@ -49,9 +49,9 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
         }
 
     }}
-
-    val teacher:TeacherInfo by lazy { intent.getSerializableExtra("teacher") as TeacherInfo }
-    //type=1 底部收藏+邀约，type=2 底部邀请
+    val teacherId:String by lazy{ intent.getStringExtra("teacherId")}
+    var teacher: TeacherInfo? = null
+    //type=1 底部收藏+邀约，type=2 底部邀请 type=3 底部直接沟通
     val type:Int by lazy{ intent.getIntExtra("type", 1)}
     val jobId:Int by lazy{ intent.getIntExtra("jobId", -1)}
 
@@ -66,18 +66,22 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher_detail)
         presenter = TeachPresenter(this)
-        (presenter as TeacherDetailContract.IPresenter).doActionStatistic(OfficeApplication.userInfo?.uid!!, teacher.uid)
+        (presenter as TeacherDetailContract.IPresenter).getTeacherInfo(teacherId)
+        (presenter as TeacherDetailContract.IPresenter).doActionStatistic(OfficeApplication.userInfo?.uid!!, teacherId)
         val tvTitle = findViewById(R.id.tv_title)as TextView
         tvTitle.text = "教师详情"
         ivShare.visibility = View.VISIBLE
         ivShare.setOnClickListener(this)
-        if (type == 1) {
-            (presenter as TeacherDetailContract.IPresenter).isCollectedTeacher(OfficeApplication.userInfo?.uid!!, teacher.uid)
-            //显示立即邀约
-            btInvite.visibility = View.VISIBLE
-        } else {
-            ivButton.visibility = View.GONE
-            tvButton.text = "邀请TA面试"
+        when(type) {
+            1,3 ->{
+                (presenter as TeacherDetailContract.IPresenter).isCollectedTeacher(OfficeApplication.userInfo?.uid!!, teacherId)
+                //显示立即邀约
+                btInvite.visibility = View.VISIBLE
+            }
+            2 ->{
+                ivButton.visibility = View.GONE
+                tvButton.text = "邀请TA面试"
+            }
         }
         btInvite.setOnClickListener(this)
         findViewById(R.id.bt_back).setOnClickListener(this)
@@ -92,7 +96,12 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
         settings.domStorageEnabled = true
         webView.setWebChromeClient(WebChromeClient())
         webView.setWebViewClient(WebViewClient())
-        webView.loadUrl("http://lll.domobile.net/Home/Index/detail?uid=${teacher.uid}&flag=1")
+        webView.loadUrl("http://lll.domobile.net/Home/Index/detail?uid=$teacherId&flag=1")
+    }
+
+    //TeacherDetailContract.IView
+    override fun onTeacherInfoGet(teacherInfo: TeacherInfo) {
+        this.teacher = teacherInfo
     }
 
     override fun onClick(v: View?) {
@@ -103,32 +112,42 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
                     if (isCollected) {
                         //取消收藏
                         (presenter as TeacherDetailContract.IPresenter).uncollectTeacher(OfficeApplication.userInfo?.uid!!
-                                , teacher.uid)
+                                , teacherId)
                     } else {
                         //添加收藏
                         (presenter as TeacherDetailContract.IPresenter).collectTeacher(OfficeApplication.userInfo?.uid!!
-                                , teacher.uid)
+                                , teacherId)
                     }
                 } else {
                     if (jobId > 0) {
                         //邀请面试
-                        (presenter as TeacherDetailContract.IPresenter).inviteInterview(jobId, teacher.uid, OfficeApplication.userInfo?.uid!!)
+                        (presenter as TeacherDetailContract.IPresenter).inviteInterview(jobId, teacherId, OfficeApplication.userInfo?.uid!!)
                     }
                 }
             }
             R.id.iv_share ->{
-                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/tcinfo?uid=${teacher.uid}" +
+                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/tcinfo?uid=$teacherId"+
                         "&actionId=${OfficeApplication.userInfo?.uid}&type=7&flag=2")
-                umWeb.title = "我在拉力郎共享师资发现一位${teacher.name}老师，拥有*年${courses[teacher.course]}教学经验，点击查看"
+                umWeb.title = "我在拉力郎共享师资发现一位${teacher?.name?:""}老师，拥有*年${courses[teacher?.course!!]}教学经验，点击查看"
+                umWeb.description = "拉力郎师资"
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))
                 ShareAction(this@TeacherDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(umShareListener).withMedia(umWeb).open()
             }
             R.id.bt_invite ->{
-                //进入机构职位列表页面
-                val intent = Intent(this, JobOnlineListActivity::class.java)
-                intent.putExtra("tid",teacher.uid)
-                startActivity(intent)
+                if (type == 1) {
+                    //进入机构职位列表页面
+                    val intent = Intent(this, JobOnlineListActivity::class.java)
+                    intent.putExtra("tid", teacherId)
+                    startActivity(intent)
+                } else {
+                    //type==3 进入直接沟通
+                    val intent = Intent(this, ChatDetailActivity::class.java)
+                    intent.putExtra("jobId", jobId)
+                    intent.putExtra("oid", OfficeApplication.userInfo?.uid!!)
+                    intent.putExtra("teacher",  teacherId)
+                    startActivity(intent)
+                }
             }
         }
     }

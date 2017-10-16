@@ -10,10 +10,7 @@ import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.customs.utils.NumberUtil
 import com.meishipintu.lll_office.modles.entities.DeliverInfo
-import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.views.ChatDetailActivity
-import com.meishipintu.lll_office.views.JobDetailActivity
-import com.meishipintu.lll_office.views.TeacherDetailActivity
 import com.meishipintu.lll_office.views.TeacherInterviewActivity
 
 /**

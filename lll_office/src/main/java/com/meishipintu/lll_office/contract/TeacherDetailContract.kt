@@ -18,6 +18,7 @@ interface TeacherDetailContract {
         //收藏回调，isCollect=true 收藏成功，false，取消收藏成功
         fun collectSuccess(isCollect:Boolean)
 
+        fun onTeacherInfoGet(teacherInfo: TeacherInfo)
     }
 
     interface IPresenter:BasicPresenterImp{
@@ -34,5 +35,7 @@ interface TeacherDetailContract {
         //添加tongji
         fun doActionStatistic(uid: String, tid: String)
 
+        //获取教师详情
+        fun getTeacherInfo(tid: String)
     }
 }

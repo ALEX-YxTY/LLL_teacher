@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import cn.jpush.android.api.JPushInterface
 import com.milai.lll_teacher.*
 import com.milai.lll_teacher.contracts.LoginContract
 import com.milai.lll_teacher.custom.util.Encoder
@@ -77,6 +79,11 @@ class LoginActivity : BasicActivity(),LoginContract.IView {
         //保存登录
         Cookies.saveUserInfo(user)
         MyApplication.userInfo = user
+        //登录成功后登录jpush
+        Log.d("setAlias", user.uid)
+        Log.d("registrationId", JPushInterface.getRegistrationID(this))
+        JPushInterface.setAlias(this, user.uid, null)
+
         //重新进入首页
         startActivity(Intent(this, MainActivity::class.java))
     }

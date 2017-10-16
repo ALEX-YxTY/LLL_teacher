@@ -63,7 +63,7 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
             }
             teacherInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, TeacherDetailActivity::class.java)
-                intent.putExtra("teacher", teacher )
+                intent.putExtra("teacherId", teacher.uid )
                 intent.putExtra("type", type)  //1-从普通页进入，点击收藏 2-点击邀约
                 intent.putExtra("jobId", jobid)
                 ctx.startActivity(intent)

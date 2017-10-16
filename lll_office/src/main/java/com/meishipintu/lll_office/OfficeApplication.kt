@@ -2,6 +2,7 @@ package com.meishipintu.lll_office
 
 import android.app.Application
 import android.util.Log
+import cn.jpush.android.api.JPushInterface
 import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.HttpResultFunc
 import com.meishipintu.lll_office.modles.entities.UserInfo
@@ -32,6 +33,11 @@ class OfficeApplication :Application() {
         //initBugly
         Bugly.init(this, "79549921d1", true)
         downloadResource()
+
+        //init JPUsh
+        JPushInterface.setDebugMode(true)
+        JPushInterface.init(this)
+
         //分享
         UMShareAPI.get(this)
     }
