@@ -67,9 +67,11 @@ class RegisterActivity : BasicActivity(),ForgetPswContract.IView {
                 val intent = Intent(this@RegisterActivity, InformationCommitActivity::class.java)
                 intent.putExtra("tel", etTel.text)
                 intent.putExtra("verify", etVcode.text)
-                intent.putExtra("psw",Encoder.md5(etPsw.text))
+                intent.putExtra("psw", Encoder.md5(etPsw.text))
                 startActivity(intent)
                 this.finish()
+            } else {
+                toast("验证码不正确！")
             }
         }
     }

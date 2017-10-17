@@ -169,6 +169,9 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
                 //验证输入
                 if (arrayOf(etJobName.text, etAddress.text, etMoney.text, etJobRequire.text).isNullOrEmpty()) {
                     toast("输入项不能为空")
+                    loadingDialog.dialogDismiss()
+                    //恢复按钮功能
+                    findViewById(R.id.bt_release).isEnabled = true
                 } else {
                     (presenter as JobManagerPresenter).addJob(etJobName.text.toString(), OfficeApplication.userInfo?.uid!!
                             , areaSelect, etAddress.text.toString(), courseSelect, gradeSelect, gradeDetailSelect, sexSelect
@@ -196,9 +199,9 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     }
 
     override fun onError(e: String) {
+        loadingDialog.dialogDismiss()
         //恢复按钮功能
         findViewById(R.id.bt_release).isEnabled = true
-        loadingDialog.dialogDismiss()
         toast(e)
     }
 

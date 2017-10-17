@@ -3,6 +3,7 @@ package com.meishipintu.lll_office.customs
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.res.Resources
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.meishipintu.lll_office.R
@@ -45,6 +46,7 @@ class CustomProgressDialog:ProgressDialog {
     }
 
     fun dialogDismiss() {
+        Log.d("test", "now showing: " + this.isShowing)
         if (isShowing) {
             this.dismiss()
         }

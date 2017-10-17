@@ -77,7 +77,9 @@ class JobManagerPresenter(val iView:BasicView):BasicPresenter()
 
             override fun onFailure(msg: String?) {
                 if (msg != null) {
-                    iView .onError(msg)
+                    iView.onError(msg)
+                } else {
+                    iView.onError("系统错误，请稍后重试")
                 }
             }
 
