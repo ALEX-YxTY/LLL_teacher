@@ -138,7 +138,8 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
             R.id.iv_share -> {
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
                         "&actionId=${MyApplication.userInfo?.uid}&type=5&flag=1")
-                umWeb.title = "${officeInfo?.name?:"这家机构"}正在招聘${courses[jobInfo!!.course]}老师，海量职位尽在拉力郎共享师资"
+                umWeb.title = "${officeInfo?.name ?: "这家机构"}正在招聘${if (jobInfo!!.course != 0) courses[jobInfo!!.course] else ""}老师，海量职位尽在拉力郎共享师资"
+
                 umWeb.description = "拉力郎师资"
                 umWeb.setThumb(UMImage(this,R.mipmap.teacher_share))
                 ShareAction(this@JobDetailActivity)
@@ -181,6 +182,8 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
     //from JobDetailContract.IView
     override fun onResumeSendSuccess() {
         toast("简历投递成功！")
+        findViewById(R.id.bt_append).visibility =  View.GONE
+        findViewById(R.id.bt_contact).visibility = View.VISIBLE
     }
 
     //from JobDetailContract.IView
@@ -201,7 +204,12 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         tvCertificate.visibility = if(jobInfo!!.have_certificate==0) View.GONE else View.VISIBLE
         (findViewById(R.id.tv_money) as TextView).text = jobInfo?.money
         (findViewById(R.id.tv_time) as TextView).text = DateUtil.stampToDate(jobInfo!!.create_time)
-
+        var reviewTime = if (jobInfo?.ll_count!! > 9999) {
+            "${jobInfo?.ll_count!! / 10000} 万次"
+        } else {
+            "${jobInfo?.ll_count!! } 次"
+        }
+        (findViewById(R.id.tv_review_time) as TextView).text = reviewTime
         var area:String
         area = if(jobInfo?.work_area==0) {
             "${areas[jobInfo!!.work_area]} ${jobInfo!!.work_address}"
@@ -213,6 +221,7 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         if (jobInfo!!.other_demand.isNullOrEmpty()) {
             findViewById(R.id.rl_other).visibility = View.GONE
         } else {
+            findViewById(R.id.rl_other).visibility = View.VISIBLE
             (findViewById(R.id.tv_other_demand)as TextView).text = jobInfo!!.other_demand
         }
         (presenter as JobDetailContact.IPresenter).getOfficeDetail(jobInf.oid)

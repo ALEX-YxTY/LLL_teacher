@@ -136,6 +136,37 @@
                 android:background="@drawable/shape_back_item_border">
 
                 <TextView
+                    android:id="@+id/component9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="浏览次数"
+                    android:textColor="@color/text_black1"/>
+
+                <TextView
+                    android:id="@+id/tv_review_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_grey1"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="0 次"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="10dp"
+                android:layout_marginLeft="@dimen/item_margin13"
+                android:layout_marginRight="@dimen/item_margin13"
+                android:layout_marginTop="@dimen/item_margin13"
+                android:background="@drawable/shape_back_item_border">
+
+                <TextView
                     android:id="@+id/component1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -194,7 +225,8 @@
                 android:layout_marginLeft="@dimen/item_margin13"
                 android:layout_marginRight="@dimen/item_margin13"
                 android:layout_marginTop="@dimen/item_margin13"
-                android:background="@drawable/shape_back_item_border">
+                android:background="@drawable/shape_back_item_border"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/component3"

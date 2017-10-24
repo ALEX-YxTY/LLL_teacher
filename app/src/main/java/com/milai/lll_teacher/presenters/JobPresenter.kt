@@ -205,10 +205,10 @@ class JobPresenter(val iView: BasicView) :BasicPresenter(),JobContract.IPresente
         addSubscription(httpApi.isDeliverPosition(tid,pid.toString()),object :HttpCallback<HttpResult<Any>>(){
             override fun onSuccess(model: HttpResult<Any>) {
                 when (model.status) {
-                    1,2 -> {
-                        (iView as JobDetailContact.IView).onJobDeliver(true)
+                    3 -> {
+                        (iView as JobDetailContact.IView).onJobDeliver(false)
                     }
-                    else -> (iView as JobDetailContact.IView).onJobDeliver(false)
+                    else -> (iView as JobDetailContact.IView).onJobDeliver(true)
                 }
             }
 
