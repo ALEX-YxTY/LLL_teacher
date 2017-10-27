@@ -9,7 +9,11 @@ import com.bumptech.glide.Glide
 import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.customs.utils.NumberUtil
+import com.meishipintu.lll_office.modles.HttpApiClinet
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
+import com.meishipintu.lll_office.presenters.JobManagerPresenter
+import com.meishipintu.lll_office.views.BasicView
+import com.meishipintu.lll_office.views.JobOnlineListActivity
 import com.meishipintu.lll_office.views.TeacherDetailActivity
 
 /**
@@ -28,10 +32,12 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
     val grades = Cookies.getConstant(3)     //获取年级数据
     val status = Cookies.getConstant(10)    //求职状态数据
     val glide = Glide.with(ctx)
+    val httpApi by lazy { HttpApiClinet.retrofit() }
     /**
      * 标记特殊显示
      * flag=1，显示收藏红心
      * flag=0，不做任何显示
+     * flag=2, 显示立即聊天
      */
     var flag = 0
     var jobid = -1
@@ -60,6 +66,15 @@ class TeacherAdapter(ctx: Context, dataList:List<TeacherInfo>, val type:Int): Ba
             }
             when (flag) {
                 1 -> glide.load(R.drawable.icon_lile_orange).into(teacherInfoViewHolder.special)
+                2 -> {
+                    glide.load(R.drawable.icon_chat).into(teacherInfoViewHolder.special)
+                    teacherInfoViewHolder.special.setOnClickListener{
+                        //直接进入在线职位列表
+                        val intent = Intent(ctx, JobOnlineListActivity::class.java)
+                        intent.putExtra("tid", teacher.uid)
+                        ctx.startActivity(intent)
+                    }
+                }
             }
             teacherInfoViewHolder.itemView.setOnClickListener{
                 val intent = Intent(ctx, TeacherDetailActivity::class.java)

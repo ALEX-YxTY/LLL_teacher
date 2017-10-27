@@ -18,7 +18,7 @@ import com.milai.lll_teacher.views.adapters.OfficeAdapter
 class CollectionActivity : BasicActivity(),TeacherCollectionContract.IView,CanLoadMoreRecyclerView.StateChangedListener {
 
     val teacherList= mutableListOf<TeacherInfo>()
-    val teacherAdapter:TeacherAdapter by lazy { TeacherAdapter(this,teacherList,1) }
+    val teacherAdapter:TeacherAdapter by lazy { TeacherAdapter(this, teacherList, 1, 2, -1) }
     val rv:CanLoadMoreRecyclerView by lazy{findViewById(R.id.rv) as CanLoadMoreRecyclerView }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -135,13 +135,17 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
                 (presenter as JobManagerPresenter).changeStatus(jobId.toString(),if(status==1) 2 else 1)
             }
             R.id.iv_share ->{
-                val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
-                        "&actionId=${OfficeApplication.userInfo?.uid}&type=8&flag=2")
-                umWeb.title = "${OfficeApplication.userInfo?.name?:"我公司"}正在招聘${if (jobInfo!!.course != 0) courses[jobInfo!!.course] else ""}老师，海量职位尽在拉力郎共享师资"
-                umWeb.description = "拉力郎师资"
-                umWeb.setThumb(UMImage(this,R.mipmap.office_share))
-                ShareAction(this@JobDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
-                        .setCallback(umShareListener).withMedia(umWeb).open()
+                if (jobInfo?.status != 1) {
+                    toast("该职位已下线，不能分享")
+                } else {
+                    val umWeb = UMWeb("http://lll.domobile.net/Home/Index/pstinfo?id=$jobId" +
+                            "&actionId=${OfficeApplication.userInfo?.uid}&type=8&flag=2")
+                    umWeb.title = "${OfficeApplication.userInfo?.name ?: "我公司"}正在招聘${if (jobInfo!!.course != 0) courses[jobInfo!!.course] else ""}老师，海量职位尽在拉力郎共享师资"
+                    umWeb.description = "拉力郎师资"
+                    umWeb.setThumb(UMImage(this, R.mipmap.office_share))
+                    ShareAction(this@JobDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                            .setCallback(umShareListener).withMedia(umWeb).open()
+                }
             }
         }
     }
