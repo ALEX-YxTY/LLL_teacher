@@ -64,7 +64,9 @@ class OfficeApplication :Application() {
                     Cookies.saveConstant(12, result)
                 },{
                     err ->
-                    Log.d("test", err.message)
+                    if (!err.message.isNullOrEmpty()) {
+                        Log.d("test", err.message)
+                    }
                 })
     }
 
