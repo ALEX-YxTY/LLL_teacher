@@ -30,12 +30,10 @@ class PayResult(rawResult: Map<String, String>?) {
     init {
         if (rawResult != null) {
             for (key in rawResult!!.keys) {
-                if (TextUtils.equals(key, "resultStatus")) {
-                    resultStatus = rawResult[key]
-                } else if (TextUtils.equals(key, "result")) {
-                    result = rawResult[key]
-                } else if (TextUtils.equals(key, "memo")) {
-                    memo = rawResult[key]
+                when {
+                    TextUtils.equals(key, "resultStatus") -> resultStatus = rawResult[key]
+                    TextUtils.equals(key, "result") -> result = rawResult[key]
+                    TextUtils.equals(key, "memo") -> memo = rawResult[key]
                 }
             }
         }

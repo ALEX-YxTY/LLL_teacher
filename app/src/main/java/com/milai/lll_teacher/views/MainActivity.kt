@@ -9,20 +9,21 @@ import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import cn.jpush.android.api.JPushInterface
 import com.milai.lll_teacher.*
 import com.milai.lll_teacher.contracts.NoticeContract
+import com.milai.lll_teacher.custom.util.DateUtil
 import com.milai.lll_teacher.custom.util.DialogUtils
 import com.milai.lll_teacher.custom.util.MyAsy
-import com.milai.lll_teacher.models.entities.BusMessage
-import com.milai.lll_teacher.models.entities.MessageNoticeInfo
-import com.milai.lll_teacher.models.entities.SysNoticeInfo
-import com.milai.lll_teacher.models.entities.VersionInfo
+import com.milai.lll_teacher.custom.view.AdPop
+import com.milai.lll_teacher.models.entities.*
 import com.milai.lll_teacher.presenters.NoticePresenter
 import com.milai.lll_teacher.views.adapters.MyviewPagerAdapter
 import com.milai.lll_teacher.views.fragments.*
+import com.tencent.bugly.Bugly
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -43,11 +44,19 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
     var newestSysId = -2         //记录获取到的最新系统信息id，默认-2，因为无消息时获取到为-1
     var newestMessId = -2        //记录获取到的最新私信信息id，默认-2，因为无消息时获取到为-1
 
+    var firstLogin:Boolean = false  //是否是首次登陆
+    val llmain:LinearLayout by lazy{ findViewById(R.id.ll_main) as LinearLayout}
+
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.milai.lll_teacher.R.layout.activity_main)
         presenter = NoticePresenter(this)
-        (presenter as NoticeContract.IPresenter).getNewsetVersiton()
+//        (presenter as NoticeContract.IPresenter).getNewsetVersiton()
+        firstLogin = intent.getBooleanExtra("firstLogin", false)
+        if (firstLogin) {
+            //只有在首次登陆才调广告页面
+            (presenter as NoticeContract.IPresenter).getAdvertisement()
+        }
         RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -66,6 +75,47 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
                     t: Disposable -> disposables.add(t)
                 })
         initViewPager()
+    }
+
+    override fun onAdGet(info: AdInfo) {
+        when (info.type) {
+            1 -> {
+                //只显示1次
+                if (Cookies.getAdShow(info.id) < 0) {
+                    //未显示过
+                    showAd(info)
+                    Cookies.saveAdShow(info.id)
+                }
+            }
+            2 -> {
+                //一天只显示一次
+                if (checkTime(info.id)) {
+                    showAd(info)
+                    Cookies.saveAdShow(info.id)
+                }
+            }
+            3 -> {
+                //每次登陆都显示
+                showAd(info)
+                Cookies.saveAdShow(info.id)
+            }
+        }
+        firstLogin = false
+    }
+
+    //检查上次广告播放时间
+    private fun checkTime(id: Int): Boolean {
+
+        return if (Cookies.getAdShow(id) < 0) {
+            //没有播放过
+            true
+        }else DateUtil.compileTime(Cookies.getAdShow(id))
+    }
+
+    //显示广告dialog
+    private fun showAd(info: AdInfo) {
+        val popAd = AdPop(this, info.img)
+        popAd.showPop(llmain)
     }
 
     override fun onVersionGet(versionInfo: VersionInfo) {
@@ -118,8 +168,8 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
         vp.adapter = MyviewPagerAdapter(supportFragmentManager, dataList as List<BasicFragment>)
         for (it: Int in 0 until dataList.size) {
             val tab = tabLayout.newTab()
-            tab?.setCustomView(R.layout.item_tab)
-            val textView = tab?.customView?.findViewById(R.id.tv_icon) as TextView
+            tab.setCustomView(R.layout.item_tab)
+            val textView = tab.customView?.findViewById(R.id.tv_icon) as TextView
             textView.text = nameList[it]
             val imageView = tab.customView?.findViewById(R.id.iv_icon) as ImageView
             imageView.setImageResource(iconList[it])

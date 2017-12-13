@@ -33,7 +33,9 @@ class GuidePageAdapter(val ctx: Activity, val list: List<Int>) : PagerAdapter() 
         imageView.layoutParams = params
         if (position == list.size - 1) {
             imageView.setOnClickListener{
-                ctx.startActivity(Intent(ctx, MainActivity::class.java))
+                val intent = Intent(ctx, MainActivity::class.java)
+                intent.putExtra("firstLogin", true)
+                ctx.startActivity(intent)
                 Cookies.setFirstLogin()
                 ctx.finish()
             }

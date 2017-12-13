@@ -40,7 +40,9 @@ class SplashActivity : AppCompatActivity() {
                     if (Cookies.isFirstLogin()) {
                         activity.startActivity(Intent(activity, GuideActivity::class.java))
                     } else {
-                        activity.startActivity(Intent(activity, MainActivity::class.java))
+                        val intent = Intent(activity, MainActivity::class.java)
+                        intent.putExtra("firstLogin", true)
+                        activity.startActivity(intent)
                     }
                     activity.finish()
                 }

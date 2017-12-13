@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.contracts
 
+import com.milai.lll_teacher.models.entities.AdInfo
 import com.milai.lll_teacher.models.entities.MessageNoticeInfo
 import com.milai.lll_teacher.models.entities.SysNoticeInfo
 import com.milai.lll_teacher.models.entities.VersionInfo
@@ -26,9 +27,12 @@ interface NoticeContract {
 
         fun onVersionGet(versionInfo:VersionInfo)
 
+        fun onAdGet(info: AdInfo)
+
     }
 
     interface IPresenter: BasicPresenterImp {
+
         fun getNewestSysId(tid: String)
 
         fun getNewestMessId(tid: String)
@@ -38,5 +42,7 @@ interface NoticeContract {
         fun getMessageNotice(tid:String, page: Int)
 
         fun getNewsetVersiton()
+
+        fun getAdvertisement()
     }
 }

@@ -1,5 +1,6 @@
 package com.milai.lll_teacher.custom.util
 
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,5 +42,23 @@ object DateUtil{
     fun  stampToDate4(timeStamp: Long): String {
         val simpleDateFormat = SimpleDateFormat("MM-dd  HH:mm:ss")
         return simpleDateFormat.format(Date(timeStamp * 1000))
+    }
+
+    //timeNow的天数大于timePast的天数
+    fun compileTime(timePast: Long): Boolean {
+        if (System.currentTimeMillis() - timePast > 86400) {
+            return true
+        } else {
+            val now = Calendar.getInstance()
+            val past = Calendar.getInstance()
+            past.timeInMillis = timePast
+
+            if (now.get(Calendar.DAY_OF_MONTH) > past.get(Calendar.DAY_OF_MONTH)
+                    || now.get(Calendar.YEAR) > past.get(Calendar.YEAR)
+                    || now.get(Calendar.MONTH) > past.get(Calendar.MONTH)) {
+                return true
+            }
+        }
+        return false
     }
 }

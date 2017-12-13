@@ -80,21 +80,25 @@ class InterviewListActivity : BasicActivity(), InterviewListContract.IView,CanLo
 
     //from InterviewContract.IView
     override fun onDeliverHistoryGet(dataList: List<DeliverInfo>, page: Int) {
-        if (page == 1) {
-            //首次加载
-            this.dataList.clear()
-            this.dataList.addAll(dataList)
-            rv.onLoadSuccess(page)
-            adapter.notifyDataSetChanged()
-        }else if (dataList.isNotEmpty()) {
-            //load more 并且有数据
-            this.dataList.addAll(dataList)
-            rv.onLoadSuccess(page)
-            adapter.notifyDataSetChanged()
-        } else {
-            //load more 没数据
-            rv.dismissProgressBar()
-            rv.dismissLoading()
+        when {
+            page == 1 -> {
+                //首次加载
+                this.dataList.clear()
+                this.dataList.addAll(dataList)
+                rv.onLoadSuccess(page)
+                adapter.notifyDataSetChanged()
+            }
+            dataList.isNotEmpty() -> {
+                //load more 并且有数据
+                this.dataList.addAll(dataList)
+                rv.onLoadSuccess(page)
+                adapter.notifyDataSetChanged()
+            }
+            else -> {
+                //load more 没数据
+                rv.dismissProgressBar()
+                rv.dismissLoading()
+            }
         }
     }
 }

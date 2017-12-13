@@ -208,6 +208,22 @@ object Cookies {
         editor?.putBoolean("isFirstLogin", false)
         editor?.apply()
     }
+
+    //获取id广告显示时间，未显示返回-1
+    fun getAdShow(id: Int): Long {
+        return if (getPreference() != null) {
+            getPreference()!!.getLong("ad" + id, -1)
+        } else {
+            -1
+        }
+    }
+
+    //记录id广告显示时间
+    fun saveAdShow(id: Int) {
+        val editor = getPreference()?.edit()
+        editor?.putLong("ad" + id, System.currentTimeMillis())
+        editor?.apply()
+    }
 }
 
 //扩展方法

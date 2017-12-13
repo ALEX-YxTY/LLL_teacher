@@ -88,12 +88,12 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
                     iView.showError(msg)
                 }
             }
-
         })
     }
 
+    //获取新版本信息
     override fun getNewsetVersiton() {
-        addSubscription(httpApi.getNewestVersion(1).map(HttpResultFunc<VersionInfo>())
+        addSubscription(httpApi.getNewestVersion(1).map(HttpResultFunc())
                 ,object :HttpCallback<VersionInfo>(){
             override fun onSuccess(model: VersionInfo) {
                 iView.onVersionGet(model)
@@ -107,4 +107,21 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
 
         })
     }
+
+    //获取新闻
+    override fun getAdvertisement() {
+        addSubscription(httpApi.getAdvertisement().map(HttpResultFunc())
+                ,object :HttpCallback<List<AdInfo>>(){
+            override fun onSuccess(model: List<AdInfo>) {
+                iView.onAdGet(model[0])
+            }
+
+            override fun onFailure(msg: String?) {
+                if (msg != null) {
+                    iView.showError(msg)
+                }
+            }
+        })
+    }
+
 }

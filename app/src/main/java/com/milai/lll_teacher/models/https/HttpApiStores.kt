@@ -179,4 +179,8 @@ interface HttpApiStores {
     @FormUrlEncoded
     @POST("Home/Api/getTeacherIsDeliverPosition")
     fun isDeliverPosition(@Field("tid") tid: String, @Field("pid") pid: String):Observable<HttpResult<Any>>
+
+    //获取广告信息
+    @POST("Home/Api/getAdver2")
+    fun getAdvertisement(): Observable<HttpResult<List<AdInfo>>>
 }

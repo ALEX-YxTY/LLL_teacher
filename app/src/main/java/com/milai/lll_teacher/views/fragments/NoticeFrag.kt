@@ -13,6 +13,7 @@ import com.milai.lll_teacher.MyApplication
 import com.milai.lll_teacher.R
 import com.milai.lll_teacher.contracts.NoticeContract
 import com.milai.lll_teacher.custom.view.CanLoadMoreRecyclerView
+import com.milai.lll_teacher.models.entities.AdInfo
 import com.milai.lll_teacher.models.entities.MessageNoticeInfo
 import com.milai.lll_teacher.models.entities.SysNoticeInfo
 import com.milai.lll_teacher.models.entities.VersionInfo
@@ -187,6 +188,10 @@ class NoticeFrag :BasicFragment(),NoticeContract.IView,CanLoadMoreRecyclerView.S
             //隐藏红点
             tabLayout.getTabAt(1)?.customView?.findViewById(R.id.red_point)?.visibility = View.GONE
         }
+    }
+
+    override fun onAdGet(info: AdInfo) {
+        //null
     }
 
 }
