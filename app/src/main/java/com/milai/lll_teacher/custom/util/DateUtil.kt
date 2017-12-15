@@ -54,8 +54,8 @@ object DateUtil{
             past.timeInMillis = timePast
 
             if (now.get(Calendar.DAY_OF_MONTH) > past.get(Calendar.DAY_OF_MONTH)
-                    || now.get(Calendar.YEAR) > past.get(Calendar.YEAR)
-                    || now.get(Calendar.MONTH) > past.get(Calendar.MONTH)) {
+                    || now.get(Calendar.MONTH) > past.get(Calendar.MONTH)
+                    || now.get(Calendar.YEAR) > past.get(Calendar.YEAR)) {
                 return true
             }
         }

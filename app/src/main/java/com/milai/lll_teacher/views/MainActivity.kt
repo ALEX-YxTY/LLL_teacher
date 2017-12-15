@@ -87,14 +87,14 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
                     Cookies.saveAdShow(info.id)
                 }
             }
-            2 -> {
+            3 -> {
                 //一天只显示一次
                 if (checkTime(info.id)) {
                     showAd(info)
                     Cookies.saveAdShow(info.id)
                 }
             }
-            3 -> {
+            2 -> {
                 //每次登陆都显示
                 showAd(info)
                 Cookies.saveAdShow(info.id)
