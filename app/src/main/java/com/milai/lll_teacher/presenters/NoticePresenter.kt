@@ -108,7 +108,7 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
         })
     }
 
-    //获取新闻
+    //获取广告
     override fun getAdvertisement() {
         addSubscription(httpApi.getAdvertisement().map(HttpResultFunc())
                 ,object :HttpCallback<List<AdInfo>>(){

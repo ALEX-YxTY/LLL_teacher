@@ -46,7 +46,7 @@ object DateUtil{
 
     //timeNow的天数大于timePast的天数
     fun compileTime(timePast: Long): Boolean {
-        if (System.currentTimeMillis() - timePast > 86400) {
+        if (System.currentTimeMillis() - timePast > 86400000) {
             return true
         } else {
             val now = Calendar.getInstance()
@@ -58,7 +58,7 @@ object DateUtil{
                     || now.get(Calendar.YEAR) > past.get(Calendar.YEAR)) {
                 return true
             }
+            return false
         }
-        return false
     }
 }

@@ -51,12 +51,8 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
         super.onCreate(savedInstanceState)
         setContentView(com.milai.lll_teacher.R.layout.activity_main)
         presenter = NoticePresenter(this)
-//        (presenter as NoticeContract.IPresenter).getNewsetVersiton()
+        (presenter as NoticeContract.IPresenter).getNewsetVersiton()
         firstLogin = intent.getBooleanExtra("firstLogin", false)
-        if (firstLogin) {
-            //只有在首次登陆才调广告页面
-            (presenter as NoticeContract.IPresenter).getAdvertisement()
-        }
         RxBus.getObservable(BusMessage::class.java).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -77,6 +73,15 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
         initViewPager()
     }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        //在window获取焦点时调用显示popupwindow，否则页面未渲染成功无法显示
+        if (firstLogin) {
+            //只有在首次登陆才调广告页面
+            (presenter as NoticeContract.IPresenter).getAdvertisement()
+        }
+    }
+
     override fun onAdGet(info: AdInfo) {
         when (info.type) {
             1 -> {
@@ -89,6 +94,7 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
             }
             3 -> {
                 //一天只显示一次
+                Log.i("test","hasn't show?:"+checkTime(info.id))
                 if (checkTime(info.id)) {
                     showAd(info)
                     Cookies.saveAdShow(info.id)
@@ -246,7 +252,7 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
     }
 
     override fun onNewestMessIdGet(id: Int) {
-        Log.d("test","main activity messageId get :Cookies get ${Cookies.getNewestMesId(MyApplication.userInfo?.uid!!)}, net get $id while uid=${MyApplication.userInfo?.uid}")
+//        Log.d("test","main activity messageId get :Cookies get ${Cookies.getNewestMesId(MyApplication.userInfo?.uid!!)}, net get $id while uid=${MyApplication.userInfo?.uid}")
         //记录最新id
         newestMessId = id
         changeRedPoint()
@@ -254,7 +260,7 @@ class MainActivity : BasicActivity(),NoticeContract.IView {
 
 
     override fun onNewestSysIdGet(id: Int) {
-        Log.d("test","main activity sysNoticeId get :Cookies get ${Cookies.getNewestSysId(MyApplication.userInfo?.uid!!)}, net get $id while uid=${MyApplication.userInfo?.uid}")
+//        Log.d("test","main activity sysNoticeId get :Cookies get ${Cookies.getNewestSysId(MyApplication.userInfo?.uid!!)}, net get $id while uid=${MyApplication.userInfo?.uid}")
         newestSysId = id
         changeRedPoint()
 
