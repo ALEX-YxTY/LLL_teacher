@@ -39,6 +39,7 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
     private val etJobName: EditText by lazy { findViewById(R.id.et_job_name) as EditText }
     private val etMoney: EditText by lazy { findViewById(R.id.et_money) as EditText }
     private val etAddress: EditText by lazy { findViewById(R.id.et_address) as EditText }
+    private val etContact:EditText by lazy{ findViewById(R.id.et_contact) as EditText}
     private val etJobRequire: EditText by lazy { findViewById(R.id.et_job_require) as EditText }
 
     val tvCourse: TextView by lazy { findViewById(R.id.tv_course) as TextView }
@@ -76,6 +77,7 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
         tvWorkArea.text = if (newJob!=null) areas[newJob.work_area] else "请选择"
         areaSelect = newJob?.work_area?:0
         etAddress.setText(newJob?.work_address)
+        etContact.setText(newJob?.tel)
 
         tvSex.text = sexs[newJob?.sex ?: 0]
         sexSelect = newJob?.sex?:0
@@ -167,7 +169,7 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
                 findViewById(R.id.bt_release).isEnabled = false
                 loadingDialog.dialogShow()
                 //验证输入
-                if (arrayOf(etJobName.text, etAddress.text, etMoney.text, etJobRequire.text).isNullOrEmpty()) {
+                if (arrayOf(etJobName.text, etAddress.text, etMoney.text, etJobRequire.text, etContact.text).isNullOrEmpty()) {
                     toast("输入项不能为空")
                     loadingDialog.dialogDismiss()
                     //恢复按钮功能
@@ -176,11 +178,12 @@ class NewJobActivity : BasicActivity(),View.OnClickListener,NewJobContract.IView
                     (presenter as JobManagerPresenter).addJob(etJobName.text.toString(), OfficeApplication.userInfo?.uid!!
                             , areaSelect, etAddress.text.toString(), courseSelect, gradeSelect, gradeDetailSelect, sexSelect
                             , experienceSelect, etMoney.text.toString(), certificateSelect, etJobRequire.text.toString()
-                            )
+                            , etContact.text.toString()
+                    )
                     saveNewJob = JobInfo(etJobName.text.toString(), OfficeApplication.userInfo?.uid!!
                             , areaSelect, etAddress.text.toString(), courseSelect, gradeSelect, gradeDetailSelect
-                            ,sexSelect, experienceSelect, etJobRequire.text.toString(), etMoney.text.toString()
-                            , certificateSelect)
+                            , sexSelect, experienceSelect, etJobRequire.text.toString(), etMoney.text.toString()
+                            , certificateSelect, etContact.text.toString())
                 }
             }
         }

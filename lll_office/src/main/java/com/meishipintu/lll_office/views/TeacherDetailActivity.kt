@@ -17,6 +17,7 @@ import com.meishipintu.lll_office.Cookies
 import com.meishipintu.lll_office.OfficeApplication
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.contract.TeacherDetailContract
+import com.meishipintu.lll_office.customs.utils.StringUtils
 import com.meishipintu.lll_office.modles.entities.TeacherInfo
 import com.meishipintu.lll_office.presenters.TeachPresenter
 import com.umeng.socialize.ShareAction
@@ -82,6 +83,10 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
                 ivButton.visibility = View.GONE
                 tvButton.text = "邀请TA面试"
             }
+            4 ->{
+                //底部全部不显示
+                findViewById(R.id.bt_collect).visibility = View.GONE
+            }
         }
         btInvite.setOnClickListener(this)
         findViewById(R.id.bt_back).setOnClickListener(this)
@@ -129,7 +134,7 @@ class TeacherDetailActivity : BasicActivity(),View.OnClickListener,TeacherDetail
                 val umWeb = UMWeb("http://lll.domobile.net/Home/Index/tcinfo?uid=$teacherId"+
                         "&actionId=${OfficeApplication.userInfo?.uid}&type=7&flag=2")
                 umWeb.title = "我在拉力郎共享师资发现一位${teacher?.name?:""}老师，拥有*年${courses[teacher?.course!!]}教学经验，点击查看"
-                umWeb.description = "拉力郎师资"
+                umWeb.description = "简历编号："+ StringUtils.decimalFormat(teacher?.id?:0)
                 umWeb.setThumb(UMImage(this,R.mipmap.office_share))
                 ShareAction(this@TeacherDetailActivity).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(umShareListener).withMedia(umWeb).open()

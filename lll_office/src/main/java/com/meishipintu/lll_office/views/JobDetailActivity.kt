@@ -22,6 +22,7 @@ import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
 import com.umeng.socialize.media.UMWeb
+import org.w3c.dom.Text
 
 class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract.IView{
 
@@ -106,6 +107,11 @@ class JobDetailActivity : BasicActivity(),View.OnClickListener,JobDetailContract
         tvCertificate.visibility = if(jobInfo.have_certificate==0) View.GONE else View.VISIBLE
         (findViewById(R.id.tv_money) as TextView).text = jobInfo.money
         (findViewById(R.id.tv_time) as TextView).text = DateUtil.stampToDate(jobInfo.create_time)
+        if (jobInfo.tel.isNullOrEmpty()) {
+            findViewById(R.id.rl_contact).visibility = View.GONE
+        } else {
+            (findViewById(R.id.tv_contact_num) as TextView).text = jobInfo.tel
+        }
         var reviewTime = if (jobInfo?.ll_count!! > 9999) {
             "${jobInfo?.ll_count!! / 10000} 万次"
         } else {

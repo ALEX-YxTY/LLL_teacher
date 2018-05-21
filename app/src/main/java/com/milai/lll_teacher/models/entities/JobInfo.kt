@@ -22,5 +22,5 @@ import java.io.Serializable
 data class JobInfo(val id: Int, val job_name: String, val oid: String, val work_area: Int, val work_address: String
                    , val course: Int, val grade: Int, val grade_detail: Int, val sex: Int, val year: Int, var status: Int
                    , val require_year: Int, val require: String, val money: String, val other_demand: String
-                   , val organization: OfficeInfo, val have_certificate: Int, val create_time: String, val ll_count: Int): Serializable
+                   , val organization: OfficeInfo, val have_certificate: Int, val create_time: String, val ll_count: Int, val tel:String): Serializable
 

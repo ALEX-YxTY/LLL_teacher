@@ -30,6 +30,8 @@
         android:layout_toRightOf="@id/iv_head"
         android:layout_marginLeft="21dp"
         android:background="@drawable/shape_talk_radius5"
+        android:autoLink="phone"
+        android:textIsSelectable="true"
         style="@style/text_12_black"
         />
 

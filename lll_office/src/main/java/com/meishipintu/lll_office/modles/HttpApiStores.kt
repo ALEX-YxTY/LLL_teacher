@@ -50,13 +50,14 @@ interface HttpApiStores {
 
 
     //发布职位接口
+    //2018-2-26 增加tel，联系电话，必填
     @FormUrlEncoded
     @POST("Home/organization/addPosition")
     fun addJobService(@Field("job_name") jobName: String, @Field("oid") oid: String, @Field("work_area") area: Int
                       , @Field("work_address") address: String, @Field("course") course: Int, @Field("grade") grade: Int
                       , @Field("grade_detail") grade_detail: Int, @Field("sex") sex: Int, @Field("require_year") rYear: Int
                       , @Field("money") money: String, @Field("have_certificate") have_certificate: Int
-                      , @Field("require") require: String)
+                      , @Field("require") require: String,@Field("tel") tel:String)
             : Observable<HttpResult<Any>>
 
     //获取机构发布的职位

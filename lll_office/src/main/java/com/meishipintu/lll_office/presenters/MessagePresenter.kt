@@ -56,7 +56,7 @@ class MessagePresenter(val iView: BasicView) : BasicPresenter(), ChatDetailContr
 
     //获取通讯列表
     override fun getChatList(tid: String, pid: Int) {
-        addSubscription(httpApi.getChatDetailService(tid,pid).map(HttpResultFunc<List<ChatDetail>>())
+        addSubscription(httpApi.getChatDetailService(tid,pid).map(HttpResultFunc())
                 ,object :HttpCallback<List<ChatDetail>>(){
 
             override fun onSuccess(model: List<ChatDetail>) {

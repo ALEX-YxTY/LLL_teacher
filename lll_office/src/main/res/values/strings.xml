@@ -52,5 +52,6 @@
     <string name="only_backend2">(仅在后台显示)</string>
     <string name="version">当前版本</string>
     <string name="down_code">下载二维码</string>
+    <string name="contact_num">联系方式</string>
 
 </resources>

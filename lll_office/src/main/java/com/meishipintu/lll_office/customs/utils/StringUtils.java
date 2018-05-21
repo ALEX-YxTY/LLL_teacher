@@ -92,6 +92,11 @@ public class StringUtils {
         return df.format(Integer.parseInt(num));
     }
 
+    public static String decimalFormat(int num) {
+        DecimalFormat df = new DecimalFormat("00000000");
+        return df.format(num);
+    }
+
     public static boolean isNullOrEmptOrZero(String money) {
         return isNullOrEmpty(money) || Integer.parseInt(money) == 0;
     }

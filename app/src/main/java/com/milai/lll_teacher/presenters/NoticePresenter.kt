@@ -113,7 +113,9 @@ class NoticePresenter(val iView: NoticeContract.IView): BasicPresenter(),NoticeC
         addSubscription(httpApi.getAdvertisement().map(HttpResultFunc())
                 ,object :HttpCallback<List<AdInfo>>(){
             override fun onSuccess(model: List<AdInfo>) {
-                iView.onAdGet(model[0])
+                if (model.isNotEmpty()) {
+                    iView.onAdGet(model[0])
+                }
             }
 
             override fun onFailure(msg: String?) {

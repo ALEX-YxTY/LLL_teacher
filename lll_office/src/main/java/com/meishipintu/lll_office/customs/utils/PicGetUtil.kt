@@ -37,6 +37,7 @@ object PicGetUtil {
     var cropURI: Uri? = null    //裁剪后图片的URI
     var successListener: SuccessListener? = null  //成功回调
 
+
     //选择图片 调用PhotoPicker
     fun choosePicture(context: Activity, listener: SuccessListener) {
         successListener = listener

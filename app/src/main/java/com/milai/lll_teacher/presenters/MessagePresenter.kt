@@ -84,7 +84,6 @@ class MessagePresenter(val iView:BasicView) : BasicPresenter(),ChatDetailContrac
                     iView.showError(msg)
                 }
             }
-
         })
     }
 

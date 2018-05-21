@@ -38,7 +38,7 @@ class NoticePresenter(val iView:BasicView):BasicPresenter(),NoticeContract.IPres
     }
 
     override fun getMessageNotice(oid: String,page:Int) {
-        addSubscription(httpApi.getChatListService("",2,oid,page).map(HttpResultFunc<List<MessageNoticeInfo>>())
+        addSubscription(httpApi.getChatListService("",2,oid,page).map(HttpResultFunc())
                 ,object :HttpCallback<List<MessageNoticeInfo>>(){
             override fun onSuccess(model: List<MessageNoticeInfo>) {
                 (iView as NoticeContract.IView).onMessageNoticeGet(model,page)

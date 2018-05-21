@@ -1,6 +1,7 @@
 package com.meishipintu.lll_office.views.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.meishipintu.lll_office.R
 import com.meishipintu.lll_office.customs.utils.DateUtil
 import com.meishipintu.lll_office.modles.entities.ChatDetail
+import com.meishipintu.lll_office.views.TeacherDetailActivity
 
 /**
  * Created by Administrator on 2017/6/23.
@@ -71,7 +73,7 @@ class ChatAdapter(val ctx:Context,val dataList:List<ChatDetail>):RecyclerView.Ad
             }
 
             if (getItemViewType(position) == TYPE_LEFT) {
-                glide.load(chatDetail.avatar.teacher_avatar).error(if(chatDetail.sex==1) R.drawable.teacher_default_female
+                glide.load(chatDetail.avatar.teacher_avatar).error(if(chatDetail.avatar.sex==1) R.drawable.teacher_default_female
                     else R.drawable.teacher_default)
                         .into(chatViewHolder.ivHead)
             } else {
@@ -83,6 +85,12 @@ class ChatAdapter(val ctx:Context,val dataList:List<ChatDetail>):RecyclerView.Ad
                 this.timeLast = 0
             } else {
                 this.timeLast = chatDetail.create_time
+            }
+            chatViewHolder.ivHead.setOnClickListener {
+                val intent = Intent(ctx, TeacherDetailActivity::class.java)
+                intent.putExtra("teacherId", chatDetail.tid )
+                intent.putExtra("type", 4)  //1-从普通页进入，点击收藏 2-点击邀约 4-底部完全不显示
+                ctx.startActivity(intent)
             }
         }
     }

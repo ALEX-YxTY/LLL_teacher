@@ -209,6 +209,11 @@ class JobDetailActivity : BasicActivity() ,View.OnClickListener,JobDetailContact
         } else {
             "${jobInfo?.ll_count!! } 次"
         }
+        if (jobInfo?.tel.isNullOrEmpty()) {
+            findViewById(R.id.rl_contact).visibility = View.GONE
+        } else {
+            (findViewById(R.id.tv_contact_num) as TextView).text = jobInfo?.tel
+        }
         (findViewById(R.id.tv_review_time) as TextView).text = reviewTime
         var area:String
         area = if(jobInfo?.work_area==0) {
